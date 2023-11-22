@@ -1,6 +1,7 @@
 {
   "name": "sdk-docs",
   "version": "0.0.1",
+    "packageManager": "bun@1.0.13",
   "scripts": {
     "dev": "next dev -p 3002",
     "build": "next build",
