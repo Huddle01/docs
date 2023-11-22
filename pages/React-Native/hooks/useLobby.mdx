@@ -1,0 +1,67 @@
+---
+title: 'useLobby'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+
+
+## useLobby
+
+
+Acess the following methods & states `joinLobby()` `leaveLobby()` `isLoading` `isLobbyJoined` `error` .
+
+
+<OptionTable
+  headers={['Name', "Type","Description"]}
+  options={[
+    [
+      'joinlobby(roomId: string, accessToken: string)',
+      'Function',
+      'moves the user to a pre-room lobby where they can toggle with audio/video controls before joining a room'
+    ],
+    [
+      'leaveLobby()',
+      'Function',
+      'removes the user from the lobby back to the initialized state'
+    ],
+    ['isLoading', "boolean","loading state"],
+    ['isLobbyJoined', "boolean","state for whether the user has joined the lobby"],
+    ['error', "string","gives the error message"],
+  ]}
+/>
+
+
+### Sample Code
+
+```jsx
+  import {Button, View} from 'react-native';
+  import { useLobby } from '@huddle01/react-native/hooks';
+  
+  const App = () => {
+    const { joinLobby, leaveLobby, isLoading, isLobbyJoined, error } = useLobby();
+  
+    return (
+      <View>
+        <View style={styles.button}>
+          <Button
+            title="JOIN_LOBBY"
+            disabled={!joinLobby.isCallable}
+            onPress={() => {
+              joinLobby('YOUR_ROOM_ID');
+            }}
+          />
+        </View>
+
+        <View style={styles.button}>
+          <Button
+            title="LEAVE_LOBBY"
+            disabled={!state.matches('Initialized.JoinedLobby')}
+            onPress={leaveLobby}
+          />
+        </View>
+      </View>
+    );
+  };
+
+
+```

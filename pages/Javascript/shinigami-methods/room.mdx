@@ -1,0 +1,153 @@
+---
+title: 'Room'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+
+## Room
+
+The room is the place where the actual meeting takes place. It is the place where the user can interact with other peers.
+
+### Methods 
+
+<OptionTable 
+    headers={['Name', 'Description', 'Parameters']}
+    options={[
+        [
+            'connect()',
+            'Connects to the room and transitions its state to "connecting."',
+            'None'
+        ],
+        [
+            'admitPeer(peerId)',
+            'Admits a peer from the lobby to the room.',
+            'peerId: string'
+        ],
+        [
+            'denyPeer(peerId)',
+            'Denies a peer from joining the room who is in the lobby.',
+            'peerId: string'
+        ],
+        [
+            'close()',
+            'Closes the room for the current user and all other users.',
+            'None'
+        ],
+        [
+            'leave()',
+            'Leaves the room for the current user while allowing it to remain active for remote participants.',
+            'None'
+        ]
+    ]}
+/>
+
+### Attributes
+
+<OptionTable 
+    headers={['Name', 'Description', 'Type']}
+    options={[
+        [
+            'roomId',
+            'Room Id of the currently joined room.',
+            'string or null'
+        ],
+        [
+            'lobbyPeerSet',
+            'Lobby peers as a Set.',
+            'Set<string>'
+        ],
+        [
+            'lobbyPeerIds',
+            'Lobby peers as an array.',
+            'string[]'
+        ],
+        [
+            'config',
+            'Room configuration settings including permissions and room state.',
+            'TRoomInfo["config"] (object)'
+        ],
+    ]}
+/>
+
+### Events
+
+<OptionTable 
+    headers={['Event Name', 'Description', 'Returns']}
+    options={[
+        [
+            'room-joined',
+            'Invoked when a user successfully joins a room.',
+            'None'
+        ],
+        [
+            'room-joined-failed',
+            "Invoked when a user's attempt to join a room fails.",
+            '{ message: string, status: string }'
+        ],
+        [
+            'room-closed',
+            'Invoked when a room is closed.',
+            'None'
+        ],
+        [
+            'room-left',
+            'Invoked when a user leaves a room.',
+            'None'
+        ],
+        [
+            'room-connecting',
+            'Invoked when a room is in the process of connecting.',
+            'None'
+        ],
+        [
+            'new-peer-joined',
+            'Invoked when a new peer joins the room.',
+            'data (object): Information about the new peer.'
+        ],
+        [
+            'lobby-peers-updated',
+            'Invoked when the list of lobby peers is updated.',
+            'peerIds (array): An array of lobby peer IDs.'
+        ],
+        [
+            'peer-left',
+            'Invoked when a peer leaves the room.',
+            'peerId (string): The ID of the peer who left.'
+        ],
+        [
+            'room-controls-updated',
+            "Invoked when the room's control settings are updated.",
+            'data (object): Information about the updated control settings.'
+        ]
+    ]}
+/>
+
+### Example
+
+```js
+// Getting room instance
+const room = await huddleClient.joinRoom({
+	roomId: "YOUR_ROOM_ID",
+	token: "YOUR_ACCESS_TOKEN"
+});
+
+// Admit peer from lobby
+room.admitPeer("PEER_ID");
+
+// Get remote peers
+const remotePeers = room.remotePeers;
+
+// Event listeners for the Room events
+room.on("room-joined", () => {
+  console.log("You have successfully joined the room.");
+  console.log("Room ID:", room.roomId);
+});
+
+room.on("new-peer-joined", (data) => {
+  console.log("A new peer has joined the room:");
+  console.log("Peer ID:", data.peerId);
+});
+
+room.on("room-closed", () => {
+  console.log("The room has been closed.");
+});

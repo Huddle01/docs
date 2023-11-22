@@ -1,0 +1,50 @@
+---
+title: 'Guides'
+---
+
+import { GuidesData } from '@components/assets/Data/data';
+import GradientCard from '@components/common/GradientCard/GradientCard';
+
+<div className="md:p-10 p-2">
+
+<div className="flex md:items-center md:justify-between md:flex-row flex-col">
+# Guides
+
+<div className="text-rgb-7 text-xs font-normal">
+Last updated on June 16, 2023
+</div>
+</div>
+
+
+Straight-forward guides and walkthroughs to help you get started with building immersive and powerful audio/video experiences.
+
+
+##  Discover Guides for Huddle01 SDK
+
+<div className="my-16 xl:max-w-none">
+  <div className="not-prose mt-4 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
+    {GuidesData.map(resource => (
+      <GradientCard key={resource.href} resource={resource} />
+    ))}
+  </div>
+</div>
+
+<video
+  src="/docs/videos/useCase.mp4"
+  muted
+  controls
+  className="my-20 rounded-lg"
+  width="100%"
+  height="100%"
+/>
+
+## Creative Guides for SDK
+
+1. **Zendesk for Web3**: Huddle01 lite with audioX integration, allowing users to add each other's wallets as friends and make calls directly via audioX to the other wallet.
+2. **Token-Gated Loom Video**: Record a small video, like a Loom, and share it via a link that is token-gated for public sharing or sent directly to a wallet address.
+3. **Live Streaming with Neural Style Transfer from User NFT**: Use neural style transfer to create unique video streams from user NFTs.
+4. **Music Room**: A landing page where users can see existing music rooms with titles such as the 90s and indie. The one who starts the room will have the host's right to play music, and it will be an audio-only stream where people can join channels and listen (which can also be token-gated). New artists can launch their albums, and users who own music NFTs can have a subscription-based channel. Users can also tip on playlists, and it can be extended to a Google extension.
+
+
+
+</div>

@@ -1,0 +1,19 @@
+[
+  {
+    "title": "iFrame",
+    "type": "iFrame",
+    "url": "iFrame/intro",
+    "desc": "Integrate Huddle01 quickly into your product within few lines of code.",
+    "linksArr": [
+      { "title": "Javascript", "linkUrl": "iFrame/vanilla" },
+      { "title": "React JS", "linkUrl": "iFrame/react" }
+    ]
+  },
+  {
+    "title": "API reference",
+    "type": "api",
+    "url": "/apis",
+    "desc": "Create and token-gate meetings. Fetch meeting details and more with our suite of APIs.",
+    "linksArr": [{ "title": "Arrow", "linkUrl": "/apis" }]
+  }
+]

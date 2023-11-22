@@ -1,0 +1,70 @@
+---
+title: 'Utility Methods'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+
+## Utility Methods
+
+Other App Utility Methods for meeting use-case
+
+ <OptionTable 
+    headers={['Name', 'Type']}
+    options={[
+        [
+            'setDisplayName(displayName: string)',
+            'Function',
+            'Set the display name of the current user'
+        ],
+        [
+            'changeAvatarUrl(avatarUrl: string)', 
+            'Function',
+            'Set the avatar url of the current user'
+        ],
+        [
+            'sendData(peerIds: [] | "*", data: unknown)', 
+            'Function',
+            "Send data to the specified peerIds or all peers if '*' is passed as peerIds"
+        ]
+    ]}
+/>
+
+## Example 
+
+```html
+<script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js"></script>
+
+<body>
+
+    <input type="text" id="displayName" placeholder="Enter Display Name" />
+    <button id="setDisplayName">Set Display Name</button>
+    <input type="text" id="avatarUrl" placeholder="Enter Avatar Url" />
+    <button id="setAvatarUrl">Set Avatar Url</button>
+    <input type="text" id="data" placeholder="Enter data" />
+    <button id="sendData">Send Data</button>
+
+</body>
+
+<script>
+
+document.getElementById('setDisplayName').addEventListener('click', () => {
+    const displayName = document.getElementById('displayName').value;
+    huddleClient.setDisplayName(displayName);
+});
+
+document.getElementById('setAvatarUrl').addEventListener('click', () => {
+    const avatarUrl = document.getElementById('avatarUrl').value;
+    huddleClient.changeAvatarUrl(avatarUrl);
+});
+
+document.getElementById('sendData').addEventListener('click', () => {
+    const data = document.getElementById('data').value;
+    huddleClient.sendData('*', data);
+});
+
+</script>
+```
+
+
+
+

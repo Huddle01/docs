@@ -1,0 +1,69 @@
+{
+  "--Overview": {
+    "type": "separator",
+    "title": "Overview"
+  },
+  "index": {
+    "title": "Home",
+    "theme": {
+      "layout": "full"
+    }
+  },
+  "get-started": {
+    "title": "Get Started",
+    "theme": { "layout": "default" }
+  },
+  "concepts": "Concepts",
+  "guides": {
+    "title": "Guides",
+    "theme": {
+      "layout": "full"
+    }
+  },
+  "changelog": {
+    "title": "Changelog",
+    "theme": {
+      "layout": "full"
+    }
+  },
+  "showcase": {
+    "title": "Showcase",
+    "theme": {
+      "typesetting": "article",
+      "layout": "full"
+    }
+  },
+  "talk-to-sales": {
+    "type": "page",
+    "title": "Talk to sales",
+    "href": "http://cal.com/yashvendra",
+    "newWindow": true
+  },
+  "--SDKs": {
+    "type": "separator",
+    "title": "SDKs"
+  },
+  "Javascript": "",
+  "React": "",
+  "React-Native": "",
+  "Flutter": "",
+  "--APIs": {
+    "type": "separator",
+    "title": "APIs"
+  },
+  "api-keys": "Get an API key",
+  "apis": "API Reference",
+  "--Quick Integration": {
+    "type": "separator",
+    "title": "Quick Integration"
+  },
+  "cli-tool": "CLI Tool",
+  "iFrame": "",
+  "release-note": {
+    "type": "page",
+    "title": "Release Notes",
+    "theme": {
+      "typesetting": "article"
+    }
+  }
+}

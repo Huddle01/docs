@@ -1,0 +1,149 @@
+---
+title: 'Get Recordings API'
+---
+
+import JoinRoomToken from '@components/ApiRef/JoinRoomToken';
+import JoinRoomTokenResponse from '@components/ApiRef/JoinRoomTokenResponse';
+import RequestStrip from '@components/ApiRequest/RequestStrip';
+import {
+  APIRequestCard,
+  APIRequestContent,
+  APIResponseCard,
+} from '@components/common/ApiCard/ApiCard';
+import { Button } from '@components/common/Button/Button';
+import HighLight from '@components/common/HighLight';
+import Paragraph from '@components/common/Paragraph';
+import Pill from '@components/common/Pill/Pill';
+import { Callout } from 'nextra-theme-docs';
+
+## **Get Recordings API**
+
+The Get Recordings API provides the ability to fetch recordings that were created using the SDK.
+In order to use the API, you will need to obtain an API key by connecting to your wallet.
+
+## **Endpoint**
+<div className="flex justify-between w-full">
+  <HighLight className="my-3 w-3/4">
+    <RequestStrip
+      method={'GET'}
+      url={'https://api.huddle01.com/api/v1'}
+      endpoint={'get-recordings'}
+    />
+  </HighLight>
+  <Button
+    variant="primary"
+    url="/api-keys"
+    text="Get your API Key"
+    isRouting
+    className=" my-2 w-auto px-8"
+  />
+</div>
+
+
+<Paragraph className="mt-5">
+Whatever recordings are created using the SDK, will be listed in the Get Recordings API. The API will return the list of all the recordings which are created using the SDK.
+
+</Paragraph>
+
+<div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-10  md:h-[24.5rem]">
+<div>
+<div className="flex items-center gap-4">
+<Pill >GET</Pill>
+<div className="text-sm font-normal text-slate-50">`/get-recordings`</div>
+
+</div>
+
+<div className="mt-7 font-mono text-2xl font-bold text-[#f1f5f9]">
+  Get Recordings API
+</div>
+
+The API supports a **GET** request with the following required parameters:
+
+- **`x-api-key`** - Add your API Key to the headers to fetch all rooms associated with your API Key.
+
+
+</div>
+
+<APIRequestCard
+    requestType = "GET"
+    route="/get-recordings"
+    
+  >
+
+<APIRequestContent value="axios">
+      ```js
+      const response = await axios.get(
+        'https://api.huddle01.com/api/v1/get-recordings',
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': {{API_KEY}},
+          },
+        }
+    );
+      ```
+    </APIRequestContent>
+
+    
+    <APIRequestContent value="fetch">
+      ```js
+     const  response = await fetch("https://api.huddle01.com/api/v1/get-recordings", {
+     
+    method: "GET",
+    {},
+    headers: {
+        "Content-type": "application/json",
+        'x-api-key': {{API_KEY}},
+    }
+})
+      ```
+    </APIRequestContent>
+
+    <APIRequestContent value="cUrl">
+      ```bash
+curl -X POST \
+  'https://api.huddle01.com/api/v1/get-recordings' \
+  --header 'Accept: */*' \
+  --header 'x-api-key: {{API_KEY}}' \
+  --header 'Content-Type: application/json' \
+  
+      ```
+    </APIRequestContent>
+  </APIRequestCard>
+
+</div>
+
+<div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-10">
+<div className="text-start ">
+
+<div className="font-mono text-2xl font-bold text-[#f1f5f9]">Response</div>
+
+Upon success, the API will return a response with an array of rooms with the following fields:
+
+- **`nextCursor`** - The cursor for the pagination
+- **`recordings`** - The list of recordings with their respective id, url and size.
+
+In case of an error, the API will return an error message with a corresponding status code.
+
+</div>
+
+<APIResponseCard>
+  <APIRequestContent value="Success">
+    ```jsx
+      {
+          "nextCursor": 1,
+          "recordings": [
+            {
+                "id": "dummy-recording-id",
+                "url": "https://dummy-recording-url.com",
+                "size": 100
+            }
+          ]
+      }
+    ```
+  </APIRequestContent>
+</APIResponseCard>
+
+</div>
+

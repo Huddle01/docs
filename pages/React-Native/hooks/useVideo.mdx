@@ -1,0 +1,84 @@
+---
+title: 'useVideo'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs'
+
+## useVideo
+
+<Callout emoji="⚠️">
+    If cam isn’t enabled in the lobby, video won’t be shareable inside the room 
+  </Callout>
+  <Callout emoji="⚠️">
+    The method is to be called only when in lobby state.
+  </Callout>
+
+
+These are the fields which are returned from **`useVideo`** hook.
+
+<OptionTable
+  headers={['Name', "Type"]}
+  options={[
+    [
+      'fetchVideoStream(deviceId?: string)',
+      'Function',
+      "Enables video stream from user’s webcam(lobby)"
+    ],
+    ['stopVideoStream()', 'Function',"Disables video stream from user’s device cam(lobby)"],
+    [
+      'produceVideo()',
+      'Function',
+      "Starts sharing user’s webcam video stream with other peers in the room"
+    ],
+    ['stopProducingVideo()', 'Function',"Stops sharing user’s webcam video stream with other peers in the room"],
+    ['switchCamera()', 'Function',"Switches between video stream coming from user’s front and rear device webcams"],
+    ['isFrontCamera', 'boolean',"Boolean indicating whether the video stream is coming from user's front cam or rear"],
+    ['isLoading', 'boolean',"loading state"],
+    ['isProducing','boolean',"state whether the video is producing or not"],
+    ['stream', "MediaStream","video stream"],
+    ['error', "string","gives the error message"],
+  ]} 
+/>
+
+
+
+### Sample Code
+
+```jsx
+import {Button, View} from 'react-native';
+import { useVideo } from '@huddle01/react-native/hooks';
+ 
+const App = () => {
+  const { fetchVideoStream, stopVideoStream, isProducing, switchCamera, isFrontCamera, stream, error} = useVideo();
+
+  return (
+    <View>
+      <View style={styles.button}>
+        <Button
+          title="FETCH_VIDEO_STREAM"
+          disabled={!fetchVideoStream.isCallable}
+          onPress={fetchVideoStream}
+        />
+      </View>
+
+      <View style={styles.button}>
+        <Button
+          title="STOP_VIDEO_STREAM"
+          disabled={!stopVideoStream.isCallable}
+          onPress={stopVideoStream}
+        />
+      </View>
+
+      <View style={styles.button}>
+        <Button
+          title="SWITCH_CAMERA"
+          onPress={switchCamera}
+        />
+      </View>
+    </View>
+  );
+};
+ 
+
+```

@@ -1,0 +1,59 @@
+---
+title:'Quickstart'
+---
+
+import { Tab, Tabs, Callout } from 'nextra-theme-docs';
+
+# Quickstart
+
+This guide will help you to quickly get started with using our Javascript SDK in your project. 
+
+## Installation
+
+You can install the Huddle01 Vanilla JS SDK packages in two ways:
+
+1. Using the script tag: Add the following code snippet to the head of your HTML. 
+
+    ```html
+    <script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js" />
+
+    <script type="module">
+	    // Initialize huddleClient
+	    const huddleClient = new HuddleClient({ projectId: "YOUR_PROJECT_ID" });
+    </script>
+    ```
+
+2. Using npm or any other package manager: Run the following command in your terminal to install the package:
+
+  <Tabs items={['npm', 'yarn']}>
+    <Tab>
+      ```bash 
+      npm install @huddle01/web-core
+        ```
+    </Tab>
+
+    <Tab>
+      ```bash
+      yarn add @huddle01/web-core
+      ```
+    </Tab>
+  </Tabs>
+
+## Using client to access Methods
+
+Once you initialise `huddleClient` you can access various methods such as `joinRoom` and other methods. 
+
+```html 
+<script>
+// Joining room
+huddleClient.joinRoom({
+	roomId: "YOUR_ROOM_ID",
+	token: "YOUR_ACCESS_TOKEN"
+});
+
+// Listening to room joined event
+huddleClient.room.on(eventName: "room-joined", () => {
+	console.log("Room Joined");
+}) 
+</script>
+```

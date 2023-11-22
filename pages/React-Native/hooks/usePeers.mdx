@@ -1,0 +1,112 @@
+---
+title: 'usePeers'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs'
+
+
+## usePeers(peerId?:string)
+
+<Callout>
+    if `peerId` is passed peerId and peers will be empty arrays
+  </Callout>
+
+
+The `peerId` is the unique identifier for the peer. The `mic` and `cam` are the `MediaStreamTrack` objects for the audio and video streams respectively.
+
+
+The `usePeers` hook can be used to access the audio and video streams for the peers and can be used in the following way to render the audio and video streams:
+
+
+<OptionTable
+  headers={['Name', "Type","Description"]}
+  options={[
+    [
+      'peerIds[]',
+      'Array<string>',
+      "array of the peerIds"
+    ],
+    [
+      'peers',
+      'Object',
+      "object contains mic,cam properties"
+    ],
+    ['error', "string","gives the error message"],
+  ]} 
+/>
+
+```jsx
+
+//Example Type
+
+interface IPeers {
+  [peerId: string]: {
+    peerId: string;
+    role: IRoleEnum;
+    mic: MediaStreamTrack;
+    cam: MediaStreamTrack;
+  };
+}
+
+// IRoleEnum: "host" | "moderator" | "speaker" | "listener" | "peer";
+
+```
+
+
+### Sample Code
+
+<details>
+  <summary>
+    Getting access to data related to peers
+  </summary>
+  JSX:
+  ```tsx
+  import {Text, View} from 'react-native';
+  import { usePeers } from '@huddle01/react-native/hooks';
+
+  export default function() {
+    const peers = usePeers();
+    
+    return <View><Text>{JSON.stringify(peers)}</Text></View>
+  }
+
+  ```
+  Output: (Example Output for 1 peer)
+  ```json
+  [
+    {
+      peerId: "sdksjdsjd",
+      mic: MediaStreamTrack,
+      cam: MediaStreamTrack
+    }
+  ]
+
+  ```
+</details>
+
+
+```jsx
+  import {Button, View} from 'react-native';
+  import { usePeers } from '@huddle01/react-native/hooks';
+  import {Video, Audio} from '@huddle01/react-native/components';
+ 
+  const App = () => {
+    const { peerIds } = usePeers();
+ 
+    return (
+      <View>
+        <View>
+          {peerIds.map(peerId => (
+              <Video key={peer.peerId} peerId={peer.peerId} debug />
+          ))}
+ 
+          {peerIds.map(peerId => (
+              <Audio key={peer.peerId} peerId={peer.peerId} debug />
+          ))}
+        </View>
+      </View>
+    );
+  };
+ 
+```

@@ -1,0 +1,67 @@
+---
+title: 'useLobby'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+
+
+## useLobby
+
+
+Acess the following methods & states `joinLobby()` `leaveLobby()` `isLoading` `isLobbyJoined` `error` .
+
+
+<OptionTable
+  headers={['Name', "Type","Description"]}
+  options={[
+    [
+      'joinLobby(roomId: string, accessToken: string)',
+      'Function',
+      'moves the user to a pre-room lobby where they can toggle with audio/video controls before joining a room'
+    ],
+    [
+      'leaveLobby()',
+      'Function',
+      'removes the user from the lobby back to the initialized state'
+    ],
+    ['isLoading', "boolean","loading state"],
+    ['isLobbyJoined', "boolean","state for whether the user has joined the lobby"],
+    ['previewPeers', "Object","list of peers present in the room"],
+    ['error', "string","gives the error message"],
+  ]}
+/>
+
+
+### Sample Code
+
+```jsx
+
+  import { useLobby } from '@huddle01/react/hooks';
+  
+  const App = () => {
+    const { joinLobby,leaveLobby, isLoading, isLobbyJoined, previewPeers, error } = useLobby();
+
+    if(isLoading) return (<div>...loading</div>)
+  
+    return (
+      <div>
+        <button 
+          disabled={!joinLobby.isCallable} 
+          onClick={() => joinLobby('YOUR_ROOM_ID');
+        }>
+          Join Lobby
+        </button>
+
+        {isLobbyJoined ? "lobby": error} 
+
+        <div>PreviewPeers: {JSON.stringify(previewPeers)}</div>
+
+        <button disabled={!leaveRoom.isCallable} onClick={leaveRoom}>
+          LEAVE_LOBBY 
+        </button>
+      </div>
+    );
+  };
+
+
+```

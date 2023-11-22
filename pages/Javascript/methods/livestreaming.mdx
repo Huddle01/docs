@@ -1,0 +1,55 @@
+---
+title: 'Livestreaming'
+---
+
+## Livestream
+
+START_STREAMING `(streamPayload: TLivestreamData)`
+
+Starts live-streaming the web app on the given sourceUrl
+
+```jsx
+const LivstreamData:TLivestreamData = {
+	sourceUrl: "https://yourapp.com",
+	data: {
+		title: "My Livestream",
+		desc: "This is my first Livestream"
+	}
+}
+ 
+huddleClient.startStreaming(LivstreamData);
+```
+
+STOP_STREAMING
+
+Stops the live-stream on the web app
+
+```jsx
+huddleClient.stopStreaming();
+```
+
+### Sample Code
+
+
+```html
+<script>
+	const LivstreamData:TLivestreamData = {
+		sourceUrl: "https://yourapp.com",
+		data: {
+			title: "My Livestream",
+			desc: "This is my first Livestream"
+		}
+	}
+
+	huddleClient.initialize("YOUR_PROJECT_ID") 
+	document.getElementById('startStreaming').onclick = () => {
+		huddleClient.startStreaming(LivstreamData);
+	};
+
+	document.getElementById('stopStreaming').onclick = () => {
+		huddleClient.stopStreaming();
+	};
+</script>
+
+```
+

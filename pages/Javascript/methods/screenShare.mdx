@@ -1,0 +1,49 @@
+---
+title: 'ScreenShare'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs'
+
+## ScreenShare
+
+<OptionTable
+  headers={['Name', "Type"]}
+  options={[
+    [
+      'fetchScreenShare()',
+      'Function',
+      "Fetches screen share stream from user’s display"
+    ],
+    ['stopScreenShare()', 'Function',"Disables screen share stream"],
+    [
+      'produceScreenShare(screenShareStream: MediaStream, peerIds?: string[])',
+      'Function',
+      "Starts sharing user’s screen with other peers in the room"
+    ],
+    ['stopProducingScreenShare()', 'Function',"Stops sharing user’s screen with other peers in the room"]
+  ]} 
+/>
+
+
+### Example
+
+```html
+
+<script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js"></script>
+
+<body>
+
+    <button id="fetchScreenShare">Fetch Screen Share</button>
+
+</body>
+
+<script>
+
+document.getElementById('fetchScreenShare').addEventListener('click', async () => {
+    await huddleClient.fetchScreenShare();
+});
+
+</script>
+
+```

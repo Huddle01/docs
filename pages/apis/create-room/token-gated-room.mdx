@@ -1,0 +1,212 @@
+---
+title: 'Token Gated Room API'
+---
+
+import TokenGated from '@components/ApiRef/TokenGated';
+import TokenGatedResponse from '@components/ApiRef/TokenGatedResponse';
+import RequestStrip from '@components/ApiRequest/RequestStrip';
+import {
+  APIRequestCard,
+  APIRequestContent,
+  APIResponseCard,
+} from '@components/common/ApiCard/ApiCard';
+import { Button } from '@components/common/Button/Button';
+import HighLight from '@components/common/HighLight';
+import Paragraph from '@components/common/Paragraph';
+import Pill from '@components/common/Pill/Pill';
+import { Callout } from 'nextra-theme-docs';
+
+
+
+## **Create Token Gated Room API**
+
+The Huddle01 API provides the ability to create rooms for hosting various communication experiences.
+In order to use the API, you will need to obtain an API key by connecting to your wallet.
+
+## **Endpoint**
+<div className="flex justify-between md:flex-row flex-col">
+  <HighLight className="my-3 md:w-3/4 w-full">
+    <RequestStrip
+      method={'POST'}
+      url={'https://api.huddle01.com/api/v1'}
+      endpoint={'create-room'}
+    />
+  </HighLight>
+  <Button
+    variant="primary"
+    url="/api-keys"
+    text="Get your API Key"
+    isRouting
+    className=" my-2 w-auto px-8"
+  />
+</div>
+
+<Paragraph className="mt-5">
+  The Token Gated Room is a feature that allows you to create a room where access is restricted based on the type and value of a token. This means that only those who possess the required token can enter the room
+By implementing Token Gated Rooms, you can ensure that only the intended participants are granted access to the room, maintaining the privacy and exclusivity of the event.
+
+So, if you're looking for a secure and exclusive way to host your events, try out the Token Gated Room feature and experience the benefits of controlled access.
+
+</Paragraph>
+
+
+<div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-10  md:h-[28rem]">
+<div>
+<div className="flex items-center gap-4">
+<Pill >POST</Pill>
+<div className="text-sm font-normal text-slate-50">`/createroom`</div>
+
+</div>
+
+<div className="mt-7 font-mono text-2xl font-bold text-[#f1f5f9]">
+  Token Gated Api
+</div>
+
+The API supports a **POST** request with the following required parameters:
+
+- **`title`** - The title of the room.
+- **`tokenType`** - The type of token to be used for the room.	.
+- **`chain`** - The chain the token is on.	 .
+- **`contractAddress `** - The contract address of the token.	.
+
+</div>
+
+<APIRequestCard
+    requestType = "POST"
+    route="/create-room"
+    
+  >
+    <APIRequestContent value="cUrl">
+      ```bash
+        curl --location --request POST 'https://api.huddle01.com/api/v1/create-room' \
+        --header 'x-api-key: {{API_KEY}}' \
+        --header 'Content-Type: application/json' \
+        --data '{
+              "title": "Test Meeting",
+              "tokenType": "ERC1155",
+              "chain": "POLYGON",
+              "contractAddress": ["0xADC327CC02d3230af723C47eCd91a73F600d7E3A"]
+          }'
+      ```
+    </APIRequestContent>
+    
+    <APIRequestContent value="fetch">
+      ```js
+        const  response = await fetch("https://api.huddle01.com/api/v1/create-room", {
+          method: "POST",
+          {
+            "title": "Test Meeting",
+            "tokenType": "ERC1155",
+            "chain": "POLYGON",
+            "contractAddress": ["0xADC327CC02d3230af723C47eCd91a73F600d7E3A"]
+          },
+          headers: {
+              "Content-type": "application/json",
+              'x-api-key': {{API_KEY}},
+          },
+        }
+    )
+      ```
+    </APIRequestContent>
+    <APIRequestContent value="axios">
+      ```js
+      const response = await axios.post(
+        'https://api.huddle01.com/api/v1/create-room',
+        {
+            "title": "Test Meeting",
+            "tokenType": "ERC1155",
+            "chain": "POLYGON",
+            "contractAddress": ["0xADC327CC02d3230af723C47eCd91a73F600d7E3A"]
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': {{API_KEY}},
+          },
+        }
+    );
+      ```
+    </APIRequestContent>
+  </APIRequestCard>
+
+
+</div>
+
+
+<div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-10">
+<div className="text-start ">
+
+<div className="font-mono text-2xl font-bold text-[#f1f5f9]">Response</div>
+
+Upon success, the API will return a response with the following fields:
+
+- **`message`** - The message returned from the server.	.
+- **`roomId`** - The room ID of the newly created room.
+
+In case of an error, the API will return an error message with a corresponding status code.
+
+</div>
+
+
+<APIResponseCard>
+  <APIRequestContent value="Success">
+```jsx
+{
+    "message": "Meeting Created Successfully",
+    "data": {
+        "roomId": "tyt-eyoq-zwq",
+    }
+}
+````
+
+</APIRequestContent>
+
+<APIRequestContent value="Error">
+
+```jsx
+{
+    "message": "Input validation failed",
+    "code": "BAD_REQUEST",
+    "issues": [
+        {
+            "code": "invalid_type",
+            "expected": "string",
+            "received": "number",
+            "path": [
+                "title"
+            ],
+            "message": "Expected string, received number"
+        }
+    ]
+}
+```
+
+</APIRequestContent>
+  </APIResponseCard>
+
+</div>
+
+<div className = 'flex flex-col item-center gap-3 w-full'>
+
+### **Request**
+
+
+<TokenGated />
+
+
+
+
+
+<Callout>
+ 
+ **NOTE:** If using `ERC1155` as the token type, you need to pass `conditionValue` with the `tokenId`.
+
+</Callout>
+
+### **Response**
+
+<TokenGatedResponse />
+
+
+</div>
+

@@ -1,0 +1,166 @@
+---
+title: 'Walkthrough'
+---
+
+import { Callout, Steps, Tab, Tabs } from 'nextra-theme-docs';
+
+# Building a Vanilla App with Huddle01
+
+## Walkthrough
+
+The following guide explains how you can integrate audio/video into your application seamlessly using the Huddle01 vanilla JS SDK.
+
+<Steps>
+### Add the following code snippet to the head of your HTML file: Replace with our CDN
+
+To power your Vanilla App with audio/video communication using Huddle01.
+
+```js filename="app.js" 
+<script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js" />
+```
+
+
+### Initialization of project
+
+Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials: 
+
+- `API Key`
+- `projectId`
+
+Once done, initialize your project by calling the `initialize()` method and pass `projectId`  in params.
+
+```js filename="app.js" highlight={6}
+<script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js" / >
+ 
+<script type="module">
+  huddleClient.initialize("YOUR_PROJECT_ID")
+</script>
+```
+
+### Joining the lobby
+Once the client has been initialized,
+
+Room Id can be generated using the : [Create Room API](/apis/create-room/create-room)
+
+
+Add the following button to your jsx and call the `joinLobby()` method.
+
+```js filename="app.js" highlight={4-6}
+<script type="module">
+  huddleClient.initialize("YOUR_PROJECT_ID")
+
+  document.getElementById('joinLobby').onclick = () => {
+    huddleClient.joinLobby('YOUR_ROOM_ID');
+  };
+</script>
+```
+
+### Enabling and Disabling Media Devices
+  <Callout emoji="⚠️">
+    If cam and mic aren't enabled in the lobby, video and audio won't be shareable inside the room 
+  </Callout>
+  <Callout emoji="⚠️">
+    These methods are to be called only when in lobby state.
+  </Callout>
+
+  Then, add the locale codes to your file extensions (required for the default locale too):
+
+
+
+```js filename="app.js" highlight={8-14}
+<script type="module">
+  huddleClient.initialize("YOUR_PROJECT_ID")
+
+  document.getElementById('joinLobby').onclick = () => {
+    huddleClient.joinLobby('YOUR_ROOM_ID');
+  };
+
+  document.getElementById('enableMic').onclick = () => {
+    huddleClient.enableMic();
+  };
+
+  document.getElementById('enableCam').onclick = () => {
+    huddleClient.enableCam();
+  };
+</script>
+```
+
+### Joining and leaving the room
+
+The joinRoom() method can be called to enter the room, once the lobby has been joined. To leave that respective room you can call the leaveRoom() method in the ROOM state.
+
+```js filename="app.js" highlight={16-22}
+<script type="module">
+  huddleClient.initialize("YOUR_PROJECT_ID")
+
+  document.getElementById('joinLobby').onclick = () => {
+    huddleClient.joinLobby('YOUR_ROOM_ID');
+  };
+
+  document.getElementById('enableMic').onclick = () => {
+    huddleClient.enableMic();
+  };
+
+  document.getElementById('enableCam').onclick = () => {
+    huddleClient.enableCam();
+  };
+
+  document.getElementById('joinRoom').onclick = () => {
+    huddleClient.joinRoom();
+  };
+
+  document.getElementById('leaveRoom').onclick = () => {
+    huddleClient.leaveRoom();
+  };
+</script>
+```
+<Callout type="info">
+Clicking on the **JOIN_ROOM** button, will make the user join the room and will allow them to send/receive media with other participants.
+</Callout>
+
+
+### Sending media across to other participants
+Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
+
+
+```js filename="app.js" highlight={25-31}
+<script type="module">
+
+  huddleClient.initialize("YOUR_PROJECT_ID");
+
+  document.getElementById('joinLobby').onclick = () => {
+    huddleClient.joinLobby('YOUR_ROOM_ID');
+  };
+
+  document.getElementById('joinRoom').onclick = () => {
+    huddleClient.joinRoom();
+  };
+
+  document.getElementById('leaveRoom').onclick = () => {
+    huddleClient.leaveRoom();
+  };
+
+  document.getElementById('enableMic').onclick = () => {
+    huddleClient.enableMic();
+  };
+
+  document.getElementById('enableCam').onclick = () => {
+    huddleClient.enableCam();
+  };
+
+  document.getElementById('produceMic').onclick = () => {
+    huddleClient.produceMic();
+  };
+
+  document.getElementById('produceCam').onclick = () => {
+    huddleClient.produceCam();
+  };
+</script>
+```
+
+
+### You're all set! Happy Hacking! 🎉
+
+For more information, please refer to the [SDK Reference](/Javascript).
+
+</Steps>

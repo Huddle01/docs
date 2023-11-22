@@ -1,0 +1,51 @@
+---
+title: 'Audio'
+---
+
+import  { Callout } from "nextra-theme-docs"
+import OptionTable from '@components/common/Table/OptionTable';
+
+## Audio
+
+<OptionTable
+  headers={['Name', "Type","Description"]}
+  options={[
+    [
+      'fetchAudioStream(deviceId?: string)',
+      'Function',
+      "Enables audio stream from user’s device mic(lobby)"
+    ],
+    ['stopAudioStream()', 'Function',"Disables audio stream from user’s device mic(lobby)"],
+    [
+      'produceAudio(micStream: MediaStream, peerIds?: string[])',
+      'Function',
+      "Starts sharing user’s audio stream with other peers in the room"
+    ],
+    ['stopProducingAudio()', 'Function',"Stops sharing user’s audio stream with other peers in the room"],
+    ['enumerateDevices()', 'Function', "Returns the list of audio devices"],
+    ['createSingleConsumer(peerId: string, "mic")', 'Function', "Starts consuming audio stream for given peerId"],
+    ['closeSingleConsumer(peerId: string, "mic")', 'Function', "Stops consuming audio stream for given peerId"],
+  ]} 
+/>
+
+## Example 
+
+```html
+
+<script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js"></script>
+
+<body>
+
+    <button id="fetchAudioStream">Fetch Audio Stream</button>
+
+</body>
+
+<script> 
+
+document.getElementById("fetchAudioStream").addEventListener("click", async () => {
+  await huddleClient.fetchAudioStream();
+});
+
+</script>
+
+```

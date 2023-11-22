@@ -1,0 +1,119 @@
+---
+title: 'Metaverse'
+---
+
+import { Callout, Steps, Tab, Tabs } from 'nextra-theme-docs';
+
+# Using Huddle01 in Metaverse 
+
+## Walkthrough
+
+The following guide provides step-by-step instructions on utilizing Huddle01 for selective stream production and consumption, enabling you to leverage it within your metaverse application. 
+Selective stream production allows you to choose specific peers to whom you want to send your stream, while selective stream consumption enables you to choose which peers’ streams you want to receive.
+By following this guide, you’ll gain a clear understanding of how to leverage Huddle01's capabilities for tailored stream management within your metaverse environment.
+
+<Steps>
+
+### Developing an Audio/Video application using Huddle01
+
+To selectively product or consume using Huddle01 SDK, you need first need to setup an audio/video application.
+
+Walkthroughs for setting up an audio/video application using Huddle01 SDK can be found here: <br />
+[React App](/React/walkthrough)<br />
+[Vanilla JS Application](/Javascript/walkthrough)
+
+Once you have setup your audio/video application, you can now use Huddle01 SDK to selectively consume and produce.
+
+### Selectively produce 
+
+Create a useStates for set of selectedCamPeers and selectedMicPeers. These are the peers you want to produce your stream to.
+
+```js
+const [selectedMicPeers, updateSelectedMicPeers] = useState<Set<String>>(
+  new Set()
+);
+
+const [selectedCamPeers, updateSelectedCamPeers] = useState<Set<String>>(
+  new Set()
+);
+```
+
+Now, you can use this state to selectively produce your stream to the selected peers. 
+You can use the below functions to add or remove peerId from the set of selectedCamPeers and selectedMicPeers.
+
+```js
+const handleMicPeerSelection = (peerId: string) => {
+  if (selectedMicPeers.has(peerId)) {
+    selectedMicPeers.delete(peerId);
+  } else {
+    selectedMicPeers.add(peerId);
+  }
+  updateSelectedMicPeers(new Set(selectedMicPeers));
+};
+
+const handleCamPeerSelection = (peerId: string) => {
+  if (selectedCamPeers.has(peerId)) {
+    selectedCamPeers.delete(peerId);
+  } else {
+    selectedCamPeers.add(peerId);
+  }
+  updateSelectedCamPeers(new Set(selectedCamPeers));
+};
+```
+
+You have to update selectedMicPeers and selectedCamPeers before calling produceAudio and produceVideo respectively, 
+otherwise selectively producing won't work because you need to pass selectedMicPeers/selectedCamPeers while producing audio/video. 
+
+<Callout>
+Make sure you have imported produceAudio and produceAudio from useAudio and useVideo hook respectively.
+</Callout>
+
+```js
+// Produce audio
+produceAudio(micStream, Array.from(selectedMicPeers) as string[]);
+
+// Produce video
+produceVideo(camStream, Array.from(selectedCamPeers) as string[]);
+```
+
+
+### Selectively consume
+
+You need to import required methods to enable/disable streams for selected peers. 
+
+```js
+const { createMicConsumer, closeMicConsumer } = useAudio();
+const { createCamConsumer, closeCamConsumer } = useVideo();
+```
+
+Now, using above imported methods you can selectively consume streams by just passing peerId.
+
+```js
+// Enable mic stream for selected peer
+createMicConsumer(peerId);
+
+// Disable mic stream for selected peer
+closeMicConsumer(peerId);
+
+// Enable cam stream for selected peer
+createCamConsumer(peerId);
+
+// Disable cam stream for selected peer
+closeCamConsumer(peerId);
+```
+
+### Demo of Selectively produce and consume
+
+You can check the demo app [here](https://selective-consuming-huddle01.vercel.app/) to see how selectively produce and consume look like. 
+Additionally, you can find corresponding GitHub repository [here](https://github.com/Huddle01/selective-consuming-example). 
+
+<video
+  src="/docs/videos/selective-producing-consuming.mp4"
+  muted
+  controls
+  className="my-8 rounded-lg"
+  width="100%"
+  height="100%"
+/>
+
+</Steps>

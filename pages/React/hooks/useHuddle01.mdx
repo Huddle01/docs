@@ -1,0 +1,69 @@
+---
+title: 'useHuddle01'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import {Callout} from "nextra-theme-docs"
+
+## useHuddle01
+
+Once done, initialize your project by calling the `initialize()` method and pass `projectId` in params.
+
+<Callout type="info">
+This method should be invoked first at all times
+</Callout>
+
+<OptionTable
+  headers={['Name', "Type","Description"]}
+  options={[
+    [
+      'initialize(projectId: string)',
+      'Function',
+      "initializes and sets up the app state required by the library. "
+    ],
+    ['isInitialized', "boolean","state for whether the app is initialized"],
+    [
+      "me", 
+      "object",
+      "Contains current user's `role`, `displayName`, `meId`, and `avatarUrl`."
+    ],
+    [
+      "roomState",
+      "`IDLE` | `INIT` | `LOBBY` | `ROOM`",
+      "States the current state of the room"
+    ]
+  ]}
+/>
+
+
+
+### Sample Code
+
+```jsx
+
+import { useHuddle01 } from '@huddle01/react/hooks';
+import Image from 'next/image';
+ 
+const App = () => {
+  const { initialize, isInitialized, me, roomState } = useHuddle01();
+ 
+  useEffect(() => {
+    // its preferable to use env vars to store projectId
+    initialize('YOUR_PROJECT_ID');
+  }, []);
+ 
+  return (
+    <div>
+      {isInitialized ? 'Hello World!' : 'Please initialize'}
+      <div>Room State: {roomState}</div>
+      <Image src={me.avatarUrl} alt="avatar" width={50} height={50} />
+      <div>DisplayName: {me.displayName}</div>
+      <div>Role: {me.role}</div>
+      <div>Peer ID: {me.meId}</div>
+    </div>
+  );
+};
+
+```
+
+

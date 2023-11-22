@@ -1,0 +1,79 @@
+---
+title: 'useRoom'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+
+
+## useRoom
+
+Acess the following methods & states `joinRoom()`, `leaveRoom()`, `isLoading`, `isLobbyJoined`, `error`, `lobbyPeers` .
+
+<OptionTable
+  headers={['Name', "Type","Description"]}
+  options={[
+    [
+      'joinRoom()',
+      'Function',
+      "moves user from lobby to actual room with other peers"
+    ],
+    [
+      'leaveRoom()',
+      'Function',
+      "removes user from room, back to the lobby"
+    ],
+    ['isLoading', "boolean","loading state"],
+    ['isRoomJoined', "boolean","state whether the room is joined or not"],
+
+    ['error', "string","gives the error message"],
+    ['roomId', "string", "gives the current joined room id"],
+    [
+      'endRoom()',
+      'Function',
+      "Ends the room for all, only `host` has the ability to call this function"
+    ],
+    [
+      'lobbyPeers',
+      'Object',
+      "gives the list of peers waiting in the lobby to join the room"
+    ]
+  ]}
+/>
+
+
+
+### Sample Code
+
+
+```jsx
+
+  import { useRoom } from '@huddle01/react/hooks';
+ 
+  const App = () => {
+    const { joinRoom, leaveRoom, isLoading, isRoomJoined, lobbyPeers, error, endRoom } = useRoom();
+
+    if(isLoading) return (<div>...loading</div>)
+  
+    return (
+      <div> 
+        <button disabled={!joinRoom.isCallable} onClick={joinRoom}>
+          JOIN_ROOM 
+        </button>
+
+        {isRoomJoined ? "room joined": error} 
+
+        <div>lobbyPeers: {JSON.stringify(lobbyPeers)}</div>
+ 
+        <button disabled={!leaveRoom.isCallable} onClick={leaveRoom}>
+          LEAVE_ROOM 
+        </button>
+
+        <button disabled={!endRoom.isCallable} onClick={endRoom}>
+          END_ROOM 
+        </button>
+      </div>
+    );
+  };
+ 
+```
+

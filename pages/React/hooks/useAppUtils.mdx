@@ -1,0 +1,85 @@
+---
+title: 'useAppUtils'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs'
+
+## useAppUtils
+
+useAppUtils hook allows you to set `displayName`, `avatarUrl` and `sendData`. 
+
+<Callout type='info'>
+    You can import `useAppUtils` hook from `@huddle01/react/app-utils`
+</Callout>
+
+ <OptionTable 
+    headers={['Name', 'Type']}
+    options={[
+        [
+            'setDisplayName(displayName: string)',
+            'Function',
+            'Set the display name of the current user'
+        ],
+        [
+            'changeAvatarUrl(avatarUrl: string)', 
+            'Function',
+            'Set the avatar url of the current user'
+        ],
+        [
+            'sendData(peerIds: [] | "*", data: unknown)', 
+            'Function',
+            "Send data to the specified peerIds or all peers if '*' is passed as peerIds"
+        ],
+        [
+            'error',
+            'string',
+            "Error message occurs while using any function of useAppUtils hook"
+        ],
+        [
+            "displayName",
+            "string",
+            "Display name of the current user"
+        ]
+    ]}
+/>
+
+## Example
+
+```js
+import { useEffect } from "react";
+import { useAppUtils } from "@huddle01/react/app-utils";
+
+const App = () => {
+
+useEffect(() => {
+    if(changeAvatarUrl.isCallable) {
+        changeAvatarUrl("YOUR AVATAR URL")
+    }
+}, [changeAvatarUrl.isCallable]);
+
+useEffect(() => {
+    if(setDisplayName.isCallable) {
+        setDisplayName("YOUR DISPLAY NAME")
+    }
+}, [setDisplayName.isCallable]);
+
+const sendDataToAllPeers = () => {
+    sendData("*", { message: "Hello World" })
+};
+
+const sendDataToSpecificPeer = () => {
+    sendData(["PEER_ID"], { message: "Hello World" })
+};
+
+return (
+    <div>
+        <button onClick={sendDataToAllPeers}> Send data to all peers </button>
+        <button onClick={sendDataToSpecificPeer}> Send data to specific peer </button>
+    </div>
+)
+};
+
+export default App;
+
+```

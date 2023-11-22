@@ -1,0 +1,64 @@
+---
+title: 'Audio'
+---
+
+import  { Callout } from "nextra-theme-docs"
+import OptionTable from '@components/common/Table/OptionTable';
+
+## Audio
+
+<OptionTable
+  headers={['Name', "Type","Description"]}
+  options={[
+    [
+      'fetchAudioStream(deviceId?: string)',
+      'Function',
+      "Enables audio stream from user’s device mic(lobby)"
+    ],
+    ['stopAudioStream()', 'Function',"Disables audio stream from user’s device mic(lobby)"],
+    [
+      'produceAudio(micStream: MediaStream, peerIds?: string[])',
+      'Function',
+      "Starts sharing user’s audio stream with other peers in the room"
+    ],
+    ['stopProducingAudio()', 'Function',"Stops sharing user’s audio stream with other peers in the room"],
+    ['enumerateDevices()', 'Function', "Returns the list of audio devices"],
+    ['createSingleConsumer(peerId: string, "mic")', 'Function', "Starts consuming audio stream for given peerId"],
+    ['closeSingleConsumer(peerId: string, "mic")', 'Function', "Stops consuming audio stream for given peerId"],
+  ]} 
+/>
+
+## Example 
+
+```dart filename="meeting_screen.dart" highlight={2,22} showLineNumbers
+import 'package:flutter/material.dart';
+import 'package:huddle01_flutter_client/huddle_client.dart';
+
+
+class MeetingScreen extends StatefulWidget {
+  ...
+}
+
+class _MeetingScreenState extends State<MeetingScreen> {
+  late HuddleClient huddleClient;
+
+  @override
+  void initState() {
+    ...
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children:[
+        ElevatedButton(
+          onPressed:(){
+            huddleClient.fetchAudioStream();
+          },
+          child: const Text("Fetch Audio Stream"),
+        )
+      ]
+    );
+  }
+}
+```

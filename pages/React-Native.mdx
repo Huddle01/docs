@@ -1,0 +1,38 @@
+---
+title: 'React Native'
+---
+
+import { ReactNativeData } from '@components/assets/Data/data';
+import GradientCard from '@components/common/GradientCard/GradientCard';
+import { Callout, Tab, Tabs } from 'nextra-theme-docs';
+
+# React Native SDK
+
+Huddle01 React Native SDK lets you incorporate video and audio calls, screen sharing, chat functionality, and much more, all while providing a seamless and user-friendly experience to your users. Our SDK is designed to be easy to use and implement, allowing you to quickly build high-quality, reliable communication experiences for your mobile app users.
+
+<div className="my-16 xl:max-w-none">
+  <div className="not-prose mt-4 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
+    {ReactNativeData.map(resource => (
+      <GradientCard key={resource.href} resource={resource} />
+    ))}
+  </div>
+</div>
+
+## Pre Requisites
+
+Before using the Huddle01 React Native SDK, you must have Node.js installed on your machine. You can install Node.js using one of the following methods:
+
+- Install Node.js with NVM by following the instructions on this **[GitHub page](https://github.com/nvm-sh/nvm)**
+- Install Node.js with FNM by following the instructions on this **[GitHub page](https://github.com/Schniz/fnm)**
+- Download Node.js from the official **[website](https://nodejs.org/)**
+
+<Callout>
+💡 Pro Tip: Use NVM or FNM to install Node.js as they help in version management and easy updation
+
+</Callout>
+
+After installing Node.js, verify it's installed by running the following command in your terminal:
+
+```bash
+node --version
+```

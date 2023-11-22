@@ -1,0 +1,187 @@
+---
+title: 'Audio Spaces'
+---
+
+import { Callout, Steps, Tab, Tabs } from 'nextra-theme-docs';
+
+import Image from 'next/image';
+
+# Building Audio Spaces 
+
+## Walkthrough
+
+This guide provides step-by-step instructions on utilizing the [Audio Spaces Example App](https://github.com/Huddle01/Audio-spaces-example-app) and outlines the process of building audio spaces using the Huddle01 SDK.
+
+
+<Steps>
+### Getting Sample app ready
+
+Follow the below steps to clone the sample app and get it ready to run on your local machine.
+
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/Huddle01/Audio-spaces-example-app
+```
+
+**2. Install dependencies**
+
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+  <Tab>
+    ```bash 
+    pnpm i  
+    ```
+  </Tab>
+  <Tab>
+    ```bash 
+    npm i  
+    ```
+  </Tab>
+  <Tab>
+    ```bash 
+    yarn
+    ```
+  </Tab>
+</Tabs>
+
+**3. Create a `.env` file in the root directory of the project and add the following environment variables**
+
+Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials: 
+- `API Key`
+- `projectId`
+
+```bash
+NEXT_PUBLIC_API_KEY=YOUR_API_KEY
+
+NEXT_PUBLIC_PROJECT_ID=YOUR_PROJECT_ID
+```
+
+**4. Run the app**
+
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+  <Tab>
+    ```bash 
+    pnpm run dev 
+    ```
+  </Tab>
+  <Tab>
+    ```bash 
+    npm run dev 
+    ```
+  </Tab>
+  <Tab>
+    ```bash 
+    yarn run dev 
+    ```
+  </Tab>
+</Tabs>
+
+### Joining an Audio Space 
+Once you run the web app on localhost, you will see the lobby screen.
+<br/>
+<Image 
+  src="/docs/images/audio-spaces/lobby.png"
+  alt="Home Page"
+  width={1000}
+  height={500}
+  quality={100}
+/>
+
+In the example app, we have designed a UI that closely resembles Huddle01 Audio Spaces. 
+Now, you no longer need to concern yourself with building the UI from scratch. 
+Instead, you can effortlessly utilize the components from our Audio Spaces example app and customize them according to your requirements. 
+Our [example app](https://github.com/Huddle01/Audio-spaces-example-app) offers everything, from Grid layout to Peer list components.
+
+You can filter out peers based on their roles and you can use `usePeers` hook to get the peers in the room.
+
+```js
+import { usePeers } from "@huddle01/react/app-utils";
+
+const { peers } = usePeers();
+
+const App () => {
+  return (
+    <div> 
+      {Object.values(peers).filter(({role}) => role === "host").map((peer) => (
+        <div key={peer.peerId}>
+          {/* Your UI */}
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+### Managing Roles in Audio Spaces
+<br/>
+<Image 
+  src="/docs/images/audio-spaces/roles.png"
+  alt="Home Page"
+  width={1000}
+  height={500}
+  quality={100}
+/>
+
+There are 4 roles in the audio space:
+
+1. **Host**: By default, anyone who joins the room first will be assigned as a host. The host has the ability to manage the room and assign peers’ roles such as `coHost`, `speaker`, or `listener`.
+
+2. **Co-Host**: The co-host possesses almost full control over the room, similar to the host, with the exception of not being able to change a peer’s role to `coHost`. 
+Co-hosts can assign the roles of speaker or listener to other participants.
+
+3. **Speaker**: Speakers have the capability to actively participate and speak in the room.
+
+4. **Listener**: Listeners can only listen in the room and have the ability to send reactions.
+
+Now, once you have understood the roles in the room, you can use `changePeerRole` method from `useAcl` hook where you just need to pass the `peerId` and `role` to change the peer's role. 
+Please make sure that you follow the role hierarchy as mentioned above while changing the peer's role.
+
+```js
+import { useAcl } from "@huddle01/react/hooks";
+
+const { changePeerRole, changeRoomControls } = useAcl();
+
+// changePeerRole supports 4 roles: host, coHost, speaker and listener
+const changeRole = (peerId, role) => {
+  // Make sure that you call this method only when you are a host. 
+  changePeerRole(peerId, "host");
+};
+
+const muteEveryone = () => {
+  changeRoomControls("muteEveryone", true);
+};
+```
+### Send reactions, speaker request and raise hands in Audio Spaces
+
+You can send reactions and raise hands in the room using `sendData()` method from `useAppUtils` hook. 
+You can pass an emoji in data and send it to all peers in the room, and you can listen it using `room:data-received` event. 
+Similarly, you can send speaker request to host using `sendData()` method and listen it using `room:data-received` event.
+
+```js 
+import { useAppUtils, usePeers } from "@huddle01/react/app-utils";
+import { useEventListener } from "@huddle01/react/hooks";
+
+const { sendData } = useAppUtils();
+const { peers } = usePeers();
+
+useEventListener("room:data-received", (data) => {
+  console.log(data);
+});
+
+const sendReaction = (emoji) => {
+  // Here "*" represents all peers in the room
+  sendData("*", {emoji: emoji });
+};
+
+const sendSpeakerRequest = () => {
+  // Get the host peerId from peers object
+  const peerIds = Object.values(peers).filter(({role}) => role === "host" || role === "coHost")
+  .map(({peerId}) => peerId);
+  // Send speaker request to host using the host peerIds
+  sendData(peerIds, {speakerRequest: true });
+};
+```
+
+This will make you audio space more interactive and engaging.
+
+</Steps>

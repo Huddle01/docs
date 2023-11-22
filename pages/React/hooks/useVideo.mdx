@@ -1,0 +1,66 @@
+---
+title: 'useVideo'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs'
+
+## useVideo
+
+<Callout>
+    `produceVideo()` method takes list of peerId as an optional argument, by default it will produce video for all peers. 
+</Callout> 
+
+These are the fields which are returned from **`useVideo`** hook.
+
+<OptionTable
+  headers={['Name', "Type"]}
+  options={[
+    [
+      'fetchVideoStream()',
+      'Function',
+      "Enables video stream from user’s device mic(lobby)"
+    ],
+    ['stopVideoStream()', 'Function',"Disables video stream from user’s device mic(lobby)"],
+    [
+      'produceVideo(camStream: MediaStream, peerIds?: string[])',
+      'Function',
+      "Starts sharing user’s webcam video stream with other peers in the room"
+    ],
+    ['stopProducingVideo()', 'Function',"Stops sharing user’s webcam video stream with other peers in the room"],
+    ['enumerateDevices()', 'Function', "Returns the list of video devices"],
+    ['createCamConsumer(peerId: string)', 'Function', "Starts consuming video stream of given peerId"],
+    ['closeCamConsumer(peerId: string)', 'Function', "Stops consuming video stream of given peerId"],
+    ['isLoading', 'boolean',"loading state"],
+    ['isProducing','boolean',"state whether the video is producing or not"],
+    ['stream', "MediaStream","video stream"],
+    ['error', "string","gives the error message"],
+  ]} 
+/>
+
+
+
+### Sample Code
+
+
+```jsx
+
+import { useVideo } from '@huddle01/react/hooks';
+ 
+const App = () => {
+  const { fetchVideoStream, stopVideoStream, isProducing, stream, error} = useVideo();
+
+  return (
+    <div>
+      
+     {/* Mic */} 
+      <button disabled={!fetchVideoStream.isCallable} onClick={fetchVideoStream}>
+        FETCH_VIDEO_STREAM
+      </button>
+ 
+    </div>
+  );
+};
+ 
+
+```

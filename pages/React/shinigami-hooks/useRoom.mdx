@@ -1,0 +1,261 @@
+---
+title: 'useRoom'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import Pill from '@components/common/Pill/Pill';
+
+# useRoom
+
+The useRoom hook exposes primitives to interact with a Huddle01 room, like joining, leaving, closing the room.
+
+```tsx
+const {
+    room,
+    state,
+    joinRoom,
+    leaveRoom,
+    closeRoom,
+  } = useRoom({
+    onJoin(data) {},
+    onClose() {},
+    onLeave() {},
+  });
+```
+
+
+## Props
+The useRoom hook accepts an object with the following fields as props.
+
+{/* onJoin */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">1. onJoin</span>
+    <span className="ml-2">
+        <Pill>Optional</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when you successfully join a room.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      '{ room: Room }',
+      'Object containing data about the room.',
+      'Yes',
+    ],
+  ]}
+/>
+
+##### Example Usage
+
+```tsx
+const room = useRoom({ onJoin: (data) => {
+	console.log("Successfully joined the room!");
+	console.log(data.room);
+    // your code here
+}});
+```
+
+{/* onLeave */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">2. onLeave</span>
+    <span className="ml-2">
+        <Pill>Optional</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when you successfully leave a room.',
+      'void',
+    ],
+  ]}
+/>
+
+##### Example Usage
+
+```tsx
+const room = useRoom({ onLeave: () => {
+	console.log("Successfully left the room!");
+    // your code here
+}});
+```
+
+{/* onClose */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">3. onClose</span>
+    <span className="ml-2">
+        <Pill>Optional</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when the room has been closed.',
+      'void',
+    ],
+  ]}
+/>
+
+##### Example Usage
+
+```tsx
+const room = useRoom({ onClose: () => {
+	console.log("The room was closed!");
+    // your code here
+}});
+```
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when the room controls have been updated.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      'TNewRoomControls',
+      'Object containing the new room controls.',
+      'Yes',
+    ],
+  ]}
+/>
+
+##### Example Usage
+
+```tsx
+const room = useRoom({ onJoin: (data) => {
+	console.log("Room controls updated!");
+	console.log(data);
+    // your code here
+}});
+```
+
+## Returns
+The useRoom hook returns an object with the following fields.
+
+{/* room */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">1. room</span>
+    <span className="ml-2">
+        <Pill>Object</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'The currently joined room object.',
+      'Room',
+    ],
+  ]}
+/>
+
+{/* state */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">2. state</span>
+    <span className="ml-2">
+        <Pill>Object</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'The state of the currently joined room.',
+      'RoomStates',
+    ],
+  ]}
+/>
+
+{/* joinRoom */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">3. joinRoom</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Join the room.',
+      'Promise<Room>',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      '{ roomId: string; token: string }',
+      'Object containing the roomId to be joined and the user’s access token.',
+      'Yes',
+    ],
+  ]}
+/>
+
+{/* leaveRoom */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">4. leaveRoom</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Leave the room.',
+      'void',
+    ],
+  ]}
+/>
+
+{/* closeRoom */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">5. closeRoom</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Close the room.',
+      'void',
+    ],
+  ]}
+/>
+
+

@@ -1,0 +1,61 @@
+---
+title: 'Quickstart'
+---
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+## Quickstart
+
+### Installing the packages:
+
+To get started with the Huddle01 React SDK, you can install the package using npm or yarn:
+
+<Tabs items={['pnpm','npm', 'yarn']}>
+ <Tab>
+
+    ```bash
+    pnpm install @huddle01/react
+     ```
+     </Tab>
+
+  <Tab>
+    
+    ```bash 
+    npm install @huddle01/react
+     ```
+
+  </Tab>
+
+  <Tab>
+
+    ```bash
+    yarn add @huddle01/react
+     ```
+     </Tab>
+
+</Tabs>
+
+## Initializing the SDK:
+
+After installing the package, you can initialize the SDK by using the **`useHuddle01`** hook:
+
+```jsx
+import { useHuddle01 } from '@huddle01/react';
+
+function App() {
+  const { initialize } = useHuddle01();
+
+  initialize("YOUR_PROJECT_ID")
+}
+```
+
+### Example Video
+
+<video
+  src="/docs/videos/react.mp4"
+  muted
+  controls
+  className="my-8 rounded-lg"
+  width="100%"
+  height="100%"
+/>

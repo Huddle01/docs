@@ -1,0 +1,68 @@
+---
+title: 'useRecording'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+
+## useRecording
+
+useRecording hook allows you to use following methods & states.
+
+
+<OptionTable
+  headers={['Name', "Type","Description"]}
+  options={[
+    [
+      'startRecording()',
+      'Function',
+      "starts recording the web app on the given sourceUrl"
+    ],
+    [
+      'stoprecording()',
+      'Function',
+      "stops the recording on the web app"
+    ],
+    ['isStarting', 'boolean',"state whether the recording has started or not"],
+    ['inProgress', 'boolean',"state whether the recording is in progress"],
+    ['isStopping', 'boolean',"state whether the recording has stopped or not"],
+    ['data', 'data' ,"data of the recording"],
+    ['error', 'string',"gives the error message"],
+  ]} 
+/>
+
+
+### Sample code
+
+
+```jsx
+  import {Button, Text, View} from 'react-native';
+  import {useRecording} from '@huddle01/react-native/hooks';
+  
+  const App = () => {
+    const { startRecording, stoprecording, isStarting, inProgress isStopping, error } = useRecording();
+ 
+    if(inProgress) return (<View><Text>Loading...</Text></View>)
+  
+    return (
+      <View>
+         <View style={styles.button}>
+          <Button
+            title="START_RECORDING"
+            disabled={!startRecording.isCallable} 
+            onPress={startRecording}
+          />
+        </View>
+ 
+        {isStarting ? <Text>"live stream is starting"</Text>: error} 
+
+        <View style={styles.button}>
+          <Button
+            title="STOP_RECORDING"
+            disabled={!stopRecording.isCallable}
+            onPress={stopRecording}
+          />
+        </View>
+      </View>
+    );
+  };
+```

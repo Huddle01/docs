@@ -1,0 +1,20 @@
+---
+title: 'Apis'
+---
+
+import { ApisData } from '@components/assets/Data/data';
+import GradientCard from '@components/common/GradientCard/GradientCard';
+
+# Create Room APIs
+
+The Huddle01 SDK offers a comprehensive suite of Create Room APIs that allow for seamless real-time audio and video communication with minimal coding required.
+
+
+
+<div className="my-16 xl:max-w-none">
+  <div className="not-prose mt-4 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
+    {ApisData.map(resource => (
+      <GradientCard key={resource.href} resource={resource} />
+    ))}
+  </div>
+</div>

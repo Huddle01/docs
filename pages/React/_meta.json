@@ -1,0 +1,15 @@
+{
+  "quickstart": "Quickstart",
+  "Shinigami-Quickstart": "Shinigami-Quickstart",
+  "walkthrough": "Walkthrough",
+  "example": "Start from an example",
+  "hooks": "Hooks",
+  "shinigami-hooks": "Shinigami Hooks",
+  "events": {
+    "title": "Events",
+    "theme": {
+      "toc": false,
+      "layout": "full"
+    }
+  }
+}

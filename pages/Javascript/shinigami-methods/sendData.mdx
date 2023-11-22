@@ -1,0 +1,56 @@
+---
+title: 'Send Data'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+
+### Send Data 
+
+The `sendData` method allows the Local Peer to send data messages to other peers in the room. It is limited to 280 characters per message.
+
+**Parameters**
+
+<OptionTable
+    headers={['Name', 'Type', 'Description']}
+    options={[
+    [
+        'to',
+        'string[] or ""',
+        'An array of peer IDs or "" for all peers.'
+    ],
+    [
+        'payload',
+        'string',
+        'The data message to send (limited to 280 characters).'
+    ],
+    ]}
+/>
+
+**Events**
+
+<OptionTable
+    headers={['Name', 'Description', 'Returns']}
+    options={[
+    [
+        'data-message',
+        'Triggered when a data message is received.',
+        '{ peerId: string; label: string; message: string }'
+    ],
+    [
+        'receive-data',
+        'Triggered when data is received.',
+        'TDataMessage'
+    ],
+    ]}
+/>
+
+**Example**
+
+```js 
+// Send a message to specific peers
+huddleClient.localPeer.sendData({ to: ["peerID1", "peerID2"], payload: "Hello, everyone!" });
+
+// Sending message to all peers
+huddleClient.localPeer.sendData({ to: "*", payload: "Hello, everyone!" });
+```
+

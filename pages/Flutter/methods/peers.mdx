@@ -1,0 +1,105 @@
+---
+title: 'Peers Methods'
+---
+
+## Peers Methods
+
+
+### Get Peers
+In order to get access to the peers in a meeting room you can call the `getPeers()` method.
+
+
+```dart filename="meeting_screen.dart" highlight={2,22} showLineNumbers
+import 'package:flutter/material.dart';
+import 'package:huddle01_flutter_client/huddle_client.dart';
+
+
+class MeetingScreen extends StatefulWidget {
+  ...
+}
+
+class _MeetingScreenState extends State<MeetingScreen> {
+  late HuddleClient huddleClient;
+
+  @override
+  void initState() {
+    ...
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children:[
+        ElevatedButton(
+          onPressed:(){
+            huddleClient.getPeers();
+          },
+          child: const Text("Get Peers"),
+        )
+      ]
+    );
+  }
+}
+```
+
+
+```json
+// Output: 
+[
+    {
+        peerId: "peerId-xyz";
+        role: "host";
+        displayName: "Guest";
+        avatarUrl: "https://xyz.com/image.png";
+        joinStatus: "joined";
+        isHandRaised: false;
+    }
+]
+```
+### Get Peer Tracks
+In order to get access to a particular peer's audio/video tracks call the `getPeerTracks()` method.
+
+
+```dart filename="meeting_screen.dart" highlight={2,22} showLineNumbers
+import 'package:flutter/material.dart';
+import 'package:huddle01_flutter_client/huddle_client.dart';
+
+
+class MeetingScreen extends StatefulWidget {
+  ...
+}
+
+class _MeetingScreenState extends State<MeetingScreen> {
+  late HuddleClient huddleClient;
+
+  @override
+  void initState() {
+    ...
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children:[
+        ElevatedButton(
+          onPressed:(){
+            huddleClient.getPeerTracks("peerId-xyz");
+          },
+          child: const Text("Get Peer Tracks"),
+        )
+      ]
+    );
+  }
+}
+```
+
+
+```json
+// Output: 
+[
+    {
+       audio: MediaStreamTrack,
+       video: MediaStreamTrack
+    }
+]
+```

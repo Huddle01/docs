@@ -1,0 +1,72 @@
+---
+title: 'useScreenShare'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs'
+
+## useScreenShare
+
+<Callout>
+    `produceScreenShare()` method takes list of peerId as an optional argument, by default it will produce video for all peers. 
+</Callout> 
+
+These are the fields which are returned from **`useVideo`** hook.
+
+<OptionTable
+  headers={['Name', "Type"]}
+  options={[
+    [
+      'fetchScreenShare()',
+      'Function',
+      "Fetches screen share stream from user’s display"
+    ],
+    ['stopScreenShare()', 'Function',"Disables screen share stream"],
+    [
+      'produceScreenShare(screenShareStream: MediaStream, peerIds?: string[])',
+      'Function',
+      "Starts sharing user’s screen with other peers in the room"
+    ],
+    ['stopProducingScreenShare()', 'Function',"Stops sharing user’s screen with other peers in the room"],
+    ['stream', "MediaStream","Screen share stream"],
+    ['error', "string","Gives the error message"],
+    ['isScreenShareOn', "boolean", "Returns true if screen share is on"]
+  ]} 
+/>
+
+
+
+### Sample Code
+
+```jsx
+
+import { useScreenShare } from '@huddle01/react/hooks';
+ 
+const App = () => {
+  const { fetchScreenShare, produceScreenShare, stopScreenShare, stopProducingScreenShare, stream: screenShareStream  } = useVideo();
+
+  return (
+    <div>
+      
+      <button disabled={!fetchScreenShare.isCallable} onClick={fetchVideoStream}>
+        FETCH_SCREEN_SHARE
+      </button>
+
+      <button disabled={!produceScreenShare.isCallable} onClick={() => produceScreenShare(screenShareStream)}>
+        PRODUCE_SCREEN_SHARE
+      </button>
+
+      <button disabled={!stopScreenShare.isCallable} onClick={stopScreenShare}>
+        STOP_SCREEN_SHARE
+      </button>
+
+      <button disabled={!stopProducingScreenShare.isCallable} onClick={stopProducingScreenShare}>
+        STOP_PRODUCING_SCREEN_SHARE
+      </button>
+
+    </div>
+  );
+};
+ 
+
+```

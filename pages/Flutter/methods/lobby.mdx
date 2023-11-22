@@ -1,0 +1,67 @@
+---
+title: 'Lobby'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+
+
+## Lobby
+
+The lobby is where users can toggle with audio/video controls before joining a room. 
+
+<OptionTable
+  headers={['Name', "Type","Description"]}
+  options={[
+    [
+      'joinLobby(roomId: string, accessToken: string)',
+      'Function',
+      'moves the user to a pre-room lobby where they can toggle with audio/video controls before joining a room'
+    ],
+    [
+      'leaveLobby()',
+      'Function',
+      'removes the user from the lobby back to the initialized state'
+    ]
+  ]}
+/>
+
+### Example
+
+```dart filename="meeting_screen.dart" highlight={2,22,28} showLineNumbers
+import 'package:flutter/material.dart';
+import 'package:huddle01_flutter_client/huddle_client.dart';
+
+
+class MeetingScreen extends StatefulWidget {
+  ...
+}
+
+class _MeetingScreenState extends State<MeetingScreen> {
+  late HuddleClient huddleClient;
+
+  @override
+  void initState() {
+    ...
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children:[
+        ElevatedButton(
+          onPressed:(){
+            huddleClient.joinLobby(roomId);
+          },
+          child: const Text("Join Lobby"),
+        ),
+        ElevatedButton(
+          onPressed:(){
+            huddleClient.leaveLobby();
+          },
+          child: const Text("Leave Lobby"),
+        ),
+      ]
+    );
+  }
+}
+```

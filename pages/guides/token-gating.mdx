@@ -1,0 +1,406 @@
+---
+title: 'Token Gated Rooms'
+---
+
+import { Callout, Steps, Tab, Tabs } from 'nextra-theme-docs';
+
+import Image from 'next/image';
+
+# Building Token Gated Rooms using the React SDK
+
+## Walkthrough
+<Steps>
+
+### Getting Access Token 
+
+To access the token gated room using SDK, you need an `accessToken` which you will pass in the `joinLobby()` method.
+
+As you have installed `@huddle01/auth` package, you can use the following code snippet to get the `accessToken`
+
+**1. Install token gating package**
+
+```bash
+pnpm i @huddle01/auth
+```
+
+<Callout>
+  Make sure that you already have installed `@huddle01/react` or `@huddle01/web-core` package. 
+</Callout>
+
+**2. Getting the message to sign**
+
+<details>
+
+    <summary> Use wagmi to connect wallet </summary>
+
+    <Steps>
+    ### Install wagmi and ethers 
+    ```bash 
+    pnpm i wagmi ethers^5 connectkit
+    ```
+
+    ### Add wagmi to the root of your project  
+    ```js
+    import { WagmiConfig, createClient } from 'wagmi'
+    import { getDefaultClient, ConnectKitProvider } from "connectkit";
+    import type { AppProps } from "next/app";
+
+    const client = createClient(
+      getDefaultClient({
+      autoConnect: true,
+      appName: "Huddle01-Token-Gating",
+     })
+    )
+
+    function App({ Component, pageProps }: AppProps) {
+      return (
+        <WagmiConfig client={client}>
+            <ConnectKitProvider>
+                <Component {...pageProps} />
+            </ConnectKitProvider>
+        </WagmiConfig>
+      )
+    }
+    ```
+
+    ### Add wallet connect button
+    ```js
+    import { ConnectKitButton } from "connectkit";
+    import { useAccount } from "wagmi";
+
+    const ConnectWallet = () => {
+      const { address } = useAccount();
+
+      return (
+        <div>
+          <ConnectKitButton/>
+        </div>
+      );
+    };
+    ```
+    </Steps>
+</details>
+
+<details>
+    
+    <summary> Connect wallet using wallet01 </summary>
+
+    <Steps>
+
+    ### Install wallet01 package
+    ```bash
+    pnpm i @wallet01/react @wallet01/evm
+    ```
+
+    ### Add wallet01 to the root of your project
+    ```js
+    import { Wallet01 } from "@wallet01/react";
+    import { InjectedConnector } from "@wallet01/evm";
+    import type { AppProps } from "next/app";
+
+    function MyApp({ Component, pageProps }: AppProps) {
+
+      return (
+        <Wallet01 autoConnect={true} connectors={() => [new InjectedConnector()]}>
+          <Component {...pageProps} />
+        </Wallet01>
+      );
+    }
+    ```
+
+    ### Add wallet connect button 
+
+    ```js
+    import { useConnect } from "@wallet01/react";
+    import { useWallet } from "@wallet01/react";
+
+    const ConnectWallet = () => {
+      const { connect } = useConnect();
+      const { address } = useWallet();
+
+      return (
+        <div>
+        {
+          connectors.map((connector) => (
+            <button
+              onClick={() => {
+                connect({ connector })
+              }}
+            >
+              {address ?? "Connect"}
+            </button>
+          ))
+        }
+      </div>
+      );
+    }
+    ```
+
+    </Steps>
+
+</details>
+
+    Once you connect wallet and get address, use the following code snippet to get the message to sign.
+
+```js
+import { getMessage } from '@huddle01/auth';
+
+const address = '0x1234567890123456789012345678901234567890'; // address of the user
+
+const message = getMessage(address); // message to sign
+```
+
+**3. Signing the message**
+
+You can sign message using any of the following methods:
+
+<details>
+
+    <summary> Use wagmi to sign message and get access token </summary>
+
+    <Steps>
+    ### Importing methods from wagmi
+    ```js
+    import { useAccount, useSignMessage } from "wagmi";
+    import { getAccessToken, getMessage } from "@huddle01/auth";
+    ```
+
+    ### Signing the message and getting Access token 
+    ```js
+    const App () => {
+      const { address } = useAccount();
+      const [accessToken, setAccessToken] = useState("");
+
+      const { signMessage } = useSignMessage({
+        onSuccess: async (data) => {
+          const token = await getAccessToken(data, address as string);
+          setAccessToken(token.accessToken);
+        },
+      });
+
+      return (
+        <div>
+          <button 
+            onClick={ async() => {
+              const msg = await getMessage(address as string);
+              signMessage({ message: msg.message });
+            }}> 
+            Sign Message
+          </button>
+        </div>
+      );
+    }
+    ```
+    </Steps>
+</details>
+
+<details> 
+
+    <summary> Use wallet01 to sign message and get access token </summary>
+
+      <Steps> 
+
+        ### Importing methods from wallet01
+        ```js
+        import { useWallet, useMessage } from "@wallet01/react";
+        import { getAccessToken, getMessage } from "@huddle01/auth";
+        ```
+
+        ### Signing the message and getting Access token 
+        ```js
+        const App = () => {
+          const { address } = useWallet();
+          const { hash, signMessage } = useMessage();
+
+          const [accessToken, setAccessToken] = useState("");
+
+          const getAccessToken = async (hash: string) => {
+            const token = await getAccessToken(hash, address as string);
+            setAccessToken(token.accessToken);
+          };
+
+          useEffect(() => {
+            if (hash) {
+              setToken(hash);
+            }
+          }, [hash]);
+
+          return (
+            <div>
+              <button 
+                onClick={ async () => {
+                  const msg = await getMessage(address as string);
+                  signMessage({message: msg.message});
+                }}> 
+                Sign Message
+              </button>
+            </div>
+          );
+        }
+        ```
+      </Steps>
+
+</details>
+
+### Joining the Lobby using access token
+
+Once you get the access token, you can pass it in the `joinLobby` hook to access the token gated room. 
+
+```js
+joinLobby(roomId, accessToken)
+```
+
+</Steps>
+
+## Use sample app to access token gated room
+
+Visit this [sample app](https://auth-simulator.vercel.app/) to get the access token. 
+<br/>
+<Image 
+  src="/docs/images/token-gating/home-page.png"
+  alt="Home Page"
+  width={1000}
+  height={500}
+  quality={100}
+/>
+
+
+<Steps>
+
+### Get Message to Sign
+
+Click on `getMessage()` button to get the message to sign. Once you click it you will get message as shown below.
+<br/>
+<Image 
+  src="/docs/images/token-gating/message-to-sign.png"
+  alt="Message"
+  width={1000}
+  height={500}
+  quality={100}
+/>
+
+### Sign Message
+
+Click on `signMessage()` button to sign the message. Once you click it you will get a pop up to sign the message.
+<br/>
+
+<Image 
+  src="/docs/images/token-gating/sign-message.png"
+  alt="Sign Message"
+  width={1000}
+  height={500}
+  quality={100}
+/>
+
+Once you sign it you will get signature as shown below.
+<br/>
+
+<Image 
+  src="/docs/images/token-gating/message-signature.png"
+  alt="Signature"
+  width={1000}
+  height={500}
+  quality={100}
+/>
+
+### Get Access Token
+
+Click on `getAccessToken()` button to get the access token. Once you click it you will get access token as shown below.
+<br/>
+
+<Image 
+  src="/docs/images/token-gating/get-access-token.png"
+  alt="Access Token"
+  width={1000}
+  height={500}
+  quality={100}
+/>
+
+### Using Access Token in sample app
+
+The following guide explains how you can integrate token gated rooms into your application seamlessly using Huddle01 SDKs. 
+
+## Start from an example app
+
+<Steps>
+### Open your terminal and enter the following command:
+
+```bash
+npx create-huddle01
+```
+
+2. Give a **`Name`** to your project.
+3. Choose **`Core SDK`**.
+4. Confirm whether you want to use **`TypeScript`**.
+5. Choose **`React`** to generate boilerplate.
+6. Choose **`Next`** or **`Vite`** based on your preference to generate boilerplate.
+7. The sample app has now been cloned to your local system!
+
+### Change directory
+
+```bash
+cd name-of-the-app
+```
+
+### Install the dependencies
+
+```bash
+pnpm i
+```
+
+### Run the app
+
+```bash 
+pnpm dev
+```
+
+<Callout>
+ We prefer pnpm over yarn or npm.
+
+</Callout>
+
+Once you run the above command open `localhost:3000` or the port on which your web app is running. 
+You will see a page as shown below.
+
+<br/>
+<Image 
+  src="/docs/images/token-gating/sample-home.png"
+  alt="Sample App"
+  width={1000}
+  height={500}
+  quality={100}
+/>
+
+### Initilization of project
+
+Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials: 
+
+- `API Key`
+- `projectId`
+
+Enter this `projectId` in the sample app and click on `INIT` button.
+
+### Create a token gated room 
+
+Visit the [Token Gating Page](/apis/create-room/token-gated-room) and create a token gated room. 
+
+<Callout>
+  Make sure you create token gated room only for the token which you already have. 
+</Callout>
+
+Once you create token gated room, get a `roomId` and use it in the sample app which you are running. 
+Here we also need to pass `accessToken`, which you get from previous steps, 
+once you enter both `roomId` and `accessToken` you can press `JOIN_LOBBY` button. 
+
+</Steps>
+
+### Happy Hacking
+
+That's it for the setup! You can now start building dApps with token gated rooms using Huddle01 SDKs.
+
+</Steps>
+
+
+
+
+

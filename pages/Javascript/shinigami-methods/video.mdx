@@ -1,0 +1,23 @@
+---
+title: 'Video' 
+---
+
+## Video 
+
+### Enable Video 
+
+The `enableVideo` method enables the local microphone and starts producing the video stream with the label `video`.
+
+```js
+// Enable Video stream
+await huddleClient.localPeer.enableVideo();
+```
+
+### Disable Video
+
+The `disableVideo` method stops the local video stream and also stops producing the video stream with remote peers.
+
+```js
+// Disable video stream
+await huddleClient.localPeer.disableVideo();
+```

@@ -1,0 +1,61 @@
+---
+title:'Quickstart'
+---
+
+import { Tab, Tabs, Callout } from 'nextra-theme-docs';
+
+# Quickstart
+
+## Installing the packages:
+
+You can install the Huddle01 Vanilla JS SDK packages in two ways:
+
+
+<Callout type="info">
+  The **`huddleClient`** variable will be accessible in the global scope after importing from CDN.
+</Callout>
+
+1. Using the script tag: Add the following code snippet to the head of your HTML file: Replace with our CDN
+
+   ```js
+   <script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js" />
+
+   <script type="module">
+     huddleClient.initialize("YOUR_PROJECT_ID");
+     huddleClient.joinLobby("YOUR_ROOM_ID");
+   </script>
+   ```
+
+2. Using npm (or yarn): Run the following command in your terminal to install the package:
+
+  <Tabs items={['npm', 'yarn']}>
+    <Tab>
+      ```bash 
+      npm install @huddle01/web-core
+        ```
+    </Tab>
+
+    <Tab>
+      ```bash
+      yarn add @huddle01/web-core
+      ```
+    </Tab>
+  </Tabs>
+
+## Initializing the client:
+
+After installing the package, you can initialize the client in your JavaScript code as shown below:
+
+```html
+<script>
+  huddleClient.initialize("YOUR_PROJECT_ID");
+
+  document.getElementById('joinLobby').onclick = () => {
+    huddleClient.joinLobby('YOUR_ROOM_ID');
+  };
+
+  document.getElementById('joinRoom').onclick = () => {
+    huddleClient.joinRoom();
+  };
+</script>
+```

@@ -1,0 +1,134 @@
+---
+title: 'useRemotePeer'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import Pill from '@components/common/Pill/Pill';
+
+# useRemotePeer
+
+The useRemotePeer hook allows you to interact with another user's Peer object, which is how they are represented inside a Huddle01 room.
+
+```tsx
+const {
+    peerId,
+    metadata,
+  } = useRemotePeer({
+    peerId: "remote-peer-id",
+    onMetadataUpdate(data) {},
+  });
+```
+
+## Props
+The useRemotePeer hook accepts an object with the following fields as props.
+
+{/* peerId */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">1. peerId</span>
+    <span>
+        <Pill>Required</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "The peerId of the remote peer.",
+      'string',
+    ],
+  ]}
+/>
+
+
+##### Example Usage
+
+```tsx
+const remotePeer = useRemotePeer({ peerId: "remote-peer-id" });
+```
+
+{/* onMetadataUpdated */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">2. onMetadataUpdated</span>
+    <span className="ml-2">
+        <Pill>Optional</Pill>
+    </span>
+    <span className="ml-2">
+        <Pill>Advanced</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when the metadata associated with the remote peer is updated.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      '{ metadata: unknown }',
+      'An object containing the metadata associated with the remote peer object.',
+      'Yes',
+    ],
+  ]}
+/>
+
+##### Example Usage
+
+```tsx
+const remotePeer = useRemotePeer({ peerId: "remote-peer-id", onMetadataUpdated: (data) => {
+	console.log("Remote peer's metadata was updated!");
+	console.log(data.metadata);
+    // your code here
+}});
+```
+
+
+## Returns
+The useLocalPeer hook returns an object with the following fields.
+
+{/* peerId */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">1. peerId</span>
+    <span className="ml-2">
+        <Pill>Object</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "The remote peer's peerId.",
+      'string | undefined',
+    ],
+  ]}
+/>
+
+{/* metadata */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">2. metadata</span>
+    <span className="ml-2">
+        <Pill>Object</Pill>
+    </span>
+    <span className="ml-2">
+        <Pill>Advanced</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'The metadata associated with the remote peer.',
+      'unknown',
+    ],
+  ]}
+/>

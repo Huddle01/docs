@@ -1,0 +1,11 @@
+{
+  "quickstart": "Quickstart",
+  "shinigami-quickstart": "Shinigami Quickstart",
+  "shinigami-methods": "Shinigami Methods",
+  "walkthrough": "Walkthrough",
+  "example": "Start from an example",
+  "methods": "Methods",
+  "events": {
+    "title": "Events"
+  }
+}

@@ -1,0 +1,1102 @@
+---
+title: 'Walkthrough'
+---
+
+import Image from 'next/image';
+
+import { Callout, Steps, Tab, Tabs } from 'nextra-theme-docs';
+
+
+# Building a React Native Mobile App with Huddle01
+
+In this walkthrough guide, we will be creating a very basic video conferencing app using Huddle01’s React Native SDK. This guide serves as a good starting point for anyone trying out the SDK for the first time.
+
+## Creating a new React Native app
+
+
+
+Let’s begin by creating a fresh React Native application using npx.
+```bash 
+  npx react-native@latest init MyVideoConfApp
+```
+
+Once the app has been created, follow [these instructions](https://reactnative.dev/docs/environment-setup) to run the app depending on your platform and device. If the app was successfully built and run, you should be seeing something similar to this.
+
+<Image
+  src="/docs/images/react-native-walkthrough/ss1.png"
+  alt="Get-Started"
+  width={250}
+  height={250}
+  quality={100}
+  priority
+  className="my-8 mx-auto"
+/>
+
+The react native starter app comes with some of this pre-written UI that you see on the screen, so let’s get rid of that before we dive into our video conferencing functionalities.
+
+Go to your `app.tsx` file and replace all of the code with this
+
+```tsx filename="app.tsx"
+import React from 'react';
+import {SafeAreaView, StyleSheet, Text} from 'react-native';
+
+function App(): JSX.Element {
+  return (
+    <SafeAreaView style={styles.background}>
+      <Text style={styles.text}>My Video Conferencing App</Text>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  background: {
+    backgroundColor: '#222222',
+    height: '100%',
+    width: '100%',
+  },
+  text: {
+    color: '#ffffff',
+  },
+});
+
+export default App;
+```
+
+{/* <Image
+  src="/docs/images/react-native-walkthrough/ss2.png"
+  alt="Get-Started"
+  width={250}
+  height={250}
+  quality={100}
+  priority
+  className="my-8 mx-auto"
+/> */}
+
+That should be everything we need for the initial app config. Let’s move on to installing and setting up the Huddle01 SDK.
+
+## Installing and setting up the SDK
+
+In your terminal, install the following packages.
+
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+  <Tab>
+    ```bash 
+    pnpm add @huddle01/react-native react-native-get-random-values react-native-webrtc
+    ```
+  </Tab>
+  <Tab>
+    ```bash 
+    npm install @huddle01/react-native react-native-get-random-values react-native-webrtc
+    ```
+  </Tab>
+  <Tab>
+    ```bash 
+    yarn add @huddle01/react-native react-native-get-random-values react-native-webrtc
+    ```
+  </Tab>
+</Tabs>
+
+This will install the SDK and a few extra packages that we need for it to work as intended.
+
+<Callout type="info">
+Important Step: Make sure to add camera and mic permissions to your `AndroidManifest.xml` file [(for Android)](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/AndroidInstallation.md) and `Info.plist` file [(for iOS)](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/iOSInstallation.md).
+
+If you are building for iOS, don’t forget to run `pod install` inside the ios directory to install the iOS native dependencies.
+
+</Callout>
+
+Now that we have our packages installed and app permissions granted, we need to add a few more lines of code for configuring the SDK. Go to your top-level `index.js` file and replace all of the code with the following:
+
+```js filename="index.js"
+import { AppRegistry } from 'react-native';
+import 'react-native-get-random-values';
+import { registerGlobals } from 'react-native-webrtc';
+import App from './App';
+import { name as appName } from './app.json';
+ 
+registerGlobals();
+ 
+AppRegistry.registerComponent(appName, () => App);
+```
+
+That’s all the SDK setup we need to build a full-fledged video conferencing app. Kudos if you made it till here! Let’s move on to the fun part now.
+
+## Initializing the SDK
+
+Inside our `app.tsx` file, we can initialize the SDK by using the `useHuddle01()` hook.
+
+```tsx filename="app.tsx"
+import React from 'react';
+import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import {useHuddle01} from '@huddle01/react-native';
+
+function App(): JSX.Element {
+  const {initialize, isInitialized} = useHuddle01();
+
+  return (
+    <SafeAreaView style={styles.background}>
+      <Text style={styles.text}>My Video Conferencing App</Text>
+    </SafeAreaView>
+  );
+}
+```
+
+We can use the **`initialize()`** function returned from the hook to initialize the SDK and interact with it. But before we do that, let’s build out a basic UI for our app.
+
+```tsx filename="app.tsx"
+import {useHuddle01} from '@huddle01/react-native';
+import {useMeetingMachine} from '@huddle01/react-native/hooks';
+import React from 'react';
+import {Button, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+
+function App(): JSX.Element {
+  const {initialize, isInitialized} = useHuddle01();
+  const {state} = useMeetingMachine();
+
+  return (
+    <SafeAreaView style={styles.background}>
+      <Text style={styles.appTitle}>My Video Conferencing App</Text>
+
+      <View style={styles.infoSection}>
+        <View style={styles.infoTab}>
+          <View style={styles.infoKey}>
+            <Text style={styles.text}>Room State</Text>
+          </View>
+          <View style={styles.infoValue}>
+            <Text style={styles.text}>{JSON.stringify(state.value)}</Text>
+          </View>
+        </View>
+        <View style={styles.infoTab}>
+          <View style={styles.infoKey}>
+            <Text style={styles.text}>Me Id</Text>
+          </View>
+          <View style={styles.infoValue}>
+            <Text style={styles.text}>
+              {JSON.stringify(state.context.peerId)}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.infoTab}>
+          <View style={styles.infoKey}>
+            <Text style={styles.text}>Peers</Text>
+          </View>
+          <View style={styles.infoValue}>
+            <Text style={styles.text}>
+              {JSON.stringify(state.context.peers)}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.infoTab}>
+          <View style={styles.infoKey}>
+            <Text style={styles.text}>Consumers</Text>
+          </View>
+          <View style={styles.infoValue}>
+            <Text style={styles.text}>
+              {JSON.stringify(state.context.consumers)}
+            </Text>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.controlsSection}>
+        <View style={styles.controlsColumn}>
+          <View style={styles.controlGroup}>
+            <Text style={styles.controlsGroupTitle}>Idle</Text>
+            <View style={styles.button}>
+              <Button title="INIT" />
+            </View>
+          </View>
+          <View style={styles.controlGroup}>
+            <Text style={styles.controlsGroupTitle}>Lobby</Text>
+            <View>
+              <View style={styles.button}>
+                <Button title="ENABLE_CAM" />
+              </View>
+
+              <View style={styles.button}>
+                <Button title="ENABLE_MIC" />
+              </View>
+
+              <View style={styles.button}>
+                <Button title="JOIN_ROOM" />
+              </View>
+
+              <View style={styles.button}>
+                <Button title="LEAVE_LOBBY" />
+              </View>
+
+              <View style={styles.button}>
+                <Button title="DISABLE_CAM" />
+              </View>
+
+              <View style={styles.button}>
+                <Button title="DISABLE_MIC" />
+              </View>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.controlsColumn}>
+          <View style={styles.controlGroup}>
+            <Text style={styles.controlsGroupTitle}>Initialized</Text>
+
+            <View style={styles.button}>
+              <Button title="JOIN_LOBBY" />
+            </View>
+          </View>
+
+          <View style={styles.controlGroup}>
+            <Text style={styles.controlsGroupTitle}>Room</Text>
+            <View>
+              <View style={styles.button}>
+                <Button title="PRODUCE_MIC" />
+              </View>
+
+              <View style={styles.button}>
+                <Button title="PRODUCE_CAM" />
+              </View>
+
+              <View style={styles.button}>
+                <Button title="STOP_PRODUCING_MIC" />
+              </View>
+
+              <View style={styles.button}>
+                <Button title="STOP_PRODUCING_CAM" />
+              </View>
+
+              <View style={styles.button}>
+                <Button title="LEAVE_ROOM" />
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  appTitle: {
+    color: '#ffffff',
+    fontSize: 18,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  background: {
+    backgroundColor: '#222222',
+    height: '100%',
+    width: '100%',
+  },
+  text: {
+    color: '#ffffff',
+    fontSize: 18,
+  },
+  infoSection: {
+    borderBottomColor: '#fff',
+    borderBottomWidth: 2,
+    padding: 10,
+  },
+  infoTab: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderWidth: 2,
+    borderColor: '#fff',
+    borderRadius: 6,
+    marginTop: 4,
+  },
+  infoKey: {
+    borderRightColor: '#fff',
+    borderRightWidth: 2,
+    padding: 4,
+  },
+  infoValue: {
+    flex: 1,
+    padding: 4,
+  },
+  controlsSection: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    borderBottomColor: '#fff',
+    borderBottomWidth: 2,
+  },
+  controlsColumn: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  button: {
+    marginTop: 4,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#fff',
+  },
+  controlsGroupTitle: {
+    color: '#ffffff',
+    fontSize: 18,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+  },
+  controlGroup: {
+    marginTop: 4,
+    textAlign: 'center',
+    display: 'flex',
+    alignItems: 'center',
+  },
+});
+
+export default App;
+```
+
+<Image
+  src="/docs/images/react-native-walkthrough/ss3.png"
+  alt="Get-Started"
+  width={250}
+  height={250}
+  quality={100}
+  priority
+  className="my-8 mx-auto"
+/>
+
+This gives us a basic UI with two main sections. The first section at the top is for general information about the current state of the app, like the app state, your peerID, and other peers in the room. We get this information from the `state` object returned from the `useMeetingMachine()` hook. The second section is a control centre which provides us different buttons grouped by the app state they can be pressed in. These buttons will help us interact with the SDK.
+
+Let’s link the buttons with their intended interactions by calling the different SDK methods upon pressing them. We will import these interaction methods at the top, from different hooks available as a part of the SDK.
+
+```tsx filename="app.tsx"
+import {
+  useAudio,
+  useEventListener,
+  useHuddle01,
+  useLobby,
+  useMeetingMachine,
+  usePeers,
+  useRoom,
+  useVideo,
+} from '@huddle01/react-native/hooks';
+import React from 'react';
+import {Button, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+
+function App(): JSX.Element {
+    const {initialize, isInitialized} = useHuddle01();
+    const {state} = useMeetingMachine();
+    const {joinLobby, leaveLobby} = useLobby();
+    const {
+      fetchAudioStream,
+      produceAudio,
+      stopAudioStream,
+      stopProducingAudio,
+      stream: micStream,
+    } = useAudio();
+    const {
+      fetchVideoStream,
+      produceVideo,
+      stopVideoStream,
+      stopProducingVideo,
+      stream: camStream,
+    } = useVideo();
+    const {joinRoom, leaveRoom} = useRoom();
+    const {peers} = usePeers();
+
+    return (...)
+}
+
+export default App;
+```
+
+These imported functions can then be called inside the onPress prop function of each of the buttons.
+
+## Invoking the different methods returned from hooks
+
+<Steps>
+
+
+### Initialization of project
+
+{/* TODO: Add initialization of project link */}
+Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials: 
+
+- `API Key`
+- `projectId`
+
+Once done, initialize your project by calling the `initialize()` method and pass `projectId` as an argument. 
+
+```tsx filename="app.tsx"
+<View style={styles.button}>
+  <Button
+      title="INIT"
+      disabled={!state.matches('Idle')}
+      onPress={() => initialize('YOUR_PROJECT_ID')}
+  />
+</View>
+```
+
+
+### Joining the Lobby
+To join a lobby/room, you need to first create the room it using the [Create Room API](/apis/create-room/create-room). Once that is done, you will have a unique roomID that you can use to join the lobby/room, using the `joinLobby()` method and passing `roomID` as an argument.
+
+```tsx filename="app.tsx"
+<View style={styles.button}>
+  <Button
+    title="JOIN_LOBBY"
+    disabled={!joinLobby.isCallable}
+    onPress={() => {
+      joinLobby('your_unique_room_id');
+    }}
+  />
+</View>
+```
+<Callout type="info">
+  The **`isCallable`** is an attribute available on all methods to check whether the function is callable or not.
+</Callout>
+
+
+### Enabling and Disabling Media Devices
+<Callout emoji="⚠️">
+  If cam and mic aren’t enabled in the lobby, video and audio won’t be shareable inside the room.
+</Callout>
+<Callout emoji="⚠️">
+  These methods are to be called only when in lobby state.
+</Callout>
+
+```tsx filename="app.tsx"
+<View style={styles.button}>
+  <Button
+    title="ENABLE_CAM"
+    disabled={!fetchVideoStream.isCallable}
+    onPress={fetchVideoStream}
+  />
+</View>
+
+<View style={styles.button}>
+  <Button
+    title="ENABLE_MIC"
+    disabled={!fetchAudioStream.isCallable}
+    onPress={fetchAudioStream}
+  />
+
+<View style={styles.button}>
+  <Button
+    title="DISABLE_CAM"
+    disabled={!stopVideoStream.isCallable}
+    onPress={stopVideoStream}
+    />
+</View>
+
+<View style={styles.button}>
+  <Button
+    title="DISABLE_MIC"
+    disabled={!stopAudioStream.isCallable}
+    onPress={stopAudioStream}
+    />
+</View>
+```
+
+### Joining the Room
+```tsx filename="app.tsx"
+ <View style={styles.button}>
+  <Button
+    title="JOIN_ROOM"
+    disabled={!joinRoom.isCallable}
+    onPress={joinRoom}
+  />
+</View>
+```
+
+### Leaving the lobby
+```tsx filename="app.tsx"
+<View style={styles.button}>
+  <Button
+    title="LEAVE_LOBBY"
+    disabled={!state.matches('Initialized.JoinedLobby')}
+    onPress={leaveLobby}
+  />
+</View>
+```
+
+### Producing your media streams
+As defined earlier inside [Concepts](/concepts), producing is the act of sharing a participant’s media stream with other peers inside a room. When a participant starts sharing their video or audio stream, they become a producer and the other peers in the room become consumers for that particular media stream.
+
+```tsx filename="app.tsx"
+<View style={styles.button}>
+  <Button
+    title="PRODUCE_MIC"
+    disabled={!produceAudio.isCallable}
+    onPress={() => produceAudio(micStream)}
+  />
+</View>
+
+<View style={styles.button}>
+  <Button
+    title="PRODUCE_CAM"
+    disabled={!produceVideo.isCallable}
+    onPress={() => produceVideo(camStream)}
+  />
+</View>
+
+<View style={styles.button}>
+  <Button
+    title="STOP_PRODUCING_MIC"
+    disabled={!stopProducingAudio.isCallable}
+    onPress={() => stopProducingAudio()}
+  />
+</View>
+
+<View style={styles.button}>
+  <Button
+    title="STOP_PRODUCING_CAM"
+    disabled={!stopProducingVideo.isCallable}
+    onPress={() => stopProducingVideo()}
+  />
+</View>
+```
+
+### Leaving the Room
+
+```tsx filename="app.tsx"
+ <View style={styles.button}>
+  <Button
+    title="LEAVE_ROOM"
+    disabled={!leaveRoom.isCallable}
+    onPress={leaveRoom}
+  />
+</View>
+```
+
+You’ll be able to see that all the buttons except the first one have been disabled because the app is in “Idle” state right now.
+
+<Image
+  src="/docs/images/react-native-walkthrough/ss4.png"
+  alt="Get-Started"
+  width={250}
+  height={250}
+  quality={100}
+  priority
+  className="my-8 mx-auto"
+/>
+
+<Callout type="info">
+  You can refer to the [hooks section](/sdk/react-native/hooks) to see in detail what each of these hooks and the functions returned from them do when they are called.
+</Callout>
+
+</Steps>
+
+
+## Rendering media streams
+
+Now let’s add the UI to render the video streams of you and other peers that might join the same room as you. To render our own video stream, we will be using the `<RTCView />` component imported from `react-native-webrtc`.
+
+```tsx filename="app.tsx"
+<View style={styles.videoSection}>
+  <Text style={styles.text}>My Video:</Text>
+  <View style={styles.myVideo}>
+    <RTCView
+      mirror={true}
+      objectFit={'cover'}
+      streamURL={streamURL}
+      zOrder={0}
+      style={{
+        backgroundColor: 'white',
+        width: '75%',
+        height: '100%',
+      }}
+    />
+  </View>
+</View>
+
+const styles = StyleSheet.create({
+  videoSection: {},
+  myVideo: {
+    height: 300,
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+  },
+});
+```
+
+There are a couple of things happening here. Let’s break it down. First, we added an RTCView component to render our own video stream. We passed a prop **`streamURL={streamURL}`** to it but `streamURL` is not defined at the moment. We need to initialize a state variable with that name and set it to our video stream only when we enable our camera. So let’s do that now.
+
+```tsx filename="app.tsx"
+const [streamURL, setStreamURL] = useState('');
+
+useEventListener('lobby:cam-on', () => {
+  if (camStream) {
+    console.log('camStream: ', camStream.toURL());
+    setStreamURL(camStream.toURL());
+  }
+});
+```
+
+The `streamURL` state is initially set to an empty string. We added an event listener using the `useEventListener` hook, that sets the `streamURL` to our video stream when the app state changes to `lobby:cam-on`, indicating that the camera was enabled in the lobby state.
+
+That’s all we need to render our own camera stream. Now let’s render video streams coming from other peers in the room. To do that, we will use the custom `<Video />` component imported from the SDK. This component accepts a `track (MediaStreamTrack)` and a `peerId (string)` as it’s props and renders the video stream. You can aslo pass in a `style` prop for customizing how the video component looks.
+
+### Audio and Video components
+<details>
+  <summary>
+    Using the audio and video components
+  </summary>
+
+    #### Importing
+
+    ```tsx filename="app.tsx"
+    import { Video, Audio } from '@huddle01/react-native/components'
+    ```
+
+    There are two ways to use the audio and video components
+    #### 1. Usage with `peerId`:
+
+    ```tsx filename="app.tsx"  
+      <Video peerId="PEER_ID" />
+      <Audio peerId="PEER_ID" />
+    ```
+    #### 2. Usage with `track` or `stream`: 
+
+    <Callout type="info">
+      The **`stream`** value for **mic** and **cam** are available on the **`useAudio`** and **`useVideo`** hooks respectively.
+    </Callout>
+    <Callout type="info">
+      The **`tracks`** for peers can be found from the **`usePeers`** hook.
+    </Callout>
+
+
+    <Callout emoji="🚨">
+      To be used only when you want to make changes to streams from your side otherwise use `peerId` method!
+    </Callout>
+
+
+    ```tsx filename="app.tsx"
+      <Video peerId="PEER_ID" track={camTrack}  />
+      <Audio peerId="PEER_ID" track={micTrack} />
+    ```
+
+    ```tsx filename="app.tsx"
+      <Video peerId="PEER_ID" stream={camStream}  />
+      <Audio peerId="PEER_ID" stream={micStream} />
+    ```
+
+    <Callout type="info">
+      The Audio and Video components also accept a `style` prop using which you can customize the styling of the components.
+      
+      ```tsx filename="app.tsx"  
+        <Video
+          peerId="PEER_ID"
+          style={{
+            backgroundColor: 'white',
+            width: '75%',
+            height: '100%',
+          }}
+        />
+      ```
+
+    </Callout>
+</details>
+
+```tsx filename="app.tsx"
+<View style={styles.videoSection}>
+  <Text style={styles.text}>My Video:</Text>
+  <View style={styles.myVideo}>
+    <RTCView
+      mirror={true}
+      objectFit={"cover"}
+      streamURL={streamURL}
+      zOrder={0}
+      style={{
+        backgroundColor: "white",
+        width: "75%",
+        height: "100%",
+      }}
+    />
+  </View>
+  <View>
+    {Object.values(peers)
+      .filter((peer) => peer.cam)
+      .map((peer) => (
+        <Video
+          key={peer.peerId}
+          peerId={peer.peerId}
+          track={peer.cam}
+          style={{
+            backgroundColor: "white",
+            width: "75%",
+            height: "100%",
+          }}
+        />
+      ))}
+  </View>
+</View>;
+```
+
+Here we are filtering out peers returned from the `usePeer()` hook that are producing their camera stream, and then mapping over these peers and rendering an instance of the Video component for each of them by passing the track and peerId as props.
+
+And voila! Our quick little video conferencing app is ready. To test it, play around with the controls and press each button to see what happens.
+
+<Image
+  src="/docs/images/react-native-walkthrough/ss5.png"
+  alt="Get-Started"
+  width={250}
+  height={250}
+  quality={100}
+  priority
+  className="my-8 mx-auto"
+/>
+
+<Image
+  src="/docs/images/react-native-walkthrough/ss6.png"
+  alt="Get-Started"
+  width={250}
+  height={250}
+  quality={100}
+  priority
+  className="my-8 mx-auto"
+/>
+
+## Final app.tsx file
+```tsx filename="app.tsx"
+import {Video} from '@huddle01/react-native/components';
+import {
+  useAudio,
+  useEventListener,
+  useHuddle01,
+  useLobby,
+  useMeetingMachine,
+  usePeers,
+  useRoom,
+  useVideo,
+} from '@huddle01/react-native/hooks';
+import React, {useState} from 'react';
+import {Button, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {RTCView} from 'react-native-webrtc';
+
+function App(): JSX.Element {
+  const {state} = useMeetingMachine();
+  const {initialize, isInitialized} = useHuddle01();
+  const {joinLobby, leaveLobby} = useLobby();
+  const {
+    fetchAudioStream,
+    produceAudio,
+    stopAudioStream,
+    stopProducingAudio,
+    stream: micStream,
+  } = useAudio();
+  const {
+    fetchVideoStream,
+    produceVideo,
+    stopVideoStream,
+    stopProducingVideo,
+    stream: camStream,
+  } = useVideo();
+  const {joinRoom, leaveRoom} = useRoom();
+  const {peers} = usePeers();
+
+  const [streamURL, setStreamURL] = useState('');
+
+  useEventListener('lobby:cam-on', () => {
+    if (camStream) {
+      console.log('camStream: ', camStream.toURL());
+      setStreamURL(camStream.toURL());
+    }
+  });
+
+  return (
+    <ScrollView style={styles.background}>
+      <Text style={styles.appTitle}>My Video Conferencing App</Text>
+
+      <View style={styles.infoSection}>
+        <View style={styles.infoTab}>
+          <View style={styles.infoKey}>
+            <Text style={styles.text}>Room State</Text>
+          </View>
+          <View style={styles.infoValue}>
+            <Text style={styles.text}>{JSON.stringify(state.value)}</Text>
+          </View>
+        </View>
+        <View style={styles.infoTab}>
+          <View style={styles.infoKey}>
+            <Text style={styles.text}>Me Id</Text>
+          </View>
+          <View style={styles.infoValue}>
+            <Text style={styles.text}>
+              {JSON.stringify(state.context.peerId)}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.infoTab}>
+          <View style={styles.infoKey}>
+            <Text style={styles.text}>Peers</Text>
+          </View>
+          <View style={styles.infoValue}>
+            <Text style={styles.text}>
+              {JSON.stringify(state.context.peers)}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.infoTab}>
+          <View style={styles.infoKey}>
+            <Text style={styles.text}>Consumers</Text>
+          </View>
+          <View style={styles.infoValue}>
+            <Text style={styles.text}>
+              {JSON.stringify(state.context.consumers)}
+            </Text>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.controlsSection}>
+        <View style={styles.controlsColumn}>
+          <View style={styles.controlGroup}>
+            <Text style={styles.controlsGroupTitle}>Idle</Text>
+            <View style={styles.button}>
+              <Button
+                title="INIT"
+                disabled={!state.matches('Idle')}
+                onPress={() => initialize('YOUR_PROJECT_ID')}
+              />
+            </View>
+          </View>
+          <View style={styles.controlGroup}>
+            <Text style={styles.controlsGroupTitle}>Lobby</Text>
+            <View>
+              <View style={styles.button}>
+                <Button
+                  title="ENABLE_CAM"
+                  disabled={!fetchVideoStream.isCallable}
+                  onPress={fetchVideoStream}
+                />
+              </View>
+
+              <View style={styles.button}>
+                <Button
+                  title="ENABLE_MIC"
+                  disabled={!fetchAudioStream.isCallable}
+                  onPress={fetchAudioStream}
+                />
+              </View>
+
+              <View style={styles.button}>
+                <Button
+                  title="JOIN_ROOM"
+                  disabled={!joinRoom.isCallable}
+                  onPress={joinRoom}
+                />
+              </View>
+
+              <View style={styles.button}>
+                <Button
+                  title="LEAVE_LOBBY"
+                  disabled={!state.matches('Initialized.JoinedLobby')}
+                  onPress={leaveLobby}
+                />
+              </View>
+
+              <View style={styles.button}>
+                <Button
+                  title="DISABLE_CAM"
+                  disabled={!stopVideoStream.isCallable}
+                  onPress={stopVideoStream}
+                />
+              </View>
+
+              <View style={styles.button}>
+                <Button
+                  title="DISABLE_MIC"
+                  disabled={!stopAudioStream.isCallable}
+                  onPress={stopAudioStream}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.controlsColumn}>
+          <View style={styles.controlGroup}>
+            <Text style={styles.controlsGroupTitle}>Initialized</Text>
+
+            <View style={styles.button}>
+              <Button
+                title="JOIN_LOBBY"
+                disabled={!joinLobby.isCallable}
+                onPress={() => {
+                  joinLobby('your_unique_room_id');
+                }}
+              />
+            </View>
+          </View>
+
+          <View style={styles.controlGroup}>
+            <Text style={styles.controlsGroupTitle}>Room</Text>
+            <View>
+              <View style={styles.button}>
+                <Button
+                  title="PRODUCE_MIC"
+                  disabled={!produceAudio.isCallable}
+                  onPress={() => produceAudio(micStream)}
+                />
+              </View>
+
+              <View style={styles.button}>
+                <Button
+                  title="PRODUCE_CAM"
+                  disabled={!produceVideo.isCallable}
+                  onPress={() => produceVideo(camStream)}
+                />
+              </View>
+
+              <View style={styles.button}>
+                <Button
+                  title="STOP_PRODUCING_MIC"
+                  disabled={!stopProducingAudio.isCallable}
+                  onPress={() => stopProducingAudio()}
+                />
+              </View>
+
+              <View style={styles.button}>
+                <Button
+                  title="STOP_PRODUCING_CAM"
+                  disabled={!stopProducingVideo.isCallable}
+                  onPress={() => stopProducingVideo()}
+                />
+              </View>
+
+              <View style={styles.button}>
+                <Button
+                  title="LEAVE_ROOM"
+                  disabled={!leaveRoom.isCallable}
+                  onPress={leaveRoom}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.videoSection}>
+        <Text style={styles.text}>My Video:</Text>
+        <View style={styles.myVideo}>
+          <RTCView
+            mirror={true}
+            objectFit={'cover'}
+            streamURL={streamURL}
+            zOrder={0}
+            style={{
+              backgroundColor: 'white',
+              width: '75%',
+              height: '100%',
+            }}
+          />
+        </View>
+        <View>
+          {Object.values(peers)
+            .filter(peer => peer.cam)
+            .map(peer => (
+              <Video
+                key={peer.peerId}
+                peerId={peer.peerId}
+                track={peer.cam}
+                style={{
+                  backgroundColor: 'white',
+                  width: '75%',
+                  height: '100%',
+                }}
+              />
+            ))}
+        </View>
+      </View>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  appTitle: {
+    color: '#ffffff',
+    fontSize: 18,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  background: {
+    backgroundColor: '#222222',
+    height: '100%',
+    width: '100%',
+    paddingVertical: 50,
+  },
+  text: {
+    color: '#ffffff',
+    fontSize: 18,
+  },
+  infoSection: {
+    borderBottomColor: '#fff',
+    borderBottomWidth: 2,
+    padding: 10,
+  },
+  infoTab: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderWidth: 2,
+    borderColor: '#fff',
+    borderRadius: 6,
+    marginTop: 4,
+  },
+  infoKey: {
+    borderRightColor: '#fff',
+    borderRightWidth: 2,
+    padding: 4,
+  },
+  infoValue: {
+    flex: 1,
+    padding: 4,
+  },
+  controlsSection: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    borderBottomColor: '#fff',
+    borderBottomWidth: 2,
+  },
+  controlsColumn: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  button: {
+    marginTop: 4,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#fff',
+  },
+  controlsGroupTitle: {
+    color: '#ffffff',
+    fontSize: 18,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+  },
+  controlGroup: {
+    marginTop: 4,
+    textAlign: 'center',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  videoSection: {},
+  myVideo: {
+    height: 300,
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+  },
+});
+
+export default App;
+```
+
+
+
+## GitHub
+Link to github repository: [https://github.com/Huddle01/react-native-SDK-example](https://github.com/Huddle01/react-native-SDK-example)

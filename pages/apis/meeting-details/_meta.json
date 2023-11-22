@@ -1,0 +1,23 @@
+{
+  "room-details": {
+    "title": "Room Details API",
+    "theme": {
+      "toc": false,
+      "layout": "full"
+    }
+  },
+  "meeting-list": {
+    "title": "Meeting List API",
+    "theme": {
+      "toc": false,
+      "layout": "full"
+    }
+  },
+  "participant-list": {
+    "title": "Participant List API",
+    "theme": {
+      "toc": false,
+      "layout": "full"
+    }
+  }
+}

@@ -1,0 +1,69 @@
+---
+title: 'useAudio'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs'
+
+## useAudio
+
+  <Callout>
+    `produceAudio()` method takes list of peerId as an optional argument, by default it will produce audio for all peers. 
+</Callout> 
+
+These are the fields which are returned from **`useAudio`** hook.
+
+<OptionTable
+  headers={['Name', "Type","Description"]}
+  options={[
+    [
+      'fetchAudioStream(deviceId?: string)',
+      'Function',
+      "Enables audio stream from user’s device mic(lobby)"
+    ],
+    ['stopAudioStream()', 'Function',"Disables audio stream from user’s device mic(lobby)"],
+    [
+      'produceAudio(micStream: MediaStream, peerIds?: string[])',
+      'Function',
+      "Starts sharing user’s webcam audio stream with other peers in the room"
+    ],
+    ['stopProducingAudio()', 'Function',"Stops sharing user’s webcam audio stream with other peers in the room"],
+    ['enumerateDevices()', 'Function', "Returns the list of audio devices"],
+    ['createMicConsumer(peerId: string)', 'Function', "Starts consuming audio stream for given peerId"],
+    ['closeMicConsumer(peerId: string)', 'Function', "Stops consuming audio stream for given peerId"],
+    ['isLoading', 'boolean',"loading state"],
+    ['isProducing','boolean',"state whether the audio is producing or not"],
+    ['stream', "MediaStream","audio stream"],
+    ['error', "string" ,"gives the error message"],
+  ]} 
+/>
+
+
+
+### Sample Code
+
+
+```jsx
+
+import { useAudio } from '@huddle01/react/hooks';
+ 
+const App = () => {
+  const { fetchAudioStream, stopAudioStream, isProducing, stream, error} = useAudio();
+
+  return (
+    <div>
+      
+     {/* Mic */} 
+      <button disabled={!fetchAudioStream.isCallable} onClick={fetchAudioStream}>
+        FETCH_AUDIO_STREAM
+      </button>
+ 
+    </div>
+  );
+};
+ 
+
+```
+
+
+

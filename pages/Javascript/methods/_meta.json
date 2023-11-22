@@ -1,0 +1,12 @@
+{
+  "init": "Init",
+  "lobby": "Lobby",
+  "room": "Room",
+  "audio": "Audio",
+  "video": "Video",
+  "peers": "Peers",
+  "recording": "Recording",
+  "livestreaming": "Livestreaming",
+  "utility": "Utility Methods",
+  "screenShare": "Screen Share"
+}

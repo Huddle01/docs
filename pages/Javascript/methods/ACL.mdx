@@ -1,0 +1,80 @@
+---
+title: 'ACL methods'
+---
+import { Callout } from 'nextra-theme-docs'
+import OptionTable from '@components/common/Table/OptionTable';
+
+## ACL methods
+
+ACL methods allow you to manage access control of peers. 
+
+<Callout type="info">
+    Please follow this hierarchy when changing peer roles: host -> coHost -> speaker -> listener
+</Callout>
+
+
+<OptionTable 
+    headers={['Name', 'Type']}
+    options={[
+        [
+            'changePeerRole(peerId: string, role: string)',
+            'Function',
+            'Change peer role of given peerId to given role'
+        ],
+        [
+            'changeRoomControls(type: string, value: boolean)', 
+            'Function',
+            'Handle room controls such as `muteEveryone`, `audioLocked`, and `videoLocked`'
+        ],
+        [
+            'kickPeer(peerId: string)',
+            'Function',
+            'Kicks out peer from the room'
+        ]
+    ]}
+/>
+
+## Example 
+
+```html
+<script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js"></script>
+
+<script>
+
+const handleMuteEveryone = () => {
+    // This will mute everyone in the room
+    huddleClient.changeRoomControls('muteEveryone', true);
+}
+
+const changeRoleToHost = () => {
+    // This will change peer role of given peerId to host
+    huddleClient.changePeerRole(PEER_ID, 'host');
+}
+
+const changeRoleToCoHost = () => {
+    // This will change peer role of given peerId to coHost
+    huddleClient.changePeerRole(PEER_ID, 'coHost');
+}
+
+const changeRoleToSpeaker = () => {
+    // This will change peer role of given peerId to speaker
+    huddleClient.changePeerRole(PEER_ID, 'speaker');
+}
+
+const changeRoleToListener = () => {
+    // This will change peer role of given peerId to listener
+    huddleClient.changePeerRole(PEER_ID, 'listener');
+}
+
+const muteEveryone = () => {
+    // This will mute everyone in the room
+    huddleClient.changeRoomControls('muteEveryone', true);
+}
+
+const removePeer = () => {
+    // This will remove peer from the room
+    huddleClient.kickPeer(PEER_ID);
+}
+
+</script>
+```

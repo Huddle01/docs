@@ -1,0 +1,69 @@
+---
+title: 'Concepts'
+---
+
+import Image from 'next/image';
+
+
+# Core Concepts and Glossary 
+
+<Image
+  src="/docs/images/sdk-arch.png"
+  alt="Cli-tool"
+  width={1000}
+  height={1000}
+  quality={100}
+  priority
+  className="my-8"
+/>
+
+
+The core principles around the architecture of Huddle01’s React SDK are what make using it a breeze. Below are some concepts and glossary that you should be familiar with before using the SDK.
+
+## Room
+A room is a Huddle01 meeting session. It contains all the participants and their media streams.
+
+## Peer
+A peer is a participant inside a room. It is an object containing all the media streams of a participant. Each peer is represented by a unique peerId. Every peer is associated with a room.
+
+## MediaStream
+The `MediaStream` interface represents a stream of media content. A stream can consist of several tracks, which can be either audio or video. `MediaStreams` are associated with their respective peer.
+
+## MediaStreamTrack
+The `MediaStreamTrack` interface represents a single media track within a `MediaStream`. It can be either an audio or a video track.
+
+## Local
+Once you join a room, all operations related to your own Peer object insde a room are represented by the keyword local.
+
+| Item | Variable |
+| --- | --- |
+| Your Peer Object | localPeer |
+| Your Audio Stream | localAudio |
+| Your Video Stream | localVideo |
+
+## Remote
+All other peers in the same room as you are represented by the keyword remote. Performing any operations related to a remote peer would require you to pass in the peerId of the remote peer.
+
+| Item | Variable |
+| --- | --- |
+| Another Peer Object | remotePeer |
+| Another Peer's Audio Stream | remoteAudio |
+| Another Peer's Video Stream | remoteVideo |
+
+## Data Message
+Besides `MediaStreams`, peers in the room can also send messages to one other in the form of text strings not exceeding 280 characters in length. These messages are called data messages.
+
+## Metadata
+Metadata is a generic object that can be attached to both Peers and the Room itself. It can be used to store any additional information that you want to associate with a Peer or a Room. The SDKs expose methods to get and set these metadata.
+
+## Room States
+At any given point, a Room can be in any one of these 6 states.
+
+| RoomState | Description |
+| --- | --- |
+| idle | Room is created and ready to be joined |
+| connecting | You are trying to join the room |
+| connected | You have joined the room |
+| failed | You have failed to join the room |
+| left | You have left the room |
+| closed | The room has been closed |

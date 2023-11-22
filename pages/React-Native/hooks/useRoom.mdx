@@ -1,0 +1,78 @@
+---
+title: 'useRoom'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+
+
+## useRoom
+
+Acess the following methods & states `joinRoom()` `leaveRoom()` `isLoading` `isLobbyJoined` `error` .
+
+<OptionTable
+  headers={['Name', "Type","Description"]}
+  options={[
+    [
+      'joinRoom()',
+      'Function',
+      "moves user from lobby to actual room with other peers"
+    ],
+    [
+      'leaveRoom()',
+      'Function',
+      "removes user from room, back to the lobby"
+    ],
+    ['isLoading', "boolean","loading state"],
+    ['isRoomJoined', "boolean","state whether the room is joined or not"],
+    ['error', "string","gives the error message"],
+    [
+      'endRoom()',
+      'Function',
+      "Ends the room for all, only `host` has the ability to call this function"
+    ]
+  ]}
+/>
+
+
+
+### Sample Code
+
+
+```jsx
+  import {Button, View} from 'react-native';
+  import { useRoom } from '@huddle01/react-native/hooks';
+ 
+  const App = () => {
+    const { joinRoom, leaveRoom, isLoading, isRoomJoined, error, endRoom } = useRoom();
+
+    return (
+      <View>
+        <View style={styles.button}>
+          <Button
+            title="JOIN_ROOM"
+            disabled={!joinRoom.isCallable}
+            onPress={joinRoom}
+          />
+        </View>
+
+        <View style={styles.button}>
+          <Button
+            title="LEAVE_ROOM"
+            disabled={!leaveRoom.isCallable}
+            onPress={leaveRoom}
+          />
+        </View>
+
+        <View style={styles.button}>
+          <Button
+            title="END_ROOM"
+            disabled={!endRoom.isCallable}
+            onPress={endRoom}
+          />
+        </View>
+      </View>
+    );
+  };
+ 
+```
+
