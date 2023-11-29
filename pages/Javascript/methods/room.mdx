@@ -10,7 +10,17 @@ The room is the place where the actual meeting takes place. It is the place wher
 
 ### Methods 
 
-<OptionTable 
+Geeting Room Instance
+
+```jsx
+// Getting room instance
+const room = await huddleClient.joinRoom({
+	roomId: "YOUR_ROOM_ID",
+	token: "YOUR_ACCESS_TOKEN"
+});
+```
+
+{/* <OptionTable 
     headers={['Name', 'Description', 'Parameters']}
     options={[
         [
@@ -39,7 +49,245 @@ The room is the place where the actual meeting takes place. It is the place wher
             'None'
         ]
     ]}
+/> */}
+
+`connect`
+
+Function `connect` connects to the room and returns the instance of the room.
+
+<OptionTable
+    headers={["Description",'Return Type']}
+  options={[
+    [
+      "Connects to the room and returns the instance of the room",
+      'room'
+    ],
+  ]}
 />
+
+**Example**
+```jsx
+// Usage
+ await room.connect();
+```
+
+`getLobbyPeerMetadata`
+
+Function `getLobbyPeerMetadata` gets the Metadata of the lobby peer.
+
+<OptionTable
+    headers={["Params","Type","Description",'Return Type']}
+  options={[
+    ["peerId",
+    "string",
+      "Gets the Metadata of the lobby peer",
+      'room'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.getLobbyPeerMetadata({peerId: string});
+```
+
+
+`getMetadata`
+
+Function `getMetadata` gets Metadata of the room.
+
+<OptionTable
+    headers={["Params","Type","Description",'Return Type']}
+  options={[
+    ["data",
+    "unknown",
+      "gets Metadata of the room",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.updateMetadata({data: unknown});
+```
+
+`updateMetadata`
+
+Function `updateMetadata` update Metadata of the room.
+
+<OptionTable
+    headers={["Description",'Return Type']}
+  options={[
+    [
+      "Update Metadata of the room",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.getMetadata({data: unknown});
+```
+
+
+`getRemotePeerById`
+
+Function `getRemotePeerById` returns the Remote Peer if present in room.
+
+<OptionTable
+    headers={["Params","Type","Description",'Return Type']}
+  options={[
+    [
+     "peerId",
+     "string",
+      "Returns the Remote Peer if present in room",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.getRemotePeerById(peerId:string);
+```
+
+`updateRoomControls`
+
+Function `updateRoomControls` update room control booleans - roomLocked, allowProduce, allowConsume, allowSendData.
+
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    ["data",
+    "NewRoomControls",
+      "update room control booleans - roomLocked, allowProduce, allowConsume, allowSendData",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.updateRoomControls({data: NewRoomControls});
+```
+
+
+`closeStreamOfLabel`
+
+Function `closeStreamOfLabel` will close a particular stream of remote peers in the room.
+
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    ["lables | peerIds(optional)",
+    "Label of the stream | PeerIds of the remote peers, if not provided, it will close the stream of all the remote peers",
+      "close a particular stream of remote peers in the room",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.closeStreamOfLabel({labels:,peerIds?:string[]});
+```
+
+
+`muteEveryone`
+
+Function `muteEveryone` will close the audio stream of all the remote peers who dont have admin permissions in the room.
+
+<OptionTable
+    headers={["Description" , 'Return Type']}
+  options={[
+    [
+      "Close the audio stream of all the remote peers who dont have admin permissions",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.muteEveryone();
+```
+
+`admitPeer`
+
+Function `admitPeer` admits a Peer to the room who is in the lobby.
+
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    [
+      "peerId",
+      "string",
+      "Admit a Peer to the room who is in the lobby",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.admitPeer(peerId:string);
+```
+
+
+`denyPeer`
+
+Function `denyPeer` denies the peer from joining the room, who is in the lobby.
+
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    [
+      "peerId",
+      "string",
+      "Denies the peer from joining the room, who is in the lobby",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.denyPeer(peerId:string);
+```
+
+`kickPeer`
+
+Function `kickPeer` kick peer from room with respective peerId
+
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    [
+      "peerId",
+      "string",
+      "kick peer from room with respective peerId",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.kickPeer(peerId:string);
+```
+
 
 ### Attributes
 
@@ -125,11 +373,6 @@ The room is the place where the actual meeting takes place. It is the place wher
 ### Example
 
 ```js
-// Getting room instance
-const room = await huddleClient.joinRoom({
-	roomId: "YOUR_ROOM_ID",
-	token: "YOUR_ACCESS_TOKEN"
-});
 
 // Admit peer from lobby
 room.admitPeer("PEER_ID");

@@ -35,3 +35,54 @@ const metadata = huddleClient.localPeer.metadata;
     ],
   ]}
 />
+
+**activateSpeakerNotification**
+
+`activateSpeakerNotification` function helps to activate the volatile data messaging.
+
+**Parameters**
+<OptionTable
+    headers={[,"Description" , 'Return Type']}
+  options={[
+    [
+      "function helps to activate the volatile data messaging",
+      'Promise<void>'
+    ],
+  ]}
+/>
+
+**Example**
+
+
+```jsx
+// Usage
+await huddleClient.localPeer.activateSpeakerNotification();
+```
+
+**updateRole**
+
+`updateRole` update the role of the Local Peer in the Room, this will emit an event `updated` with the updated role.
+
+**Parameters**
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    [
+      "role",
+      "string",
+      "update the role of the Local Peer in the Room",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+
+
+```jsx
+// Usage
+await huddleClient.localPeer.updateRole({role:string});
+```
+
+
+

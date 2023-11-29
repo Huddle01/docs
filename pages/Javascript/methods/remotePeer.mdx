@@ -14,3 +14,79 @@ Remote peers are peers who are present in the room. It doesn't include local pee
 // This will have an array of remote peers
 const remotePeers = huddleClient.room.remotePeers;
 ```
+
+**getConsumer**
+
+`getConsumer` gets the associated consumer for the labels.
+
+**Parameters**
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    [
+      "role",
+      "video | audio",
+      "gets the associated consumer for the labels",
+      'consumer'
+    ],
+  ]}
+/>
+
+**Example**
+
+
+```jsx
+// Usage
+await huddleClient.localPeer.getConsumer(label:string);
+```
+
+**updateRole**
+
+`updateRole` update the role of the Remote Peer in the Room, this will emit an event `updated` with the updated role.
+
+**Parameters**
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    [
+      "role",
+      "string",
+      "update the role of the Remote Peer in the Room",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+
+
+```jsx
+// Usage
+await huddleClient.localPeer.updateRole({role:string});
+```
+
+**updatePermissions**
+
+`updatePermissions` updates the Permissions of the Remote Peer in the Room. This will emit an event `updated` with the updated permissions.
+
+
+**Parameters**
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    [
+      "data",
+      "TPermissions",
+      "updates the Permissions of the Remote Peer in the Room",
+      'Promise<void>'
+    ],
+  ]}
+/>
+
+**Example**
+
+
+```jsx
+// Usage
+await huddleClient.localPeer.updatePermissions(data:TPermissions);
+```

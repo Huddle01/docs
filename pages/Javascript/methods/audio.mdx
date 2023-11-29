@@ -2,6 +2,8 @@
 title: 'Audio' 
 ---
 
+import OptionTable from '@components/common/Table/OptionTable';
+
 ## Audio 
 
 ### Enable Audio 
@@ -20,4 +22,55 @@ The `disableAudio` method stops the local audio stream and also stops producing 
 ```js
 // Disable audio stream
 await huddleClient.localPeer.disableAudio();
+```
+
+**replaceAudioStream**
+
+The `replaceAudioStream` method replaces the current audio stream with the new stream.
+
+**Parameters**
+<OptionTable
+    headers={['Params',"Type", "Description" , 'Return Type']}
+  options={[
+    [
+      'mediastream',
+      "MediaStream",
+      "This function replaces the audio stream",
+      'Promise<void>'
+    ],
+  ]}
+/>
+
+**Example**
+
+
+```jsx
+// Usage
+await huddleClient.localPeer.replaceAudioStream({MediaStream});
+```
+
+
+**changeAudioSource**
+
+The `changeAudioSource` changes the Audio source to the given deviceId, sets the preferred mic device as the given deviceId
+
+**Parameters**
+<OptionTable
+    headers={['Params',"Type","Description" , 'Return Type']}
+  options={[
+    [
+      'deviceId',
+      "string",
+      "changes the audio source to the given deviceId",
+      'Promise<void>'
+    ],
+  ]}
+/>
+
+**Example**
+
+
+```jsx
+// Usage
+await huddleClient.localPeer.changeAudioSource({deviceId});
 ```

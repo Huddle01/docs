@@ -2,6 +2,8 @@
 title: 'Video' 
 ---
 
+import OptionTable from '@components/common/Table/OptionTable';
+
 ## Video 
 
 ### Enable Video 
@@ -20,4 +22,56 @@ The `disableVideo` method stops the local video stream and also stops producing 
 ```js
 // Disable video stream
 await huddleClient.localPeer.disableVideo();
+```
+
+
+**replaceVideoStream**
+
+The `replacevideoStream` method replaces the current video stream with the new stream.
+
+**Parameters**
+<OptionTable
+    headers={['Params',"Type", "Description" , 'Return Type']}
+  options={[
+    [
+      'mediastream',
+      "MediaStream",
+      "This function replaces the video stream",
+      'Promise<void>'
+    ],
+  ]}
+/>
+
+**Example**
+
+
+```jsx
+// Usage
+await huddleClient.localPeer.replaceVideoStream({MediaStream});
+```
+
+
+**changeVideoSource**
+
+The `changeVideoSource` changes the Video source to the given deviceId, sets the preferred cam device as the given deviceId
+
+**Parameters**
+<OptionTable
+    headers={['Params',"Type","Description" , 'Return Type']}
+  options={[
+    [
+      'deviceId',
+      "string",
+      "This function changes the video stream",
+      'Promise<void>'
+    ],
+  ]}
+/>
+
+**Example**
+
+
+```jsx
+// Usage
+await huddleClient.localPeer.changeVideoSource({deviceId});
 ```
