@@ -3,12 +3,5 @@
   "walkthrough": "Walkthrough",
   "example": "Start from an example",
   "hooks": "Hooks",
-  "events": {
-    "title": "Events",
-    "theme": {
-      "toc": false,
-      "layout": "full"
-    }
-  },
   "expo": "Expo Support"
 }
