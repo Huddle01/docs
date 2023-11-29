@@ -13,7 +13,8 @@ The useDataMessage hook allows you to send and receive messages to and from othe
 const {
     sendData
   } = useDataMessage({
-    onMessage(payload, from, label) {},
+    onMessage(payload: string, from: string, label?: string) ();
+    onVolatileMesssage(data: TVolatileDataMessage) ();
   });
 ```
 
@@ -66,6 +67,61 @@ The useDataMessage hook accepts an object with the following fields as props.
 
 ```tsx
 const dataMessage = useDataMessage({ onMessage: (payload, from, label) => {
+	console.log("Received a message!");
+	console.log("Message: ", payload);
+    console.log("Sender: ", from);
+    if(label) console.log("Label: ", label);
+    // your code here
+}});
+```
+
+
+{/* onVolatileMesssage */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">2. onVolatileMesssage</span>
+    <span className="ml-2">
+        <Pill>Optional</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'TODO:.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'payload',
+      'string',
+      'The message string.',
+      'Yes',
+    ],
+    [
+      'from',
+      'string',
+      'The peerId of the sender.',
+      'Yes',
+    ],
+    [
+      'label',
+      'string',
+      'An optional label field for the message.',
+      'No',
+    ],
+  ]}
+/>
+
+##### Example Usage
+
+```tsx
+const dataMessage = useDataMessage({ onVolatileMesssage: (payload, from, label) => {
 	console.log("Received a message!");
 	console.log("Message: ", payload);
     console.log("Sender: ", from);

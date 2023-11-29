@@ -13,11 +13,14 @@ The useLocalAudio hook exposes primitives to interact with your own audio stream
 const {
     stream,
     track,
+    isAudioOn,
     enableAudio,
     disableAudio,
+    replaceAudioStream,
+    changeAudioSource,
   } = useLocalAudio({
     onProduceStart(producer) {},
-    onProduceClose() {},
+    onProduceClose(label:string) {},
     onProduceError() {},
   });
 ```
@@ -168,9 +171,27 @@ The useLocalAudio hook returns an object with the following fields.
   ]}
 />
 
+{/* isAudioOn */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">3. isAudioOn</span>
+    <span className="ml-2">
+        <Pill>Object</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "Your camera's audio stream is on or off yet.",
+      'boolean',
+    ],
+  ]}
+/>
+
 {/* enableAudio */}
 <div className="flex mt-5">
-    <span className="font-mono font-semibold">3. enableAudio</span>
+    <span className="font-mono font-semibold">4. enableAudio</span>
     <span className="ml-2">
         <Pill>Function</Pill>
     </span>
@@ -188,7 +209,7 @@ The useLocalAudio hook returns an object with the following fields.
 
 {/* disableAudio */}
 <div className="flex mt-5">
-    <span className="font-mono font-semibold">4. disableAudio</span>
+    <span className="font-mono font-semibold">5. disableAudio</span>
     <span className="ml-2">
         <Pill>Function</Pill>
     </span>
@@ -199,6 +220,44 @@ The useLocalAudio hook returns an object with the following fields.
   options={[
     [
       "Disable your microphone's audio stream and stop producing it with other peers in the room.",
+      'Promise<void>',
+    ],
+  ]}
+/>
+
+
+{/* replaceAudioStream */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">6. replaceAudioStream</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "Replaces the  mediastream.",
+      'Promise<void>',
+    ],
+  ]}
+/>
+
+
+{/* changeAudioSource */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">7. changeAudioSource</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "Changes the audio sources of the devices.",
       'Promise<void>',
     ],
   ]}

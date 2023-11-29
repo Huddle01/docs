@@ -13,16 +13,19 @@ The usePeerIds hook returns peerIds of all peers inside a Huddle01 room.
 const {
     peerIds
   } = usePeerIds({
-    labels: ["audio"]
+   roles?: string[];
+  labels?: Array<
+    'audio' | 'video' | 'screen-share-video' | 'screen-share-audio' | string
+  >;
   });
 ```
 
 ## Props
 The usePeerIds hook accepts an object with the following fields as props.
 
-{/* labels */}
+{/* roles */}
 <div className="flex mt-5">
-    <span className="font-mono font-semibold">1. labels</span>
+    <span className="font-mono font-semibold">1. roles</span>
     <span className="ml-2">
         <Pill>Optional</Pill>
     </span>
@@ -32,7 +35,32 @@ The usePeerIds hook accepts an object with the following fields as props.
   headers={['Description', 'Type']}
   options={[
     [
-      'TODO: NOT SURE WHAT THIS IS FOR.',
+      'Returns the array of the roles.',
+      "string[]",
+    ],
+  ]}
+/>
+
+
+##### Example Usage
+
+```tsx
+const peerIds = usePeerIds({ roles: ["bot"] });
+```
+
+{/* labels */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">2. labels</span>
+    <span className="ml-2">
+        <Pill>Optional</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'Returns the array of the params.',
       "Array<'audio' | 'video' | 'screen-video' | 'screen-audio' | string>",
     ],
   ]}

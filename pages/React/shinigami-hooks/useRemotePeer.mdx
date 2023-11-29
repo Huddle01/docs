@@ -12,7 +12,9 @@ The useRemotePeer hook allows you to interact with another user's Peer object, w
 ```tsx
 const {
     peerId,
+    role,
     metadata,
+    updateRole,
   } = useRemotePeer({
     peerId: "remote-peer-id",
     onMetadataUpdate(data) {},
@@ -129,6 +131,56 @@ The useLocalPeer hook returns an object with the following fields.
     [
       'The metadata associated with the remote peer.',
       'unknown',
+    ],
+  ]}
+/>
+
+{/* role */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">3. role</span>
+    <span className="ml-2">
+        <Pill>state</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'Update the metadata associated with your peer object.',
+      'string',
+    ],
+  ]}
+/>
+
+
+
+{/* updateRole */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">4. updateRole</span>
+    <span className="ml-2">
+        <Pill>function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Update the metadata associated with your peer object.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      'CO-HOST,LISTENER,GUEST',
+      'The role you want to be associated with your peer object.',
+      'Yes',
     ],
   ]}
 />

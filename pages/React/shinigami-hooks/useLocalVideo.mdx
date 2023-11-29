@@ -13,12 +13,18 @@ The useLocalVideo hook exposes primitives to interact with your own video stream
 const {
     stream,
     track,
+    isVideoOn,
     enableVideo,
     disableVideo,
+    replaceVideoStream,
+    changeVideoSource,
   } = useLocalVideo({
     onProduceStart(producer) {},
-    onProduceClose() {},
-    onProduceError() {},
+    onProduceClose(reason :{
+      code:number,
+      tag:string,
+      message:string
+    }) {},
   });
 ```
 
@@ -92,41 +98,13 @@ const localVideo = useLocalVideo({ onProduceStart: (producer) => {
 ##### Example Usage
 
 ```tsx
-const localVideo = useLocalVideo({ onProduceClose: () => {
+const localVideo = useLocalVideo({ onProduceClose: (reason) => {
 	console.log("Stopped producing your video stream!");
     // your code here
 }});
 ```
 
-{/* onProduceError */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">3. onProduceError</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
-</div>
 
-<OptionTable
-  headers={['Description', 'Return Type']}
-  options={[
-    [
-      "This function will be called when there was an error encountered while producing your camera's video stream.",
-      'void',
-    ],
-  ]}
-/>
-
-##### Example Usage
-
-```tsx
-const localVideo = useLocalVideo({ onProduceError: () => {
-	console.log("There was an error in producing your video stream!");
-    // your code here
-}});
-```
 
 ## Returns
 The useLocalVideo hook returns an object with the following fields.
@@ -167,9 +145,27 @@ The useLocalVideo hook returns an object with the following fields.
   ]}
 />
 
+{/* isVideoOn */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">3. isVideoOn</span>
+    <span className="ml-2">
+        <Pill>Object</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "Your camera's video stream is on or off.",
+      'boolean',
+    ],
+  ]}
+/>
+
 {/* enableVideo */}
 <div className="flex mt-5">
-    <span className="font-mono font-semibold">3. enableVideo</span>
+    <span className="font-mono font-semibold">4. enableVideo</span>
     <span className="ml-2">
         <Pill>Function</Pill>
     </span>
@@ -187,7 +183,7 @@ The useLocalVideo hook returns an object with the following fields.
 
 {/* disableVideo */}
 <div className="flex mt-5">
-    <span className="font-mono font-semibold">4. disableVideo</span>
+    <span className="font-mono font-semibold">5. disableVideo</span>
     <span className="ml-2">
         <Pill>Function</Pill>
     </span>
@@ -202,3 +198,43 @@ The useLocalVideo hook returns an object with the following fields.
     ],
   ]}
 />
+
+{/* replaceVideoStream */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">6. replaceVideoStream</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "Replaces the  mediastream.",
+      'Promise<void>',
+    ],
+  ]}
+/>
+
+
+{/* changeVideoSource */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">7. changeVideoSource</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "Changes the video sources of the devices.",
+      'Promise<void>',
+    ],
+  ]}
+/>
+
+
+

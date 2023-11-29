@@ -14,10 +14,19 @@ const {
     state,
     track,
     stream,
+    isVideoOn,
   } = useRemoteVideo({
     peerId: "remote-peer-id",
-    onPlayable(data) {},
-    onClose() {},
+    onClose(reason:{
+    code: number;
+    tag: string;
+    message: string;
+    }) {},
+    onPlayable(data:{
+      stream:Mediastream,
+      track:Mediatrack,
+      label:"video"
+    }) {}
   });
 ```
 
@@ -116,7 +125,7 @@ const remoteVideo = useRemoteVideo({ peerId: "remote-peer-id", onPlayable: (data
 ##### Example Usage
 
 ```tsx
-const remoteVideo = useRemoteVideo({ peerId: "remote-peer-id", onClose: () => {
+const remoteVideo = useRemoteVideo({ peerId: "remote-peer-id", onClose: (reason) => {
 	console.log("Remote video stream has been closed!");
     // your code here
 }});
@@ -175,6 +184,24 @@ The useRemoteVideo hook returns an object with the following fields.
     [
       "State of the remote peer's video stream.",
       `"playable" | "unavailable" | "stopped" | "paused" | "available"`,
+    ],
+  ]}
+/>
+
+{/* isVideOn */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">4. isVideOn</span>
+    <span className="ml-2">
+        <Pill>Object</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "State of the remote peer's video.",
+      "boolean"
     ],
   ]}
 />

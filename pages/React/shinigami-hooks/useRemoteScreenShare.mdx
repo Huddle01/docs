@@ -18,7 +18,11 @@ const {
     state,
   } = useRemoteScreenShare({
     peerId: "remote-peer-id",
-    onPlayable(data) {},
+    onPlayable(data:{
+    track: MediaStreamTrack;
+    stream: MediaStream;
+    label: 'screen-share-video' | 'screen-share-audio';
+    }) {},
     onClose() {},
   });
 ```

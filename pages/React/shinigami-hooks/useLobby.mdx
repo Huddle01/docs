@@ -13,9 +13,10 @@ The useLobby hook allows you to interact with peers in the lobby, i.e. who are w
 const {
     lobbyPeers,
     admitPeer,
-    denyPeer
+    denyPeer,
+    getLobbyPeerMetadata
   } = useLobby({
-    onLobbyPeersUpdated(lobbyPeers) {},
+     onLobbyPeersUpdated(lobbyPeers: string[]) ();
   });
 ```
 
@@ -115,7 +116,7 @@ The useLobby hook returns an object with the following fields.
 
 {/* denyPeer */}
 <div className="flex mt-5">
-    <span className="font-mono font-semibold">2. denyPeer</span>
+    <span className="font-mono font-semibold">3. denyPeer</span>
     <span className="ml-2">
         <Pill>Function</Pill>
     </span>
@@ -138,6 +139,36 @@ The useLobby hook returns an object with the following fields.
       'peerId',
       'string',
       'peerId of the waiting peer you want to deny joining the room.',
+      'Yes',
+    ],
+  ]}
+/>
+
+{/* getLobbyPeerMetadata */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">4. getLobbyPeerMetadata</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'returns the metadata of lobby peer.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'peerId',
+      'string',
+      'peerId of the waiting peer you want to join the room.',
       'Yes',
     ],
   ]}

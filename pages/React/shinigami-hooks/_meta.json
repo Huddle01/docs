@@ -12,5 +12,7 @@
   "useRemoteAudio": "useRemoteAudio",
   "useRemoteScreenShare": "useRemoteScreenShare",
   "useDataMessage": "useDataMessage",
-  "useDevices": "useDevices"
+  "useDevices": "useDevices",
+  "useActivePeers": "useActivePeers",
+  "useRoomMetadata": "useRoomMetadata"
 }

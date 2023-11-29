@@ -12,9 +12,11 @@ The useLocalPeer hook allows you to interact with your own Peer object, which is
 ```tsx
 const {
     peerId,
-    metadata,
+    role,
     permissions,
+    metadata,
     updateMetadata,
+    updateRole,
   } = useLocalPeer({
     onMetadataUpdated(metadata) {},
   });
@@ -156,3 +158,55 @@ The useLocalPeer hook returns an object with the following fields.
     ],
   ]}
 />
+
+{/* role */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">5. role</span>
+    <span className="ml-2">
+        <Pill>state</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'Update the metadata associated with your peer object.',
+      'string',
+    ],
+  ]}
+/>
+
+
+
+{/* updateRole */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">6. updateRole</span>
+    <span className="ml-2">
+        <Pill>function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Update the metadata associated with your peer object.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      'CO-HOST,LISTENER,GUEST',
+      'The role you want to be associated with your peer object.',
+      'Yes',
+    ],
+  ]}
+/>
+
+
