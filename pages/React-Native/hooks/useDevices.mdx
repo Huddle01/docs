@@ -1,0 +1,241 @@
+---
+title: 'useDevices'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import Pill from '@components/common/Pill/Pill';
+
+# useDevices
+
+The useDevices hook provides functionality to interact with the different media devices available to you, like your camera, microphone, and speaker.
+
+```tsx
+const {
+    devices,
+    preferredDeviceId,
+    preferredDevice,
+    fetchStream,
+    getPermission,
+    setPreferredDevice,
+  } = useDevices({
+    type: "cam",
+    onPermissionGranted() {},
+    onPermissionDenied() {},
+  });
+```
+
+## Props
+The useDevices hook accepts an object with the following fields as props.
+
+{/* type */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">1. type</span>
+    <span>
+        <Pill>Required</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'The device type.',
+      `"mic" | "cam" | "speaker"`,
+    ],
+  ]}
+/>
+
+##### Example Usage
+
+```tsx
+const devices = useDevices({ type: "cam" });
+```
+
+{/* onPermissionGranted */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">2. onPermissionGranted</span>
+    <span className="ml-2">
+        <Pill>Optional</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when the permission for accessing the device is granted.',
+      'void',
+    ],
+  ]}
+/>
+
+##### Example Usage
+
+```tsx
+const devices = useDevices({ type: "cam", onPermissionGranted: () => {
+	console.log("Permission for accessing the device was granted!");
+    // your code here
+}});
+```
+
+{/* onPermissionDenied */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">3. onPermissionDenied</span>
+    <span className="ml-2">
+        <Pill>Optional</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when the permission for accessing the device is denied.',
+      'void',
+    ],
+  ]}
+/>
+
+##### Example Usage
+
+```tsx
+const devices = useDevices({ type: "cam", onPermissionDenied: () => {
+	console.log("Permission for accessing the device was denied!");
+    // your code here
+}});
+```
+
+## Returns
+The useDevices hook returns an object with the following fields.
+
+{/* devices */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">1. devices</span>
+    <span className="ml-2">
+        <Pill>Object</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'The available media devices.',
+      'MediaDeviceInfo[]',
+    ],
+  ]}
+/>
+
+{/* preferredDeviceId */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">2. preferredDeviceId</span>
+    <span className="ml-2">
+        <Pill>Object</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "The preferred media device's ID.",
+      'string | null',
+    ],
+  ]}
+/>
+
+{/* preferredDevice */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">3. preferredDevice</span>
+    <span className="ml-2">
+        <Pill>Object</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'The preferred media device.',
+      'MediaDeviceInfo | null',
+    ],
+  ]}
+/>
+
+{/* fetchStream */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">4. fetchStream</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Fetch media stream from the selected media device.',
+      'Promise<FetchStreamResponse>',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      '{ mediaDeviceKind: "mic" | "cam"; }',
+      'Object containing the type media device.',
+      'Yes',
+    ],
+  ]}
+/>
+
+{/* getPermission */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">5. getPermission</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Get permission to access the selected media device.',
+      'Promise<{ permission: "granted" | "denied"; error?: StreamPermissionsError | undefined; }>',
+    ],
+  ]}
+/>
+
+{/* setPreferredDevice */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">7. setPreferredDevice</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Set the preferred media device.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'deviceId',
+      'string',
+      'The ID of the media device you want to set as your preferred device.',
+      'Yes',
+    ],
+  ]}
+/>

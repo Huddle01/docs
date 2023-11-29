@@ -3,65 +3,173 @@ title: 'useLobby'
 ---
 
 import OptionTable from '@components/common/Table/OptionTable';
+import Pill from '@components/common/Pill/Pill';
 
+# useLobby
 
-## useLobby
+The useLobby hook allows you to interact with peers in the lobby, i.e. who are waiting to join a locked room. As an admin, you can choose to admit these peers into the room or deny them from joining the room.
 
+```tsx
+const {
+    lobbyPeers,
+    admitPeer,
+    denyPeer,
+    getLobbyPeerMetadata
+  } = useLobby({
+     onLobbyPeersUpdated(lobbyPeers: string[]) ();
+  });
+```
 
-Acess the following methods & states `joinLobby()` `leaveLobby()` `isLoading` `isLobbyJoined` `error` .
+## Props
+The useLobby hook accepts an object with the following fields as props.
 
+{/* onLobbyPeersUpdated */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">1. onLobbyPeersUpdated</span>
+    <span className="ml-2">
+        <Pill>Optional</Pill>
+    </span>
+</div>
 
 <OptionTable
-  headers={['Name', "Type","Description"]}
+  headers={['Description', 'Return Type']}
   options={[
     [
-      'joinlobby(roomId: string, accessToken: string)',
-      'Function',
-      'moves the user to a pre-room lobby where they can toggle with audio/video controls before joining a room'
+      'This function will be called when the peers waiting in lobby are updated.',
+      'void',
     ],
-    [
-      'leaveLobby()',
-      'Function',
-      'removes the user from the lobby back to the initialized state'
-    ],
-    ['isLoading', "boolean","loading state"],
-    ['isLobbyJoined', "boolean","state for whether the user has joined the lobby"],
-    ['error', "string","gives the error message"],
   ]}
 />
 
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'lobbyPeers',
+      'string[]',
+      'Array of peerIds of peers waiting in lobby',
+      'Yes',
+    ],
+  ]}
+/>
 
-### Sample Code
+##### Example Usage
 
-```jsx
-  import {Button, View} from 'react-native';
-  import { useLobby } from '@huddle01/react-native/hooks';
-  
-  const App = () => {
-    const { joinLobby, leaveLobby, isLoading, isLobbyJoined, error } = useLobby();
-  
-    return (
-      <View>
-        <View style={styles.button}>
-          <Button
-            title="JOIN_LOBBY"
-            disabled={!joinLobby.isCallable}
-            onPress={() => {
-              joinLobby('YOUR_ROOM_ID');
-            }}
-          />
-        </View>
-
-        <View style={styles.button}>
-          <Button
-            title="LEAVE_LOBBY"
-            disabled={!state.matches('Initialized.JoinedLobby')}
-            onPress={leaveLobby}
-          />
-        </View>
-      </View>
-    );
-  };
-
-
+```tsx
+const lobby = useLobby({ onLobbyPeersUpdated: (lobbyPeers) => {
+	console.log("Peers in lobby who are waiting to join updated!");
+    console.log(lobbyPeers);
+    // your code here
+}});
 ```
+
+## Returns
+The useLobby hook returns an object with the following fields.
+
+{/* lobbyPeers */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">1. lobbyPeers</span>
+    <span>
+        <Pill>Array</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'List of peerIds of the peers in lobby who are waiting to join a locked room',
+      'string[]',
+    ],
+  ]}
+/>
+
+{/* admitPeer */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">2. admitPeer</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Admit a peer into the room.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'peerId',
+      'string',
+      'peerId of the waiting peer you want to admit into the room.',
+      'Yes',
+    ],
+  ]}
+/>
+
+{/* denyPeer */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">3. denyPeer</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Deny a peer from joining the room.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'peerId',
+      'string',
+      'peerId of the waiting peer you want to deny joining the room.',
+      'Yes',
+    ],
+  ]}
+/>
+
+{/* getLobbyPeerMetadata */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">4. getLobbyPeerMetadata</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'returns the metadata of lobby peer.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'peerId',
+      'string',
+      'peerId of the waiting peer you want to join the room.',
+      'Yes',
+    ],
+  ]}
+/>

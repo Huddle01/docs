@@ -78,8 +78,22 @@ import { Card, Cards } from 'nextra-theme-docs'
 </Cards>
 
 
+#### Example
 
+```jsx
+import { useRoom } from '@huddle01/react/hooks';
 
+const { joinRoom } = useRoom({
+   onJoin: () => {
+     console.log('Joined room');
+   }
+});
 
+// join room 
+joinRoom({
+   roomId: "YOUR_ROOM_ID",
+   token: "YOUR_TOKEN"
+});
+```
 
 

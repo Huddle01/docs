@@ -1,0 +1,264 @@
+---
+title: 'useLocalAudio'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import Pill from '@components/common/Pill/Pill';
+
+# useLocalAudio
+
+The useLocalAudio hook exposes primitives to interact with your own audio stream - coming from your microphone device.
+
+```tsx
+const {
+    stream,
+    track,
+    isAudioOn,
+    enableAudio,
+    disableAudio,
+    replaceAudioStream,
+    changeAudioSource,
+  } = useLocalAudio({
+    onProduceStart(producer) {},
+    onProduceClose(label:string) {},
+    onProduceError() {},
+  });
+```
+
+
+## Props
+The useLocalAudio hook accepts an object with the following fields as props.
+
+{/* onProduceStart */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">1. onProduceStart</span>
+    <span className="ml-2">
+        <Pill>Optional</Pill>
+    </span>
+    <span className="ml-2">
+        <Pill>Advanced</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "This function will be called when you start producing your microphone's audio stream i.e sharing it with other peers in the room.",
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'producer',
+      'Producer',
+      'The mediasoup producer object.',
+      'Yes',
+    ],
+  ]}
+/>
+
+##### Example Usage
+
+```tsx
+const localAudio = useLocalAudio({ onProduceStart: (producer) => {
+	console.log("Started producing your audio stream!");
+	console.log(producer);
+    // your code here
+}});
+```
+
+{/* onProduceClose */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">2. onProduceClose</span>
+    <span className="ml-2">
+        <Pill>Optional</Pill>
+    </span>
+    <span className="ml-2">
+        <Pill>Advanced</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "This function will be called when you stop producing your microphone's audio stream.",
+      'void',
+    ],
+  ]}
+/>
+
+##### Example Usage
+
+```tsx
+const localAudio = useLocalAudio({ onProduceClose: () => {
+	console.log("Stopped producing your audio stream!");
+    // your code here
+}});
+```
+
+{/* onProduceError */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">3. onProduceError</span>
+    <span className="ml-2">
+        <Pill>Optional</Pill>
+    </span>
+    <span className="ml-2">
+        <Pill>Advanced</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "This function will be called when there was an error encountered while producing your microphone's audio stream.",
+      'void',
+    ],
+  ]}
+/>
+
+##### Example Usage
+
+```tsx
+const localAudio = useLocalAudio({ onProduceError: () => {
+	console.log("There was an error in producing your audio stream!");
+    // your code here
+}});
+```
+
+## Returns
+The useLocalAudio hook returns an object with the following fields.
+
+{/* stream */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">1. stream</span>
+    <span className="ml-2">
+        <Pill>Object</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "Your microphone's audio stream. null if not enabled yet.",
+      'MediaStream | null',
+    ],
+  ]}
+/>
+
+{/* track */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">2. track</span>
+    <span className="ml-2">
+        <Pill>Object</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "Your microphone's audio stream track. null if not enabled yet.",
+      'MediaStreamTrack | null',
+    ],
+  ]}
+/>
+
+{/* isAudioOn */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">3. isAudioOn</span>
+    <span className="ml-2">
+        <Pill>Object</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "Your camera's audio stream is on or off yet.",
+      'boolean',
+    ],
+  ]}
+/>
+
+{/* enableAudio */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">4. enableAudio</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "Enable your microphone's audio stream and start producing it with other peers in the room.",
+      'Promise<void>',
+    ],
+  ]}
+/>
+
+{/* disableAudio */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">5. disableAudio</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "Disable your microphone's audio stream and stop producing it with other peers in the room.",
+      'Promise<void>',
+    ],
+  ]}
+/>
+
+
+{/* replaceAudioStream */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">6. replaceAudioStream</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "Replaces the  mediastream.",
+      'Promise<void>',
+    ],
+  ]}
+/>
+
+
+{/* changeAudioSource */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">7. changeAudioSource</span>
+    <span className="ml-2">
+        <Pill>Function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "Changes the audio sources of the devices.",
+      'Promise<void>',
+    ],
+  ]}
+/>
