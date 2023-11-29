@@ -1,49 +1,23 @@
 ---
-title: 'ScreenShare'
+title: 'Screen Share' 
 ---
 
-import OptionTable from '@components/common/Table/OptionTable';
-import { Callout } from 'nextra-theme-docs'
+## Video 
 
-## ScreenShare
+### Enable Screen Share 
 
-<OptionTable
-  headers={['Name', "Type"]}
-  options={[
-    [
-      'fetchScreenShare()',
-      'Function',
-      "Fetches screen share stream from user’s display"
-    ],
-    ['stopScreenShare()', 'Function',"Disables screen share stream"],
-    [
-      'produceScreenShare(screenShareStream: MediaStream, peerIds?: string[])',
-      'Function',
-      "Starts sharing user’s screen with other peers in the room"
-    ],
-    ['stopProducingScreenShare()', 'Function',"Stops sharing user’s screen with other peers in the room"]
-  ]} 
-/>
+The `enableScreenShare` method enables the local screen sharing and starts producing the screen sharing stream with the label `screen`.
 
+```js
+// Enable screen share
+await huddleClient.localPeer.enableScreenShare();
+```
 
-### Example
+### Disable Screen Share
 
-```html
+The `disableScreenShare` method stops the local screen sharing and also stops producing the screen sharing stream with remote peers.
 
-<script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js"></script>
-
-<body>
-
-    <button id="fetchScreenShare">Fetch Screen Share</button>
-
-</body>
-
-<script>
-
-document.getElementById('fetchScreenShare').addEventListener('click', async () => {
-    await huddleClient.fetchScreenShare();
-});
-
-</script>
-
+```js
+// Disable screen share
+await huddleClient.localPeer.disableScreenShare();
 ```

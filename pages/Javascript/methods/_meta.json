@@ -1,12 +1,13 @@
 {
   "init": "Init",
-  "lobby": "Lobby",
   "room": "Room",
   "audio": "Audio",
   "video": "Video",
-  "peers": "Peers",
-  "recording": "Recording",
-  "livestreaming": "Livestreaming",
-  "utility": "Utility Methods",
-  "screenShare": "Screen Share"
+  "localPeer": "Local Peer",
+  "remotePeer": "Remote Peer",
+  "screenShare": "Screen Share",
+  "mediaDevices": "Media Devices",
+  "produce": "Produce",
+  "consume": "Consume",
+  "sendData": "Send Data"
 }

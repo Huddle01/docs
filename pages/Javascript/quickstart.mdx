@@ -6,27 +6,24 @@ import { Tab, Tabs, Callout } from 'nextra-theme-docs';
 
 # Quickstart
 
-## Installing the packages:
+This guide will help you to quickly get started with using our Javascript SDK in your project. 
+
+## Installation
 
 You can install the Huddle01 Vanilla JS SDK packages in two ways:
 
+1. Using the script tag: Add the following code snippet to the head of your HTML. 
 
-<Callout type="info">
-  The **`huddleClient`** variable will be accessible in the global scope after importing from CDN.
-</Callout>
+    ```html
+    <script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js" />
 
-1. Using the script tag: Add the following code snippet to the head of your HTML file: Replace with our CDN
+    <script type="module">
+	    // Initialize huddleClient
+	    const huddleClient = new HuddleClient({ projectId: "YOUR_PROJECT_ID" });
+    </script>
+    ```
 
-   ```js
-   <script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js" />
-
-   <script type="module">
-     huddleClient.initialize("YOUR_PROJECT_ID");
-     huddleClient.joinLobby("YOUR_ROOM_ID");
-   </script>
-   ```
-
-2. Using npm (or yarn): Run the following command in your terminal to install the package:
+2. Using npm or any other package manager: Run the following command in your terminal to install the package:
 
   <Tabs items={['npm', 'yarn']}>
     <Tab>
@@ -42,20 +39,21 @@ You can install the Huddle01 Vanilla JS SDK packages in two ways:
     </Tab>
   </Tabs>
 
-## Initializing the client:
+## Using client to access Methods
 
-After installing the package, you can initialize the client in your JavaScript code as shown below:
+Once you initialise `huddleClient` you can access various methods such as `joinRoom` and other methods. 
 
-```html
+```html 
 <script>
-  huddleClient.initialize("YOUR_PROJECT_ID");
+// Joining room
+huddleClient.joinRoom({
+	roomId: "YOUR_ROOM_ID",
+	token: "YOUR_ACCESS_TOKEN"
+});
 
-  document.getElementById('joinLobby').onclick = () => {
-    huddleClient.joinLobby('YOUR_ROOM_ID');
-  };
-
-  document.getElementById('joinRoom').onclick = () => {
-    huddleClient.joinRoom();
-  };
+// Listening to room joined event
+huddleClient.room.on(eventName: "room-joined", () => {
+	console.log("Room Joined");
+}) 
 </script>
 ```

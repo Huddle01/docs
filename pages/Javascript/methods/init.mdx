@@ -2,13 +2,10 @@
 title: 'Init'
 ---
 
-## Init
+## Init 
 
-Initializes and sets up the app state required by the library. This method should be invoked first at all times.
+You need to create a new `huddleClient` instance which will be used to access various methods. 
 
 ```js
-huddleClient.initialize("YOUR_PROJECT_ID");
+const huddleClient = new HuddleClient({ projectID: "YOUR_PROJECT_ID" })
 ```
-
-
-

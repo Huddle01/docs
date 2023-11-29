@@ -1,51 +1,23 @@
 ---
-title: 'Video'
+title: 'Video' 
 ---
 
-import  { Callout } from "nextra-theme-docs"
-import OptionTable from '@components/common/Table/OptionTable';
+## Video 
 
-## Video
+### Enable Video 
 
-<OptionTable
-  headers={['Name', "Type","Description"]}
-  options={[
-    [
-      'fetchVideoStream(deviceId?: string)',
-      'Function',
-      "Enables video stream from user’s device cam(lobby)"
-    ],
-    ['stopVideoStream()', 'Function',"Disables video stream from user’s device cam(lobby)"],
-    [
-      'produceVideo(camStream: MediaStream, peerIds?: string[])',
-      'Function',
-      "Starts sharing user’s webcam stream with other peers in the room"
-    ],
-    ['stopProducingVideo()', 'Function',"Stops sharing user’s webcam stream with other peers in the room"],
-    ['enumerateDevices()', 'Function', "Returns the list of video devices"],
-    ['createSingleConsumer(peerId: string, "cam")', 'Function', "Starts consuming video stream for given peerId"],
-    ['closeSingleConsumer(peerId: string, "cam")', 'Function', "Stops consuming video stream for given peerId"],
-  ]} 
-/>
+The `enableVideo` method enables the local microphone and starts producing the video stream with the label `video`.
 
-## Example 
+```js
+// Enable Video stream
+await huddleClient.localPeer.enableVideo();
+```
 
-```html
+### Disable Video
 
-<script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js"></script>
+The `disableVideo` method stops the local video stream and also stops producing the video stream with remote peers.
 
-<body>
-
-    <button id="fetchVideoStream">Fetch Video Stream</button>
-
-</body>
-
-<script> 
-
-document.getElementById("fetchVideoStream").addEventListener("click", async () => {
-  await huddleClient.fetchVideoStream();
-});
-
-</script>
-
+```js
+// Disable video stream
+await huddleClient.localPeer.disableVideo();
 ```

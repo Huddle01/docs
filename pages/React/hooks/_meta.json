@@ -1,13 +1,18 @@
 {
-  "useHuddle01": "useHuddle01",
-  "useLobby": "useLobby",
   "useRoom": "useRoom",
-  "useAudio": "useAudio",
-  "useVideo": "useVideo",
-  "usePeers": "usePeers",
-  "useRecording": "useRecording",
-  "useLivestream": "useLivestream",
-  "useAcl": "useAcl",
-  "useAppUtils": "useAppUtils",
-  "useScreenShare": "useScreenShare"
+  "useRoomControls": "useRoomControls",
+  "useLobby": "useLobby",
+  "usePeerIds": "usePeerIds",
+  "useLocalPeer": "useLocalPeer",
+  "useLocalVideo": "useLocalVideo",
+  "useLocalAudio": "useLocalAudio",
+  "useLocalScreenShare": "useLocalScreenShare",
+  "useRemotePeer": "useRemotePeer",
+  "useRemoteVideo": "useRemoteVideo",
+  "useRemoteAudio": "useRemoteAudio",
+  "useRemoteScreenShare": "useRemoteScreenShare",
+  "useDataMessage": "useDataMessage",
+  "useDevices": "useDevices",
+  "useActivePeers": "useActivePeers",
+  "useRoomMetadata": "useRoomMetadata"
 }
