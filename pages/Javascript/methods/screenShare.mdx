@@ -2,13 +2,14 @@
 title: 'Screen Share' 
 ---
 
-## Video 
+# Screen Share
 
 ### Start Screen Share 
 
 The `startScreenShare` method enables the local screen sharing and starts producing the screen sharing stream with the label `screen`.
 
 ```js
+// Usage
 // Enable screen share
 await huddleClient.localPeer.startScreenShare();
 ```
@@ -18,6 +19,7 @@ await huddleClient.localPeer.startScreenShare();
 The `stopScreenShare` method stops the local screen sharing and also stops producing the screen sharing stream with remote peers.
 
 ```js
+// Usage
 // Disable screen share
 await huddleClient.localPeer.stopScreenShare();
 ```

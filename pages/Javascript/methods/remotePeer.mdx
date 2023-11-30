@@ -4,18 +4,18 @@ title: 'Remote Peer'
 
 import OptionTable from '@components/common/Table/OptionTable';
 
-## Remote Peer 
+# Remote Peer 
 
 Remote peers are peers who are present in the room. It doesn't include local peer. 
 
-### Example 
+**Example** 
 
 ```js
 // This will have an array of remote peers
 const remotePeers = huddleClient.room.remotePeers;
 ```
 
-**getConsumer**
+### getConsumer
 
 `getConsumer` gets the associated consumer for the labels.
 
@@ -40,7 +40,32 @@ const remotePeers = huddleClient.room.remotePeers;
 await huddleClient.localPeer.getConsumer(label:string);
 ```
 
-**updateRole**
+### getMetadata
+
+`getMetadata` gets the metadata of the Remote Peer in the Room.
+
+**Parameters**
+<OptionTable
+    headers={["Description" , 'Return Type']}
+  options={[
+    [
+      "gets the metadata of the Remote Peer in the Room",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+
+
+```jsx
+// Usage
+await huddleClient.localPeer.getMetadata();
+```
+
+
+
+### updateRole
 
 `updateRole` update the role of the Remote Peer in the Room, this will emit an event `updated` with the updated role.
 
@@ -65,7 +90,7 @@ await huddleClient.localPeer.getConsumer(label:string);
 await huddleClient.localPeer.updateRole({role:string});
 ```
 
-**updatePermissions**
+ ### updatePermissions
 
 `updatePermissions` updates the Permissions of the Remote Peer in the Room. This will emit an event `updated` with the updated permissions.
 
@@ -90,3 +115,55 @@ await huddleClient.localPeer.updateRole({role:string});
 // Usage
 await huddleClient.localPeer.updatePermissions(data:TPermissions);
 ```
+
+## Events
+
+<OptionTable 
+    headers={['Event Name', 'Description']}
+    options={[
+        [
+            'metadata-updated',
+            'Invoked when a remote user metadata successfully updates.',
+        ],
+        [
+            'role-updated',
+            "Invoked when a rempote user's role successfully updates.",
+        ],
+        [
+            'stream-available',
+            'Invoked when a remote peer stream is available.',
+        ],
+        [
+            'stream-closed',
+            'Invoked when a remote peer stream is closed.',
+        ],
+        [
+            'stream-playable',
+            'Invoked when a remote peer stream is playable.',
+        ],
+
+         [
+            'stream-stopped',
+            'Invoked when a remote peer stream is stopped.',
+        ],
+    ]}
+/>
+
+
+**Example**
+
+```js
+
+// Event listeners for the Remote Peer
+remotePeer.on("metadata-updated", () => {
+  console.log("successfully updated remote peer metatdat.");
+});
+
+remotePeer.once("stream-available", (data) => {
+  console.log("Remote Peer stream is avaialble.");
+
+});
+
+remotePeer.off("stream-closed", () => {
+  console.log("Remote Peer Stream is closed.");
+});

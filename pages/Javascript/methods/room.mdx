@@ -4,13 +4,13 @@ title: 'Room'
 
 import OptionTable from '@components/common/Table/OptionTable';
 
-## Room
+# Room
 
 The room is the place where the actual meeting takes place. It is the place where the user can interact with other peers.
 
-### Methods 
+## Methods 
 
-Geeting Room Instance
+### Join Room
 
 ```jsx
 // Getting room instance
@@ -20,38 +20,8 @@ const room = await huddleClient.joinRoom({
 });
 ```
 
-{/* <OptionTable 
-    headers={['Name', 'Description', 'Parameters']}
-    options={[
-        [
-            'connect()',
-            'Connects to the room and transitions its state to "connecting."',
-            'None'
-        ],
-        [
-            'admitPeer(peerId)',
-            'Admits a peer from the lobby to the room.',
-            'peerId: string'
-        ],
-        [
-            'denyPeer(peerId)',
-            'Denies a peer from joining the room who is in the lobby.',
-            'peerId: string'
-        ],
-        [
-            'close()',
-            'Closes the room for the current user and all other users.',
-            'None'
-        ],
-        [
-            'leave()',
-            'Leaves the room for the current user while allowing it to remain active for remote participants.',
-            'None'
-        ]
-    ]}
-/> */}
 
-`connect`
+ ### connect
 
 Function `connect` connects to the room and returns the instance of the room.
 
@@ -71,7 +41,7 @@ Function `connect` connects to the room and returns the instance of the room.
  await room.connect();
 ```
 
-`getLobbyPeerMetadata`
+ ### getLobbyPeerMetadata
 
 Function `getLobbyPeerMetadata` gets the Metadata of the lobby peer.
 
@@ -93,7 +63,7 @@ await room.getLobbyPeerMetadata({peerId: string});
 ```
 
 
-`getMetadata`
+- ### getMetadata
 
 Function `getMetadata` gets Metadata of the room.
 
@@ -114,7 +84,7 @@ Function `getMetadata` gets Metadata of the room.
 await room.updateMetadata({data: unknown});
 ```
 
-`updateMetadata`
+ ### updateMetadata
 
 Function `updateMetadata` update Metadata of the room.
 
@@ -135,7 +105,7 @@ await room.getMetadata({data: unknown});
 ```
 
 
-`getRemotePeerById`
+- ### getRemotePeerById
 
 Function `getRemotePeerById` returns the Remote Peer if present in room.
 
@@ -157,7 +127,7 @@ Function `getRemotePeerById` returns the Remote Peer if present in room.
 await room.getRemotePeerById(peerId:string);
 ```
 
-`updateRoomControls`
+ ### updateRoomControls
 
 Function `updateRoomControls` update room control booleans - roomLocked, allowProduce, allowConsume, allowSendData.
 
@@ -179,7 +149,7 @@ await room.updateRoomControls({data: NewRoomControls});
 ```
 
 
-`closeStreamOfLabel`
+ ### closeStreamOfLabel
 
 Function `closeStreamOfLabel` will close a particular stream of remote peers in the room.
 
@@ -201,7 +171,7 @@ await room.closeStreamOfLabel({labels:,peerIds?:string[]});
 ```
 
 
-`muteEveryone`
+ ### muteEveryone
 
 Function `muteEveryone` will close the audio stream of all the remote peers who dont have admin permissions in the room.
 
@@ -221,7 +191,7 @@ Function `muteEveryone` will close the audio stream of all the remote peers who 
 await room.muteEveryone();
 ```
 
-`admitPeer`
+ ### admitPeer
 
 Function `admitPeer` admits a Peer to the room who is in the lobby.
 
@@ -243,8 +213,7 @@ Function `admitPeer` admits a Peer to the room who is in the lobby.
 await room.admitPeer(peerId:string);
 ```
 
-
-`denyPeer`
+ ### denyPeer
 
 Function `denyPeer` denies the peer from joining the room, who is in the lobby.
 
@@ -266,7 +235,7 @@ Function `denyPeer` denies the peer from joining the room, who is in the lobby.
 await room.denyPeer(peerId:string);
 ```
 
-`kickPeer`
+ ### kickPeer
 
 Function `kickPeer` kick peer from room with respective peerId
 
@@ -289,7 +258,7 @@ await room.kickPeer(peerId:string);
 ```
 
 
-### Attributes
+## Attributes
 
 <OptionTable 
     headers={['Name', 'Description', 'Type']}
@@ -317,7 +286,7 @@ await room.kickPeer(peerId:string);
     ]}
 />
 
-### Events
+## Events
 
 <OptionTable 
     headers={['Event Name', 'Description', 'Returns']}
@@ -370,7 +339,7 @@ await room.kickPeer(peerId:string);
     ]}
 />
 
-### Example
+**Example**
 
 ```js
 

@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 // Assets
-import LandingIcons from '@components/assets/LandingIcons';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
+import LandingIcons from "@components/assets/LandingIcons";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
 type LatestReleaseProps = {};
 
@@ -12,19 +12,25 @@ const LatestRelease: React.FC<LatestReleaseProps> = () => {
 
   const releaseData = [
     {
-      title: 'Javascript',
-      version: '0.0.15',
-      url: '/Javascript',
+      title: "Javascript",
+      version: "1.0.0-alpha.54",
+      url: "/Javascript",
     },
     {
-      title: 'React JS',
-      version: '0.0.13',
-      url: '/React',
+      title: "React JS",
+      version: "1.0.0-alpha.57",
+      url: "/React",
     },
     {
-      title: 'React Native',
-      version: '0.0.14',
-      url: '/React-Native',
+      title: "React Native",
+      version: "1.0.0-alpha.57",
+      url: "/React-Native",
+    },
+
+    {
+      title: "Server Sdk",
+      version: "1.0.0-alpha.25",
+      url: "/server-sdk",
     },
   ];
   return (
@@ -71,7 +77,7 @@ const Strip: React.FC<IStripProps> = ({ isUpdated, version, title }) => (
       <div className="flex items-center gap-2.5">
         <Image
           src={`/docs/images/${title}.png`}
-          alt={title ?? 'latest-release-img'}
+          alt={title ?? "latest-release-img"}
           width={20}
           height={20}
           className="object-contain"
@@ -86,7 +92,7 @@ const Strip: React.FC<IStripProps> = ({ isUpdated, version, title }) => (
         v {version}
       </div>
     ) : (
-      <div className="cursor-pointer">{LandingIcons['chevron-up']}</div>
+      <div className="cursor-pointer">{LandingIcons["chevron-up"]}</div>
     )}
   </div>
 );

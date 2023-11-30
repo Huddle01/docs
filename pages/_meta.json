@@ -47,12 +47,19 @@
   "React": "",
   "React-Native": "",
   "Flutter": "",
+  "server-sdk": {
+    "title": "Server-Sdk",
+    "theme": {
+      "layout": "full"
+    }
+  },
   "--APIs": {
     "type": "separator",
     "title": "APIs"
   },
   "api-keys": "Get an API key",
   "apis": "API Reference",
+
   "--Quick Integration": {
     "type": "separator",
     "title": "Quick Integration"

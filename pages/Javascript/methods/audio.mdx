@@ -10,6 +10,8 @@ import OptionTable from '@components/common/Table/OptionTable';
 
 The `enableAudio` method enables the local microphone and starts producing the audio stream with the label `audio`.
 
+
+**Example**
 ```js
 // Enable audio stream
 await huddleClient.localPeer.enableAudio();
@@ -19,12 +21,14 @@ await huddleClient.localPeer.enableAudio();
 
 The `disableAudio` method stops the local audio stream and also stops producing the audio stream with remote peers.
 
+
+**Example**
 ```js
 // Disable audio stream
 await huddleClient.localPeer.disableAudio();
 ```
 
-**replaceAudioStream**
+### replaceAudioStream
 
 The `replaceAudioStream` method replaces the current audio stream with the new stream.
 
@@ -43,14 +47,13 @@ The `replaceAudioStream` method replaces the current audio stream with the new s
 
 **Example**
 
-
 ```jsx
 // Usage
 await huddleClient.localPeer.replaceAudioStream({MediaStream});
 ```
 
 
-**changeAudioSource**
+### changeAudioSource
 
 The `changeAudioSource` changes the Audio source to the given deviceId, sets the preferred mic device as the given deviceId
 

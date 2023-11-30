@@ -1,0 +1,150 @@
+---
+title: 'Server-SDK'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+
+## Server SDK
+
+
+## Recording / Livestreaming
+
+```jsx
+import { Recorder } from '@huddle01/server-sdk/recorder';
+
+const recorder = new Recorder("API_KEY", "API_SECRET");
+
+// Start Recording
+recorder.startRecording({
+	roomId: 'YOUR_ROOM_ID',
+	token: 'YOUR_TOKEN'
+})
+
+// Start Livestreaming
+recorder.startLivestream({
+	roomId: 'YOUR_ROOM_ID',
+	token: 'YOUR_TOKEN'
+	rtmpUrls: []
+})
+
+// Stop Recording/Livestreaming
+recorder.stop({
+	roomId: 'YOUR_ROOM_ID',
+})
+```
+
+## Access Token
+
+```jsx
+import { AccessToken, Role } from '@huddle01/server-sdk/auth';
+
+const accessToken = new AccessToken({
+    apiKey: 'YOUR_API_KEY',
+    roomId: 'YOUR_ROOM_ID',
+    role: Role.HOST,
+    options: {
+      metadata: {}, // any custom metadata
+    },
+  });
+```
+
+## Web Hooks
+
+```jsx
+import { WebhookReceiver } from '@huddle01/server-sdk/webhooks';
+
+const webhookReceiver = new WebhookReceiver({
+  apiKey: 'YOUR_API_KEY',
+  apiSecret: 'YOUR_API_SECRET',
+});
+```
+
+### Events
+
+You can listen to these event on your server side and perform various actions based on the events. Following is the list of events you can listen to: 
+
+
+
+ `**meeting:started**`
+    
+    
+    | Attributes | Type |
+    | --- | --- |
+    | roomId | string |
+    | createdAt | number |
+- `**meeting:ended**`
+    
+    
+    | Attributes | Type |
+    | --- | --- |
+    | roomId | string |
+    | createdAt | number |
+    | endedAt | number |
+    | duration | number |
+    | participants | number |
+    | maxParticipants | number |
+- `**peer:joined**`
+    
+    
+    | Attributes | Type |
+    | --- | --- |
+    | id | string |
+    | roomId | string |
+    | joinedAt | number |
+    | metadata | string? |
+    | role | string? |
+    | browser | Browser |
+    | device | Device |
+    
+    **Browser**
+    
+    | name | string? |
+    | --- | --- |
+    | version | string? |
+    
+    **Device**
+    
+    | model | string? |
+    | --- | --- |
+    | type | string? |
+    | vendor | string? |
+    
+- `**peer:left**`
+    
+    
+    | Attributes | Type |
+    | --- | --- |
+    | id | string |
+    | roomId | string |
+    | leftAt | number |
+    | duration | number |
+    | metadata | string? |
+    | role | string? |
+- `**peer:trackPublished**`
+    
+    
+    | Attributes | Type |
+    | --- | --- |
+    | id | string |
+    | track | string |
+- **`peer:trackUnpublished`**
+    
+    
+    | Attributes | Type |
+    | --- | --- |
+    | id | string |
+    | track | string |
+- `**recording:started**`
+    
+    
+    | Attributes | Type |
+    | --- | --- |
+    | id | string |
+    | roomId | string |
+- **`recording:stopped`**
+    
+    
+    | Attributes | Type |
+    | --- | --- |
+    | id | string |
+    | roomId | string |

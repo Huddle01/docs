@@ -35,17 +35,7 @@ The **`produce`** method allows the Local Peer to produce a media stream with a 
   ]}
 />
 
-**Events**
-<OptionTable
-    headers={['Name', 'Description', 'Returns']}
-  options={[
-    [
-      'new-producer',
-      'Emitted when a new producer is created',
-      '{ label: string; producer: Producer }'
-    ],
-  ]}
-/>
+
 
 **Example**
 
@@ -75,3 +65,17 @@ The **`stopProducing`** method allows the Local Peer to stop producing a media s
 ```jsx
 const producer = await huddleClient.localPeer.stopProducing({ label: "video" });
 ```
+
+
+## Events
+
+<OptionTable
+    headers={['Name', 'Description', 'Returns']}
+  options={[
+    [
+      'new-producer',
+      'Emitted when a new producer is created',
+      '{ label: string; producer: Producer }'
+    ],
+  ]}
+/>

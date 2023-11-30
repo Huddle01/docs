@@ -2,8 +2,5 @@
   "quickstart": "Quickstart",
   "methods": "Methods",
   "walkthrough": "Walkthrough",
-  "example": "Start from an example",
-  "events": {
-    "title": "Events"
-  }
+  "example": "Start from an example"
 }

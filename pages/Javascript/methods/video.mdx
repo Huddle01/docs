@@ -10,14 +10,18 @@ import OptionTable from '@components/common/Table/OptionTable';
 
 The `enableVideo` method enables the local microphone and starts producing the video stream with the label `video`.
 
+**Example**
+
 ```js
 // Enable Video stream
 await huddleClient.localPeer.enableVideo();
 ```
 
-### Disable Video
+- ### Disable Video
 
 The `disableVideo` method stops the local video stream and also stops producing the video stream with remote peers.
+
+**Example**
 
 ```js
 // Disable video stream
@@ -25,7 +29,7 @@ await huddleClient.localPeer.disableVideo();
 ```
 
 
-**replaceVideoStream**
+### replaceVideoStream
 
 The `replacevideoStream` method replaces the current video stream with the new stream.
 
@@ -51,7 +55,7 @@ await huddleClient.localPeer.replaceVideoStream({MediaStream});
 ```
 
 
-**changeVideoSource**
+### changeVideoSource
 
 The `changeVideoSource` changes the Video source to the given deviceId, sets the preferred cam device as the given deviceId
 
