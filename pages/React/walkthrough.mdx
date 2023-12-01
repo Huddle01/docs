@@ -41,347 +41,141 @@ Head over to [API Keys Page](/api-keys) and connect your wallet to get your proj
 - `API Key`
 - `projectId`
 
-Once done, initialize your project by calling the `initialize()` method and pass `projectId`  in params. 
-
+Once done, initialize your project by adding the `HuddleProvider` and pass `projectId`  in params. 
 
 ```tsx filename="app.tsx"
 import { useHuddle01 } from '@huddle01/react';
 
-const App = () => {
-  const { initialize, isInitialized } = useHuddle01();
+const huddleClient = new HuddleClient({
+  projectId: env.NEXT_PUBLIC_PROJECT_ID,
+  options: {
+    activeSpeakers: {
+      size: 14,
+    },
+  },
+});
 
-  useEffect(() => {
-    // its preferable to use env vars to store projectId
-    initialize('YOUR_PROJECT_ID');
-  }, []);
-
-  return <div>{isInitialized ? 'Hello World!' : 'Please initialize'}</div>;
+const Parent = () => {
+  return (
+    <HuddleProvider key="huddle01-provider" client={huddleClient}>
+      <App />
+    </HuddleProvider>
+  );
 };
 ```
 
-### Joining the lobby
+### Generating the access token
 Room Id can be generated using the : [Create Room API](/apis/create-room/create-room)
 
-Add the following button to your jsx and call the `joinLobby()` method.
+```tsx filename="api.ts" highlight={2,7,16-21}
+  import { AccessToken, Role } from '@huddle01/server-sdk/auth';
 
-```tsx filename="app.tsx" highlight={2,7,16-21}
-  import { useHuddle01 } from '@huddle01/react';
-  import { useLobby } from '@huddle01/react/hooks';
+   const accessToken = new AccessToken({
+        apiKey,
+        roomId: "YOUR_ROOM_ID",
+        role:  Role.HOST,
+        permissions: {
+          admin: true,
+          canConsume: true,
+          canProduce: true,
+          canProduceSources: {
+            cam: true,
+            mic: true,
+            screen: true,
+          },
+          canRecvData: true,
+          canSendData: true,
+          canUpdateMetadata: true,
+        },
+        options: {
+          metadata: { 
+             // you can add any custom attributes here which you want to associate with the user
+            walletAddress: "axit.eth"
+          },
+        },
+      });
 
-
-  const App = () => {
-    const { initialize, isInitialized } = useHuddle01();
-    const { joinLobby } = useLobby();
-
-    useEffect(() => {
-      // its preferable to use env vars to store projectId
-      initialize('YOUR_PROJECT_ID');
-    }, []);
-  
-    return (
-      <div>{isInitialized ? 'Hello World!' : 'Please initialize'}
-        <button 
-          disabled={joinLobby.isCallable} 
-          onClick={() => joinLobby('YOUR_ROOM_ID');
-        }>
-          Join Lobby
-        </button>
-      </div>
-    );
-  };
 ```
-
-
-<Callout type="info">
-  The **`isCallable`** is an attribute available on all methods to check whether the function is callable or not.
-</Callout>
-
-  Room creation using the [Create Room API](/apis/create-room/create-room) can be done in the following ways:
-  <details>
-    <summary>
-      NextJs API Route to create room  (NodeJs)
-    </summary>
-
-    This is how you can create a room using [NextJS API Route](https://nextjs.org/docs/api-routes/introduction) and pass the `roomId` to the `joinLobby()` method.
-
-    ```ts filename="pages/api/create-room.ts" 
-    import axios from 'axios';
-
-    import type { NextApiRequest, NextApiResponse } from 'next';
-
-    const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-      try {
-        const { data } = await axios.post(
-          'https://api.huddle01.com/api/v1/create-room',
-          {
-            title: 'Huddle01-Test',
-            roomLock: false,
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'x-api-key': process.env.API_KEY,
-            },
-          }
-        );
-
-        res.status(200).json(data);
-      } catch (error) {
-        res.status(500).json(error);
-      }
-    };
-
-    export default handler;
-    ```
-  </details>
-
-  <details>
-    <summary>
-      NextJS `getServerSideProps()` room creation example
-    </summary>
-    This is how you can create a room using [getServerSideProps()](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props) and pass the `roomId` to the `joinLobby()` method.
-
-    ```tsx filename="app.tsx" 
-    export const getServerSideProps: GetServerSideProps<{
-      roomId: string;
-    }> = async () => {
-      const { data } = await axios.post(
-        'https://api.huddle01.com/api/v1/create-room',
-        {
-          title: 'Huddle01-SDK-Test',
-          roomLock: false,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': process.env.API_KEY,
-          },
-        }
-      );
-
-      return {
-        props: {
-          roomId: data.roomId,
-        },
-      };
-    };
-    ```
-  </details>
-
-  ### Enabling and Disabling Media Devices
-  <Callout emoji="⚠️">
-    If cam and mic aren’t enabled in the lobby, video and audio won’t be shareable inside the room 
-  </Callout>
-  <Callout emoji="⚠️">
-    These methods are to be called only when in lobby state.
-  </Callout>
-
-  Then, add the locale codes to your file extensions (required for the default locale too):
-
+### Joining and leaving the room
 
 
   ```tsx filename="app.tsx" highlight={2,8-9,26-34}
-  import { useHuddle01 } from '@huddle01/react';
-  import { useLobby, useAudio, useVideo } from '@huddle01/react/hooks';
+  import { useRoom } from '@huddle01/react/hooks';
 
 
   const App = () => {
-    const { initialize, isInitialized } = useHuddle01();
-    const { joinLobby } = useLobby();
-    const { fetchAudioStream, stopAudioStream, error: micError } = useAudio();
-    const { fetchVideoStream, stopVideoStream, error: camError } = useVideo();
-    // Show error if it exists
-
-    useEffect(() => {
-      // its preferable to use env vars to store projectId
-      initialize('YOUR_PROJECT_ID');
-    }, []);
+    const { joinRoom, leaveRoom } = useRoom({
+      onJoin: () => {
+        console.log('Joined the room');
+      },
+      onLeave: () => {
+        console.log('Left the room');
+      },
+    });
   
     return (
-      <div>{isInitialized ? 'Hello World!' : 'Please initialize'}
-        <button 
-          disabled={joinLobby.isCallable} 
-          onClick={() => joinLobby('YOUR_ROOM_ID');
-        }>
-          Join Lobby
-        </button>
-
-       {/* Mic */} 
-        <button disabled={!fetchAudioStream.isCallable} onClick={fetchAudioStream}>
-          FETCH_AUDIO_STREAM
-        </button>
-
-        {/* Webcam */} 
-        <button disabled={!fetchVideoStream.isCallable} onClick={fetchVideoStream}>
-          FETCH_VIDEO_STREAM
-        </button>
+      <div>
+        <button onClick={() => joinRoom('YOUR_ROOM_ID')}>
+          Join Room
+        </button>      
+        <button onClick={() => leaveRoom('YOUR_ROOM_ID')}>
+          Leave Room
+        </button> 
       </div>
     );
   };
 
 ```
 
-
-<Callout type="info">
-  The **`isCallable`** is an attribute available on all methods to check whether the function is callable or not.
-</Callout>
-
- <details>
-    <summary>
-      Render your own video and audio streams 
-    </summary>
-    
-    This is how can render your own video and audio streams
-
-    ```tsx filename="Media.tsx" 
-    import { useHuddle01 } from '@huddle01/react';
-    import { Audio, Video } from '@huddle01/react/components';
- 
-    const Media = () => {
-      const { meId } = useHuddle01();
-      const { stream: videoStream } = useVideo();
-      const { stream: audioStream } = useAudio();
-   
-      return (
-        <div>
-          <Video peerId={meId} stream={videoStream} />
-          <Audio peerId={meId} stream={audioStream} />
-        </div>
-      );
-    };
-
-    ```
-  </details>
-
-### Joining and leaving the room
-
-The joinRoom() method can be called to enter the room, once the lobby has been joined. To leave that respective room you can call the leaveRoom() method in the ROOM state.
-
-```tsx filename="app.tsx" highlight={2,9,36-42}
-  import { useHuddle01 } from '@huddle01/react';
-  import { useLobby, useAudio, useVideo, useRoom } from '@huddle01/react/hooks';
-
-  const App = () => {
-    const { initialize, isInitialized } = useHuddle01();
-    const { joinLobby } = useLobby();
-    const { fetchAudioStream, stopAudioStream, error: micError } = useAudio();
-    const { fetchVideoStream, stopVideoStream, error: camError } = useVideo(); 
-    const { joinRoom, leaveRoom } = useRoom();
-
-
-    useEffect(() => {
-      // its preferable to use env vars to store projectId
-      initialize('YOUR_PROJECT_ID');
-    }, []);
-  
-    return (
-      <div>{isInitialized ? 'Hello World!' : 'Please initialize'}
-        <button 
-          disabled={joinLobby.isCallable} 
-          onClick={() => joinLobby('YOUR_ROOM_ID');
-        }>
-          Join Lobby
-        </button>
-
-        {/* Mic */} 
-        <button disabled={!fetchAudioStream.isCallable} onClick={fetchAudioStream}>
-          FETCH_AUDIO_STREAM
-        </button>
-
-        {/* Webcam */} 
-        <button disabled={!fetchVideoStream.isCallable} onClick={fetchVideoStream}>
-          FETCH_VIDEO_STREAM
-        </button>
-
-        <button disabled={!joinRoom.isCallable} onClick={joinRoom}>
-          JOIN_ROOM 
-        </button>
-
-        <button disabled={!leaveRoom.isCallable} onClick={leaveRoom}>
-          LEAVE_ROOM 
-        </button>
-      </div>
-    );
-  };
-
-```
-
-
-<Callout type="info">
-  The **`isCallable`** is an attribute available on all methods to check whether the function is callable or not.
-</Callout>
-<Callout type="info">
-Clicking on the **JOIN_ROOM** button, will make the user join the room and will allow them to send/receive media with other participants.
-</Callout>
 ### Sending media across to other participants
 Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
 
-
 ```tsx filename="app.tsx" highlight={9,14,51-65}
-  import { useHuddle01 } from '@huddle01/react';
-  import { useLobby, useAudio, useVideo, useRoom } from '@huddle01/react/hooks';
+  import { useLocalVideo, useLocalAudio } from '@huddle01/react/hooks';
 
   const App = () => {
-    const { initialize, isInitialized } = useHuddle01();
-    const { joinLobby } = useLobby();
-    const { 
-      fetchAudioStream, stopAudioStream, error: micError, 
-      produceAudio, stopProducingAudio 
-    } = useAudio();
+    const { stream, enableVideo, disableVideo, changeVideoSource } = useLocalVideo();
+    const { stream, enableAudio, disableAudio, changeVideoSource } = useLocalAudio();
 
-    const { 
-      fetchVideoStream, stopVideoStream, error: camError, 
-      produceVideo, stopProducingVideo 
-    } = useVideo(); 
-    const { joinRoom, leaveRoom } = useRoom();
-
-
-    useEffect(() => {
-      // its preferable to use env vars to store projectId
-      initialize('YOUR_PROJECT_ID');
-    }, []);
-  
     return (
       <div>{isInitialized ? 'Hello World!' : 'Please initialize'}
+        {/* Webcam */} 
         <button 
-          disabled={joinLobby.isCallable} 
-          onClick={() => joinLobby('YOUR_ROOM_ID');
-        }>
-          Join Lobby
+          onClick={enableVideo} >
+          Fetch and Produce Video Stream
         </button>
 
         {/* Mic */} 
-        <button disabled={!fetchAudioStream.isCallable} onClick={fetchAudioStream}>
-          FETCH_AUDIO_STREAM
+       <button 
+          onClick={enableAudio} >
+          Fetch and Produce Audio Stream
         </button>
 
+      </div>
+    );
+  };
+
+```
+
+#### Advanced: Using the `useLocalMedia` hook
+```tsx filename="app.tsx" highlight={9,14,51-65}
+  import { useLocalMedia } from '@huddle01/react/hooks';
+
+  const App = () => {
+    const { fetchStream } = useLocalMedia();
+
+    return (
+      <div>{isInitialized ? 'Hello World!' : 'Please initialize'}
         {/* Webcam */} 
-        <button disabled={!fetchVideoStream.isCallable} onClick={fetchVideoStream}>
-          FETCH_VIDEO_STREAM
+        <button 
+          onClick={() => fetchStream({ mediaDeviceKind: 'cam' })} >
+          Fetch Cam Stream
         </button>
 
-        <button disabled={!joinRoom.isCallable} onClick={joinRoom}>
-          JOIN_ROOM 
-        </button>
-
-        <button disabled={!leaveRoom.isCallable} onClick={leaveRoom}>
-          LEAVE_ROOM 
-        </button>
-
-        <button disabled={!produceVideo.isCallable} onClick={() => produceVideo(camStream)}>
-          Produce Cam  
-        </button>
-
-        <button disabled={!produceAudio.isCallable} onClick={() => produceAudio(micStream)}>
-          Produce Mic  
-        </button>
-
-        <button disabled={!stopProducingVideo.isCallable} onClick={stopProducingVideo}>
-          Stop Producing Cam  
-        </button>
-
-        <button disabled={!stopProducingAudio.isCallable} onClick={stopProducingAudio}>
-          Stop Producing Mic  
+        {/* Mic */} 
+       <button 
+          onClick={() => fetchStream({ mediaDeviceKind: 'mic' })} >
+          Fetch Mic Stream
         </button>
 
       </div>
@@ -398,26 +192,33 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
   </summary>
   JSX:
   ```tsx
-  import { usePeers } from '@huddle01/react/hooks';
+  import { usePeerIds } from '@huddle01/react/hooks';
+
+  const RemotePeer = ({ peerId }) => {
+    
+    const { stream } = useRemoteVideo({ peerId });
+ 
+    return (
+      <div>
+        <Video stream={stream} />
+      </div>
+    ) 
+  }
+  
 
   export default function() {
-    const peers = usePeers();
-    
-    return <div>{JSON.stringify(peers)}</div>
+    const { peerIds } = usePeerIds({ roles: [Role.HOST, Role.CO_HOST] }); // Get Hosts And Cohost's peerIds
+
+    return 
+      <div>
+        {peerIds.map(peerId => {
+          return <RemotePeer peerId={peerId}  />
+        })}
+      </div>
   }
 
   ```
-  Output: (Example Output for 1 peer)
-  ```json
-  [
-    {
-      peerId: "sdksjdsjd",
-      mic: MediaStreamTrack,
-      cam: MediaStreamTrack
-    }
-  ]
-
-  ```
+ 
 </details>
 
 <details>
