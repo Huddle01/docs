@@ -164,7 +164,7 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
     const { fetchStream } = useLocalMedia();
 
     return (
-      <div>{isInitialized ? 'Hello World!' : 'Please initialize'}
+      <div>
         {/* Webcam */} 
         <button 
           onClick={() => fetchStream({ mediaDeviceKind: 'cam' })} >
