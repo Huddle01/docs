@@ -33,85 +33,102 @@ Once done, initialize your project by calling the `initialize()` method and pass
 <script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js" / >
  
 <script type="module">
-  huddleClient.initialize("YOUR_PROJECT_ID")
+  const huddleClient = new HuddleClient({
+  projectId: env.NEXT_PUBLIC_PROJECT_ID,
+  options: {
+    activeSpeakers: {
+      size: 14,
+    },
+  },
+});
 </script>
 ```
 
-### Joining the lobby
+### Generating the Access Token.
 Once the client has been initialized,
 
 Room Id can be generated using the : [Create Room API](/apis/create-room/create-room)
 
 
-Add the following button to your jsx and call the `joinLobby()` method.
 
 ```js filename="app.js" highlight={4-6}
 <script type="module">
-  huddleClient.initialize("YOUR_PROJECT_ID")
+  
+  import { AccessToken, Role } from '@huddle01/server-sdk/auth';
 
-  document.getElementById('joinLobby').onclick = () => {
-    huddleClient.joinLobby('YOUR_ROOM_ID');
-  };
-</script>
-```
+   const accessToken = new AccessToken({
+        apiKey,
+        roomId: "YOUR_ROOM_ID",
+        role:  Role.HOST,
+        permissions: {
+          admin: true,
+          canConsume: true,
+          canProduce: true,
+          canProduceSources: {
+            cam: true,
+            mic: true,
+            screen: true,
+          },
+          canRecvData: true,
+          canSendData: true,
+          canUpdateMetadata: true,
+        },
+        options: {
+          metadata: { 
+             // you can add any custom attributes here which you want to associate with the user
+            walletAddress: "axit.eth"
+          },
+        },
+      });
 
-### Enabling and Disabling Media Devices
-  <Callout emoji="⚠️">
-    If cam and mic aren't enabled in the lobby, video and audio won't be shareable inside the room 
-  </Callout>
-  <Callout emoji="⚠️">
-    These methods are to be called only when in lobby state.
-  </Callout>
 
-  Then, add the locale codes to your file extensions (required for the default locale too):
-
-
-
-```js filename="app.js" highlight={8-14}
-<script type="module">
-  huddleClient.initialize("YOUR_PROJECT_ID")
-
-  document.getElementById('joinLobby').onclick = () => {
-    huddleClient.joinLobby('YOUR_ROOM_ID');
-  };
-
-  document.getElementById('enableMic').onclick = () => {
-    huddleClient.enableMic();
-  };
-
-  document.getElementById('enableCam').onclick = () => {
-    huddleClient.enableCam();
-  };
 </script>
 ```
 
 ### Joining and leaving the room
 
-The joinRoom() method can be called to enter the room, once the lobby has been joined. To leave that respective room you can call the leaveRoom() method in the ROOM state.
+The `joinRoom() `method can be called to enter the room. To leave that respective room you can call the `leaveRoom() `method.
+
+```js filename="app.js" highlight={8-14}
+<script type="module">
+
+    document.getElementById('joinRoom').onclick = async () => {
+    await huddleClient.joinLobby({
+      roomId: "YOUR_ROOM_ID",
+	    token: "YOUR_ACCESS_TOKEN"
+    });
+  };
+
+  document.getElementById('leaveRoom').onclick = async () => {
+      await huddleClient.leaveRoom();
+  };
+
+</script>
+```
+
+### Enabling and Disabling Audio and Video.
+
+Add the locale codes to your file extensions (required for the default locale too):
 
 ```js filename="app.js" highlight={16-22}
 <script type="module">
-  huddleClient.initialize("YOUR_PROJECT_ID")
 
-  document.getElementById('joinLobby').onclick = () => {
-    huddleClient.joinLobby('YOUR_ROOM_ID');
+  document.getElementById('enableMic').onclick = async () => {
+    await huddleClient.localPeer.enableAudio();
   };
 
-  document.getElementById('enableMic').onclick = () => {
-    huddleClient.enableMic();
+  document.getElementById('disableMic').onclick = async () => {
+     await huddleClient.localPeer.disableAudio();
   };
 
-  document.getElementById('enableCam').onclick = () => {
-    huddleClient.enableCam();
+  document.getElementById('enableCam').onclick = async () => {
+    await huddleClient.localPeer.enableVideo();
   };
 
-  document.getElementById('joinRoom').onclick = () => {
-    huddleClient.joinRoom();
+  document.getElementById('disableCam').onclick = async () => {
+     await huddleClient.localPeer.disableVideo();
   };
 
-  document.getElementById('leaveRoom').onclick = () => {
-    huddleClient.leaveRoom();
-  };
 </script>
 ```
 <Callout type="info">
@@ -123,38 +140,46 @@ Clicking on the **JOIN_ROOM** button, will make the user join the room and will 
 Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
 
 
-```js filename="app.js" highlight={25-31}
+```js filename="app.js" highlight={30-31}
 <script type="module">
 
-  huddleClient.initialize("YOUR_PROJECT_ID");
-
-  document.getElementById('joinLobby').onclick = () => {
-    huddleClient.joinLobby('YOUR_ROOM_ID');
+  document.getElementById('produceMic').onclick = async () => {
+     // Producing a video stream from a Local Peer
+      await huddleClient.localPeer.produce({ label: "video", stream: mediaStream, appData: { key: "value" } });
   };
 
-  document.getElementById('joinRoom').onclick = () => {
-    huddleClient.joinRoom();
-  };
-
-  document.getElementById('leaveRoom').onclick = () => {
-    huddleClient.leaveRoom();
-  };
-
-  document.getElementById('enableMic').onclick = () => {
-    huddleClient.enableMic();
-  };
-
-  document.getElementById('enableCam').onclick = () => {
-    huddleClient.enableCam();
-  };
-
-  document.getElementById('produceMic').onclick = () => {
-    huddleClient.produceMic();
+  document.getElementById('produceCam').onclick = async () => {
+      // Stopping a video stream from a Local Peer
+      await huddleClient.localPeer.stopProducing({ label: "video" });
   };
 
   document.getElementById('produceCam').onclick = () => {
-    huddleClient.produceCam();
+      // Stopping a audio stream from a Local Peer
+      await huddleClient.localPeer.produce({ label: "audio", stream: mediaStream, appData: { key: "value" } });
   };
+
+  document.getElementById('produceCam').onclick = async () => {
+      // Stopping a audio stream from a Local Peer
+      await huddleClient.localPeer.stopProducing({ label: "audio" });
+  };
+
+  document.getElementById("consumeMic").onclick = async () => {
+     // Consume a stream from a Remote Peer
+     await localPeer.consume({
+       peerId: "remotePeerID",
+       label: "streamLabel",
+       appData: { key: "value" },
+   });
+  }
+
+  document.getElementById("consumeMic").onclick = async () => {
+    // Stop consuming a stream from remote peer
+    await huddleClient.localPeer.stopConsuming({
+     peerId: "remotePeerID",
+     label: "streamLabel", // stream label can be 'video', 'audio', 'screen'
+   });
+  }
+
 </script>
 ```
 

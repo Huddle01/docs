@@ -13,7 +13,7 @@ The room is the place where the actual meeting takes place. It is the place wher
 ### Join Room
 
 ```jsx
-// Getting room instance
+// Joining the room
 const room = await huddleClient.joinRoom({
 	roomId: "YOUR_ROOM_ID",
 	token: "YOUR_ACCESS_TOKEN"
@@ -257,6 +257,29 @@ Function `kickPeer` kick peer from room with respective peerId
 await room.kickPeer(peerId:string);
 ```
 
+
+### close
+
+Function `close` closes the room with respective reason.
+
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    [
+      "reason ['LEFT' | 'CLOSED' | 'KICKED' | 'DENIED']",
+      "string",
+      "closes the room with respective reason",
+      'void'
+    ],
+  ]}
+/>
+
+
+**Example**
+```jsx
+// Usage
+await room.close(reason);
+```
 
 ## Attributes
 
