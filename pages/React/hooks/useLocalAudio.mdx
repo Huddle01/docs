@@ -30,14 +30,10 @@ const {
 The useLocalAudio hook accepts an object with the following fields as props.
 
 {/* onProduceStart */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. onProduceStart</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">onProduceStart</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
 </div>
 
 <OptionTable
@@ -62,7 +58,7 @@ The useLocalAudio hook accepts an object with the following fields as props.
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const localAudio = useLocalAudio({ onProduceStart: (producer) => {
@@ -73,14 +69,10 @@ const localAudio = useLocalAudio({ onProduceStart: (producer) => {
 ```
 
 {/* onProduceClose */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. onProduceClose</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">onProduceClose</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
 </div>
 
 <OptionTable
@@ -93,7 +85,7 @@ const localAudio = useLocalAudio({ onProduceStart: (producer) => {
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const localAudio = useLocalAudio({ onProduceClose: () => {
@@ -103,14 +95,10 @@ const localAudio = useLocalAudio({ onProduceClose: () => {
 ```
 
 {/* onProduceError */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">3. onProduceError</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">onProduceError</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
 </div>
 
 <OptionTable
@@ -123,7 +111,7 @@ const localAudio = useLocalAudio({ onProduceClose: () => {
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const localAudio = useLocalAudio({ onProduceError: () => {
@@ -136,11 +124,9 @@ const localAudio = useLocalAudio({ onProduceError: () => {
 The useLocalAudio hook returns an object with the following fields.
 
 {/* stream */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. stream</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">stream</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable
@@ -154,11 +140,9 @@ The useLocalAudio hook returns an object with the following fields.
 />
 
 {/* track */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. track</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">track</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable
@@ -172,11 +156,9 @@ The useLocalAudio hook returns an object with the following fields.
 />
 
 {/* isAudioOn */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">3. isAudioOn</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">isAudioOn</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable
@@ -190,11 +172,9 @@ The useLocalAudio hook returns an object with the following fields.
 />
 
 {/* enableAudio */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">4. enableAudio</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">enableAudio</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 
 <OptionTable
@@ -208,11 +188,9 @@ The useLocalAudio hook returns an object with the following fields.
 />
 
 {/* disableAudio */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">5. disableAudio</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">disableAudio</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 
 <OptionTable
@@ -227,11 +205,10 @@ The useLocalAudio hook returns an object with the following fields.
 
 
 {/* replaceAudioStream */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">6. replaceAudioStream</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">replaceAudioStream</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Function</Pill>
+  <Pill>Advanced</Pill>
 </div>
 
 <OptionTable
@@ -246,11 +223,10 @@ The useLocalAudio hook returns an object with the following fields.
 
 
 {/* changeAudioSource */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">7. changeAudioSource</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">changeAudioSource</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Function</Pill>
+  <Pill>Advanced</Pill>
 </div>
 
 <OptionTable

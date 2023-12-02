@@ -24,16 +24,11 @@ const {
 The useRoomControls hook accepts an object with the following fields as props.
 
 {/* onRoomControlsUpdated */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. onRoomControlsUpdated</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">onRoomControlsUpdated</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Return Type']}
   options={[
@@ -56,7 +51,7 @@ The useRoomControls hook accepts an object with the following fields as props.
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const roomControls = useRoomControls({ onRoomControlsUpdated: (data) => {
@@ -67,14 +62,10 @@ const roomControls = useRoomControls({ onRoomControlsUpdated: (data) => {
 ```
 
 {/* onRoomLeave */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. onRoomLeave</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">onRoomLeave</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
 </div>
 
 <OptionTable
@@ -99,7 +90,7 @@ const roomControls = useRoomControls({ onRoomControlsUpdated: (data) => {
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const roomControls = useRoomControls({ onRoomLeave: (data) => {
@@ -113,16 +104,11 @@ const roomControls = useRoomControls({ onRoomLeave: (data) => {
 The useRoomControls hook returns an object with the following fields.
 
 {/* roomControls */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. roomControls</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">roomControls</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Object</Pill>
+  <Pill>Advanced</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Type']}
   options={[
@@ -134,14 +120,10 @@ The useRoomControls hook returns an object with the following fields.
 />
 
 {/* updateControls */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. updateControls</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">updateControls</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Function</Pill>
+  <Pill>Advanced</Pill>
 </div>
 
 <OptionTable

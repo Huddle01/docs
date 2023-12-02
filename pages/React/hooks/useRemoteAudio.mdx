@@ -20,7 +20,7 @@ const {
      onPlayable(data:{
       stream:Mediastream,
       track:Mediatrack,
-      label:"video"
+      label:"audio"
     }) {},
     onClose(reason:{
     code: number;
@@ -34,11 +34,9 @@ const {
 The useRemoteAudio hook accepts an object with the following fields as props.
 
 {/* peerId */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. peerId</span>
-    <span>
-        <Pill>Required</Pill>
-    </span>
+### <span className="font-mono font-semibold">peerId</span>
+<div className='w-20 mt-4'>
+  <Pill>Required</Pill>
 </div>
 
 <OptionTable
@@ -52,21 +50,17 @@ The useRemoteAudio hook accepts an object with the following fields as props.
 />
 
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const remoteAudio = useRemoteAudio({ peerId: "remote-peer-id" });
 ```
 
 {/* onPlayable */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. onPlayable</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">onPlayable</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
 </div>
 
 <OptionTable
@@ -92,7 +86,7 @@ const remoteAudio = useRemoteAudio({ peerId: "remote-peer-id" });
 />
 
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const remoteAudio = useRemoteAudio({ peerId: "remote-peer-id", onPlayable: (data) => {
@@ -102,14 +96,10 @@ const remoteAudio = useRemoteAudio({ peerId: "remote-peer-id", onPlayable: (data
 ```
 
 {/* onClose */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">3. onClose</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">onClose</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
 </div>
 
 <OptionTable
@@ -122,7 +112,7 @@ const remoteAudio = useRemoteAudio({ peerId: "remote-peer-id", onPlayable: (data
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const remoteAudio = useRemoteAudio({ peerId: "remote-peer-id", onClose: (reason) => {
@@ -135,13 +125,10 @@ const remoteAudio = useRemoteAudio({ peerId: "remote-peer-id", onClose: (reason)
 The useRemoteAudio hook returns an object with the following fields.
 
 {/* stream */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. stream</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">stream</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Type']}
   options={[
@@ -153,11 +140,9 @@ The useRemoteAudio hook returns an object with the following fields.
 />
 
 {/* track */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. track</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">track</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable
@@ -171,13 +156,10 @@ The useRemoteAudio hook returns an object with the following fields.
 />
 
 {/* state */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">3. state</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">state</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Type']}
   options={[
@@ -190,11 +172,9 @@ The useRemoteAudio hook returns an object with the following fields.
 
 
 {/* isAudioOn */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">4. isAudioOn</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">isAudioOn</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable

@@ -8,7 +8,7 @@ import Pill from '@components/common/Pill/Pill';
 
 # useActivePeers
 
-The  ` useActivePeers `  hook returns the last most active n number of peers i.e. `activePeerIds` & `dominantSpeakerId`.
+The  ` useActivePeers `  hook returns the last most active "N" number of peers i.e. `activePeerIds` & `dominantSpeakerId`.
 
 
 ```tsx
@@ -23,11 +23,9 @@ The useActivePeers hook returns an object with the following fields.
 
 
 {/* activePeerIds */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. activePeerIds</span>
-    <span className="ml-2">
-        <Pill>object</Pill>
-    </span>
+### <span className="font-mono font-semibold">activePeerIds</span>
+<div className='w-20 mt-4'>
+  <Pill>Array</Pill>
 </div>
 
 <OptionTable
@@ -43,11 +41,9 @@ The useActivePeers hook returns an object with the following fields.
 
 
 {/* dominantSpeakerId */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. dominantSpeakerId</span>
-    <span className="ml-2">
-        <Pill>object</Pill>
-    </span>
+### <span className="font-mono font-semibold">dominantSpeakerId</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable

@@ -28,12 +28,11 @@ const {
 ```
 ## Props
 The useRoom hook accepts an object with the following fields as props.
+
 {/* onJoin */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. onJoin</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
+### <span className="font-mono font-semibold">onJoin</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
 </div>
 <OptionTable
   headers={['Description', 'Return Type']}
@@ -55,7 +54,7 @@ The useRoom hook accepts an object with the following fields as props.
     ],
   ]}
 />
-##### Example Usage
+#### Example Usage
 ```tsx
 const room = useRoom({ onJoin: (data) => {
   console.log("Successfully joined the room!");
@@ -64,11 +63,9 @@ const room = useRoom({ onJoin: (data) => {
 }});
 ```
 {/* onWaiting */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. onWaiting</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
+### <span className="font-mono font-semibold">onWaiting</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
 </div>
 <OptionTable
   headers={['Description', 'Return Type']}
@@ -90,7 +87,7 @@ const room = useRoom({ onJoin: (data) => {
     ],
   ]}
 />
-##### Example Usage
+#### Example Usage
 ```tsx
 const room = useRoom({ onWaiting: (data) => {
   console.log("Waiting for the host to admit you");
@@ -99,13 +96,10 @@ const room = useRoom({ onWaiting: (data) => {
 }});
 ```
 {/* onLeave */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">3. onLeave</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
+### <span className="font-mono font-semibold">onLeave</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Return Type']}
   options={[
@@ -126,7 +120,7 @@ const room = useRoom({ onWaiting: (data) => {
     ],
   ]}
 />
-##### Example Usage
+#### Example Usage
 ```tsx
 const room = useRoom({ onLeave: (data) => {
   console.log("Successfully leave the room!");
@@ -134,13 +128,10 @@ const room = useRoom({ onLeave: (data) => {
 }});
 ```
 {/* onFailed */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">4. onFailed</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
+### <span className="font-mono font-semibold">onFailed</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Return Type']}
   options={[
@@ -162,7 +153,7 @@ const room = useRoom({ onLeave: (data) => {
     ],
   ]}
 />
-##### Example Usage
+#### Example Usage
 ```tsx
 const room = useRoom({ onFailed: (data) => {
   console.log("The room was failed!");
@@ -171,13 +162,10 @@ const room = useRoom({ onFailed: (data) => {
 ```
 
 {/* onPeerJoin */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">5. onPeerJoin</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
+### <span className="font-mono font-semibold">onPeerJoin</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Return Type']}
   options={[
@@ -198,7 +186,7 @@ const room = useRoom({ onFailed: (data) => {
     ],
   ]}
 />
-##### Example Usage
+#### Example Usage
 ```tsx
 const room = useRoom({ onPeerJoin: (peerId:string) => {
   console.log(`${peerId} has joined the room.`);
@@ -206,15 +194,11 @@ const room = useRoom({ onPeerJoin: (peerId:string) => {
 }});
 ```
 
-
 {/* onPeerLeft*/}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">6. onPeerLeft</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
+### <span className="font-mono font-semibold">onPeerLeft</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Return Type']}
   options={[
@@ -235,7 +219,7 @@ const room = useRoom({ onPeerJoin: (peerId:string) => {
     ],
   ]}
 />
-##### Example Usage
+#### Example Usage
 ```tsx
 const room = useRoom({ onPeerLeft: (peerId:string) => {
   console.log(`${peerId} has left the room.`);
@@ -243,16 +227,12 @@ const room = useRoom({ onPeerLeft: (peerId:string) => {
 }});
 ```
 
-
-
 ## Returns
 The useRoom hook returns an object with the following fields.
 {/* room */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. room</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">room</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 <OptionTable
   headers={['Description', 'Type']}
@@ -264,11 +244,9 @@ The useRoom hook returns an object with the following fields.
   ]}
 />
 {/* state */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. state</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">state</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 <OptionTable
   headers={['Description', 'Type']}
@@ -280,11 +258,9 @@ The useRoom hook returns an object with the following fields.
   ]}
 />
 {/* joinRoom */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">3. joinRoom</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">joinRoom</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 <OptionTable
   headers={['Description', 'Return Type']}
@@ -307,11 +283,9 @@ The useRoom hook returns an object with the following fields.
   ]}
 />
 {/* leaveRoom */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">4. leaveRoom</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">leaveRoom</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 <OptionTable
   headers={['Description', 'Return Type']}
@@ -324,11 +298,9 @@ The useRoom hook returns an object with the following fields.
 />
 
 {/* closeRoom */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">5. closeRoom</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">closeRoom</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 <OptionTable
   headers={['Description', 'Return Type']}
@@ -342,11 +314,9 @@ The useRoom hook returns an object with the following fields.
 
 
 {/* kickPeer */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">6. kickPeer</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">kickPeer</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 <OptionTable
   headers={['Description', 'Return Type']}
@@ -360,11 +330,9 @@ The useRoom hook returns an object with the following fields.
 
 
 {/* muteEveryone */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">7. muteEveryone</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">muteEveryone</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 <OptionTable
   headers={['Description', 'Return Type']}
@@ -377,12 +345,10 @@ The useRoom hook returns an object with the following fields.
 />
 
 
-{/* closeStreamOfLabel */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">8. closeStreamOfLabel</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+{/* closeStreamOfLabel
+### <span className="font-mono font-semibold">closeStreamOfLabel</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 <OptionTable
   headers={['Description', 'Return Type']}
@@ -403,4 +369,4 @@ The useRoom hook returns an object with the following fields.
       'Yes',
     ],
   ]}
-/>
+/> */}

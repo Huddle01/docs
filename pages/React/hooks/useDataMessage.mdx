@@ -14,7 +14,6 @@ const {
     sendData
   } = useDataMessage({
     onMessage(payload: string, from: string, label?: string) ();
-    onVolatileMesssage(data: TVolatileDataMessage) ();
   });
 ```
 
@@ -22,11 +21,9 @@ const {
 The useDataMessage hook accepts an object with the following fields as props.
 
 {/* onMessage */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. onMessage</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
+### <span className="font-mono font-semibold">onMessage</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
 </div>
 
 <OptionTable
@@ -63,7 +60,7 @@ The useDataMessage hook accepts an object with the following fields as props.
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const dataMessage = useDataMessage({ onMessage: (payload, from, label) => {
@@ -76,12 +73,10 @@ const dataMessage = useDataMessage({ onMessage: (payload, from, label) => {
 ```
 
 
-{/* onVolatileMesssage */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. onVolatileMesssage</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
+{/* onVolatileMesssage
+### <span className="font-mono font-semibold">onVolatileMesssage</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
 </div>
 
 <OptionTable
@@ -118,7 +113,7 @@ const dataMessage = useDataMessage({ onMessage: (payload, from, label) => {
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const dataMessage = useDataMessage({ onVolatileMesssage: (payload, from, label) => {
@@ -128,17 +123,15 @@ const dataMessage = useDataMessage({ onVolatileMesssage: (payload, from, label) 
     if(label) console.log("Label: ", label);
     // your code here
 }});
-```
+``` */}
 
 ## Returns
 The useDataMessage hook returns an object with the following fields.
 
 {/* sendData */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. sendData</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">sendData</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 
 <OptionTable

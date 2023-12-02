@@ -24,13 +24,10 @@ const {
 The useLobby hook accepts an object with the following fields as props.
 
 {/* onLobbyPeersUpdated */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. onLobbyPeersUpdated</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
+### <span className="font-mono font-semibold">onLobbyPeersUpdated</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Return Type']}
   options={[
@@ -53,7 +50,7 @@ The useLobby hook accepts an object with the following fields as props.
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const lobby = useLobby({ onLobbyPeersUpdated: (lobbyPeers) => {
@@ -67,11 +64,9 @@ const lobby = useLobby({ onLobbyPeersUpdated: (lobbyPeers) => {
 The useLobby hook returns an object with the following fields.
 
 {/* lobbyPeers */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. lobbyPeers</span>
-    <span>
-        <Pill>Array</Pill>
-    </span>
+### <span className="font-mono font-semibold">lobbyPeers</span>
+<div className='w-20 mt-4'>
+  <Pill>Array</Pill>
 </div>
 
 <OptionTable
@@ -85,11 +80,9 @@ The useLobby hook returns an object with the following fields.
 />
 
 {/* admitPeer */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. admitPeer</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">admitPeer</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 
 <OptionTable
@@ -115,11 +108,9 @@ The useLobby hook returns an object with the following fields.
 />
 
 {/* denyPeer */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">3. denyPeer</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">denyPeer</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 
 <OptionTable
@@ -145,18 +136,16 @@ The useLobby hook returns an object with the following fields.
 />
 
 {/* getLobbyPeerMetadata */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">4. getLobbyPeerMetadata</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">getLobbyPeerMetadata</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 
 <OptionTable
   headers={['Description', 'Return Type']}
   options={[
     [
-      'returns the metadata of lobby peer.',
+      'Returns the metadata of lobby peer.',
       'void',
     ],
   ]}
@@ -168,7 +157,7 @@ The useLobby hook returns an object with the following fields.
     [
       'peerId',
       'string',
-      'peerId of the waiting peer you want to join the room.',
+      'peerId of the peer you want the metadata of.',
       'Yes',
     ],
   ]}

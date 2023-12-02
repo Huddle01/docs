@@ -25,11 +25,9 @@ const {
 The useRemotePeer hook accepts an object with the following fields as props.
 
 {/* peerId */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. peerId</span>
-    <span>
-        <Pill>Required</Pill>
-    </span>
+### <span className="font-mono font-semibold">peerId</span>
+<div className='w-20 mt-4'>
+  <Pill>Required</Pill>
 </div>
 
 <OptionTable
@@ -43,21 +41,17 @@ The useRemotePeer hook accepts an object with the following fields as props.
 />
 
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const remotePeer = useRemotePeer({ peerId: "remote-peer-id" });
 ```
 
 {/* onMetadataUpdated */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. onMetadataUpdated</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">onMetadataUpdated</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
 </div>
 
 <OptionTable
@@ -82,7 +76,7 @@ const remotePeer = useRemotePeer({ peerId: "remote-peer-id" });
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const remotePeer = useRemotePeer({ peerId: "remote-peer-id", onMetadataUpdated: (data) => {
@@ -97,11 +91,9 @@ const remotePeer = useRemotePeer({ peerId: "remote-peer-id", onMetadataUpdated: 
 The useLocalPeer hook returns an object with the following fields.
 
 {/* peerId */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. peerId</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">peerId</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable
@@ -115,14 +107,10 @@ The useLocalPeer hook returns an object with the following fields.
 />
 
 {/* metadata */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. metadata</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">metadata</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Object</Pill>
+  <Pill>Advanced</Pill>
 </div>
 
 <OptionTable
@@ -136,18 +124,16 @@ The useLocalPeer hook returns an object with the following fields.
 />
 
 {/* role */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">3. role</span>
-    <span className="ml-2">
-        <Pill>state</Pill>
-    </span>
+### <span className="font-mono font-semibold">role</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable
   headers={['Description', 'Type']}
   options={[
     [
-      'Update the metadata associated with your peer object.',
+      'Your peer role.',
       'string',
     ],
   ]}
@@ -156,11 +142,9 @@ The useLocalPeer hook returns an object with the following fields.
 
 
 {/* updateRole */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">4. updateRole</span>
-    <span className="ml-2">
-        <Pill>function</Pill>
-    </span>
+### <span className="font-mono font-semibold">updateRole</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 
 <OptionTable

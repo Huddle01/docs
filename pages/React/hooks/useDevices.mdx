@@ -28,11 +28,9 @@ const {
 The useDevices hook accepts an object with the following fields as props.
 
 {/* type */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. type</span>
-    <span>
-        <Pill>Required</Pill>
-    </span>
+### <span className="font-mono font-semibold">type</span>
+<div className='w-20 mt-4'>
+  <Pill>Required</Pill>
 </div>
 
 <OptionTable
@@ -45,18 +43,16 @@ The useDevices hook accepts an object with the following fields as props.
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const devices = useDevices({ type: "cam" });
 ```
 
 {/* onPermissionGranted */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. onPermissionGranted</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
+### <span className="font-mono font-semibold">onPermissionGranted</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
 </div>
 
 <OptionTable
@@ -69,7 +65,7 @@ const devices = useDevices({ type: "cam" });
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const devices = useDevices({ type: "cam", onPermissionGranted: () => {
@@ -79,11 +75,9 @@ const devices = useDevices({ type: "cam", onPermissionGranted: () => {
 ```
 
 {/* onPermissionDenied */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">3. onPermissionDenied</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
+### <span className="font-mono font-semibold">onPermissionDenied</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
 </div>
 
 <OptionTable
@@ -96,7 +90,7 @@ const devices = useDevices({ type: "cam", onPermissionGranted: () => {
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const devices = useDevices({ type: "cam", onPermissionDenied: () => {
@@ -109,11 +103,9 @@ const devices = useDevices({ type: "cam", onPermissionDenied: () => {
 The useDevices hook returns an object with the following fields.
 
 {/* devices */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. devices</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">devices</span>
+<div className='w-20 mt-4'>
+  <Pill>Array</Pill>
 </div>
 
 <OptionTable
@@ -127,11 +119,9 @@ The useDevices hook returns an object with the following fields.
 />
 
 {/* preferredDeviceId */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. preferredDeviceId</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">preferredDeviceId</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable
@@ -145,11 +135,9 @@ The useDevices hook returns an object with the following fields.
 />
 
 {/* preferredDevice */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">3. preferredDevice</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">preferredDevice</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable
@@ -163,11 +151,9 @@ The useDevices hook returns an object with the following fields.
 />
 
 {/* fetchStream */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">4. fetchStream</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">fetchStream</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 
 <OptionTable
@@ -193,11 +179,9 @@ The useDevices hook returns an object with the following fields.
 />
 
 {/* getPermission */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">5. getPermission</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">getPermission</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 
 <OptionTable
@@ -211,11 +195,9 @@ The useDevices hook returns an object with the following fields.
 />
 
 {/* setPreferredDevice */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">7. setPreferredDevice</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">setPreferredDevice</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
 
 <OptionTable

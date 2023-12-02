@@ -24,13 +24,10 @@ const {
 The usePeerIds hook accepts an object with the following fields as props.
 
 {/* roles */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. roles</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
+### <span className="font-mono font-semibold">roles</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Type']}
   options={[
@@ -42,18 +39,16 @@ The usePeerIds hook accepts an object with the following fields as props.
 />
 
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const peerIds = usePeerIds({ roles: ["bot"] });
 ```
 
 {/* labels */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. labels</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
+### <span className="font-mono font-semibold">labels</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
 </div>
 
 <OptionTable
@@ -67,7 +62,7 @@ const peerIds = usePeerIds({ roles: ["bot"] });
 />
 
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const peerIds = usePeerIds({ labels: ["audio"] });
@@ -77,11 +72,9 @@ const peerIds = usePeerIds({ labels: ["audio"] });
 The usePeerIds hook returns an object with the following fields.
 
 {/* peerIds */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. peerIds</span>
-    <span>
-        <Pill>Array</Pill>
-    </span>
+### <span className="font-mono font-semibold">peerIds</span>
+<div className='w-20 mt-4'>
+  <Pill>Array</Pill>
 </div>
 
 <OptionTable

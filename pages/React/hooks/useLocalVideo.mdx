@@ -32,14 +32,10 @@ const {
 The useLocalVideo hook accepts an object with the following fields as props.
 
 {/* onProduceStart */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. onProduceStart</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">onProduceStart</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
 </div>
 
 <OptionTable
@@ -64,7 +60,7 @@ The useLocalVideo hook accepts an object with the following fields as props.
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const localVideo = useLocalVideo({ onProduceStart: (producer) => {
@@ -75,15 +71,12 @@ const localVideo = useLocalVideo({ onProduceStart: (producer) => {
 ```
 
 {/* onProduceClose */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. onProduceClose</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">onProduceClose</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
 </div>
+
 
 <OptionTable
   headers={['Description', 'Return Type']}
@@ -95,7 +88,7 @@ const localVideo = useLocalVideo({ onProduceStart: (producer) => {
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const localVideo = useLocalVideo({ onProduceClose: (reason) => {
@@ -110,11 +103,9 @@ const localVideo = useLocalVideo({ onProduceClose: (reason) => {
 The useLocalVideo hook returns an object with the following fields.
 
 {/* stream */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. stream</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">stream</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable
@@ -128,11 +119,9 @@ The useLocalVideo hook returns an object with the following fields.
 />
 
 {/* track */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. track</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">track</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable
@@ -146,11 +135,9 @@ The useLocalVideo hook returns an object with the following fields.
 />
 
 {/* isVideoOn */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">3. isVideoOn</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">isVideoOn</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable
@@ -164,13 +151,10 @@ The useLocalVideo hook returns an object with the following fields.
 />
 
 {/* enableVideo */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">4. enableVideo</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">enableVideo</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Return Type']}
   options={[
@@ -182,13 +166,10 @@ The useLocalVideo hook returns an object with the following fields.
 />
 
 {/* disableVideo */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">5. disableVideo</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">disableVideo</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Return Type']}
   options={[
@@ -200,13 +181,11 @@ The useLocalVideo hook returns an object with the following fields.
 />
 
 {/* replaceVideoStream */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">6. replaceVideoStream</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">replaceVideoStream</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Function</Pill>
+  <Pill>Advanced</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Return Type']}
   options={[
@@ -219,11 +198,10 @@ The useLocalVideo hook returns an object with the following fields.
 
 
 {/* changeVideoSource */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">7. changeVideoSource</span>
-    <span className="ml-2">
-        <Pill>Function</Pill>
-    </span>
+### <span className="font-mono font-semibold">changeVideoSource</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Function</Pill>
+  <Pill>Advanced</Pill>
 </div>
 
 <OptionTable

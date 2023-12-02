@@ -32,11 +32,9 @@ const {
 The useRemoteScreenShare hook accepts an object with the following fields as props.
 
 {/* peerId */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. peerId</span>
-    <span>
-        <Pill>Required</Pill>
-    </span>
+### <span className="font-mono font-semibold">peerId</span>
+<div className='w-20 mt-4'>
+  <Pill>Required</Pill>
 </div>
 
 <OptionTable
@@ -50,22 +48,19 @@ The useRemoteScreenShare hook accepts an object with the following fields as pro
 />
 
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const remoteScreenShare = useRemoteScreenShare({ peerId: "remote-peer-id" });
 ```
 
 {/* onPlayable */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. onPlayable</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">onPlayable</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
 </div>
+
 
 <OptionTable
   headers={['Description', 'Return Type']}
@@ -90,7 +85,7 @@ const remoteScreenShare = useRemoteScreenShare({ peerId: "remote-peer-id" });
 />
 
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const remoteScreenShare = useRemoteScreenShare({ peerId: "remote-peer-id", onPlayable: (data) => {
@@ -100,16 +95,11 @@ const remoteScreenShare = useRemoteScreenShare({ peerId: "remote-peer-id", onPla
 ```
 
 {/* onClose */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">3. onClose</span>
-    <span className="ml-2">
-        <Pill>Optional</Pill>
-    </span>
-    <span className="ml-2">
-        <Pill>Advanced</Pill>
-    </span>
+### <span className="font-mono font-semibold">onClose</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Return Type']}
   options={[
@@ -120,7 +110,7 @@ const remoteScreenShare = useRemoteScreenShare({ peerId: "remote-peer-id", onPla
   ]}
 />
 
-##### Example Usage
+#### Example Usage
 
 ```tsx
 const remoteScreenShare = useRemoteScreenShare({ peerId: "remote-peer-id", onClose: () => {
@@ -133,13 +123,10 @@ const remoteScreenShare = useRemoteScreenShare({ peerId: "remote-peer-id", onClo
 The useRemoteScreenShare hook returns an object with the following fields.
 
 {/* videoStream */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">1. videoStream</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">videoStream</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Type']}
   options={[
@@ -151,11 +138,9 @@ The useRemoteScreenShare hook returns an object with the following fields.
 />
 
 {/* audioStream */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">2. audioStream</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">audioStream</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable
@@ -169,13 +154,10 @@ The useRemoteScreenShare hook returns an object with the following fields.
 />
 
 {/* videoTrack */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">3. videoTrack</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">videoTrack</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Type']}
   options={[
@@ -187,11 +169,9 @@ The useRemoteScreenShare hook returns an object with the following fields.
 />
 
 {/* audioTrack */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">4. audioTrack</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">audioTrack</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
 
 <OptionTable
@@ -205,13 +185,10 @@ The useRemoteScreenShare hook returns an object with the following fields.
 />
 
 {/* state */}
-<div className="flex mt-5">
-    <span className="font-mono font-semibold">5. state</span>
-    <span className="ml-2">
-        <Pill>Object</Pill>
-    </span>
+### <span className="font-mono font-semibold">state</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
 </div>
-
 <OptionTable
   headers={['Description', 'Type']}
   options={[
