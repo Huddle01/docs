@@ -57,7 +57,7 @@ const config: DocsThemeConfig = {
         "ReactJS",
         "React Native",
         "Flutter",
-        "Server-Sdk",
+        "Server-SDK",
       ].includes(title);
 
       const version: {
@@ -67,7 +67,7 @@ const config: DocsThemeConfig = {
         ReactJS: "alpha",
         "React Native": "alpha",
         Flutter: "0.0.1-betav1",
-        "Server-Sdk": "alpha",
+        "Server-SDK": "alpha",
       };
 
       if (isSdkTitles) {

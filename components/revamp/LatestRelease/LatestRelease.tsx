@@ -30,7 +30,7 @@ const LatestRelease: React.FC<LatestReleaseProps> = () => {
     {
       title: "Server Sdk",
       version: "1.0.0-alpha.25",
-      url: "/server-sdk",
+      url: "/Server-SDK",
     },
   ];
   return (
