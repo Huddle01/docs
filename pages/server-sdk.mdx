@@ -2,12 +2,30 @@
 title: 'Server-SDK'
 ---
 
-import OptionTable from '@components/common/Table/OptionTable';
+import { Tab, Tabs } from 'nextra-theme-docs';
+
 
 ## Server SDK
 
+### Installation
 
-## Recording / Livestreaming
+
+ <Tabs items={['npm', 'yarn']}>
+    <Tab>
+      ```bash 
+      npm install @huddle01/web-core@alpha
+        ```
+    </Tab>
+
+    <Tab>
+      ```bash
+      yarn add @huddle01/web-core
+      ```
+    </Tab>
+  </Tabs>
+
+
+### Recording / Livestreaming
 
 ```jsx
 import { Recorder } from '@huddle01/server-sdk/recorder';
@@ -33,7 +51,7 @@ recorder.stop({
 })
 ```
 
-## Access Token
+### Access Token
 
 ```jsx
 import { AccessToken, Role } from '@huddle01/server-sdk/auth';
@@ -48,7 +66,7 @@ const accessToken = new AccessToken({
   });
 ```
 
-## Web Hooks
+### Web Hooks
 
 ```jsx
 import { WebhookReceiver } from '@huddle01/server-sdk/webhooks';
