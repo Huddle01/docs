@@ -18,17 +18,17 @@ To power your React Native app with audio/video communication using Huddle01 ins
 <Tabs items={['pnpm', 'npm', 'yarn']}>
   <Tab>
     ```bash 
-      pnpm i @huddle01/react react-native-get-random-values react-native-webrtc 
+      pnpm i @huddle01/react@alpha @huddle01/server-sdk@alpha react-native-get-random-values react-native-webrtc 
     ```
   </Tab>
   <Tab>
     ```bash 
-    npm i @huddle01/react react-native-get-random-values react-native-webrtc 
+    npm i @huddle01/react@alpha @huddle01/server-sdk@alpha react-native-get-random-values react-native-webrtc 
     ```
   </Tab>
   <Tab>
     ```bash 
-    yarn add @huddle01/react react-native-get-random-values react-native-webrtc 
+    yarn add @huddle01/react@alpha @huddle01/server-sdk@alpha react-native-get-random-values react-native-webrtc 
     ```
   </Tab>
 </Tabs>
@@ -73,7 +73,7 @@ const huddleClient = new HuddleClient({
   projectId: env.NEXT_PUBLIC_PROJECT_ID,
   options: {
     activeSpeakers: {
-      size: 14,
+      size: 8,
     },
   },
 });
