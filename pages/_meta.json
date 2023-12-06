@@ -21,6 +21,14 @@
       "layout": "full"
     }
   },
+
+  "guides": {
+    "title": "Guides",
+    "theme": {
+      "layout": "full"
+    }
+  },
+
   "showcase": {
     "title": "Showcase",
     "theme": {
