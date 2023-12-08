@@ -10,35 +10,35 @@ import { Callout, Steps, Tab, Tabs } from 'nextra-theme-docs';
 
 The following guide explains how you can integrate audio/video into your React Native mobile  app seamlessly using the Huddle01 React SDK.
 
-<Steps>
-### Install `@huddle01/react` in your react native app
+    <Steps>
+    ### Install `@huddle01/react` in your react native app
 
 To power your React Native app with audio/video communication using Huddle01 install the following:
 
-<Tabs items={['pnpm', 'npm', 'yarn']}>
-  <Tab>
-    ```bash 
+      <Tabs items={['pnpm', 'npm', 'yarn']}>
+              <Tab>
+            ```bash 
       pnpm i @huddle01/react@alpha @huddle01/server-sdk@alpha react-native-get-random-values react-native-webrtc 
     ```
-  </Tab>
+            </Tab>
   <Tab>
-    ```bash 
+      ```bash 
     npm i @huddle01/react@alpha @huddle01/server-sdk@alpha react-native-get-random-values react-native-webrtc 
     ```
-  </Tab>
+            </Tab>
   <Tab>
-    ```bash 
+      ```bash 
     yarn add @huddle01/react@alpha @huddle01/server-sdk@alpha react-native-get-random-values react-native-webrtc 
     ```
-  </Tab>
-</Tabs>
+            </Tab>
+              </Tabs>
 
-<Callout type="info">
-Important Step: Make sure to add camera and mic permissions to your `AndroidManifest.xml` file [(for Android)](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/AndroidInstallation.md) and `Info.plist` file [(for iOS)](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/iOSInstallation.md).
+      <Callout type="info">
+      Important Step: Make sure to add camera and mic permissions to your `AndroidManifest.xml` file [(for Android)](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/AndroidInstallation.md) and `Info.plist` file [(for iOS)](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/iOSInstallation.md).
 
 If you are building for iOS, don’t forget to run `pod install` inside the ios directory to install the iOS native dependencies.
 
-</Callout>
+      </Callout>
 
 Now that we have our packages installed and app permissions granted, we need to add a few more lines of code for configuring the SDK. Go to your top-level `index.js` file and replace all of the code with the following:
 
@@ -58,7 +58,7 @@ That’s all the SDK setup we need to build a full-fledged video conferencing ap
 
 ### Initialization of project
 
-{/* TODO: Add initialization of project link */}
+      {/* TODO: Add initialization of project link */}
 Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials: 
 
 - `API Key`
@@ -67,7 +67,7 @@ Head over to [API Keys Page](/api-keys) and connect your wallet to get your proj
 Once done, initialize your project by adding the `HuddleProvider` and pass `projectId`  in params. 
 
 ```tsx filename="app.tsx"
-import { useHuddle01 } from '@huddle01/react';
+import { HuddleClient, HuddleProvider } from '@huddle01/react';
 
 const huddleClient = new HuddleClient({
   projectId: env.NEXT_PUBLIC_PROJECT_ID,
@@ -209,10 +209,10 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
 ### Receiving the audio and video streams
 Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
 
-<details>
-  <summary>
-    Getting access to data related to peers
-  </summary>
+      <details>
+              <summary>
+
+                </summary>
   JSX:
   ```tsx
   import { usePeerIds } from '@huddle01/react/hooks';
@@ -244,12 +244,12 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
   }
 
   ```
- 
-</details>
+
+        </details>
 
 
 ### You're all set! Happy Hacking! 🎉
 
 For more information, please refer to the [SDK Reference](/React).
 
-</Steps>
+    </Steps>
