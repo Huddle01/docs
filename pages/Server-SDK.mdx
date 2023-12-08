@@ -10,25 +10,25 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 ### Installation
 
 
- <Tabs items={['pnpm','npm', 'yarn']}>
-    <Tab>
-      ```bash 
+ <Tabs items={['pnpm', 'npm', 'yarn']}>
+       <Tab>
+            ```bash 
       npm install @huddle01/server-sdk@alpha
         ```
-    </Tab>
+              </Tab>
 
     <Tab>
-      ```bash
+          ```bash
       yarn add @huddle01/server-sdk@alpha
       ```
-    </Tab>
+            </Tab>
 
      <Tab>
-      ```bash
+           ```bash
       yarn add @huddle01/server-sdk@alpha
       ```
-    </Tab>
-  </Tabs>
+            </Tab>
+          </Tabs>
 
 
 ### Recording / Livestreaming
@@ -36,7 +36,7 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 ```jsx
 import { Recorder } from '@huddle01/server-sdk/recorder';
 
-const recorder = new Recorder("API_KEY", "API_SECRET");
+const recorder = new Recorder("PROJECT_ID", "API_KEY");
 
 // Start Recording
 recorder.startRecording({
