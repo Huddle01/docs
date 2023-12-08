@@ -10,33 +10,33 @@ import { Steps, Tab, Tabs } from 'nextra-theme-docs';
 
 The following guide explains how you can integrate audio/video into your React web-app seamlessly using the Huddle01 React SDK.
 
-<Steps>
-### Install `@huddle01/react` in your react app
+    <Steps>
+    ### Install `@huddle01/react` in your react app
 
 To power your React DApp with audio/video communication using Huddle01 install the following:
 
-<Tabs items={['pnpm', 'npm', 'yarn']}>
-  <Tab>
-    ```bash 
+      <Tabs items={['pnpm', 'npm', 'yarn']}>
+              <Tab>
+            ```bash 
       pnpm i @huddle01/react@alpha @huddle01/server-sdk@alpha
 
     ```
-  </Tab>
+            </Tab>
   <Tab>
-    ```bash 
+      ```bash 
     npm i @huddle01/react@alpha @huddle01/server-sdk@alpha
     ```
-  </Tab>
+            </Tab>
   <Tab>
-    ```bash 
+      ```bash 
     yarn add @huddle01/react@alpha @huddle01/server-sdk@alpha
     ```
-  </Tab>
-</Tabs>
+            </Tab>
+              </Tabs>
 
 ### Initialization of project
 
-{/* TODO: Add initialization of project link */}
+      {/* TODO: Add initialization of project link */}
 Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials: 
 
 - `API Key`
@@ -45,7 +45,7 @@ Head over to [API Keys Page](/api-keys) and connect your wallet to get your proj
 Once done, initialize your project by adding the `HuddleProvider` and pass `projectId`  in params. 
 
 ```tsx filename="app.tsx"
-import { useHuddle01 } from '@huddle01/react';
+import { HuddleClient, HuddleProvider } from '@huddle01/react';
 
 const huddleClient = new HuddleClient({
   projectId: env.NEXT_PUBLIC_PROJECT_ID,
@@ -186,10 +186,10 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
 ### Receiving the audio and video streams
 Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
 
-<details>
-  <summary>
-    Getting access to data related to peers
-  </summary>
+      <details>
+              <summary>
+
+                </summary>
   JSX:
   ```tsx
   import { usePeerIds } from '@huddle01/react/hooks';
@@ -218,11 +218,11 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
   }
 
   ```
- 
-</details>
+
+        </details>
 
 ### You're all set! Happy Hacking! 🎉
 
 For more information, please refer to the [SDK Reference](/React).
 
-</Steps>
+    </Steps>
