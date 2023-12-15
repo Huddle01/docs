@@ -37,7 +37,7 @@ const remotePeers = huddleClient.room.remotePeers;
 
 ```jsx
 // Usage
-await huddleClient.localPeer.getConsumer(label:string);
+await huddleClient.room.getRemotePeerById('YOUR_PEER_ID').getConsumer('YOUR_LABEL');
 ```
 
 ### getMetadata
@@ -60,7 +60,7 @@ await huddleClient.localPeer.getConsumer(label:string);
 
 ```jsx
 // Usage
-await huddleClient.localPeer.getMetadata();
+await await huddleClient.room.getRemotePeerById('YOUR_PEER_ID').getMetadata();
 ```
 
 
@@ -87,7 +87,7 @@ await huddleClient.localPeer.getMetadata();
 
 ```jsx
 // Usage
-await huddleClient.localPeer.updateRole({role:string});
+await huddleClient.room.getRemotePeerById('YOUR_PEER_ID').updateRole({role:string});
 ```
 
  ### updatePermissions
@@ -113,7 +113,7 @@ await huddleClient.localPeer.updateRole({role:string});
 
 ```jsx
 // Usage
-await huddleClient.localPeer.updatePermissions(data:TPermissions);
+await huddleClient.room.getRemotePeerById('YOUR_PEER_ID').updatePermissions(data:TPermissions);
 ```
 
 ## Events
@@ -153,15 +153,16 @@ await huddleClient.localPeer.updatePermissions(data:TPermissions);
 **Example**
 
 ```js
+// get remote peer 
+const remotePeer = huddleClient.room.getRemotePeerById('YOUR_PEER_ID');
 
 // Event listeners for the Remote Peer
 remotePeer.on("metadata-updated", () => {
-  console.log("successfully updated remote peer metatdat.");
+  console.log("successfully updated remote peer metadata.");
 });
 
 remotePeer.once("stream-available", (data) => {
-  console.log("Remote Peer stream is avaialble.");
-
+  console.log("Remote Peer stream is available.");
 });
 
 remotePeer.off("stream-closed", () => {
