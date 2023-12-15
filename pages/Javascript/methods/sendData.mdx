@@ -15,14 +15,19 @@ The `sendData` method allows the Local Peer to send data messages to other peers
     options={[
     [
         'to',
-        'string[] or ""',
-        'An array of peer IDs or "" for all peers.'
+        'string[] | "*"',
+        'An array of peer IDs or "*" for all peers.'
     ],
     [
         'payload',
         'string',
-        'The data message to send (limited to 280 characters).'
+        'The data message to send (limited to 1KB).'
     ],
+    [
+        'label',
+        'string',
+        'The label of the data message.'
+    ]
     ]}
 />
 
@@ -31,11 +36,6 @@ The `sendData` method allows the Local Peer to send data messages to other peers
 <OptionTable
     headers={['Name', 'Description', 'Returns']}
     options={[
-    [
-        'data-message',
-        'Triggered when a data message is received.',
-        '{ peerId: string; label: string; message: string }'
-    ],
     [
         'receive-data',
         'Triggered when data is received.',
@@ -48,9 +48,14 @@ The `sendData` method allows the Local Peer to send data messages to other peers
 
 ```js 
 // Send a message to specific peers
-huddleClient.localPeer.sendData({ to: ["peerID1", "peerID2"], payload: "Hello, everyone!" });
+huddleClient.localPeer.sendData({ to: ["peerID1", "peerID2"], payload: "Hello, everyone!", label: 'chat' });
 
 // Sending message to all peers
-huddleClient.localPeer.sendData({ to: "*", payload: "Hello, everyone!" });
+huddleClient.localPeer.sendData({ to: "*", payload: "Hello, everyone!", label: 'greeting' });
+
+// Listen for data messages
+huddleClient.localPeer.on('receive-data', (data) => {
+    console.log(data);
+});
 ```
 

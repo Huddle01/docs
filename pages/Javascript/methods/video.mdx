@@ -3,12 +3,18 @@ title: 'Video'
 ---
 
 import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs';
 
 ## Video 
 
 ### Enable Video 
 
 The `enableVideo` method enables the local microphone and starts producing the video stream with the label `video`.
+
+<Callout type='info'>
+  `enableVideo` method calls both `fetchStream` and `produce` method internally. If you want to fetch video Stream, you have to explicitly call `fetchStream` method. 
+  Refer to [Media Devices](/docs/Javascript/methods/mediaDevices) for more information.
+</Callout>
 
 **Example**
 

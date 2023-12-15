@@ -2,14 +2,20 @@
 title: 'Screen Share' 
 ---
 
+import { Callout } from 'nextra-theme-docs';
+
 # Screen Share
 
 ### Start Screen Share 
 
 The `startScreenShare` method enables the local screen sharing and starts producing the screen sharing stream with the label `screen`.
 
+<Callout type='info'>
+`startScreenShare` method calls both `fetchScreen` and `produce` method internally. If you want to fetch screen share stream, you have to explicitly call `fetchScreen` method. 
+  Refer to [Media Devices](/docs/Javascript/methods/mediaDevices) for more information.
+</Callout>
+
 ```js
-// Usage
 // Enable screen share
 await huddleClient.localPeer.startScreenShare();
 ```
@@ -19,7 +25,6 @@ await huddleClient.localPeer.startScreenShare();
 The `stopScreenShare` method stops the local screen sharing and also stops producing the screen sharing stream with remote peers.
 
 ```js
-// Usage
 // Disable screen share
 await huddleClient.localPeer.stopScreenShare();
 ```
