@@ -23,7 +23,6 @@ To power your React DApp with audio/video communication using Huddle01 install t
               <Tab>
             ```bash 
       pnpm i @huddle01/react@alpha @huddle01/server-sdk@alpha
-
     ```
             </Tab>
   <Tab>
@@ -120,10 +119,15 @@ Room Id can be generated using the : [Create Room API](/apis/create-room/create-
   
     return (
       <div>
-        <button onClick={() => joinRoom('YOUR_ROOM_ID')}>
+        <button onClick={() => {
+          joinRoom({
+            roomId: 'YOUR_ROOM_ID',
+            token: 'YOUR_ACCESS_TOKEN'
+          });
+        }}>
           Join Room
         </button>      
-        <button onClick={() => leaveRoom('YOUR_ROOM_ID')}>
+        <button onClick={leaveRoom}>
           Leave Room
         </button> 
       </div>
@@ -190,15 +194,15 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
 ### Receiving the audio and video streams
 Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
 
-      <details>
-              <summary>
-
-                </summary>
-  JSX:
-  ```tsx
+  ```tsx filename="RemotePeer.tsx"
   import { usePeerIds } from '@huddle01/react/hooks';
+  import { FC } from 'react';
 
-  const RemotePeer = ({ peerId }) => {
+  interface RemotePeerProps {
+    peerId: string;
+  }
+
+  const RemotePeer: FC<RemotePeerProps> = ({ peerId }) => {
     
     const { stream } = useRemoteVideo({ peerId });
  
@@ -220,10 +224,8 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
         })}
       </div>
   }
-
   ```
 
-        </details>
 
 ### You're all set! Happy Hacking! 🎉
 

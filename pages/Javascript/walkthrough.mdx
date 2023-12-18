@@ -111,7 +111,11 @@ The `joinRoom() `method can be called to enter the room. To leave that respectiv
 </script>
 ```
 
-### Enabling and Disabling Audio and Video.
+<Callout type="info">
+Clicking on the **JOIN_ROOM** button, will make the user join the room and will allow them to send/receive media with other participants.
+</Callout>
+
+### Enabling and Disabling Audio, Video and Screen Share.
 
 Add the locale codes to your file extensions (required for the default locale too):
 
@@ -127,19 +131,66 @@ Add the locale codes to your file extensions (required for the default locale to
   };
 
   document.getElementById('enableCam').onclick = async () => {
-    await huddleClient.localPeer.enableVideo();
+    // Fetch a video stream
+    const streamResponse = await client.localPeer.deviceHandler.fetchStream({
+      mediaDeviceKind: 'cam',
+    });
+
+    // Get the stream from the response
+    const stream = streamResponse.stream;
+
+    // Set the stream to the video element
+    document.getElementById('video').srcObject = stream;
+
+    // Produce the stream
+    await huddleClient.localPeer.produce({
+      label: 'video',
+      stream: stream,
+    });
+
   };
 
   document.getElementById('disableCam').onclick = async () => {
-     await huddleClient.localPeer.disableVideo();
+     // Get reference to the video element
+     const videoRef = document.getElementById('video');
+
+     if (videoRef.srcObject) {
+        videoRef.srcObject = null;
+        await huddleClient.localPeer.disableVideo();
+     }
   };
+
+  document.getElementById('enableScreen').onclick = async () => {
+    // Fetch a screen stream
+    const streamResponse = await client.localPeer.deviceHandler.fetchStream({
+      mediaDeviceKind: 'screen',
+    });
+
+    // Get the stream from the response
+    const stream = streamResponse.stream;
+
+    // Set the stream to the video element
+    document.getElementById('video').srcObject = stream;
+
+    // Produce the stream
+    await huddleClient.localPeer.produce({
+      label: 'screen',
+      stream: stream,
+    });
+  }
+
+  document.getElementById('disableScreen').onclick = async () => {
+     // Get reference to the video element
+     const videoRef = document.getElementById('video');
+
+     if (videoRef.srcObject) {
+        videoRef.srcObject = null;
+        await huddleClient.localPeer.disableScreen();
+     }
+  }
 
 </script>
 ```
-<Callout type="info">
-Clicking on the **JOIN_ROOM** button, will make the user join the room and will allow them to send/receive media with other participants.
-</Callout>
-
 
 ### Sending media across to other participants
 Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
