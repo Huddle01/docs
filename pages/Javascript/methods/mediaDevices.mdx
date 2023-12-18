@@ -113,7 +113,9 @@ const speakerDevices = await huddleClient.localPeer.deviceHandler.getMediaDevice
 
 **Example**
 ```jsx
-const camStream = await huddleClient.localPeer.deviceHandler.fetchStream({mediaDeviceKind: 'cam'});
+const streamResponse = await huddleClient.localPeer.deviceHandler.fetchStream({mediaDeviceKind: 'cam'});
+
+const stream = streamResponse.stream;
 ```
 
 ### stopStream
@@ -135,6 +137,18 @@ const camStream = await huddleClient.localPeer.deviceHandler.fetchStream({mediaD
 **Example**
 ```jsx
 await huddleClient.localPeer.deviceHandler.stopStream({mediaDeviceKind: 'cam'});
+```
+
+### fetchScreen 
+
+`fetchScreen` method retrieves the screen stream from the device.
+
+**Example**
+
+```jsx
+const streamResponse = await huddleClient.localPeer.deviceHandler.fetchScreen();
+
+const stream = streamResponse.stream;
 ```
 
 ## Events 

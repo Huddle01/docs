@@ -3,6 +3,7 @@ title: 'Room'
 ---
 
 import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs';
 
 # Room
 
@@ -11,6 +12,10 @@ The room is the place where the actual meeting takes place. It is the place wher
 ## Methods 
 
 ### Join Room
+
+<Callout>
+You can generate Access Token using our [Server SDK](/Server-SDK). To generate `roomId` you can use our [Create Room API](/apis/create-room/create-room).
+</Callout>
 
 ```jsx
 // Joining the room
@@ -81,7 +86,7 @@ Function `getMetadata` gets Metadata of the room.
 **Example**
 ```jsx
 // Usage
-await room.updateMetadata({data: unknown});
+await room.getMetadata({data: unknown});
 ```
 
  ### updateMetadata
@@ -101,7 +106,7 @@ Function `updateMetadata` update Metadata of the room.
 **Example**
 ```jsx
 // Usage
-await room.getMetadata({data: unknown});
+await room.updateMetadata({data: unknown});
 ```
 
 
