@@ -155,7 +155,7 @@ export function handleVideoStream(element) {
 
     // If video stream is already enabled, then disable it
     if (videoRef.srcObject) {
-      videoRef.srcObject.getTracks().forEach((track) => track.stop());
+      client.localPeer.disableVideo();
       videoRef.srcObject = null;
       document.querySelector('#video').textContent = 'Enable Video';
       return;
