@@ -2,7 +2,7 @@
 title: 'Walkthrough'
 ---
 
-import { Callout, Steps } from 'nextra-theme-docs';
+import { Callout, Steps, Tabs, Tab } from 'nextra-theme-docs';
 
 # Building a Vanilla App with Huddle01
 
@@ -13,16 +13,30 @@ import { Callout, Steps } from 'nextra-theme-docs';
 
 ## Walkthrough
 
-The following guide explains how you can integrate audio/video into your application seamlessly using the Huddle01 vanilla JS SDK.
+The following guide explains how you can integrate audio/video into your application seamlessly using the Huddle01 vanilla JS SDK. 
 
 <Steps>
-### Add the following code snippet to the head of your HTML file: Replace with our CDN
+### Install `@huddle01/web-core` package
 
-To power your Vanilla App with audio/video communication using Huddle01.
+To power your Vanilla JS App with audio/video communication using Huddle01.
 
-```js filename="app.js" 
-<script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js" />
-```
+ <Tabs items={['pnpm', 'npm', 'yarn']}>
+              <Tab>
+            ```bash 
+      pnpm i @huddle01/web-core@alpha
+    ```
+            </Tab>
+  <Tab>
+      ```bash 
+    npm i @huddle01/web-core@alpha
+    ```
+            </Tab>
+  <Tab>
+      ```bash 
+    yarn add @huddle01/web-core@alpha
+    ```
+            </Tab>
+              </Tabs>
 
 
 ### Initialization of project
@@ -32,35 +46,28 @@ Head over to [API Keys Page](/api-keys) and connect your wallet to get your proj
 - `API Key`
 - `projectId`
 
-Once done, initialize your project by calling the `initialize()` method and pass `projectId`  in params.
+Once done, initialize `huddleClient` with the following code snippet.
 
-```js filename="app.js" highlight={6}
-<script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js" / >
- 
-<script type="module">
-  const huddleClient = new HuddleClient({
-  projectId: env.NEXT_PUBLIC_PROJECT_ID,
-  options: {
-    activeSpeakers: {
-      size: 8,
-    },
-  },
+```js filename="client.js"
+import { HuddleClient } from '@huddle01/web-core';
+
+export const client = new HuddleClient({
+  projectId: 'TxG-OolMwGeCoZPzX660e65wwuU2MP83',
 });
-</script>
 ```
 
-### Generating the Access Token.
-Once the client has been initialized,
+### Generating the Access Token
+Once the client has been initialized, Room Id can be generated using the [Create Room API](/apis/create-room/create-room)
 
-Room Id can be generated using the : [Create Room API](/apis/create-room/create-room)
+Access Token can be generated using [`Server-SDK`](/Server-SDK). Make sure you use `Server-SDK` from server side only, don't call it from client side. 
+We have created a [token simulator](https://huddle01-token-simulator.vercel.app/) which you can use to generate room and access token.
+You can create your own server where you can generate the access token using the following code snippet.
 
-
-
-```js filename="app.js" highlight={4-6}
-<script type="module">
+```js filename="server.js"
   
   import { AccessToken, Role } from '@huddle01/server-sdk/auth';
 
+  const generateAccessToken = async () => {
    const accessToken = new AccessToken({
         apiKey,
         roomId: "YOUR_ROOM_ID",
@@ -81,26 +88,30 @@ Room Id can be generated using the : [Create Room API](/apis/create-room/create-
         options: {
           metadata: { 
              // you can add any custom attributes here which you want to associate with the user
-            walletAddress: "axit.eth"
+            walletAddress: "vrajdesai.eth"
           },
         },
-      });
-
-
-</script>
+    });
+  const token = await accessToken.toJwt();
+  return token;
+  }
 ```
 
 ### Joining and leaving the room
 
 The `joinRoom() `method can be called to enter the room. To leave that respective room you can call the `leaveRoom() `method.
 
-```js filename="app.js" highlight={8-14}
-<script type="module">
+<Callout type="info">
+Clicking on the **JOIN_ROOM** button, will make the user join the room and will allow them to send/receive media and data with other participants.
+</Callout>
 
-    document.getElementById('joinRoom').onclick = async () => {
-    await huddleClient.joinLobby({
+```js filename="app.js" highlight={8-14}
+
+  document.getElementById('joinRoom').onclick = async () => {
+    // you can use roomId and accessToken which we have generated in the above steps
+    await huddleClient.joinRoom({
       roomId: "YOUR_ROOM_ID",
-	    token: "YOUR_ACCESS_TOKEN"
+      token: "YOUR_ACCESS_TOKEN"
     });
   };
 
@@ -108,140 +119,172 @@ The `joinRoom() `method can be called to enter the room. To leave that respectiv
       await huddleClient.leaveRoom();
   };
 
-</script>
 ```
-
-<Callout type="info">
-Clicking on the **JOIN_ROOM** button, will make the user join the room and will allow them to send/receive media with other participants.
-</Callout>
 
 ### Enabling and Disabling Audio, Video and Screen Share.
 
-Add the locale codes to your file extensions (required for the default locale too):
+The following code snippet shows how you can enable/disable audio, video and screen share.
 
-```js filename="app.js" highlight={16-22}
-<script type="module">
+```js filename="handleStream.js"
+import { client } from './client';
 
-  document.getElementById('enableMic').onclick = async () => {
-    await huddleClient.localPeer.enableAudio();
-  };
+// This function will enable or disable audio stream
+export function handleAudioStream(element) {
+  element.addEventListener("click", async () => {
+    // Reference to the button to enable/disable audio
+    const audioRef = document.querySelector("#audio");
+    // If audio stream is disabled, then enable it
+    if (audioRef.textContent == "Disable Audio") {
+      // This will disable the audio stream and other participants will not be able to hear you
+      await client.localPeer.disableAudio();
+      audioRef.textContent = "Enable Audio";
+    } else {
+      // This will enable the audio stream and other participants will be able to hear you
+      await client.localPeer.enableAudio();
+      audioRef.textContent = "Disable Audio";
+    }
+  });
+}
 
-  document.getElementById('disableMic').onclick = async () => {
-     await huddleClient.localPeer.disableAudio();
-  };
+// This function will enable or disable video stream
+export function handleVideoStream(element) {
+  element.addEventListener('click', async () => {
 
-  document.getElementById('enableCam').onclick = async () => {
-    // Fetch a video stream
+    // Reference to the button to enable/disable video
+    const videoRef = document.querySelector('#videoRef');
+
+    // If video stream is already enabled, then disable it
+    if (videoRef.srcObject) {
+      client.localPeer.disableVideo();
+      videoRef.srcObject = null;
+      document.querySelector('#video').textContent = 'Enable Video';
+      return;
+    }
+
+    // This will fetch video stream and return object from which we can get stream
     const streamResponse = await client.localPeer.deviceHandler.fetchStream({
       mediaDeviceKind: 'cam',
     });
 
-    // Get the stream from the response
+    // This will return stream from the object
     const stream = streamResponse.stream;
 
-    // Set the stream to the video element
-    document.getElementById('video').srcObject = stream;
-
-    // Produce the stream
-    await huddleClient.localPeer.produce({
+    // This will produce the stream to other participants
+    client.localPeer.produce({
       label: 'video',
       stream: stream,
     });
 
-  };
+    // This will set the stream to the video element
+    videoRef.srcObject = stream;
+    videoRef.onloadedmetadata = async () => {
+      try {
+        await videoRef.play();
+        document.querySelector('#video').textContent = 'Disable Video';
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  });
+}
 
-  document.getElementById('disableCam').onclick = async () => {
-     // Get reference to the video element
-     const videoRef = document.getElementById('video');
+// This function will enable or disable screen share
+export function handleScreenStream(element) {
+  element.addEventListener('click', async () => {
 
-     if (videoRef.srcObject) {
-        videoRef.srcObject = null;
-        await huddleClient.localPeer.disableVideo();
-     }
-  };
+    // Reference to the button to enable/disable screen share
+    const screenRef = document.querySelector('#screenRef');
 
-  document.getElementById('enableScreen').onclick = async () => {
-    // Fetch a screen stream
-    const streamResponse = await client.localPeer.deviceHandler.fetchStream({
-      mediaDeviceKind: 'screen',
-    });
+    // If screen share is already enabled, then disable it
+    if (screenRef.srcObject) {
+      screenRef.srcObject.getTracks().forEach((track) => track.stop());
+      screenRef.srcObject = null;
+      document.querySelector('#screen').textContent = 'Share Screen';
+      return;
+    }
 
-    // Get the stream from the response
+    // This will fetch screen share stream and return object from which we can get stream
+    const streamResponse = await client.localPeer.deviceHandler.fetchScreen();
+
+    // This will return stream from the object
     const stream = streamResponse.stream;
 
-    // Set the stream to the video element
-    document.getElementById('video').srcObject = stream;
-
-    // Produce the stream
-    await huddleClient.localPeer.produce({
+    // This will produce the stream to other participants
+    client.localPeer.produce({
       label: 'screen',
       stream: stream,
     });
-  }
 
-  document.getElementById('disableScreen').onclick = async () => {
-     // Get reference to the video element
-     const videoRef = document.getElementById('video');
+    // This will set the stream to the video element
+    screenRef.srcObject = stream;
+    screenRef.onloadedmetadata = async () => {
+      try {
+        await screenRef.play();
+        document.querySelector('#screen').textContent = 'Stop Sharing';
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  });
+}
 
-     if (videoRef.srcObject) {
-        videoRef.srcObject = null;
-        await huddleClient.localPeer.disableScreen();
-     }
-  }
-
-</script>
 ```
 
-### Sending media across to other participants
-Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
+### Show remote peers in the room 
 
+We have to listen to two events `stream-added` and `stream-closed` from `room` to add and remove remote peers stream. 
 
-```js filename="app.js" highlight={30-31}
-<script type="module">
+```js filename="handleEvents.js"
+import { client } from "./client";
 
-  document.getElementById('produceMic').onclick = async () => {
-     // Producing a video stream from a Local Peer
-      await huddleClient.localPeer.produce({ label: "video", stream: mediaStream, appData: { key: "value" } });
-  };
+// This function needs to be called in app.js file
+export function handleEvents() {
 
-  document.getElementById('produceCam').onclick = async () => {
-      // Stopping a video stream from a Local Peer
-      await huddleClient.localPeer.stopProducing({ label: "video" });
-  };
+  // This event will be triggered when a new stream is added to the room
+  client.room.on("stream-added", ({ peerId, label }) => {
+    const container = document.querySelector("#remotePeers");
 
-  document.getElementById('produceCam').onclick = () => {
-      // Stopping a audio stream from a Local Peer
-      await huddleClient.localPeer.produce({ label: "audio", stream: mediaStream, appData: { key: "value" } });
-  };
+    // Create a new video element to show the remote stream
+    let mediaRef = document.createElement("video");
 
-  document.getElementById('produceCam').onclick = async () => {
-      // Stopping a audio stream from a Local Peer
-      await huddleClient.localPeer.stopProducing({ label: "audio" });
-  };
+    // If the stream is audio, then create audio element
+    if (label == "audio") {
+      mediaRef = document.createElement("audio");
+    }
 
-  document.getElementById("consumeMic").onclick = async () => {
-     // Consume a stream from a Remote Peer
-     await localPeer.consume({
-       peerId: "remotePeerID",
-       label: "streamLabel",
-       appData: { key: "value" },
-   });
-  }
+    // Get the track of remote peer from the room by getting the remote peer's consumer
+    const remoteTrack = client.room
+      .getRemotePeerById(peerId)
+      ?.getConsumer(label)?.track;
 
-  document.getElementById("consumeMic").onclick = async () => {
-    // Stop consuming a stream from remote peer
-    await huddleClient.localPeer.stopConsuming({
-     peerId: "remotePeerID",
-     label: "streamLabel", // stream label can be 'video', 'audio', 'screen'
-   });
-  }
+    // Create a new media stream from the remote track and set it to the media element
+    mediaRef.srcObject = new MediaStream([remoteTrack]);
+    mediaRef.id = `${peerId}-${label}`;
+    mediaRef.autoplay = true;
 
-</script>
+    // If the stream is video, then mute it
+    if (label == "video") {
+      mediaRef.muted = true;
+    }
+    mediaRef.className = "border-2 rounded-xl border-white-400 aspect-video";
+    container.appendChild(mediaRef);
+  });
+
+  // This event will be triggered when a stream is closed in the room
+  client.room.on("stream-closed", ({ peerId, label }) => {
+    // Get the reference of media element    
+    const mediaRef = document.querySelector(`#${peerId}-${label}`);
+    // Stop the track and remove the media element
+    mediaRef.srcObject.getTracks().forEach((track) => track.stop());
+    mediaRef.srcObject = null;
+    mediaRef.remove();
+  });
+}
 ```
-
 
 ### You're all set! Happy Hacking! 🎉
 
+Full code of this walkthrough can be found [here](https://github.com/Huddle01/alpha-esm-js-example). 
 For more information, please refer to the [SDK Reference](/Javascript).
 
 </Steps>
