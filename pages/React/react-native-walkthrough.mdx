@@ -95,40 +95,13 @@ const Parent = () => {
 ### Generating the access token
 Room Id can be generated using the : [Create Room API](/apis/create-room/create-room)
 
-```tsx filename="api.ts" highlight={2,7,16-21}
-  import { AccessToken, Role } from '@huddle01/server-sdk/auth';
-
-   const accessToken = new AccessToken({
-        apiKey,
-        roomId: "YOUR_ROOM_ID",
-        role:  Role.HOST,
-        permissions: {
-          admin: true,
-          canConsume: true,
-          canProduce: true,
-          canProduceSources: {
-            cam: true,
-            mic: true,
-            screen: true,
-          },
-          canRecvData: true,
-          canSendData: true,
-          canUpdateMetadata: true,
-        },
-        options: {
-          metadata: { 
-             // you can add any custom attributes here which you want to associate with the user
-            walletAddress: "mizanxali.eth"
-          },
-        },
-      });
-
-```
+AccessToken for each peer is to be generated on a backend server using the: [Server SDK](/Server-SDK)
+  
 ### Joining and leaving the room
 
 
   ```tsx filename="app.tsx" highlight={2,8-9,26-34}
-  import { useRoom } from '@huddle01/react/hooks';
+  import { useRoom } from '@huddle01/react/dist/hooks';
   import {Button, View} from 'react-native';
 
   const App = () => {
@@ -165,11 +138,11 @@ Room Id can be generated using the : [Create Room API](/apis/create-room/create-
 Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
 
 ```tsx filename="app.tsx" highlight={9,14,51-65}
-  import { useLocalVideo, useLocalAudio } from '@huddle01/react/hooks';
+  import { useLocalVideo, useLocalAudio } from '@huddle01/react/dist/hooks';
 
   const App = () => {
-    const { stream, enableVideo, disableVideo, changeVideoSource } = useLocalVideo();
-    const { stream, enableAudio, disableAudio, changeVideoSource } = useLocalAudio();
+    const { stream: videoStream, enableVideo, disableVideo, changeVideoSource } = useLocalVideo();
+    const { stream: audioStream, enableAudio, disableAudio, changeAudioSource } = useLocalAudio();
 
     return (
         {/* Webcam */} 
@@ -192,7 +165,7 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
 
 #### Advanced: Using the `useLocalMedia` hook
 ```tsx filename="app.tsx" highlight={9,14,51-65}
-  import { useLocalMedia } from '@huddle01/react/hooks';
+  import { useLocalMedia } from '@huddle01/react/dist/hooks';
 
   const App = () => {
     const { fetchStream } = useLocalMedia();
@@ -219,7 +192,7 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
 Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
 
   ```tsx filename="RemotePeer.tsx" 
-  import { usePeerIds } from '@huddle01/react/hooks';
+  import { usePeerIds } from '@huddle01/react/dist/hooks';
   import { MediaStream, RTCView } from "react-native-webrtc";
 
   const RemotePeer = ({ peerId }) => {
