@@ -64,67 +64,69 @@ await huddleClient.localPeer.updateRole({role:string});
 ## Events
 
 <OptionTable 
-    headers={['Event Name', 'Description']}
+    headers={['Event Name', 'Description', 'Returns']}
     options={[
         [
             'metadata-updated',
             'Invoked when a local user metadata successfully updates.',
+            '{ metadata: unknown }'
+        ],
+        [
+            'permissions-updated',
+            'Invoked when a local user permissions successfully updates.',
+            '{ permissions: TPermissions; role?: string }'
         ],
         [
             'role-updated',
             "Invoked when a local user's role successfully updates.",
+            '{ role: string }'
         ],
         [
             'stream-fetched',
             'Invoked when a local peer stream is fetched.',
+            "{ mediaKind: 'cam' | 'mic' | 'speaker', stream: MediaStream, label: string }"
         ],
         [
             'stream-closed',
             'Invoked when a local peer stream is closed.',
+            "{ label: string, mediaKind: 'cam' | 'mic' | 'speaker', reason?: { code: number, tag: string, message: string } }"
         ],
         [
             'stream-playable',
             'Invoked when a local peer stream is playable.',
+            "{ label: string, producer: Producer }"
         ],
-
-         [
-            'stream-stopped',
-            'Invoked when a local peer stream is stopped.',
-        ],
-
-        [
-            'data-message',
-            'Invoked when a local peer data is send.',
-        ],
-
         [
             'device-created',
-            'Invoked when a local peer device is created.',
+            'Invoked when a new device is created',
+            '{ device: Device }'
         ],
 
        [
             'new-recv-transport',
-            'Invoked when a local peer new transport is received.',
+            'Invoked when a local peer is ready to consume stream',
+            '{ transport: Transport }'
         ],
 
          [
             'new-send-transport',
-            'Invoked when a local peer new transport is send.',
+            'Invoked when a local peer is ready to produce stream',
+            '{ transport: Transport }'
         ],
-
-         [
-            'permission-updated',
-            'Invoked when a local peer permission is updated.',
-        ],
-
         [
             'receive-data',
-            'Invoked when a local peer data is received.',
+            'Invoked when a new data message is received from the other Remote Peers',
+            '{ data: TDataMessage }'
         ],
-
-          [
+        [
+            'receive-volatile-data',
+            'Invoked when a new volatile data message is received from the other Remote Peers',
+            '{ data: TDataMessage }'
+        ],
+        [
             'reconnected',
-            'Invoked when a local peer reconnected.',
+            'Invoked when a local peer is reconnected.',
+            '{ data: Socket }'
         ],
     ]}
 />
@@ -147,5 +149,4 @@ localPeer.once("stream-available", (data) => {
 localPeer.off("stream-closed", () => {
   console.log("Remote Peer Stream is closed.");
 });
-
-
+```

@@ -10,7 +10,7 @@ This guide will help you to quickly get started with using our Javascript SDK in
 
 ## Installation
 
-You can install the Huddle01 Vanilla JS SDK packages in two ways:
+{/* You can install the Huddle01 Vanilla JS SDK packages in two ways:
 
 1. Using the script tag: Add the following code snippet to the head of your HTML. 
 
@@ -18,12 +18,12 @@ You can install the Huddle01 Vanilla JS SDK packages in two ways:
     <script src="https://unpkg.com/@huddle01/web-core@alpha/dist/index.js" />
 
     <script type="module">
-	   {/* Initialize huddleClient */}
+	   {/* Initialize huddleClient 
 	    const huddleClient = new HuddleClient({ projectId: "YOUR_PROJECT_ID" });
     </script>
-    ```
+    ``` */}
 
-2. Using npm or any other package manager: Run the following command in your terminal to install the package:
+1. Use npm or any other package manager: Run the following command in your terminal to install the package:
 
   <Tabs items={['npm', 'yarn', 'bun']}>
     <Tab>
@@ -48,6 +48,7 @@ You can install the Huddle01 Vanilla JS SDK packages in two ways:
 ## Using client to access Methods
 
 Once you initialise `huddleClient` you can access various methods such as `joinRoom` and other methods. 
+You can generate roomId using this [API](/apis/create-room/create-room) and access token using our [Server SDK](/Server-SDK).
 
 ```html 
 <script>
