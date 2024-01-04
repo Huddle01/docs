@@ -1,0 +1,51 @@
+---
+title: 'Typescript Support'
+---
+
+# Typescript Support
+
+To give support to Web Apps built using Typescript we expose some data types that you can use.
+
+## Reactions
+
+For reaction we expose an array of allowed emojis that can be used in the `sendReaction()` method
+
+### `reactions` array
+You can access them in the following way: 
+
+```js
+import { reactions } from "@huddle01/iframe/types";
+
+console.log(reactions)
+
+```
+```js
+// Output
+['😂','😢','😦','😍','🤔','👀','🙌','👍','👎','🔥','🍻','🚀','🎉','❤️','💯',]
+```
+### `TReaction` type
+You can use the TReaction data type in the following way: 
+```jsx
+import { TReaction } from "@huddle01/iframe/types";
+
+const [reaction, setReaction] = useState<TReaction>("🔥");
+```
+
+## Themes
+
+### `IColorScheme` and `darkTheme` , `lightTheme` as consts
+
+```tsx
+import { darkTheme, lightTheme, IColorScheme } from "@huddle01/iframe/types";
+
+const [theme, setTheme] = useState<IColorScheme>(darkTheme);
+
+setTheme(lightTheme)
+```
+## Events
+
+```tsx
+import { THuddleEvents } from "@huddle01/iframe/types";
+
+const [currentEvent, setCurrentEvent] = useState<THuddleEvents | null>(null)
+```
