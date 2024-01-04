@@ -138,12 +138,12 @@ iframeApi.initialize({background: ""})
 
 ### **Initializing for the first time**
 <Callout emoji="⚠️">
-   Don't use the `useEffect` hook to call `iframeApi.initialize()` for the first time, use the `useEventListner` hook instead
+   Don't use the `useEffect` hook to call `iframeApi.initialize()` for the first time, use the `useEventListener` hook instead
 </Callout>
 
 ```jsx
 // the `lobby:initialized`  event can be used to know when the lobby has been loaded 
-useEventListner("lobby:initialized", () => {
+useEventListener("lobby:initialized", () => {
     iframeApi.initialize({
       redirectUrlOnLeave: "https://huddle01.com",
       wallets: ["metamask"],
@@ -170,14 +170,14 @@ There are some additional meeting events that you can listen to as well:
 
 ```jsx
 // JavaScript
-import { useEventListner } from "@huddle01/iframe";
+import { useEventListener } from "@huddle01/iframe";
 
-useEventListner("room:new-peer", (data) => console.log({ data }));
+useEventListener("room:new-peer", (data) => console.log({ data }));
 
 // TypeScript
-import { useEventListner } from "@huddle01/iframe";
+import { useEventListener } from "@huddle01/iframe";
 
-useEventListner("lobby:joined", (data) => console.log({ data }));
+useEventListener("lobby:joined", (data) => console.log({ data }));
 ```
 
 
