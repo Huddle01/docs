@@ -13,10 +13,9 @@ The usePeerIds hook returns peerIds of all peers inside a Huddle01 room.
 const {
     peerIds
   } = usePeerIds({
-   roles?: string[];
-  labels?: Array<
-    'audio' | 'video' | 'screen-share-video' | 'screen-share-audio' | string
-  >;
+   roles: [],
+  labels: [],
+  onPeerRoleUpdate(data) {}
   });
 ```
 
@@ -32,7 +31,7 @@ The usePeerIds hook accepts an object with the following fields as props.
   headers={['Description', 'Type']}
   options={[
     [
-      'Returns the array of the roles.',
+      'The user roles for which you want the corressponding peerIds.',
       "string[]",
     ],
   ]}
@@ -42,7 +41,7 @@ The usePeerIds hook accepts an object with the following fields as props.
 #### Example Usage
 
 ```tsx
-const peerIds = usePeerIds({ roles: ["bot"] });
+const peerIds = usePeerIds({ roles: ["speaker"] });
 ```
 
 {/* labels */}
@@ -55,7 +54,7 @@ const peerIds = usePeerIds({ roles: ["bot"] });
   headers={['Description', 'Type']}
   options={[
     [
-      'Returns the array of the params.',
+      'The media type being shared by the users for which you want the corressponding peerIds.',
       "Array<'audio' | 'video' | 'screen-video' | 'screen-audio' | string>",
     ],
   ]}
@@ -65,6 +64,47 @@ const peerIds = usePeerIds({ roles: ["bot"] });
 #### Example Usage
 
 ```tsx
+const peerIds = usePeerIds({ labels: ["audio"] });
+```
+
+{/* onPeerRoleUpdate */}
+### <span className="font-mono font-semibold">onLobbyPeersUpdated</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "This function will be called when a peer's role is updated.",
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      '{ peerId: string; newRole: string; prevRole: string; }',
+      'Data related to the peer role update',
+      'Yes',
+    ],
+  ]}
+/>
+
+#### Example Usage
+
+```tsx
+const lobby = useLobby({ onLobbyPeersUpdated: (data) => {
+	console.log("Peer role updated!");
+  console.log("peerId: ", data.peerId);
+  console.log("prevRole: ", data.prevRole);
+  console.log("newRole: ", data.newRole);
+    // your code here
+}});
+
 const peerIds = usePeerIds({ labels: ["audio"] });
 ```
 
