@@ -8,7 +8,7 @@ import Pill from '@components/common/Pill/Pill';
 
 # useRoomMetadata
 
-The  ` useRoomMetadata `  hook returns the data of the room and the function to update it`.
+The  ` useRoomMetadata `  hook returns the metadata associated with the room and the function to update it.
 
 
 ```tsx
@@ -93,8 +93,8 @@ The useRoomMetadata hook returns an object with the following fields.
   headers={['Description', 'Type']}
   options={[
     [
-      'roomData',
-      'object',
+      'The room metadata',
+      'unknown',
     ],
   ]}
 />
@@ -111,7 +111,7 @@ The useRoomMetadata hook returns an object with the following fields.
   headers={['Description', 'Type']}
   options={[
     [
-      'updateMetadata',
+      'Updates the room metadata',
       'void',
     ],
   ]}

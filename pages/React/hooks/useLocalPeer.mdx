@@ -19,6 +19,8 @@ const {
     updateRole,
   } = useLocalPeer({
     onMetadataUpdated(metadata) {},
+    onPermissionsUpdated(permissions) {},
+    onRoleUpdated(role) {},
   });
 ```
 
@@ -60,6 +62,84 @@ The useLocalPeer hook accepts an object with the following fields as props.
 const localPeer = useLocalPeer({ onMetadataUpdated: (metadata) => {
 	console.log("Your metadata was updated!");
 	console.log(metadata);
+    // your code here
+}});
+```
+
+{/* onPermissionsUpdated */}
+### <span className="font-mono font-semibold">onPermissionsUpdated</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when your user permissions are updated.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'permissions',
+      'TPermissions',
+      'The permissions associated with your peer object.',
+      'Yes',
+    ],
+  ]}
+/>
+
+#### Example Usage
+
+```tsx
+const localPeer = useLocalPeer({ onPermissionsUpdated: (permissions) => {
+	console.log("Your permissions were updated!");
+	console.log(permissions);
+    // your code here
+}});
+```
+
+{/* onRoleUpdated */}
+### <span className="font-mono font-semibold">onRoleUpdated</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when your user role is updated.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'role',
+      'string',
+      'The role associated with your peer object.',
+      'Yes',
+    ],
+  ]}
+/>
+
+#### Example Usage
+
+```tsx
+const localPeer = useLocalPeer({ onRoleUpdated: (role) => {
+	console.log("Your role was updated!");
+	console.log(role);
     // your code here
 }});
 ```
