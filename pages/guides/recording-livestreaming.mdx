@@ -8,18 +8,13 @@ import Image from 'next/image';
 
 # Recording and Livestreaming
 
-<Callout>
-  This guide assumes you have a working React application with the ability to create and join Huddle01 rooms.
-</Callout>
+Huddle01 SDKs come with built-in functionality to record and livestream meetings. This guide will walk you through the steps required to get started with both features. 
 
-Huddle01 SDKs come with built-in functionality to record and livestream meetings. This guide will walk you through the steps required to get started with both features.
-
-For this guide, we have already created a basic video conferencing web app using Next.js, and we will be adding recording and livestreaming functionality to it. To build a video conferencing app from scratch, you can refer to the [React Walkthrough](/React/react-walkthrough) guide.
+For this guide, we have already created a basic video conferencing web app using Next.js, and we will be adding recording and livestreaming functionality to it. This guide assumes you have a working application with the ability to create and join Huddle01 rooms. To build an app from scratch, you can refer to the walkthrough guides for [React.js](/React/react-walkthrough) and [Vanilla JS](/Javascript/walkthrough).
 
 ## App Initial State
 
-We have used the Huddle01 [React SDK](/React) to build this app.
-This is what it looks like once you join the room and enable your video from two different tabs. 
+We have used the Huddle01 [React SDK](/React) to build this app. This is what it looks like once you join the room and enable your video from two different tabs. 
 
 <Image
               src="/docs/images/recording-walkthrough/app-initial-state.png"
@@ -31,7 +26,7 @@ This is what it looks like once you join the room and enable your video from two
 
 ## Recording the Meeting
 
-To record a meeting, you have to make use of the [Huddle01 Server SDK](/Server-SDK). This SDK exposes functions that allow you to start and stop a meeting recording. This is supposed to happen on the server side, so you will need to create an API route to handle the recording.
+To record a meeting, you have to make use of the [Huddle01 Server SDK](/Server-SDK). This SDK exposes a `Recorder` class with functions that allow you to start and stop a meeting recording. This is supposed to happen on the server side, so you will need to create an API route to handle the recording.
 
 Install the Server SDK if you haven't already.
 
