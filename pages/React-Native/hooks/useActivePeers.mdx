@@ -1,0 +1,57 @@
+---
+title: 'useActivePeers'
+---
+
+
+import OptionTable from '@components/common/Table/OptionTable';
+import Pill from '@components/common/Pill/Pill';
+
+# useActivePeers
+
+The  ` useActivePeers `  hook returns the last most active "N" number of peers i.e. `activePeerIds` & `dominantSpeakerId`.
+
+
+```tsx
+const {
+    activePeerIds,
+    dominantSpeakerId,
+  } = useActivePeers();
+```
+
+## Returns
+The useActivePeers hook returns an object with the following fields.
+
+
+{/* activePeerIds */}
+### <span className="font-mono font-semibold">activePeerIds</span>
+<div className='w-20 mt-4'>
+  <Pill>Array</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'last most active n number of peers.',
+      'string[]',
+    ],
+  ]}
+/>
+
+
+
+{/* dominantSpeakerId */}
+### <span className="font-mono font-semibold">dominantSpeakerId</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'last most active peer.',
+      'string',
+    ],
+  ]}
+/>
