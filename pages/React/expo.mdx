@@ -1,0 +1,64 @@
+---
+title: 'Expo'
+---
+
+
+# Expo Support for Huddle01 React SDK
+
+If you are building a React Native mobile app using Expo, there are a few additional steps you need to follow to correctly install and use the Huddle01 React SDK.
+
+## **Installation**
+
+Firstly, you will need to install the Huddle01 React package and the react-native-webrtc package which is used for real-time communication. This step is the same as for a regular React Native app.
+
+```bash
+expo install @huddle01/react@alpha react-native-webrtc react-native-get-random-values
+```
+
+The additional package required is the react-native-webrtc config plugin. This plugin is necessary for your Expo project to use the react-native-webrtc package.
+
+```bash
+expo install  @config-plugins/react-native-webrtc
+```
+
+These commands will add the required packages to your project. 
+
+## **Configuration**
+
+After you have installed the necessary packages, you need to add the react-native-webrtc config plugin to your Expo configuration. This can be done by adding the plugin to the plugins array in your **`app.json`** or **`app.config.js`** file.
+
+For instance, your **`app.json`** file should look like this:
+
+```json filename="app.json"
+{
+  "expo": {
+    "plugins": ["@config-plugins/react-native-webrtc"]
+  }
+}
+```
+
+## Enabling Development Builds
+
+Finally, this package cannot be used in the Expo Go app because it requires custom native code. So you will have to rebuild your app by enabling development builds as described in Expo's [Adding custom native code](https://docs.expo.dev/workflow/customizing/) guide.
+
+{/* ## **Important Notes**
+
+### 1. iOS Bitcode
+
+For iOS applications, this plugin will disable Bitcodes for all builds. This is a requirement for the package to function correctly, as Bitcode provides an intermediate representation of a compiled program, used by Apple to optimize apps in the App Store, but can cause issues with certain complex native modules.
+
+### 2. Android Desugaring and Deployment Target
+
+For Android, this plugin modifies two configurations.
+
+First, it disables desugaring in **`gradle.properties`**. Desugaring allows the use of certain Java 8 features on Android versions lower than Android 8. This plugin sets **`android.enableDexingArtifactTransform.desugaring=false`** to disable desugaring.
+
+Second, it changes the minimum deployment target from 21 to 24. This may break other packages in your app which are not compatible with Android version 24 or higher.
+
+Please consider these changes before proceeding with the use of this plugin, as it may require you to modify other parts of your application.
+
+### 3. Checking Compatibility
+
+Given these significant changes, it is essential to test your application thoroughly after installing these plugins. Make sure that your application still works as expected on all target platforms, and that the changes have not broken other functionalities or packages.
+
+In conclusion, while adding expo support for Huddle01 RN SDK, it's crucial to keep in mind the significant changes that this could bring about in your application's build and runtime behavior, especially on Android. With thorough testing and careful consideration, you can ensure a smooth integration proc */}
