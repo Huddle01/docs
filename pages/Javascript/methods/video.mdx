@@ -12,15 +12,14 @@ import { Callout } from 'nextra-theme-docs';
 The `enableVideo` method enables the local microphone and starts producing the video stream with the label `video`.
 
 <Callout type='info'>
-  `enableVideo` method calls both `fetchStream` and `produce` method internally. If you want to fetch video Stream, you have to explicitly call `fetchStream` method. 
-  Refer to [Media Devices](/docs/Javascript/methods/mediaDevices) for more information.
+  `enableVideo` method calls both `fetchStream` and `produce` method internally.It also return `MediaStream` which can be used to render the screen share stream in the UI.
 </Callout>
 
 **Example**
 
 ```js
 // Enable Video stream
-await huddleClient.localPeer.enableVideo();
+const stream = await huddleClient.localPeer.enableVideo();
 ```
 
 - ### Disable Video

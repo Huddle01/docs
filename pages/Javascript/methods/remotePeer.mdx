@@ -36,7 +36,7 @@ const remotePeers = huddleClient.room.remotePeers;
 
 
 ```jsx
-// Usage
+// This will get consumer of remote peer
 await huddleClient.room.getRemotePeerById('YOUR_PEER_ID').getConsumer('YOUR_LABEL');
 ```
 
@@ -59,7 +59,7 @@ await huddleClient.room.getRemotePeerById('YOUR_PEER_ID').getConsumer('YOUR_LABE
 
 
 ```jsx
-// Usage
+// This will get metadata of remote peer
 await await huddleClient.room.getRemotePeerById('YOUR_PEER_ID').getMetadata();
 ```
 
@@ -86,7 +86,7 @@ await await huddleClient.room.getRemotePeerById('YOUR_PEER_ID').getMetadata();
 
 
 ```jsx
-// Usage
+// This will update role of remote peer
 await huddleClient.room.getRemotePeerById('YOUR_PEER_ID').updateRole({role:string});
 ```
 
@@ -112,40 +112,40 @@ await huddleClient.room.getRemotePeerById('YOUR_PEER_ID').updateRole({role:strin
 
 
 ```jsx
-// Usage
+// This will update permissions of remote peer
 await huddleClient.room.getRemotePeerById('YOUR_PEER_ID').updatePermissions(data:TPermissions);
 ```
 
 ## Events
 
 <OptionTable 
-    headers={['Event Name', 'Description']}
+    headers={['Event Name', 'Description', 'Returns']}
     options={[
         [
             'metadata-updated',
             'Invoked when a remote user metadata successfully updates.',
+            '{ metadata?: string }'
         ],
         [
             'role-updated',
             "Invoked when a rempote user's role successfully updates.",
+            '{ role?: string }'
         ],
         [
             'stream-available',
             'Invoked when a remote peer stream is available.',
+            '{label: string, labelData: { producerId: string }}'
         ],
         [
             'stream-closed',
             'Invoked when a remote peer stream is closed.',
+            '{label: string, reason?: {code: number; tag: string; message: string;}}'
         ],
         [
             'stream-playable',
             'Invoked when a remote peer stream is playable.',
-        ],
-
-         [
-            'stream-stopped',
-            'Invoked when a remote peer stream is stopped.',
-        ],
+            '{label: string, labelData: { consumer: Consumer }}'
+        ]
     ]}
 />
 

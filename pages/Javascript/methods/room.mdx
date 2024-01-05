@@ -26,7 +26,7 @@ const room = await huddleClient.joinRoom({
 ```
 
 
- ### connect
+ {/* ### connect
 
 Function `connect` connects to the room and returns the instance of the room.
 
@@ -44,7 +44,52 @@ Function `connect` connects to the room and returns the instance of the room.
 ```jsx
 // Usage
  await room.connect();
+``` */}
+
+### remotePeerExists
+
+Function `remotePeerExists` checks if the remote peer exists in the room. Returns `null` if the peer does not exist.
+
+<OptionTable
+    headers={["Params","Type","Description",'Return Type']}
+  options={[
+    [
+      "peerId",
+      "string",
+      "Checks if the remote peer exists in the room",
+      'RemotePeer | null'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+const remotePeer = await room.remotePeerExists("PEER_ID");
 ```
+
+### getRemotePeerById
+
+Function `getRemotePeerById` returns the Remote Peer if present in room. 
+
+<OptionTable
+    headers={["Params","Type","Description",'Return Type']}
+  options={[
+    [
+      "peerId",
+      "string",
+      "Returns the Remote Peer if present in room",
+      'RemotePeer'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+const remotePeer = await room.getRemotePeerById("PEER_ID");
+```
+
 
  ### getLobbyPeerMetadata
 
@@ -311,8 +356,34 @@ await room.close(reason);
             'Room configuration settings including permissions and room state.',
             'TRoomInfo["config"] (object)'
         ],
+        [
+            'remotePeers',
+            'Remote peers in the room.',
+            'Map<string, RemotePeer>'
+        ],
+        [
+            'peerIds',
+            'Peer IDs of remote peers in the room.',
+            'string[]'
+        ]
     ]}
 />
+
+**Example**
+
+```js
+// Get room ID
+const roomId = room.roomId;
+
+// Get lobby peers as a Set
+const lobbyPeerSet = room.lobbyPeerSet;
+
+// Get lobby peers as an array
+const lobbyPeerIds = room.lobbyPeerIds;
+
+// Get room configuration settings
+const config = room.config;
+```
 
 ## Events
 
@@ -363,6 +434,26 @@ await room.close(reason);
             'room-controls-updated',
             "Invoked when the room's control settings are updated.",
             'data (object): Information about the updated control settings.'
+        ],
+        [
+          'room-role-updated',
+          "Invoked when any remote peer's role is updated.",
+          'data (object): Information about the updated role.'
+        ],
+        [
+          'room-awaiting',
+          "Invoked when a user is awaiting to join the room.",
+          'data (object): Reason and message for peer awaiting to join room.'
+        ],
+        [
+          'stream-added',
+          "Invoked when a new remote peer's stream is added to the room.",
+          'data (object): Information about the new stream.'
+        ],
+        [
+          'stream-closed',
+          "Invoked when a remote peer's stream is closed.",
+          'data (object): Information about the closed stream.'
         ]
     ]}
 />
@@ -370,13 +461,6 @@ await room.close(reason);
 **Example**
 
 ```js
-
-// Admit peer from lobby
-room.admitPeer("PEER_ID");
-
-// Get remote peers
-const remotePeers = room.remotePeers;
-
 // Event listeners for the Room events
 room.on("room-joined", () => {
   console.log("You have successfully joined the room.");
@@ -391,3 +475,4 @@ room.on("new-peer-joined", (data) => {
 room.on("room-closed", () => {
   console.log("The room has been closed.");
 });
+```
