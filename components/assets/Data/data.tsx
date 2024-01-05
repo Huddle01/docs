@@ -281,44 +281,6 @@ export const VanillaData = [
 // UseCase Data
 export const GuidesData = [
   {
-    href: "/guides/audio-room",
-    name: "Audio Rooms",
-    description:
-      "Step by step guide to create custom Audio only meeting rooms using Huddle01 SDK.",
-    icon: SquaresPlusIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
-  {
-    href: "/guides/token-gating",
-    name: "Token-Gating",
-    description:
-      "Step by step guide to create a token gated meeting using Huddle01 SDK.",
-    icon: BookIcon,
-    pattern: {
-      y: 16,
-      squares: [
-        [0, 1],
-        [1, 3],
-      ],
-    },
-  },
-  {
-    href: "/guides/recording",
-    name: "Recording a room",
-    description: "Step by step guide to record an audio/video session.",
-    icon: PaperClipIcon,
-    pattern: {
-      y: 16,
-      squares: [
-        [0, 1],
-        [1, 3],
-      ],
-    },
-  },
-  {
     href: "/guides/audio-spaces",
     name: "Audio spaces",
     description: "Step by step guide to record an audio spaces session.",
@@ -332,10 +294,10 @@ export const GuidesData = [
     },
   },
   {
-    href: "/guides",
-    name: "Voice Modulation (Coming Soon)",
+    href: "/guides/collaborative-whiteboard",
+    name: "Collaborative Whiteboard",
     description:
-      "Step by step guide to create custom Audio Modulated meeting rooms with Anonymity using Huddle01 SDK.",
+      "Step by step guide to create a collaborative whiteboard.",
     icon: Stopwatch,
     pattern: {
       y: 22,
