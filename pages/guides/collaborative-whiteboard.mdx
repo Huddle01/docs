@@ -1,0 +1,346 @@
+---
+title: 'Collaborative Whiteboard'
+---
+
+import { Steps, Tab, Tabs } from 'nextra-theme-docs'
+
+# Building a Collaborative Whiteboard
+
+This guide will walk you through building a collaborative whiteboard using our [React SDK](/React) and [tldraw](https://www.tldraw.com/). 
+
+## Demo
+
+Before we get started, here's a demo of what we'll be building:
+
+<video
+  src="/docs/videos/whiteboard.mp4"
+  muted
+  controls
+  className="my-4 rounded-lg"
+  width="100%"
+  height="100%"
+/>
+
+## Walkthrough
+
+<Steps>
+
+### Clone tldraw yjs example app and install dependencies
+
+```bash
+git clone https://github.com/Huddle01/collaborative-whiteboard
+cd collaborative-whiteboard
+```
+
+###  Install dependencies
+
+      <Tabs items={['pnpm', 'npm', 'yarn', 'bun']}>
+              <Tab>
+                                                                                                                    ```bash 
+    pnpm i  
+    ```
+            </Tab>
+  <Tab>
+                      ```bash 
+    npm i  
+    ```
+            </Tab>
+  <Tab>
+                      ```bash 
+    yarn
+    ```
+            </Tab>
+    <Tab>
+    ```bash
+    bun i
+    ```
+    </Tab>
+              </Tabs>
+
+### Add .env file
+
+```bash
+cp .env.example .env
+```
+
+Add your own `API_KEY` and `PROJECT_ID` to the `.env` file. You can get these from [here](http://localhost:3000/docs/api-keys).
+
+### Run the app
+
+<Tabs items={['pnpm', 'npm', 'yarn', 'bun']}>
+              <Tab>
+                                                                                                                    ```bash 
+    pnpm dev  
+    ```
+            </Tab>
+  <Tab>
+                      ```bash 
+    npm run dev  
+    ```
+            </Tab>
+  <Tab>
+                      ```bash 
+    yarn dev
+    ```
+            </Tab>
+    <Tab>
+    ```bash
+    bun dev
+    ```
+    </Tab>
+              </Tabs>
+
+### Preparing Whiteboard
+
+[Tldraw](https://www.tldraw.com/) and [`yjs`](https://yjs.dev) is used to create this collaborative whiteboard. 
+TLDraw provides easy to use library to create a whiteboard and other infinite canvas experiences. 
+`Yjs` is used to sync the data of whiteboard among other peers. 
+We took a reference from [tldraw-yjs-example](https://github.com/tldraw/tldraw-yjs-example) to build real-time collaborative whiteboard.
+
+### Joining a Room 
+
+[React SDK](/React) is used to enable audio/video functionality and share the data of cursor among other peers to move the viewport of user according to his/her cursor position.
+`joinRoom` from `useRoom` hook is used to join a room, but before that we have to create a room using [Create Room API](https://docs.huddle01.com/docs/apis/create-room/create-room).
+
+```jsx
+import { useRoom } from '@huddle01/react/hooks'
+
+const { joinRoom } = useRoom({
+    onJoin: () => {
+      console.log('Joined room')
+    },
+})
+
+const handleJoinRoom = async () => {
+  await joinRoom({
+    roomId: 'ROOM_ID',
+    token: "YOUR_ACCESS_TOKEN"
+  })
+}
+```
+
+### Handling Local Peer 
+
+`useLocalPeer` hook is used to update the metadata of local peer. Here, local peer refers the current user who is using the application. 
+We will update the name of local peer using `updateMetadata` method from `useLocalPeer` hook.
+
+```jsx filename="LocalPeerData.tsx"
+import { useLocalPeer } from '@huddle01/react/hooks'
+
+type PeerMetadata = {
+  name: string
+}
+
+const { updateMetadata } = useLocalPeer<PeerMetadata>();
+
+const handleUpdateMetadata = () => {
+    updateMetadata({
+        name: 'YOUR_NAME'
+    })
+}
+```
+
+`useLocalVideo` and `useLocalAudio` hooks are used to enable/disable the audio/video functionality of local peer.
+
+```jsx filename="LocalPeerData.tsx"
+import { useLocalVideo, useLocalAudio } from '@huddle01/react/hooks'
+
+const { enableVideo, disableVideo, stream: videoStream, isVideoOn } = useLocalVideo()
+const { enableAudio, disableAudio, isAudioOn } = useLocalAudio()
+const videoRef = useRef<HTMLVideoElement>(null);
+
+useEffect(() => {
+    if (stream && videoRef.current) {
+      videoRef.current.srcObject = stream;
+    }
+}, [stream]);
+
+const handleVideo = () => {
+    if (isVideoOn) {
+      disableVideo();
+    } else {
+      enableVideo();
+    }
+}
+
+const handleAudio = () => {
+    if (isAudioOn) {
+      disableAudio();
+    } else {
+      enableAudio();
+    }
+}
+
+return (
+    <div>
+        <video ref={videoRef} autoPlay muted />
+        <button onClick={handleVideo}>Video</button>
+        <button onClick={handleAudio}>Audio</button>
+    </div>
+)
+```
+
+### Handling Remote Peers
+
+`useRemotePeer` hook is used to get the metadata of remote peers. Here, remote peers refers to the other users who are in the same room.
+This hook requires `peerId` which will be unique for each remote peer. You have to create a seperate hook to get the metadata of each remote peer.
+You can use `usePeerIds` hook to get list of `peerIds` of remote peers.
+
+```jsx filename="PeerData.tsx"
+import { useRemotePeer } from '@huddle01/react/hooks'
+
+interface Props {
+  peerId: string;
+}
+
+type PeerMetadata = {
+  name: string
+}
+
+const PeerData = ({ peerId }: Props) => {
+
+  // Get the metadata of remote peer
+  const { metadata } = useRemotePeer<PeerMetadata>({ peerId });
+  
+  return (
+    {/* Your UI */}
+    {metadata.name}
+  )
+};
+```
+
+`useRemoteVideo` and `useRemoteAudio` hooks are used to enable/disable the audio/video functionality of remote peers.
+
+```tsx filename="PeerData.tsx"
+import { useRemotePeer } from '@huddle01/react/hooks'
+import { useRemoteVideo, useRemoteAudio } from '@huddle01/react/hooks'
+
+interface Props {
+  peerId: string;
+}
+
+type PeerMetadata = {
+  name: string
+}
+
+const PeerData = ({ peerId }: Props) => {
+
+    // Get the metadata of remote peer
+    const { metadata } = useRemotePeer<PeerMetadata>({ peerId });
+
+    const { stream: videoStream, isVideoOn } = useRemoteVideo({ peerId });
+    const { stream: audioStream, isAudioOn } = useRemoteAudio({ peerId });
+
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const audioRef = useRef<HTMLAudioElement>(null);
+
+    useEffect(() => {
+        if (videoStream && videoRef.current) {
+            videoRef.current.srcObject = videoStream;
+        }
+    }, [stream]);
+
+    useEffect(() => {
+        if (audioStream && videoRef.current) {
+            audioRef.current.srcObject = audioStream;
+        }
+    }, [audioStream]);
+
+    return (
+        {/* Your UI */}
+        <video ref={videoRef} autoPlay muted />
+        <audio ref={audioRef} autoPlay>
+    )
+}
+```
+
+
+### Sending Cursor Position Data
+
+We will move the viewport of user according to his/her cursor position. To achieve this we will use `sendData` method from `useDataMessage` hook 
+which will send the data of cursor position to remote peers.
+
+```jsx
+import { useDataMessage } from '@huddle01/react/hooks'
+import { useEffect, useState } from 'react'
+
+const { sendData } = useDataMessage()
+const [cursorPosition, setCursorPosition] = useState({
+    top: 0,
+    left: 0,
+  });
+
+// To track the cursor position we call onMouseMove method inside useEffect hook 
+  useEffect(() => {
+    const onMouseMove = (e: MouseEvent) => {
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      const cursorWidth = 200; // adjust as needed
+      const cursorHeight = 150; // adjust as needed
+
+      // Adjust the cursor position to stay within the screen
+      const adjustedTop = Math.min(e.clientY, screenHeight - cursorHeight);
+      const adjustedLeft = Math.min(e.clientX, screenWidth - cursorWidth);
+      
+      setCursorPosition({
+        top: adjustedTop + 15,
+        left: adjustedLeft + 15,
+      });
+
+      // Send the cursor position data to remote peers
+      sendData({
+        to: '*',
+        payload: JSON.stringify({
+          top: adjustedTop + 15,
+          left: adjustedLeft + 15,
+        }),
+        label: 'cursor',
+      });
+    };
+    document.addEventListener('mousemove', onMouseMove);
+    return () => {
+      document.removeEventListener('mousemove', onMouseMove);
+    };
+  }, []);
+```
+
+### Receiving Cursor Position Data
+
+To receive the data of cursor position from remote peers we will use `onMessage` prop from `useDataMessage` hook.
+
+```jsx
+import { useDataMessage } from '@huddle01/react/hooks'
+import { useState } from 'react'
+
+// State to store the cursor position data
+const [cursorPosition, setCursorPosition] = useState({
+    top: 0,
+    left: 0,
+});
+
+// Receive the cursor position data from remote peers
+useDataMessage({
+    onMessage(payload, from, label) {
+      if (label === 'cursor' && from === peerId) {
+        const { top, left } = JSON.parse(payload);
+        setCursorPosition({
+          top: top,
+          left: left,
+        });
+      }
+    },
+  });
+
+return (
+    <div
+      style={{
+        position: 'absolute',
+        ...cursorPosition,
+      }}
+    >
+    {/* Code to show viewport of remote peer which will move with cursor */}
+    </div>
+)
+```
+
+</Steps>
