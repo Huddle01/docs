@@ -161,19 +161,8 @@ export function handleVideoStream(element) {
       return;
     }
 
-    // This will fetch video stream and return object from which we can get stream
-    const streamResponse = await client.localPeer.deviceHandler.fetchStream({
-      mediaDeviceKind: 'cam',
-    });
-
-    // This will return stream from the object
-    const stream = streamResponse.stream;
-
-    // This will produce the stream to other participants
-    client.localPeer.produce({
-      label: 'video',
-      stream: stream,
-    });
+    // This will fetch video stream and return MediaStream 
+    const stream = await client.localPeer.enableVideo();
 
     // This will set the stream to the video element
     videoRef.srcObject = stream;
@@ -197,23 +186,14 @@ export function handleScreenStream(element) {
 
     // If screen share is already enabled, then disable it
     if (screenRef.srcObject) {
-      screenRef.srcObject.getTracks().forEach((track) => track.stop());
+      client.localPeer.stopScreenShare();
       screenRef.srcObject = null;
       document.querySelector('#screen').textContent = 'Share Screen';
       return;
     }
 
-    // This will fetch screen share stream and return object from which we can get stream
-    const streamResponse = await client.localPeer.deviceHandler.fetchScreen();
-
-    // This will return stream from the object
-    const stream = streamResponse.stream;
-
-    // This will produce the stream to other participants
-    client.localPeer.produce({
-      label: 'screen',
-      stream: stream,
-    });
+    // This will fetch screen share stream and return MediaStream
+    const stream = await client.localPeer.startScreenShare();
 
     // This will set the stream to the video element
     screenRef.srcObject = stream;
