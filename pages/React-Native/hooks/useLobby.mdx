@@ -1,0 +1,164 @@
+---
+title: 'useLobby'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import Pill from '@components/common/Pill/Pill';
+
+# useLobby
+
+The useLobby hook allows you to interact with peers in the lobby, i.e. who are waiting to join a locked room. As an admin, you can choose to admit these peers into the room or deny them from joining the room.
+
+```tsx
+const {
+    lobbyPeers,
+    admitPeer,
+    denyPeer,
+    getLobbyPeerMetadata
+  } = useLobby({
+     onLobbyPeersUpdated(lobbyPeers: string[]) ();
+  });
+```
+
+## Props
+The useLobby hook accepts an object with the following fields as props.
+
+{/* onLobbyPeersUpdated */}
+### <span className="font-mono font-semibold">onLobbyPeersUpdated</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when the peers waiting in lobby are updated.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'lobbyPeers',
+      'string[]',
+      'Array of peerIds of peers waiting in lobby',
+      'Yes',
+    ],
+  ]}
+/>
+
+#### Example Usage
+
+```tsx
+const lobby = useLobby({ onLobbyPeersUpdated: (lobbyPeers) => {
+	console.log("Peers in lobby who are waiting to join updated!");
+    console.log(lobbyPeers);
+    // your code here
+}});
+```
+
+## Returns
+The useLobby hook returns an object with the following fields.
+
+{/* lobbyPeers */}
+### <span className="font-mono font-semibold">lobbyPeers</span>
+<div className='w-20 mt-4'>
+  <Pill>Array</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'List of peerIds of the peers in lobby who are waiting to join a locked room',
+      'string[]',
+    ],
+  ]}
+/>
+
+{/* admitPeer */}
+### <span className="font-mono font-semibold">admitPeer</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Admit a peer into the room.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'peerId',
+      'string',
+      'peerId of the waiting peer you want to admit into the room.',
+      'Yes',
+    ],
+  ]}
+/>
+
+{/* denyPeer */}
+### <span className="font-mono font-semibold">denyPeer</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Deny a peer from joining the room.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'peerId',
+      'string',
+      'peerId of the waiting peer you want to deny joining the room.',
+      'Yes',
+    ],
+  ]}
+/>
+
+{/* getLobbyPeerMetadata */}
+### <span className="font-mono font-semibold">getLobbyPeerMetadata</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Returns the metadata of lobby peer.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'peerId',
+      'string',
+      'peerId of the peer you want the metadata of.',
+      'Yes',
+    ],
+  ]}
+/>

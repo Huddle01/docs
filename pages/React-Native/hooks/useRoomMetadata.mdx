@@ -1,0 +1,118 @@
+---
+title: 'useRoomMetadata'
+---
+
+
+import OptionTable from '@components/common/Table/OptionTable';
+import Pill from '@components/common/Pill/Pill';
+
+# useRoomMetadata
+
+The  ` useRoomMetadata `  hook returns the metadata associated with the room and the function to update it.
+
+
+```tsx
+const {
+    roomData,
+    updateMetadata,
+  } = useRoomMetadata({
+    onMetadataUpdated(metadata:unknown) {},
+    onLeave(data: RoomEvents['room-closed'][0]) {}
+  });
+```
+
+## Props
+The useRoomMetadata hook accepts an object with the following fields as props.
+
+{/* onMetadataUpdated */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">1. onMetadataUpdated</span>
+    <span>
+        <Pill>optional</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "This function will be called when the room metadata gets updated.",
+      "void",
+    ],
+  ]}
+/>
+
+#### Example Usage
+
+```tsx
+const devices = useRoomMetadata({ onMetadataUpdated:() => {
+    console.log("Triggered when metadata updated")
+}});
+```
+
+
+{/* onLeave */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">2. onLeave</span>
+    <span>
+        <Pill>optional</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "This function will be called when the peer leaves.",
+      "void",
+    ],
+  ]}
+/>
+
+#### Example Usage
+
+```tsx
+const devices = useRoomMetadata({ onLeave:() => {
+    console.log("Triggered when peer leaves")
+}});
+```
+
+
+## Returns
+The useRoomMetadata hook returns an object with the following fields.
+
+{/* roomData */}
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">1. roomData</span>
+    <span>
+        <Pill>state</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'The room metadata',
+      'unknown',
+    ],
+  ]}
+/>
+
+
+<div className="flex mt-5">
+    <span className="font-mono font-semibold">1. updateMetadata</span>
+    <span>
+        <Pill>function</Pill>
+    </span>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'Updates the room metadata',
+      'void',
+    ],
+  ]}
+/>

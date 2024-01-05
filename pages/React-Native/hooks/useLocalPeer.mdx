@@ -1,0 +1,274 @@
+---
+title: 'useLocalPeer'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import Pill from '@components/common/Pill/Pill';
+
+# useLocalPeer
+
+The useLocalPeer hook allows you to interact with your own Peer object, which is how you are represented inside a Huddle01 room.
+
+```tsx
+const {
+    peerId,
+    role,
+    permissions,
+    metadata,
+    updateMetadata,
+    updateRole,
+  } = useLocalPeer({
+    onMetadataUpdated(metadata) {},
+    onPermissionsUpdated(permissions) {},
+    onRoleUpdated(role) {},
+  });
+```
+
+## Props
+The useLocalPeer hook accepts an object with the following fields as props.
+
+{/* onMetadataUpdated */}
+### <span className="font-mono font-semibold">onMetadataUpdated</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when the metadata associated with you is updated.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'metadata',
+      'unknown',
+      'The metadata associated with your peer object.',
+      'Yes',
+    ],
+  ]}
+/>
+
+#### Example Usage
+
+```tsx
+const localPeer = useLocalPeer({ onMetadataUpdated: (metadata) => {
+	console.log("Your metadata was updated!");
+	console.log(metadata);
+    // your code here
+}});
+```
+
+{/* onPermissionsUpdated */}
+### <span className="font-mono font-semibold">onPermissionsUpdated</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when your user permissions are updated.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'permissions',
+      'TPermissions',
+      'The permissions associated with your peer object.',
+      'Yes',
+    ],
+  ]}
+/>
+
+#### Example Usage
+
+```tsx
+const localPeer = useLocalPeer({ onPermissionsUpdated: (permissions) => {
+	console.log("Your permissions were updated!");
+	console.log(permissions);
+    // your code here
+}});
+```
+
+{/* onRoleUpdated */}
+### <span className="font-mono font-semibold">onRoleUpdated</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when your user role is updated.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'role',
+      'string',
+      'The role associated with your peer object.',
+      'Yes',
+    ],
+  ]}
+/>
+
+#### Example Usage
+
+```tsx
+const localPeer = useLocalPeer({ onRoleUpdated: (role) => {
+	console.log("Your role was updated!");
+	console.log(role);
+    // your code here
+}});
+```
+
+## Returns
+The useLocalPeer hook returns an object with the following fields.
+
+{/* peerId */}
+### <span className="font-mono font-semibold">peerId</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'Your peerId.',
+      'string | null',
+    ],
+  ]}
+/>
+
+{/* metadata */}
+### <span className="font-mono font-semibold">metadata</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Object</Pill>
+  <Pill>Advanced</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'The metadata associated with you.',
+      'unknown',
+    ],
+  ]}
+/>
+
+{/* permissions */}
+### <span className="font-mono font-semibold">permissions</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Object</Pill>
+  <Pill>Advanced</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'Your peer permissions inside the room.',
+      'TPermissions',
+    ],
+  ]}
+/>
+
+
+{/* updateMetadata */}
+### <span className="font-mono font-semibold">updateMetadata</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Function</Pill>
+  <Pill>Advanced</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Update the metadata associated with your peer object.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      'unknown',
+      'The metadata you want to be associated with your peer object.',
+      'Yes',
+    ],
+  ]}
+/>
+
+{/* role */}
+### <span className="font-mono font-semibold">role</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'Update the metadata associated with your peer object.',
+      'string',
+    ],
+  ]}
+/>
+
+
+
+{/* updateRole */}
+### <span className="font-mono font-semibold">updateRole</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Update the metadata associated with your peer object.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      'CO-HOST,LISTENER,GUEST',
+      'The role you want to be associated with your peer object.',
+      'Yes',
+    ],
+  ]}
+/>
+
+

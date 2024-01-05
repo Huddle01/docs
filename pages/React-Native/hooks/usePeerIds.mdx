@@ -1,0 +1,128 @@
+---
+title: 'usePeerIds'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import Pill from '@components/common/Pill/Pill';
+
+# usePeerIds
+
+The usePeerIds hook returns peerIds of all peers inside a Huddle01 room.
+
+```tsx
+const {
+    peerIds
+  } = usePeerIds({
+   roles: [],
+  labels: [],
+  onPeerRoleUpdate(data) {}
+  });
+```
+
+## Props
+The usePeerIds hook accepts an object with the following fields as props.
+
+{/* roles */}
+### <span className="font-mono font-semibold">roles</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'The user roles for which you want the corressponding peerIds.',
+      "string[]",
+    ],
+  ]}
+/>
+
+
+#### Example Usage
+
+```tsx
+const peerIds = usePeerIds({ roles: ["speaker"] });
+```
+
+{/* labels */}
+### <span className="font-mono font-semibold">labels</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'The media type being shared by the users for which you want the corressponding peerIds.',
+      "Array<'audio' | 'video' | 'screen-video' | 'screen-audio' | string>",
+    ],
+  ]}
+/>
+
+
+#### Example Usage
+
+```tsx
+const peerIds = usePeerIds({ labels: ["audio"] });
+```
+
+{/* onPeerRoleUpdate */}
+### <span className="font-mono font-semibold">onLobbyPeersUpdated</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "This function will be called when a peer's role is updated.",
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      '{ peerId: string; newRole: string; prevRole: string; }',
+      'Data related to the peer role update',
+      'Yes',
+    ],
+  ]}
+/>
+
+#### Example Usage
+
+```tsx
+const lobby = useLobby({ onLobbyPeersUpdated: (data) => {
+	console.log("Peer role updated!");
+  console.log("peerId: ", data.peerId);
+  console.log("prevRole: ", data.prevRole);
+  console.log("newRole: ", data.newRole);
+    // your code here
+}});
+
+const peerIds = usePeerIds({ labels: ["audio"] });
+```
+
+## Returns
+The usePeerIds hook returns an object with the following fields.
+
+{/* peerIds */}
+### <span className="font-mono font-semibold">peerIds</span>
+<div className='w-20 mt-4'>
+  <Pill>Array</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'List of peerIds.',
+      'string[]',
+    ],
+  ]}
+/>
