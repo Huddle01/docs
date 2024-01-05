@@ -284,7 +284,21 @@ export const GuidesData = [
     href: "/guides/audio-spaces",
     name: "Audio spaces",
     description: "Step by step guide to record an audio spaces session.",
-    icon: PaperClipIcon,
+    icon: SquaresPlusIcon,
+    pattern: {
+      y: 16,
+      squares: [
+        [0, 1],
+        [1, 3],
+      ],
+    },
+  },
+  {
+    href: "/guides/recording-livestreaming",
+    name: "Recording and Livestreaming",
+    description:
+      "Step by step guide to record an audio/video session, or livestream it to 3rd party streaming platforms.",
+    icon: BookIcon,
     pattern: {
       y: 16,
       squares: [
@@ -296,12 +310,25 @@ export const GuidesData = [
   {
     href: "/guides/collaborative-whiteboard",
     name: "Collaborative Whiteboard",
-    description:
-      "Step by step guide to create a collaborative whiteboard.",
+    description: "Step by step guide to create a collaborative whiteboard.",
     icon: Stopwatch,
     pattern: {
       y: 22,
       squares: [[0, 1]],
+    },
+  },
+  {
+    href: "/guides/selective-consuming",
+    name: "Selective Consuming",
+    description:
+      "Step by step guide to receive media from only specific peers in a meeting.",
+    icon: PaperClipIcon,
+    pattern: {
+      y: 16,
+      squares: [
+        [0, 1],
+        [1, 3],
+      ],
     },
   },
 ];
