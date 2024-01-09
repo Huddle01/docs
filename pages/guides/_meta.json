@@ -2,5 +2,6 @@
   "audio-spaces": "Audio Spaces",
   "recording-livestreaming": "Recording/Livestreaming",
   "selective-consuming": "Selective Consuming",
-  "collaborative-whiteboard": "Collaborative Whiteboard"
+  "collaborative-whiteboard": "Collaborative Whiteboard",
+  "custom-auth": "Custom Authentication"
 }
