@@ -309,6 +309,20 @@ export const GuidesData = [
       ],
     },
   },
+  {
+    href: "/guides/custom-auth",
+    name: "Custom Authentication",
+    description:
+      "Step by step guide to implement custom authentication.",
+    icon: PaperClipIcon,
+    pattern: {
+      y: 16,
+      squares: [
+        [0, 1],
+        [1, 3],
+      ],
+    },
+  },
 ];
 
 // Apis Data
