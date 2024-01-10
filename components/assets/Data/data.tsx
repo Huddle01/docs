@@ -128,18 +128,7 @@ export const ReactJsData = [
         [1, 4],
       ],
     },
-  },
-  {
-    href: "/React/events",
-    name: "Events",
-    description:
-      "This section lists the available events that can be subscribed to in the React SDK.",
-    icon: CalendarIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
+  }
 ];
 
 // React-Native Data
@@ -156,7 +145,7 @@ export const ReactNativeData = [
     },
   },
   {
-    href: "/React-Native/walkthrough",
+    href: "/React-Native/react-native-walkthrough",
     name: "Walkthrough",
     description:
       "This section provides a step-by-step guide to building a simple Huddle01-based video conferencing app in a React Native project.",
@@ -196,18 +185,7 @@ export const ReactNativeData = [
         [1, 4],
       ],
     },
-  },
-  {
-    href: "/React-Native/events",
-    name: "Events",
-    description:
-      "This section lists the available events that can be subscribed to in the React Native SDK.",
-    icon: CalendarIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
+  }
 ];
 
 // JavaScript Data
