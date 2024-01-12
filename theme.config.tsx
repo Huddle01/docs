@@ -56,7 +56,7 @@ const config: DocsThemeConfig = {
         "Javascript",
         "ReactJS",
         "React Native",
-        // "Flutter",
+        "Flutter",
         "Server-SDK",
       ].includes(title);
 
@@ -66,7 +66,7 @@ const config: DocsThemeConfig = {
         Javascript: "alpha",
         ReactJS: "alpha",
         "React Native": "alpha",
-        // Flutter: "0.0.1-betav1",
+        Flutter: "beta",
         "Server-SDK": "alpha",
       };
 

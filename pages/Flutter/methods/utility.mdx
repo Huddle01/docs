@@ -1,0 +1,78 @@
+---
+title: 'Utility Methods'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+
+## Utility Methods
+
+Other App Utility Methods for meeting use-case
+
+ <OptionTable 
+    headers={['Name', 'Type']}
+    options={[
+        [
+            'setDisplayName(displayName: string)',
+            'Function',
+            'Set the display name of the current user'
+        ],
+        [
+            'changeAvatarUrl(avatarUrl: string)', 
+            'Function',
+            'Set the avatar url of the current user'
+        ],
+        [
+            'sendData(peerIds: [] | "*", data: unknown)', 
+            'Function',
+            "Send data to the specified peerIds or all peers if '*' is passed as peerIds"
+        ]
+    ]}
+/>
+
+## Example 
+
+```dart filename="meeting_screen.dart" highlight={2,22,28,34} showLineNumbers
+import 'package:flutter/material.dart';
+import 'package:huddle01_flutter_client/huddle_client.dart';
+
+
+class MeetingScreen extends StatefulWidget {
+  ...
+}
+
+class _MeetingScreenState extends State<MeetingScreen> {
+  late HuddleClient huddleClient;
+
+  @override
+  void initState() {
+    ...
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children:[
+        ElevatedButton(
+          onPressed:(){
+            huddleClient.setDisplayName("axit.eth");
+          },
+          child: const Text("Set Display Name"),
+        ),
+        ElevatedButton(
+          onPressed:(){
+            huddleClient.changeAvatarUrl("https://youravatarurl.com/avatar.png");
+          },
+          child: const Text("Change Avatar Url"),
+        ),
+        ElevatedButton(
+          onPressed:(){
+            huddleClient.sendData("*", { "hello": "world" });
+          },
+          child: const Text("Send Data"),
+        ),
+      ]
+    );
+  }
+}
+```
+
