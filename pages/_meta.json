@@ -23,10 +23,7 @@
   },
 
   "guides": {
-    "title": "Guides",
-    "theme": {
-      "layout": "full"
-    }
+    "title": "Guides"
   },
 
   "showcase": {
@@ -48,6 +45,7 @@
   },
   "Javascript": "",
   "React": "",
+  "React-Native": "",
   "Server-SDK": {
     "title": "Server-SDK",
     "theme": {

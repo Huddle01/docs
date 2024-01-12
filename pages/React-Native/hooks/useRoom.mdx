@@ -1,0 +1,372 @@
+---
+title: 'useRoom'
+---
+import OptionTable from '@components/common/Table/OptionTable';
+import Pill from '@components/common/Pill/Pill';
+
+
+# useRoom
+The useRoom hook exposes primitives to interact with a Huddle01 room, like joining, leaving, closing the room.
+```tsx
+const {
+    room,
+    state,
+    joinRoom,
+    leaveRoom,
+    closeRoom,
+    kickPeer,
+    muteEveryone,
+    closeStreamOfLabel,
+  } = useRoom({
+  onJoin(data:Room) ();
+  onWaiting(data: RoomEvents['room-waiting'][0]) ();
+  onLeave(data: RoomEvents['room-closed'][0]) ();
+  onFailed(data: RoomEvents['room-joined-failed'][0]) ();
+  onPeerJoin(peerId: string) ();
+  onPeerLeft(peerId: string) ();
+  });
+```
+## Props
+The useRoom hook accepts an object with the following fields as props.
+
+{/* onJoin */}
+### <span className="font-mono font-semibold">onJoin</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when you successfully join a room.',
+      'void',
+    ],
+  ]}
+/>
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      '{ room: Room }',
+      'Object containing data about the room.',
+      'Yes',
+    ],
+  ]}
+/>
+#### Example Usage
+```tsx
+const room = useRoom({ onJoin: (data) => {
+  console.log("Successfully joined the room!");
+  console.log(data.room);
+    // your code here
+}});
+```
+{/* onWaiting */}
+### <span className="font-mono font-semibold">onWaiting</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when you are attempting to join the room.',
+      'void',
+    ],
+  ]}
+/>
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      "RoomEvents['room-waiting'][0]",
+      'Object containing reasons.',
+      'Yes',
+    ],
+  ]}
+/>
+#### Example Usage
+```tsx
+const room = useRoom({ onWaiting: (data) => {
+  console.log("Waiting for the host to admit you");
+  console.log(data.reason);
+    // your code here
+}});
+```
+{/* onLeave */}
+### <span className="font-mono font-semibold">onLeave</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when you successfully leave the room.',
+      'void',
+    ],
+  ]}
+/>
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      "RoomEvents['room-closed'][0]",
+      'Object containing reasons.',
+      'Yes',
+    ],
+  ]}
+/>
+#### Example Usage
+```tsx
+const room = useRoom({ onLeave: (data) => {
+  console.log("Successfully leave the room!");
+    // your code here
+}});
+```
+{/* onFailed */}
+### <span className="font-mono font-semibold">onFailed</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when you are not able to join the room.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      "RoomEvents['room-joined-failed'][0]",
+      'Object containing reasons.',
+      'Yes',
+    ],
+  ]}
+/>
+#### Example Usage
+```tsx
+const room = useRoom({ onFailed: (data) => {
+  console.log("The room was failed!");
+    // your code here
+}});
+```
+
+{/* onPeerJoin */}
+### <span className="font-mono font-semibold">onPeerJoin</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when a peer successfully joins the room.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type',  'Required']}
+  options={[
+    [
+      'peerId',
+      "string",
+      'Yes',
+    ],
+  ]}
+/>
+#### Example Usage
+```tsx
+const room = useRoom({ onPeerJoin: (peerId:string) => {
+  console.log(`${peerId} has joined the room.`);
+    // your code here
+}});
+```
+
+{/* onPeerLeft*/}
+### <span className="font-mono font-semibold">onPeerLeft</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when a peer successfully left the room.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type',  'Required']}
+  options={[
+    [
+      'peerId',
+      "string",
+      'Yes',
+    ],
+  ]}
+/>
+#### Example Usage
+```tsx
+const room = useRoom({ onPeerLeft: (peerId:string) => {
+  console.log(`${peerId} has left the room.`);
+    // your code here
+}});
+```
+
+## Returns
+The useRoom hook returns an object with the following fields.
+{/* room */}
+### <span className="font-mono font-semibold">room</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'The currently joined room object.',
+      'Room',
+    ],
+  ]}
+/>
+{/* state */}
+### <span className="font-mono font-semibold">state</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'The state of the currently joined room.',
+      'RoomStates',
+    ],
+  ]}
+/>
+{/* joinRoom */}
+### <span className="font-mono font-semibold">joinRoom</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Join the room.',
+      'Promise<Room>',
+    ],
+  ]}
+/>
+<OptionTable
+  headers={['Params', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      '{ roomId: string; token: string }',
+      'Object containing the roomId to be joined and the user’s access token.',
+      'Yes',
+    ],
+  ]}
+/>
+{/* leaveRoom */}
+### <span className="font-mono font-semibold">leaveRoom</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Leave the room.',
+      'void',
+    ],
+  ]}
+/>
+
+{/* closeRoom */}
+### <span className="font-mono font-semibold">closeRoom</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Close the room.',
+      'void',
+    ],
+  ]}
+/>
+
+
+{/* kickPeer */}
+### <span className="font-mono font-semibold">kickPeer</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Remove the peer.',
+      'void',
+    ],
+  ]}
+/>
+
+
+{/* muteEveryone */}
+### <span className="font-mono font-semibold">muteEveryone</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Mute Everyone',
+      'void',
+    ],
+  ]}
+/>
+
+
+{/* closeStreamOfLabel
+### <span className="font-mono font-semibold">closeStreamOfLabel</span>
+<div className='w-20 mt-4'>
+  <Pill>Function</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Mute Everyone',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type',  'Required']}
+  options={[
+    [
+      'data',
+      "{labels:'video' | 'audio', peerIds:string[]}",
+      'Yes',
+    ],
+  ]}
+/> */}
