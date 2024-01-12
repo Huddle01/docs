@@ -1,0 +1,67 @@
+---
+title: 'Quickstart'
+---
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+## Quickstart
+
+### Installing the packages:
+
+To get started with the Huddle01 Flutter SDK, you can install the package using npm or yarn:
+
+<Tabs items={['bash']}>
+  <Tab>
+    ```bash
+    flutter pub add huddle01_flutter_client 
+     ```
+  </Tab>
+</Tabs>
+
+## Creating a room:
+```dart
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+//Auth token we will use to generate a meeting and connect to it
+String apiKey = "<Generated-from-docs>";
+
+// API call to create meeting
+Future<String> createMeeting() async {
+  final http.Response httpResponse = await http.post(
+    Uri.parse("https://api.huddle01.com/api/v1/create-room"),
+    headers: {'Authorization': apiKey},
+  );
+
+//Destructuring the roomId from the response
+  return json.decode(httpResponse.body)['roomId'];
+}
+```
+
+
+## Initializing the SDK:
+
+After installing the package, you can initialize the SDK by using the **`useHuddle01`** hook:
+
+```dart
+String projectId = 'YOUR-PROJECT-ID';
+String roomId = 'YOUR-ROOM-ID';
+
+// Initialize your huddleClient 
+HuddleClient huddleClient = HuddleClient();
+
+// Initialize project
+huddleClient.initialize(projectId);
+```
+
+### Example Video
+
+<video
+  src="/docs/videos/flutter-example-demo-vid.mp4"
+  muted
+  controls
+  className="my-8 rounded-lg w-full md:w-1/2"
+  height="100%"
+  autoPlay
+  loop
+/>

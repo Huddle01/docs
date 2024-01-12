@@ -1,0 +1,65 @@
+---
+title: 'Video'
+---
+
+import  { Callout } from "nextra-theme-docs"
+import OptionTable from '@components/common/Table/OptionTable';
+
+## Video
+
+<OptionTable
+  headers={['Name', "Type", "Description"]}
+  options={[
+    [
+      'fetchVideoStream(deviceId?: string)',
+      'Function',
+      "Enables video stream from user’s device cam(lobby)"
+    ],
+    ['stopVideoStream()', 'Function',"Disables video stream from user’s device cam(lobby)"],
+    [
+      'produceVideo(camStream: MediaStream, peerIds?: string[])',
+      'Function',
+      "Starts sharing user’s webcam stream with other peers in the room"
+    ],
+    ['stopProducingVideo()', 'Function',"Stops sharing user’s webcam stream with other peers in the room"],
+    ['enumerateDevices()', 'Function', "Returns the list of video devices"],
+    ['createSingleConsumer(peerId: string, "cam")', 'Function', "Starts consuming video stream for given peerId"],
+    ['closeSingleConsumer(peerId: string, "cam")', 'Function', "Stops consuming video stream for given peerId"],
+  ]} 
+/>
+
+## Example 
+
+
+```dart filename="meeting_screen.dart" highlight={2,22} showLineNumbers
+import 'package:flutter/material.dart';
+import 'package:huddle01_flutter_client/huddle_client.dart';
+
+
+class MeetingScreen extends StatefulWidget {
+  ...
+}
+
+class _MeetingScreenState extends State<MeetingScreen> {
+  late HuddleClient huddleClient;
+
+  @override
+  void initState() {
+    ...
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children:[
+        ElevatedButton(
+          onPressed:(){
+            huddleClient.fetchVideoStream();
+          },
+          child: const Text("Fetch Video Stream"),
+        )
+      ]
+    );
+  }
+}
+```

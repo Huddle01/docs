@@ -54,6 +54,7 @@
       "layout": "full"
     }
   },
+  "Flutter": "",
   "--APIs": {
     "type": "separator",
     "title": "APIs"
