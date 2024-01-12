@@ -74,6 +74,30 @@ export const MeetingDetailsResponse: IApiDataType[] = [
     type: 'boolean',
     default: 'false',
   },
+  {
+    title: 'tokenGatingInfo',
+    description: 'The token gating info of the room.',
+    required: false,
+    type: 'object',
+  },
+  {
+    title: 'roomType',
+    description: 'The room type of the room.',
+    required: false,
+    type: 'VIDEO | AUDIO',
+  },
+  {
+    title: 'roomSize',
+    description: 'The room size of the room.',
+    required: false,
+    type: 'NORMAL | LARGE',
+  },
+  {
+    title: 'appData',
+    description: 'The app data of the room.',
+    required: false,
+    type: 'object',
+  },
 ];
 
 export const MeetingDetailsUsingTitleAPI: IApiDataType[] = [
