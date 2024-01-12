@@ -7,6 +7,8 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## Server SDK
 
+The Huddle01 Server SDK allows you to perform protected admin actions on your server side, like generating peer access tokens and starting and stopping meeting recordings and livestreams.
+
 ### Installation
 
 
@@ -31,7 +33,45 @@ import { Tab, Tabs } from 'nextra-theme-docs';
           </Tabs>
 
 
-### Recording / Livestreaming
+### Access Token
+
+To join a Huddle01 room, every peer needs a unique access token. This is how you generate one on your own backend server. You can then call your internal API to get the access token and pass it to the `joinRoom` method on the client side.
+
+```jsx
+import { AccessToken, Role } from '@huddle01/server-sdk/auth';
+
+const accessToken = new AccessToken({
+    apiKey: 'YOUR_API_KEY',
+    roomId: 'YOUR_ROOM_ID',
+    //available roles: Role.HOST, Role.CO_HOST, Role.SPEAKER, Role.LISTENER, Role.GUEST - depending on the privileges you want to give to the user
+    role: Role.HOST,
+    //custom permissions give you more flexibility in terms of the user privileges than a pre-defined role
+    permissions: {
+          admin: true,
+          canConsume: true,
+          canProduce: true,
+          canProduceSources: {
+            cam: true,
+            mic: true,
+            screen: true,
+          },
+          canRecvData: true,
+          canSendData: true,
+          canUpdateMetadata: true,
+        },
+        options: {
+          metadata: { 
+             // you can add any custom attributes here which you want to associate with the user
+            walletAddress: "mizanxali.eth"
+          },
+        },
+  });
+```
+
+
+### Recording
+
+To start recording a Huddle01 meeting, you need to first create a `Recorder` instance using your project ID and API key. You can then call the `startRecording` method on the instance to start recording a meeting by passing the room ID. To stop the recording, you can call the `stop` method on the instance.
 
 ```jsx
 import { Recorder } from '@huddle01/server-sdk/recorder';
@@ -44,6 +84,24 @@ recorder.startRecording({
 	token: 'YOUR_TOKEN'
 })
 
+// Stop Recording
+recorder.stop({
+	roomId: 'YOUR_ROOM_ID',
+})
+```
+
+All processed recordings can then be fetched at any time using the : [Get Recordings API](/apis/get-recordings)
+
+###  Livestreaming
+
+To start livestreaming a Huddle01 meeting to any third party streaming platform, you need to first create a `Recorder` instance with your project ID and API key. You can then call the `startLivestream` method to start livestreaming a meeting by passing the room IDg. It accepts an array of `rtmpUrls` which you will get from your preferred streaming platform. To stop the livestream, you can call the `stop` method on the instance.
+
+```jsx
+import { Recorder } from '@huddle01/server-sdk/recorder';
+
+const recorder = new Recorder("PROJECT_ID", "API_KEY");
+
+
 // Start Livestreaming
 recorder.startLivestream({
 	roomId: 'YOUR_ROOM_ID',
@@ -51,27 +109,12 @@ recorder.startLivestream({
 	rtmpUrls: []
 })
 
-// Stop Recording/Livestreaming
+// Stop Livestreaming
 recorder.stop({
 	roomId: 'YOUR_ROOM_ID',
 })
 ```
-
-### Access Token
-
-```jsx
-import { AccessToken, Role } from '@huddle01/server-sdk/auth';
-
-const accessToken = new AccessToken({
-    apiKey: 'YOUR_API_KEY',
-    roomId: 'YOUR_ROOM_ID',
-    role: Role.HOST,
-    options: {
-      metadata: {}, // any custom metadata
-    },
-  });
-```
-
+{/* 
 ### Web Hooks
 
 ```jsx
@@ -171,4 +214,4 @@ You can listen to these event on your server side and perform various actions ba
     | Attributes | Type |
     | --- | --- |
     | id | string |
-    | roomId | string |
+    | roomId | string | */}

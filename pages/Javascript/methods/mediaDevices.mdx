@@ -95,6 +95,38 @@ const speakerDevices = await huddleClient.localPeer.deviceHandler.getMediaDevice
 });
 ```
 
+### setPreferredDevice
+
+`setPreferredDevice` method sets the preferred device for the specified media kind. 
+
+**Parameters**
+
+<OptionTable
+    headers={['Name', 'Type', 'Description']}
+  options={[
+    [
+      'deviceId',
+      'string',
+      'devideId of the device you want to set as preferred'
+    ],
+    [
+      'deviceKind',
+      "'cam' | 'mic' | 'speaker'",
+      'Type of device'
+    ]
+  ]}
+/>
+
+**Example**
+
+```js
+// Set preferred cam device
+await huddleClient.localPeer.deviceHandler.setPreferredDevice({
+  deviceId: 'YOUR_DEVICE_ID',
+  deviceKind: 'cam'
+});
+```
+
 ### fetchStream
 
 `fetchStream` method retrieves the stream from the device for the specified media kind. If no preferred device is found, it will throw an error.
@@ -157,24 +189,32 @@ const stream = streamResponse.stream;
   headers={['Name', 'Description', 'Returns']}
   options={[
   [
-    'stream-playable',
-    'Triggered when a stream becomes playable.',
-    '{ label: string; producer: Producer }'
+    'device-change',
+    'Emitted when a device is added or removed',
+    ''
   ],
   [
-    'stream-closed',
-    'Triggered when a stream is closed.',
-    '{ label: string }'
+    'permission-granted',
+    'Emitted when permission is granted for a device',
+    "{ deviceKind: 'cam' | 'mic' | 'speaker' }"
   ],
   [
-    'stream-fetched',
-    'Triggered when a stream is fetched.',
-    '{ mediaKind: CustomMediaKind; stream: MediaStream; label: string }'
+    'permission-denied',
+    'Emitted when permission is denied for a device',
+    "{ deviceKind: 'cam' | 'mic' | 'speaker', error: Error }"
   ],
   [
-    'stream-stopped',
-    'Triggered when a stream is stopped.',
-    '{ mediaKind: CustomMediaKind; label: string }'
-  ],
+    'preferred-device-changed',
+    'Emitted when preferred device is changed',
+    "{ deviceKind: 'cam' | 'mic' | 'speaker', deviceId: string | null }"
+  ]
   ]}
 />
+
+**Example**
+
+```js
+huddleClient.localPeer.deviceHandler.on('device-change', (devices) => {
+  console.log('devices', devices);
+});
+```

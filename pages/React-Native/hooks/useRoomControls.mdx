@@ -1,0 +1,149 @@
+---
+title: 'useRoomControls'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import Pill from '@components/common/Pill/Pill';
+
+# useRoomControls
+
+The useRoomControls hook allows you to read and update the room's controls.
+
+```tsx
+const {
+  roomControls,
+  updateControls,
+  } = useRoomControls({
+  onRoomControlsUpdated(data: NewRoomControls) ();
+  onRoomLeave(data: RoomEvents['room-closed'][0]) ();
+  });
+```
+
+
+## Props
+The useRoomControls hook accepts an object with the following fields as props.
+
+{/* onRoomControlsUpdated */}
+### <span className="font-mono font-semibold">onRoomControlsUpdated</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This function will be called when the room controls have been updated.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      'NewRoomControls',
+      'Object containing the new room controls.',
+      'Yes',
+    ],
+  ]}
+/>
+
+#### Example Usage
+
+```tsx
+const roomControls = useRoomControls({ onRoomControlsUpdated: (data) => {
+	console.log("Room controls updated!");
+	console.log(data);
+    // your code here
+}});
+```
+
+{/* onRoomLeave */}
+### <span className="font-mono font-semibold">onRoomLeave</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'This room controls will be updated when the peer leaves the room',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      'RoomEvents["room-closed"][0]',
+      'Object containing the new room controls.',
+      'Yes',
+    ],
+  ]}
+/>
+
+#### Example Usage
+
+```tsx
+const roomControls = useRoomControls({ onRoomLeave: (data) => {
+	console.log("Room controls updated!");
+	console.log(data);
+    // your code here
+}});
+```
+
+## Returns
+The useRoomControls hook returns an object with the following fields.
+
+{/* roomControls */}
+### <span className="font-mono font-semibold">roomControls</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Object</Pill>
+  <Pill>Advanced</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'The state of the currently joined room.',
+      'TRoomControls',
+    ],
+  ]}
+/>
+
+{/* updateControls */}
+### <span className="font-mono font-semibold">updateControls</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Function</Pill>
+  <Pill>Advanced</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      'Update the room control.',
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      'TNewRoomControls',
+      'Object containing the type of room control to be updated and it’s new value.',
+      'Yes',
+    ],
+  ]}
+/>

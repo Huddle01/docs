@@ -128,18 +128,7 @@ export const ReactJsData = [
         [1, 4],
       ],
     },
-  },
-  {
-    href: "/React/events",
-    name: "Events",
-    description:
-      "This section lists the available events that can be subscribed to in the React SDK.",
-    icon: CalendarIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
+  }
 ];
 
 // React-Native Data
@@ -156,7 +145,7 @@ export const ReactNativeData = [
     },
   },
   {
-    href: "/React-Native/walkthrough",
+    href: "/React-Native/react-native-walkthrough",
     name: "Walkthrough",
     description:
       "This section provides a step-by-step guide to building a simple Huddle01-based video conferencing app in a React Native project.",
@@ -196,18 +185,7 @@ export const ReactNativeData = [
         [1, 4],
       ],
     },
-  },
-  {
-    href: "/React-Native/events",
-    name: "Events",
-    description:
-      "This section lists the available events that can be subscribed to in the React Native SDK.",
-    icon: CalendarIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
+  }
 ];
 
 // JavaScript Data
@@ -281,21 +259,23 @@ export const VanillaData = [
 // UseCase Data
 export const GuidesData = [
   {
-    href: "/guides/audio-room",
-    name: "Audio Rooms",
-    description:
-      "Step by step guide to create custom Audio only meeting rooms using Huddle01 SDK.",
+    href: "/guides/audio-spaces",
+    name: "Audio spaces",
+    description: "Step by step guide to record an audio spaces session.",
     icon: SquaresPlusIcon,
     pattern: {
-      y: 22,
-      squares: [[0, 1]],
+      y: 16,
+      squares: [
+        [0, 1],
+        [1, 3],
+      ],
     },
   },
   {
-    href: "/guides/token-gating",
-    name: "Token-Gating",
+    href: "/guides/recording-livestreaming",
+    name: "Recording and Livestreaming",
     description:
-      "Step by step guide to create a token gated meeting using Huddle01 SDK.",
+      "Step by step guide to record an audio/video session, or livestream it to 3rd party streaming platforms.",
     icon: BookIcon,
     pattern: {
       y: 16,
@@ -306,40 +286,41 @@ export const GuidesData = [
     },
   },
   {
-    href: "/guides/recording",
-    name: "Recording a room",
-    description: "Step by step guide to record an audio/video session.",
-    icon: PaperClipIcon,
-    pattern: {
-      y: 16,
-      squares: [
-        [0, 1],
-        [1, 3],
-      ],
-    },
-  },
-  {
-    href: "/guides/audio-spaces",
-    name: "Audio spaces",
-    description: "Step by step guide to record an audio spaces session.",
-    icon: PaperClipIcon,
-    pattern: {
-      y: 16,
-      squares: [
-        [0, 1],
-        [1, 3],
-      ],
-    },
-  },
-  {
-    href: "/guides",
-    name: "Voice Modulation (Coming Soon)",
-    description:
-      "Step by step guide to create custom Audio Modulated meeting rooms with Anonymity using Huddle01 SDK.",
+    href: "/guides/collaborative-whiteboard",
+    name: "Collaborative Whiteboard",
+    description: "Step by step guide to create a collaborative whiteboard.",
     icon: Stopwatch,
     pattern: {
       y: 22,
       squares: [[0, 1]],
+    },
+  },
+  {
+    href: "/guides/selective-consuming",
+    name: "Selective Consuming",
+    description:
+      "Step by step guide to receive media from only specific peers in a meeting.",
+    icon: PaperClipIcon,
+    pattern: {
+      y: 16,
+      squares: [
+        [0, 1],
+        [1, 3],
+      ],
+    },
+  },
+  {
+    href: "/guides/custom-auth",
+    name: "Custom Authentication",
+    description:
+      "Step by step guide to implement custom authentication.",
+    icon: PaperClipIcon,
+    pattern: {
+      y: 16,
+      squares: [
+        [0, 1],
+        [1, 3],
+      ],
     },
   },
 ];

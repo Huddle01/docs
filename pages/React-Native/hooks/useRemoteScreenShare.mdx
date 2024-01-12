@@ -1,0 +1,200 @@
+---
+title: 'useRemoteScreenShare'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import Pill from '@components/common/Pill/Pill';
+
+# useRemoteScreenShare
+
+The useRemoteScreenShare hook allows you to receive the media stream for another peer's screen being shared.
+
+```tsx
+const {
+    videoStream,
+    audioStream,
+    videoTrack,
+    audioTrack,
+    state,
+  } = useRemoteScreenShare({
+    peerId: "remote-peer-id",
+    onPlayable(data:{
+    track: MediaStreamTrack;
+    stream: MediaStream;
+    label: 'screen-share-video' | 'screen-share-audio';
+    }) {},
+    onClose() {},
+  });
+```
+
+
+## Props
+The useRemoteScreenShare hook accepts an object with the following fields as props.
+
+{/* peerId */}
+### <span className="font-mono font-semibold">peerId</span>
+<div className='w-20 mt-4'>
+  <Pill>Required</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "The peerId of the peer whose screenshare stream you want to consume.",
+      'string',
+    ],
+  ]}
+/>
+
+
+#### Example Usage
+
+```tsx
+const remoteScreenShare = useRemoteScreenShare({ peerId: "remote-peer-id" });
+```
+
+{/* onPlayable */}
+### <span className="font-mono font-semibold">onPlayable</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
+</div>
+
+
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "This function will be called when the other peer has started sharing their screen and it can now be played on your end.",
+      'void',
+    ],
+  ]}
+/>
+
+<OptionTable
+  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  options={[
+    [
+      'data',
+      "{track: MediaStreamTrack; stream: MediaStream; label: 'share-video' | 'share-audio';}",
+      'The data object containing the media stream and media stream track that can be played.',
+      'Yes',
+    ],
+  ]}
+/>
+
+
+#### Example Usage
+
+```tsx
+const remoteScreenShare = useRemoteScreenShare({ peerId: "remote-peer-id", onPlayable: (data) => {
+	console.log("Ready to play remote peer's screen being shared!");
+    // your code here
+}});
+```
+
+{/* onClose */}
+### <span className="font-mono font-semibold">onClose</span>
+<div className='flex w-40 justify-between mt-4'>
+  <Pill>Optional</Pill>
+  <Pill>Advanced</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Return Type']}
+  options={[
+    [
+      "This function will be called when the other peer stops sharing their screen.",
+      'void',
+    ],
+  ]}
+/>
+
+#### Example Usage
+
+```tsx
+const remoteScreenShare = useRemoteScreenShare({ peerId: "remote-peer-id", onClose: () => {
+	console.log("Remote peer has stopped sharing their screen!");
+    // your code here
+}});
+```
+
+## Returns
+The useRemoteScreenShare hook returns an object with the following fields.
+
+{/* videoStream */}
+### <span className="font-mono font-semibold">videoStream</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "The video stream for remote peer's screen which is being shared. null if screen not shared yet.",
+      'MediaStream | null',
+    ],
+  ]}
+/>
+
+{/* audioStream */}
+### <span className="font-mono font-semibold">audioStream</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "The audio stream for remote peer's screen which is being shared. null if screen not shared yet.",
+      'MediaStream | null',
+    ],
+  ]}
+/>
+
+{/* videoTrack */}
+### <span className="font-mono font-semibold">videoTrack</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "The video stream track for remote peer's screen which is being shared. null if screen not shared yet.",
+      'MediaStreamTrack | null',
+    ],
+  ]}
+/>
+
+{/* audioTrack */}
+### <span className="font-mono font-semibold">audioTrack</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "The audio stream track for remote peer's screen which is being shared. null if screen not shared yet.",
+      'MediaStreamTrack | null',
+    ],
+  ]}
+/>
+
+{/* state */}
+### <span className="font-mono font-semibold">state</span>
+<div className='w-20 mt-4'>
+  <Pill>Object</Pill>
+</div>
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      "State of the remote peer's screenshare stream.",
+      `"playable" | "unavailable" | "stopped" | "paused" | "available"`,
+    ],
+  ]}
+/>
