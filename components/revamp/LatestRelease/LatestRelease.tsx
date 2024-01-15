@@ -6,6 +6,7 @@ import LandingIcons from "@components/assets/LandingIcons";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useData } from "nextra/data";
+import Link from "next/link";
 
 type LatestReleaseProps = {};
 
@@ -15,7 +16,6 @@ type PackageVersion = {
 };
 
 const LatestRelease: React.FC<LatestReleaseProps> = () => {
-  const { push } = useRouter();
   const { releaseData } = useData();
 
   return (
@@ -30,7 +30,7 @@ const LatestRelease: React.FC<LatestReleaseProps> = () => {
           title={title}
           date={date}
           version={version}
-          onClick={() => push(url)}
+          url={url}
         />
       ))}
     </div>
@@ -42,19 +42,21 @@ interface IReleaseStrip {
   version: string;
   title: string;
   date: string;
-  onClick: () => void;
+  url: string;
 }
 
 const ReleaseStrip: React.FC<IReleaseStrip> = ({
   title,
   version,
-  onClick,
+  url,
   date,
 }) => (
-  <div className="mb-3 last:mb-0 cursor-pointer  w-full" onClick={onClick}>
-    <Strip isUpdated version={version} title={title} />
-    <Strip date={date} />
-  </div>
+  <Link href={url} className="mb-3 last:mb-0 cursor-pointer  w-full">
+    <div>
+      <Strip isUpdated version={version} title={title} />
+      <Strip date={date} />
+    </div>
+  </Link>
 );
 
 interface IStripProps {

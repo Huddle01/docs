@@ -1,8 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import { cn } from 'helpers/utils';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { cn } from "helpers/utils";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 type CardsProps = {
   type?: string;
@@ -24,16 +25,18 @@ const LandingCards: React.FC<CardsProps> = ({
   return (
     <div
       className={cn(
-        'flex p-6 rounded-lg border border-custom-1 w-full',
+        "flex p-6 rounded-lg border border-custom-1 w-full",
         className
       )}
-      onClick={() => push(url ?? '')}
+      onClick={() => {
+        if (url) push(url);
+      }}
     >
       <div className="flex items-center gap-5">
         {type && (
           <Image
             src={`/docs/images/${type}.png`}
-            alt={type ?? 'landing- card'}
+            alt={type ?? "landing- card"}
             width={40}
             height={40}
             className="object-contain"
