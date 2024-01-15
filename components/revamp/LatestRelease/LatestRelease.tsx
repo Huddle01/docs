@@ -5,6 +5,7 @@ import axios from "axios";
 import LandingIcons from "@components/assets/LandingIcons";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useData } from "nextra/data";
 
 type LatestReleaseProps = {};
 
@@ -15,74 +16,7 @@ type PackageVersion = {
 
 const LatestRelease: React.FC<LatestReleaseProps> = () => {
   const { push } = useRouter();
-
-  const [reactPackageVersion, setReactPackageVersion] =
-    useState<PackageVersion>({ date: "", version: "" });
-  const [jsPackageVersion, setJsPackageVersion] = useState<PackageVersion>({
-    date: "",
-    version: "",
-  });
-  const [serverSdkPackageVersion, setServerSdkPackageVersion] =
-    useState<PackageVersion>({ date: "", version: "" });
-
-  useEffect(() => {
-    getPackageVersion("@huddle01/web-core").then((data) => {
-      setJsPackageVersion(data);
-    });
-    getPackageVersion("@huddle01/react").then((data) => {
-      setReactPackageVersion(data);
-    });
-    getPackageVersion("@huddle01/server-sdk").then((data) => {
-      setServerSdkPackageVersion(data);
-    });
-  }, []);
-
-  const getPackageVersion: (
-    packageName: string
-  ) => Promise<PackageVersion> = async (packageName: string) => {
-    const { data } = await axios.get(
-      `/docs/api/npmRegistry?packageName=${packageName}`
-    );
-    return data;
-  };
-
-  const formatDate = (date?: string) => {
-    return date
-      ? new Date(Date.parse(date)).toLocaleDateString(undefined, {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })
-      : "";
-  };
-
-  const releaseData = [
-    {
-      title: "Javascript",
-      version: jsPackageVersion.version,
-      date: formatDate(jsPackageVersion.date),
-      url: "/Javascript",
-    },
-    {
-      title: "React JS",
-      version: reactPackageVersion.version,
-      date: formatDate(reactPackageVersion.date),
-      url: "/React",
-    },
-    {
-      title: "React Native",
-      version: reactPackageVersion.version,
-      date: formatDate(reactPackageVersion.date),
-      url: "/React-Native",
-    },
-
-    {
-      title: "Server Sdk",
-      version: serverSdkPackageVersion.version,
-      date: formatDate(serverSdkPackageVersion.date),
-      url: "/Server-SDK",
-    },
-  ];
+  const { releaseData } = useData();
 
   return (
     <div className="lg:flex hidden p-9 flex-col w-full">
@@ -155,3 +89,78 @@ const Strip: React.FC<IStripProps> = ({ isUpdated, version, title, date }) => (
     )}
   </div>
 );
+
+//getStaticProps method - called inside .mdx page file
+export const getLatestReleaseData = ({ params }) => {
+  let jsPackageVersion: PackageVersion = { date: "", version: "" };
+  let reactPackageVersion: PackageVersion = { date: "", version: "" };
+  let serverSdkPackageVersion: PackageVersion = { date: "", version: "" };
+
+  const formatDate = (date?: string) => {
+    return date
+      ? new Date(Date.parse(date)).toLocaleDateString(undefined, {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      : "";
+  };
+
+  const getPackageVersion: (
+    packageName: string
+  ) => Promise<PackageVersion> = async (packageName: string) => {
+    const { data } = await axios.request({
+      method: "GET",
+      url: `https://registry.npmjs.org/${packageName}`,
+    });
+    const version = data["dist-tags"].beta;
+    return { version, date: data.time[`${version}`] };
+  };
+
+  return getPackageVersion("@huddle01/web-core").then((data) => {
+    jsPackageVersion = data;
+    return getPackageVersion("@huddle01/react").then((data) => {
+      reactPackageVersion = data;
+      return getPackageVersion("@huddle01/server-sdk").then((data) => {
+        serverSdkPackageVersion = data;
+        return {
+          props: {
+            // We add an `ssg` field to the page props,
+            // which will be provided to the Nextra `useData` hook.
+            ssg: {
+              releaseData: [
+                {
+                  title: "Javascript",
+                  version: jsPackageVersion.version,
+                  date: formatDate(jsPackageVersion.date),
+                  url: "/Javascript",
+                },
+                {
+                  title: "React JS",
+                  version: reactPackageVersion.version,
+                  date: formatDate(reactPackageVersion.date),
+                  url: "/React",
+                },
+                {
+                  title: "React Native",
+                  version: reactPackageVersion.version,
+                  date: formatDate(reactPackageVersion.date),
+                  url: "/React-Native",
+                },
+
+                {
+                  title: "Server Sdk",
+                  version: serverSdkPackageVersion.version,
+                  date: formatDate(serverSdkPackageVersion.date),
+                  url: "/Server-SDK",
+                },
+              ],
+            },
+          },
+          // The page will be considered as stale and regenerated every 600 seconds.
+          revalidate: 600,
+        };
+      });
+    });
+  });
+};
