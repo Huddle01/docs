@@ -39,12 +39,7 @@
   "Javascript": "",
   "React": "",
   "React-Native": "",
-  "Server-SDK": {
-    "title": "Server-SDK",
-    "theme": {
-      "layout": "full"
-    }
-  },
+  "Server-SDK": "",
   "Flutter": "",
   "--APIs": {
     "type": "separator",
