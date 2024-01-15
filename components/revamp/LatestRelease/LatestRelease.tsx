@@ -13,23 +13,23 @@ const LatestRelease: React.FC<LatestReleaseProps> = () => {
   const releaseData = [
     {
       title: "Javascript",
-      version: "1.0.0-alpha.54",
+      version: "1.0.0-beta.9",
       url: "/Javascript",
     },
     {
       title: "React JS",
-      version: "1.0.0-alpha.57",
+      version: "1.0.0-beta.10",
       url: "/React",
     },
     {
       title: "React Native",
-      version: "1.0.0-alpha.57",
+      version: "1.0.0-beta.10",
       url: "/React-Native",
     },
 
     {
       title: "Server Sdk",
-      version: "1.0.0-alpha.25",
+      version: "1.0.0-beta.0",
       url: "/Server-SDK",
     },
   ];
