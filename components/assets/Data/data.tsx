@@ -128,7 +128,7 @@ export const ReactJsData = [
         [1, 4],
       ],
     },
-  }
+  },
 ];
 
 // React-Native Data
@@ -185,7 +185,7 @@ export const ReactNativeData = [
         [1, 4],
       ],
     },
-  }
+  },
 ];
 
 // JavaScript Data
@@ -312,9 +312,21 @@ export const GuidesData = [
   {
     href: "/guides/custom-auth",
     name: "Custom Authentication",
-    description:
-      "Step by step guide to implement custom authentication.",
-    icon: PaperClipIcon,
+    description: "Step by step guide to implement custom authentication.",
+    icon: SquaresPlusIcon,
+    pattern: {
+      y: 16,
+      squares: [
+        [0, 1],
+        [1, 3],
+      ],
+    },
+  },
+  {
+    href: "/guides/token-gated-rooms",
+    name: "Token Gated Rooms",
+    description: "Step by step guide to create and join token-gated rooms.",
+    icon: BookIcon,
     pattern: {
       y: 16,
       squares: [
