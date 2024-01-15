@@ -436,8 +436,8 @@ const SidebarIcons: {
           y2="34.687"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#1A237E" stop-opacity="0.4" />
-          <stop offset="1" stop-color="#1A237E" stop-opacity="0" />
+          <stop stopColor="#1A237E" stopOpacity="0.4" />
+          <stop offset="1" stopColor="#1A237E" stopOpacity="0" />
         </linearGradient>
         <radialGradient
           id="paint1_radial_2501_2757"
@@ -447,8 +447,8 @@ const SidebarIcons: {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(11.3317 9.59911) scale(44.0241 43.9267)"
         >
-          <stop stop-color="white" stop-opacity="0.1" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="white" stopOpacity="0.1" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
         <image
           id="image0_2501_2757"
