@@ -2,22 +2,15 @@
 title: 'Changelog'
 ---
 
-import Image from "next/image";
 import { Tab, Tabs } from 'nextra-theme-docs';
-
-{/* Assets */}
-import LandingIcons from '@components/assets/LandingIcons';
-
-{/* Data */}
-import iFrameApiData from "Data/iFrame&Api.json";
-import GetStartedData from "Data/GetStarted.json";
 
 
 {/* Components */}
 import TabStrip from '@components/revamp/ChangelogContent/TabStrip.tsx';
-import LatestRelease from "@components/revamp/LatestRelease/LatestRelease.tsx"
+import LatestRelease, {getLatestReleaseData} from "@components/revamp/LatestRelease/LatestRelease.tsx"
 import ChangelogContent from "@components/revamp/ChangelogContent/ChangelogContent.tsx"
 
+export const getStaticProps = getLatestReleaseData;
 
 <div className="grid md:grid-cols-[2.5fr,1fr] grid-cols-1 w-full h-full ">
 
@@ -25,7 +18,6 @@ import ChangelogContent from "@components/revamp/ChangelogContent/ChangelogConte
 # Changelog
 
 Read all about the recent releases and the changes.
-
 
 
 <ChangelogContent>

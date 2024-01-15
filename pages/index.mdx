@@ -15,10 +15,12 @@ import GetStartedData from "Data/GetStarted.json";
 {/* Components */}
 import CustomBtn from "@components/revamp/CustomBtn/CustomBtn.tsx"
 import SubCard from "@components/revamp/LandingCards/SubCard.tsx"
-import LatestRelease from "@components/revamp/LatestRelease/LatestRelease.tsx"
+import LatestRelease, {getLatestReleaseData} from "@components/revamp/LatestRelease/LatestRelease.tsx"
 import LandingCards from "@components/revamp/LandingCards/LandingCards.tsx"
 import {GetStartedCards,CLIToolCard,LinksIcon} from "@components/revamp/CommonCards/CommonCards.tsx"
 import { Callout } from 'nextra-theme-docs';
+
+export const getStaticProps = getLatestReleaseData;
 
 <div className="grid lg:grid-cols-[2.5fr,1fr] grid-cols-1 w-full min-h-full">
 
@@ -87,5 +89,5 @@ From Guides to SDKs to API references - find everything you need to build high-q
 </div>
 </div>
 
-<LatestRelease/>
+<LatestRelease />
 </div>
