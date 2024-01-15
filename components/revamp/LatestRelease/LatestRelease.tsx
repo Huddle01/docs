@@ -18,12 +18,12 @@ const LatestRelease: React.FC<LatestReleaseProps> = () => {
     },
     {
       title: "React JS",
-      version: "1.0.0-beta.9",
+      version: "1.0.0-beta.10",
       url: "/React",
     },
     {
       title: "React Native",
-      version: "1.0.0-beta.9",
+      version: "1.0.0-beta.10",
       url: "/React-Native",
     },
 
