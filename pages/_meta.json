@@ -15,13 +15,6 @@
   },
   "concepts": "Concepts",
 
-  "changelog": {
-    "title": "Changelog",
-    "theme": {
-      "layout": "full"
-    }
-  },
-
   "guides": {
     "title": "Guides"
   },
