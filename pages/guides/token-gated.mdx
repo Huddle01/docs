@@ -1,0 +1,255 @@
+---
+title: "Token Gated Rooms"
+---
+
+import { Steps, Tab, Tabs } from "nextra-theme-docs";
+
+# Token Gated Rooms 
+
+In this guide we will create token gated room that only allows users with a specific token to join.
+
+## Walkthrough 
+
+We will create a token gated room using [Create Room API](/apis/create-room/create-room) and [Room Details](/apis/meeting-details/room-details).
+Once we get token gating details we will use to verify whether the user has the token or not, if user has token then we will generate access token and allow user to join room. 
+
+<Steps>
+
+### Create Token Gated Room 
+
+Create a token gated room using [Create Room API](/apis/create-room/token-gated-room). 
+Let's create a server component that will create a token gated room. 
+
+```ts filename="app/createRoom.ts"
+"use server";
+
+interface CreateRoomProps {
+  tokenGateWith: string;
+  chain: string;
+  contractAddress: string;
+}
+
+export const createRoom = async ({
+  tokenGateWith,
+  chain,
+  contractAddress,
+}: CreateRoomProps) => {
+  const response = await fetch("https://api.huddle01.com/api/v1/create-room", {
+    method: "POST",
+    body: JSON.stringify({
+      title: "Huddle01 Room",
+      tokenType: tokenGateWith,
+      chain: chain,
+      contractAddress: [contractAddress],
+    }),
+    headers: {
+      "Content-type": "application/json",
+      "x-api-key": process.env.API_KEY!,
+    },
+    cache: "no-cache",
+  });
+  const data = await response.json();
+  const { roomId } = await data.data;
+  return roomId;
+};
+```
+
+### Signing message to verify wallet 
+
+We will use [wagmi](https://wagmi.sh) and [viem](https://viem.sh) to sign message and verify wallet. 
+
+```tsx filename="app/[roomId]/page.tsx"
+import { useSignMessage } from "wagmi";
+import { config } from "@/utils/config";
+import { useState } from "react";
+
+const [expirationTime, setExpirationTime] = useState(0);
+const [message, setMessage] = useState("");
+
+const { signMessageAsync } = useSignMessage({
+    config: config,
+    mutation: {
+        onSuccess: (data) => {
+        // We will implement this function in later steps
+        authenticateUser(data);
+      },
+    },
+});
+
+<button
+    type="button"
+    className="bg-blue-500 p-2 mx-2 rounded-lg"
+    onClick={async () => {
+    const time = {
+        issuedAt: Date.now(),
+        expiresAt: Date.now() + 1000 * 60 * 5,
+    };
+    const msg = `Click "Sign" only means you have proved this wallet is owned by you.
+We will use the public wallet address to fetch your NFTs.
+This request will not trigger any blockchain transaction or cost of any gas fees.
+                    
+Account: ${address}
+                    
+Issued At: ${new Date(time.issuedAt).toLocaleString()}
+                    
+Expires At: ${new Date(time.expiresAt).toLocaleString()}`;
+    setExpirationTime(time.expiresAt);
+    setMessage(msg);
+    await signMessageAsync({
+        message: msg,
+    });
+  }}
+>
+    Sign In with Wallet
+</button>
+```
+
+### Creating API to authenticate user 
+
+We will create an API that will verify the signature, get `room-details` and verify if user holds the token or not. 
+If user holds the token then we will generate access token and allow user to join the room. 
+
+```ts filename="app/token/route.ts"
+import { publicClient } from "@/utils/config";
+import { AccessToken, Role } from "@huddle01/server-sdk/auth";
+
+export const dynamic = "force-dynamic";
+
+export async function POST(request: Request) {
+
+  // Get data from request body
+  const { roomId, signature, address, expirationTime, message } =
+    await request.json();
+
+  if (!roomId || !signature || !address) {
+    return new Response("Incorrect request", { status: 400 });
+  }
+
+  // Verify if signature is expired or not
+  if (expirationTime < Date.now()) {
+    return new Response("Signature expired", { status: 400 });
+  }
+
+  // Call `room-details` API to get token gating details
+  const roomDetailsResponse = await fetch(
+    `https://api.huddle01.com/api/v1/room-details/${roomId}`,
+    {
+      headers: {
+        "x-api-key": process.env.API_KEY!,
+      },
+    }
+  );
+
+  const roomDetails = await roomDetailsResponse.json();
+
+  if (!roomDetails?.tokenGatingInfo) {
+    return new Response("Room is not token gated", { status: 400 });
+  }
+
+  // Set public client based on chain
+  const publicClient =
+    roomDetails.tokenGatingInfo.tokenGatingConditions[0].chain === "ETHEREUM"
+      ? ethereumPublicClient
+      : polygonPublicClient;
+
+  // Verify signature
+  const verify = await publicClient.verifyMessage({
+    address,
+    message,
+    signature,
+  });
+
+  // If signature is verified then we will check if user holds the token or not
+  if (verify) {
+    const contractResponse = await publicClient.readContract({
+      address:
+        roomDetails.tokenGatingInfo.tokenGatingConditions[0].contractAddress,
+      abi: [
+        {
+          inputs: [{ name: "owner", type: "address" }],
+          name: "balanceOf",
+          outputs: [{ name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      functionName: "balanceOf",
+      args: [address],
+    });
+    const balance = Number(contractResponse);
+
+    if (balance < 1) {
+      return new Response("You don't hold token to join this room", {
+        status: 400,
+      });
+    } else {
+      
+      // If user holds the token then we will generate access token
+      const accessToken = new AccessToken({
+        apiKey: process.env.API_KEY!,
+        roomId: roomId as string,
+        role: Role.HOST,
+        permissions: {
+          admin: true,
+          canConsume: true,
+          canProduce: true,
+          canProduceSources: {
+            cam: true,
+            mic: true,
+            screen: true,
+          },
+          canRecvData: true,
+          canSendData: true,
+          canUpdateMetadata: true,
+        },
+      });
+
+      const token = await accessToken.toJwt();
+      return new Response(token, { status: 200 });
+    }
+  } else {
+    return new Response("Incorrect signature", { status: 400 });
+  }
+```
+
+Now, let's call this API from client side once user signs the message. 
+
+```tsx filename="app/[roomId]/page.tsx"
+import { useRoom } from "@huddle01/react/hooks";
+
+const { state } = useRoom();
+
+// Call this function in `onSuccess` callback of `useSignMessage`
+const authenticateUser = async (signature: string) => {
+  // Call `/token` API to verify signature and generate access token
+  const tokenResponse = await fetch("/token", {
+    method: "POST",
+    headers: {
+    "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+    signature,
+    address,
+    message,
+    expirationTime,
+    roomId: params.roomId,
+    }),
+  });
+
+  const token = await tokenResponse.text();
+
+  // Join room if `state` is `idle` which we get from `useRoom`. 
+  if (state === "idle")
+      await joinRoom({
+      roomId: params.roomId,
+      token,
+  });
+};
+```
+
+### You're all set! Happy Hacking! 🎉
+
+Thank you for following this guide till end. 
+You can find the full source code [here](https://github.com/Huddle01/token-gated-example-app). 
+
+</Steps>

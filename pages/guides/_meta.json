@@ -3,5 +3,6 @@
   "recording-livestreaming": "Recording/Livestreaming",
   "selective-consuming": "Selective Consuming",
   "collaborative-whiteboard": "Collaborative Whiteboard",
-  "custom-auth": "Custom Authentication"
+  "custom-auth": "Custom Authentication",
+  "token-gated": "Token Gated Rooms"
 }
