@@ -3,7 +3,7 @@ export interface ISvgIcon {
 }
 
 const LandingIcons: ISvgIcon = {
-  'Audio Spaces': (
+  "Audio Spaces": (
     <svg
       width="24"
       height="24"
@@ -25,7 +25,7 @@ const LandingIcons: ISvgIcon = {
       />
     </svg>
   ),
-  'Video Meeting': (
+  "Video Meeting": (
     <svg
       width="25"
       height="24"
@@ -58,7 +58,7 @@ const LandingIcons: ISvgIcon = {
       />
     </svg>
   ),
-  'Token-gated Room': (
+  "Token-gated Room": (
     <svg
       width="25"
       height="24"
@@ -80,7 +80,7 @@ const LandingIcons: ISvgIcon = {
       />
     </svg>
   ),
-  'chevron-right': (
+  "chevron-right": (
     <svg
       width="24"
       height="24"
@@ -119,7 +119,7 @@ const LandingIcons: ISvgIcon = {
       />
     </svg>
   ),
-  'chevronRight-small': (
+  "chevronRight-small": (
     <svg
       width="15"
       height="14"
@@ -136,7 +136,7 @@ const LandingIcons: ISvgIcon = {
       />
     </svg>
   ),
-  'chevron-right-btn': (
+  "chevron-right-btn": (
     <svg
       width="14"
       height="14"
@@ -147,14 +147,14 @@ const LandingIcons: ISvgIcon = {
       <path
         d="M2.3335 7H11.6668M11.6668 7L8.16683 3.5M11.6668 7L8.16683 10.5"
         stroke="#C9D1D9"
-        stroke-opacity="0.7"
+        strokeOpacity="0.7"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
     </svg>
   ),
-  'chevron-up': (
+  "chevron-up": (
     <svg
       width="18"
       height="18"
