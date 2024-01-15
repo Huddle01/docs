@@ -63,11 +63,11 @@ const config: DocsThemeConfig = {
       const version: {
         [key: string]: string;
       } = {
-        Javascript: "alpha",
-        ReactJS: "alpha",
-        "React Native": "alpha",
+        Javascript: "beta",
+        ReactJS: "beta",
+        "React Native": "beta",
         Flutter: "beta",
-        "Server-SDK": "alpha",
+        "Server-SDK": "beta",
       };
 
       if (isSdkTitles) {
