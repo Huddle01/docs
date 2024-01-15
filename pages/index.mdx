@@ -37,14 +37,14 @@ From Guides to SDKs to API references - find everything you need to build high-q
 
 
 {/* Popular Guides Section */}
-{/* <LandingCards title="Popular guides" type="Guide" className="flex-col mt-10"> 
+<LandingCards title="Popular guides" type="Guide" className="flex-col mt-10"> 
    <div className="grid lg:grid-cols-3 gap-4 grid-cols-1 mt-6">
-   {[{title:"Audio Spaces",url:"/guides/audio-spaces"},{title:"Video Meeting",url:"/React/walkthrough"},{title:"Token-gated Room",url:"/guides/token-gating"}].map(({title,url}) => (
+   {[{title:"Audio Spaces",url:"/guides/audio-spaces"},{title:"Video Meeting",url:"/React/react-walkthrough"},{title:"Token-gated Room",url:"/guides/token-gated"}].map(({title,url}) => (
     <SubCard key={title} title={title} url={url}/>
    ))}                                                                                                                                                                                                                                                                           
    </div>
 </LandingCards> 
-*/}
+
 
 {/* API Key Card Section */}
 <LandingCards title="Get your API Key" type="apiKey" className="flex-row items-center justify-between cursor-pointer mb-6 mt-10 hover:bg-[#101114] duration-300 ease-in-out" url="/api-keys">
@@ -59,7 +59,7 @@ From Guides to SDKs to API references - find everything you need to build high-q
 <GetStartedCards key={title} title={title} url={url}/>
 ))}
 </div>
-<CLIToolCard/>
+{/* <CLIToolCard/> */}
 </LandingCards>
 
 
