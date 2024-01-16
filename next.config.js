@@ -1,6 +1,6 @@
-const withNextra = require('nextra')({
-  theme: 'nextra-theme-docs',
-  themeConfig: './theme.config.tsx',
+const withNextra = require("nextra")({
+  theme: "nextra-theme-docs",
+  themeConfig: "./theme.config.tsx",
   defaultShowCopyCode: true,
   flexsearch: {
     codeblocks: true,
@@ -9,13 +9,13 @@ const withNextra = require('nextra')({
 });
 
 module.exports = withNextra({
-  basePath: '/docs',
+  basePath: "/docs",
   reactStrictMode: true,
   async redirects() {
     return [
       {
-        source: '/',
-        destination: '/docs',
+        source: "/",
+        destination: "/docs",
         permanent: false,
         basePath: false,
       },
