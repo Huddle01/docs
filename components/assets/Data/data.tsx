@@ -243,17 +243,6 @@ export const VanillaData = [
       ],
     },
   },
-  {
-    href: "/Javascript/events",
-    name: "Events",
-    description:
-      "This section lists the available events that can be subscribed to in the vanilla JavaScript SDK.",
-    icon: CalendarIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
 ];
 
 // UseCase Data
