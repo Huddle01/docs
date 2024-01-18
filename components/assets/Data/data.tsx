@@ -215,20 +215,20 @@ export const VanillaData = [
       ],
     },
   },
-  // {
-  //   href: "/Javascript/example",
-  //   name: "Start from an Example",
-  //   description:
-  //     "This section provides instructions on how to clone and run a sample Huddle01 app in a vanilla JavaScript project.",
-  //   icon: PaperAirplaneIcon,
-  //   pattern: {
-  //     y: -6,
-  //     squares: [
-  //       [-1, 2],
-  //       [1, 3],
-  //     ],
-  //   },
-  // },
+  {
+    href: "/Javascript/example",
+    name: "Start from an Example",
+    description:
+      "This section provides instructions on how to clone and run a sample Huddle01 app in a vanilla JavaScript project.",
+    icon: PaperAirplaneIcon,
+    pattern: {
+      y: -6,
+      squares: [
+        [-1, 2],
+        [1, 3],
+      ],
+    },
+  },
   {
     href: "/Javascript/methods",
     name: "Methods",
