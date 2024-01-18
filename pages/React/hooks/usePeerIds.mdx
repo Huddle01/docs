@@ -9,14 +9,39 @@ import Pill from '@components/common/Pill/Pill';
 
 The usePeerIds hook returns peerIds of all peers inside a Huddle01 room.
 
+<OptionTable
+  headers={['Name', 'Description', 'Return Type']}
+  options={[
+    [
+      'peerIds',
+      'List of peerIds.',
+      'string[]',
+    ]
+  ]}
+/>
+
+#### Example Usage
+
 ```tsx
+import { usePeerIds } from "@huddle01/react/hooks";
+import { RemotePeerCard } from "@components/RemotePeerCard";
+
 const {
     peerIds
   } = usePeerIds({
-   roles: [],
+  roles: [],
   labels: [],
   onPeerRoleUpdate(data) {}
   });
+
+return (
+  <div>
+    {peerIds.map((peerId) => (
+      {/* Use this peerId and pass it in custom component which shows viewport by using hooks such as `useRemotePeer` */}
+      <RemotePeerCard key={peerId}>{peerId} />
+    ))}
+  </div>
+)
 ```
 
 ## Props
@@ -107,22 +132,3 @@ const lobby = useLobby({ onLobbyPeersUpdated: (data) => {
 
 const peerIds = usePeerIds({ labels: ["audio"] });
 ```
-
-## Returns
-The usePeerIds hook returns an object with the following fields.
-
-{/* peerIds */}
-### <span className="font-mono font-semibold">peerIds</span>
-<div className='w-20 mt-4'>
-  <Pill>Array</Pill>
-</div>
-
-<OptionTable
-  headers={['Description', 'Type']}
-  options={[
-    [
-      'List of peerIds.',
-      'string[]',
-    ],
-  ]}
-/>

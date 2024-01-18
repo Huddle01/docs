@@ -9,6 +9,50 @@ import Pill from '@components/common/Pill/Pill';
 
 The useDevices hook provides functionality to interact with the different media devices available to you, like your camera, microphone, and speaker.
 
+<OptionTable
+  headers={['Name', 'Description', 'Return Type', 'Params']}
+  options={[
+    [
+      'devices',
+      'The available media devices.',
+      'MediaDeviceInfo[]',
+      ''
+    ],
+   [
+      'preferredDeviceId',
+      "The preferred media device's ID.",
+      'string | null',
+      ''
+    ],
+   [
+      'preferredDevice',
+      'The preferred media device.',
+      'MediaDeviceInfo | null',
+      ''
+    ],
+   [
+      'fetchStream',
+      'Fetch media stream from the selected media device.',
+      'Promise<FetchStreamResponse>',
+      '{ mediaDeviceKind: "mic" | "cam"; }'
+    ],
+   [
+      'getPermission',
+      'Get permission to access the selected media device.',
+      'Promise<{permission: "granted" | "denied"; error?: StreamPermissionsError | undefined;}>',
+      ''
+    ],
+   [
+      'setPreferredDevice',
+      'Set the preferred media device.',
+      'void',
+      'string'
+   ]
+  ]}
+/>
+
+#### Example Usage
+
 ```tsx
 const {
     devices,
@@ -21,7 +65,24 @@ const {
     type: "cam",
     onPermissionGranted() {},
     onPermissionDenied() {},
+    onDeviceChanged(deviceId: string) {},
   });
+
+// Change preferred device
+const changePreferredDevice = (deviceId: string) => {
+  setPreferredDevice(deviceId);
+};
+
+// Fetch media stream from preferred device
+const fetchMediaStream = async () => {
+  const { stream, error } = await fetchStream({
+    mediaDeviceKind: "cam",
+  });
+  if (error) {
+    return;
+  } 
+  return stream;
+};
 ```
 
 ## Props
@@ -46,7 +107,14 @@ The useDevices hook accepts an object with the following fields as props.
 #### Example Usage
 
 ```tsx
-const devices = useDevices({ type: "cam" });
+// Get all media devices of type "cam"
+const { devices } = useDevices({ type: "cam" });
+
+// Get all media devices of type "mic"
+const { devices } = useDevices({ type: "mic" });
+
+// Get all media devices of type "speaker"
+const { devices } = useDevices({ type: "speaker" });
 ```
 
 {/* onPermissionGranted */}
@@ -68,7 +136,7 @@ const devices = useDevices({ type: "cam" });
 #### Example Usage
 
 ```tsx
-const devices = useDevices({ type: "cam", onPermissionGranted: () => {
+useDevices({ type: "cam", onPermissionGranted: () => {
 	console.log("Permission for accessing the device was granted!");
     // your code here
 }});
@@ -93,118 +161,23 @@ const devices = useDevices({ type: "cam", onPermissionGranted: () => {
 #### Example Usage
 
 ```tsx
-const devices = useDevices({ type: "cam", onPermissionDenied: () => {
+useDevices({ type: "cam", onPermissionDenied: () => {
 	console.log("Permission for accessing the device was denied!");
     // your code here
 }});
 ```
 
-## Returns
-The useDevices hook returns an object with the following fields.
-
-{/* devices */}
-### <span className="font-mono font-semibold">devices</span>
+{/* OnDeviceChanged */}
+### <span className="font-mono font-semibold">onDeviceChanged</span>
 <div className='w-20 mt-4'>
-  <Pill>Array</Pill>
-</div>
-
-<OptionTable
-  headers={['Description', 'Type']}
-  options={[
-    [
-      'The available media devices.',
-      'MediaDeviceInfo[]',
-    ],
-  ]}
-/>
-
-{/* preferredDeviceId */}
-### <span className="font-mono font-semibold">preferredDeviceId</span>
-<div className='w-20 mt-4'>
-  <Pill>Object</Pill>
-</div>
-
-<OptionTable
-  headers={['Description', 'Type']}
-  options={[
-    [
-      "The preferred media device's ID.",
-      'string | null',
-    ],
-  ]}
-/>
-
-{/* preferredDevice */}
-### <span className="font-mono font-semibold">preferredDevice</span>
-<div className='w-20 mt-4'>
-  <Pill>Object</Pill>
-</div>
-
-<OptionTable
-  headers={['Description', 'Type']}
-  options={[
-    [
-      'The preferred media device.',
-      'MediaDeviceInfo | null',
-    ],
-  ]}
-/>
-
-{/* fetchStream */}
-### <span className="font-mono font-semibold">fetchStream</span>
-<div className='w-20 mt-4'>
-  <Pill>Function</Pill>
+  <Pill>Optional</Pill>
 </div>
 
 <OptionTable
   headers={['Description', 'Return Type']}
   options={[
     [
-      'Fetch media stream from the selected media device.',
-      'Promise<FetchStreamResponse>',
-    ],
-  ]}
-/>
-
-<OptionTable
-  headers={['Parameter Name', 'Type', 'Description', 'Required']}
-  options={[
-    [
-      'data',
-      '{ mediaDeviceKind: "mic" | "cam"; }',
-      'Object containing the type media device.',
-      'Yes',
-    ],
-  ]}
-/>
-
-{/* getPermission */}
-### <span className="font-mono font-semibold">getPermission</span>
-<div className='w-20 mt-4'>
-  <Pill>Function</Pill>
-</div>
-
-<OptionTable
-  headers={['Description', 'Return Type']}
-  options={[
-    [
-      'Get permission to access the selected media device.',
-      'Promise<{ permission: "granted" | "denied"; error?: StreamPermissionsError | undefined; }>',
-    ],
-  ]}
-/>
-
-{/* setPreferredDevice */}
-### <span className="font-mono font-semibold">setPreferredDevice</span>
-<div className='w-20 mt-4'>
-  <Pill>Function</Pill>
-</div>
-
-<OptionTable
-  headers={['Description', 'Return Type']}
-  options={[
-    [
-      'Set the preferred media device.',
+      'This function will be called when the preferred device is changed.',
       'void',
     ],
   ]}
@@ -215,9 +188,19 @@ The useDevices hook returns an object with the following fields.
   options={[
     [
       'deviceId',
-      'string',
-      'The ID of the media device you want to set as your preferred device.',
+      "string",
+      'Device ID of changed preferred device.',
       'Yes',
     ],
   ]}
 />
+
+#### Example Usage
+
+```tsx
+useDevices({ type: "cam", onDeviceChanged: (deviceId: string) => {
+  console.log("Changed preferred device to: ", deviceId);
+    // your code here
+}});
+```
+

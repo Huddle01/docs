@@ -9,7 +9,38 @@ import Pill from '@components/common/Pill/Pill';
 
 The useRemoteAudio hook exposes primitives to interact with audio streams coming from other peers in the room.
 
+<OptionTable
+  headers={['Name', 'Description', 'Return Type']}
+  options={[
+    [
+      'stream',
+      "Remote peer's audio stream. Null if not enabled yet.",
+      'MediaStream | null',
+    ],
+    [
+      'track',
+      "Remote peer's audio stream track. Null if not enabled yet.",
+      'MediaStreamTrack | null',
+    ],
+    [
+      'state',
+      "State of the remote peer's audio stream.",
+      `"playable" | "unavailable" | "stopped" | "paused" | "available"`,
+    ],
+    [
+      'isAudioOn',
+      "State of the remote peer's audio stream.",
+      'boolean',
+    ],
+  ]}
+/>
+
+#### Example Usage
+
 ```tsx
+import { useRemoteAudio } from "@huddle01/react/hooks";
+import { useEffect, useRef } from 'react';
+
 const {
     state,
     track,
@@ -28,6 +59,18 @@ const {
     message: string;
     }) {},
   });
+
+const audioRef = useRef<HTMLAudioElement>(null);
+
+useEffect(() => {
+  if (audio.current && stream) {
+    audio.current.srcObject = stream;
+  }
+}, [stream]);
+
+return (
+  <audio ref={audioRef} autoplay>
+)
 ```
 
 ## Props
@@ -120,69 +163,3 @@ const remoteAudio = useRemoteAudio({ peerId: "remote-peer-id", onClose: (reason)
     // your code here
 }});
 ```
-
-## Returns
-The useRemoteAudio hook returns an object with the following fields.
-
-{/* stream */}
-### <span className="font-mono font-semibold">stream</span>
-<div className='w-20 mt-4'>
-  <Pill>Object</Pill>
-</div>
-<OptionTable
-  headers={['Description', 'Type']}
-  options={[
-    [
-      "Remote peer's audio stream. null if not enabled yet.",
-      'MediaStream | null',
-    ],
-  ]}
-/>
-
-{/* track */}
-### <span className="font-mono font-semibold">track</span>
-<div className='w-20 mt-4'>
-  <Pill>Object</Pill>
-</div>
-
-<OptionTable
-  headers={['Description', 'Type']}
-  options={[
-    [
-      "Remote peer's audio stream track. null if not enabled yet.",
-      'MediaStreamTrack | null',
-    ],
-  ]}
-/>
-
-{/* state */}
-### <span className="font-mono font-semibold">state</span>
-<div className='w-20 mt-4'>
-  <Pill>Object</Pill>
-</div>
-<OptionTable
-  headers={['Description', 'Type']}
-  options={[
-    [
-      "State of the remote peer's audio stream.",
-      `"playable" | "unavailable" | "stopped" | "paused" | "available"`,
-    ],
-  ]}
-/>
-
-
-{/* isAudioOn */}
-### <span className="font-mono font-semibold">isAudioOn</span>
-<div className='w-20 mt-4'>
-  <Pill>Object</Pill>
-</div>
-
-<OptionTable
-  headers={['Description', 'Type']}
-  options={[
-    [
-      "State of the remote peer's audio stream.",
-      "boolean",
-    ],
-  ]}
-/>

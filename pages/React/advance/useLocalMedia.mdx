@@ -1,0 +1,54 @@
+---
+title: 'useLocalMedia'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+
+# useLocalMedia 
+
+The `useLocalMedia` hook exposes methods to fetch and produce streams of a local peer. 
+
+<OptionTable
+  headers={['Name', 'Description', 'Return Type', 'Params']}
+  options={[
+    [
+      'fetchStream',
+      'Fetches a stream from the local peer',
+      'Promise<MediaStream>',
+      'mediaDeviceKind: "mic" | "cam"',
+    ],
+    [
+      'produceStream',
+      'Produces a stream to the local peer',
+      'Promise<Producer<AppData>>',
+      '{stream: MediaStream; label: string; appData: AppData}'
+    ],
+    [
+      'stopProducing',
+      'Stops producing a stream to the local peer',
+      'void',
+      'label: string',
+    ],
+  ]}
+/>
+
+```tsx
+const { fetchStream, produceStream, stopProducing } = useLocalMedia();
+
+const fetchAudioStream = async () => {
+  const stream = await fetchStream({
+    mediaDeviceKind: 'mic'
+  });
+  return stream;
+};
+
+const produceAudioStream = async () => {
+  const stream = await fetchAudioStream();
+  await produceStream({
+    stream,
+    label: 'mic',
+    appData: {}
+  });
+  return stream;
+};
+``` 
