@@ -37,8 +37,25 @@ The Huddle01 Server SDK allows you to perform protected admin actions on your se
 
 To join a Huddle01 room, every peer needs a unique access token. This is how you generate one on your own backend server. You can then call your internal API to get the access token and pass it to the `joinRoom` method on the client side.
 
+<Tabs items={['module','commonjs']}>
+       <Tab>
+            ```ts 
+      import { AccessToken, Role } from '@huddle01/server-sdk/auth';
+        ```
+              </Tab>
+
+    <Tab>
+          ```js
+      const HuddleAuth = require('@huddle01/server-sdk/auth');
+      const { AccessToken, Role } = HuddleAuth
+      ```
+            </Tab>
+
+   
+          </Tabs>
+
+
 ```jsx
-import { AccessToken, Role } from '@huddle01/server-sdk/auth';
 
 const accessToken = new AccessToken({
     apiKey: 'YOUR_API_KEY',
@@ -66,7 +83,12 @@ const accessToken = new AccessToken({
           },
         },
   });
+
+const token = accessToken.toJwt();
+
 ```
+
+
 
 
 ### Recording

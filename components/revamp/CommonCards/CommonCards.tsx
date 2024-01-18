@@ -34,7 +34,7 @@ export const GetStartedCards: React.FC<TGetStartedCardProps> = ({
 
 export const CLIToolCard = () => {
   return (
-    <Link href={"/cli-tool"}>
+    <Link href={"/React/example"}>
       <div className="bg-rgb-4 border border-rgb-5 rounded-md flex lg:flex-row flex-col lg:items-center gap-2.5 py-2 px-2.5">
         <div className="flex items-center gap-2.5">
           <span>{LandingIcons.terminal}</span>
