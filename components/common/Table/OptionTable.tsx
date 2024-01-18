@@ -18,8 +18,11 @@ export default function OptionTable({
       <table className="w-full border-collapse text-sm">
         <thead>
           <tr className="border-b py-4 text-left dark:border-neutral-700">
-            {headers.map(header => (
-              <th key={header} className="py-2 font-semibold">
+            {headers.map((header) => (
+              <th
+                key={header}
+                className="whitespace-pre py-2 pr-4 font-semibold"
+              >
                 {header}
               </th>
             ))}

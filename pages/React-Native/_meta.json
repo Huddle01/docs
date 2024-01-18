@@ -3,5 +3,6 @@
   "react-native-walkthrough": "React Native Walkthrough",
   "example": "Start from an example",
   "hooks": "Hooks",
+  "advance": "Advance Hooks",
   "expo": "Expo Support"
 }

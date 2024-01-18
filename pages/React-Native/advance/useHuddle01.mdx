@@ -1,0 +1,40 @@
+---
+title: "useHuddle01"
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+
+# useHuddle01
+
+The useHuddle01 hook exposes `huddleClient` which you can use to access all methods that are available in our [Vanilla JS](/Javascript/methods) SDK. 
+
+<OptionTable
+  headers={['Name', 'Description', 'Type',]}
+  options={[
+    [
+      'huddleClient',
+      'HuddleClient instance',
+      'HuddleClient',
+    ]
+  ]}
+/>
+
+### Example Usage 
+
+```tsx
+// Close room using huddleClient
+const closeRoom = async () => {
+  try {
+    await huddleClient.closeRoom();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Listen to events using huddleClient
+useEffect(() => {
+  huddleClient.room.on("room-closed", () => {
+    console.log("Room closed");
+  });
+}, []);
+```
