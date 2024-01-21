@@ -1,0 +1,174 @@
+---
+title: 'Preview Live Meeting Peers API'
+---
+
+import RequestStrip from '@components/ApiRequest/RequestStrip';
+import {
+  APIRequestCard,
+  APIRequestContent,
+  APIResponseCard,
+} from '@components/common/ApiCard/ApiCard';
+import { Button } from '@components/common/Button/Button';
+import HighLight from '@components/common/HighLight';
+import Paragraph from '@components/common/Paragraph';
+import Pill from '@components/common/Pill/Pill';
+import { Callout } from 'nextra-theme-docs';
+
+## **Preview Live Meeting Peers API**
+
+The Live Meetings API provides the ability to fetch live rooms in which people are currently present.
+In order to use the API, you will need to obtain an API key by connecting to your wallet.
+
+## **Endpoint**
+<div className="flex justify-between w-full">
+  <HighLight className="my-3 w-3/4">
+    <RequestStrip
+      method={'GET'}
+      url={'https://api.huddle01.com/api/v1'}
+      endpoint={'live-meetings/preview-peers?roomId=YOUR_ROOM_ID'}
+    />
+  </HighLight>
+  <Button
+    variant="primary"
+    url="/api-keys"
+    text="Get your API Key"
+    isRouting
+    className=" my-2 w-auto px-8"
+  />
+</div>
+
+
+<Paragraph className="mt-5">
+ Whatever meetings are created using Create Room API and are joined by users, will be listed in the Live Meetings API. The API will return the list of all the rooms which are currently live and the number of users present in each room.
+
+
+</Paragraph>
+
+<div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-10  md:h-[24.5rem]">
+<div>
+<div className="flex items-center gap-4">
+<Pill >GET</Pill>
+<div className="text-sm font-normal text-slate-50">`/live-meetings/preview-peers`</div>
+
+</div>
+
+<div className="mt-7 font-mono text-2xl font-bold text-[#f1f5f9]">
+  Get Preview Peers API
+</div>
+
+The API supports a **GET** request with the following required parameters:
+
+- **`x-api-key`** - Add your API Key to the headers to fetch all the peers associated with your room.
+- **`roomId`** - Add your RoomId to the query params to fetch all the peers associated with your room.
+
+
+</div>
+
+<APIRequestCard
+    requestType = "GET"
+    route="/live-meetings/preview-peers"
+    
+  >
+
+<APIRequestContent value="axios">
+      ```js
+      const response = await axios.get(
+        'https://api.huddle01.com/api/v1/live-meeting/preview-peers',
+        {
+          roomId: 'YOUR_ROOM_ID',
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': {{API_KEY}},
+          },
+        }
+    );
+      ```
+    </APIRequestContent>
+
+    
+    <APIRequestContent value="fetch">
+      ```js
+     const  response = await fetch("https://api.huddle01.com/api/v1/live-meeting/preview-peers", {
+     
+    method: "GET",
+    {
+      roomId: 'YOUR_ROOM_ID',
+    },
+    headers: {
+        "Content-type": "application/json",
+        'x-api-key': {{API_KEY}},
+    }
+})
+      ```
+    </APIRequestContent>
+
+    <APIRequestContent value="cUrl">
+      ```bash
+curl -X POST \
+  'https://api.huddle01.com/api/v1/live-meetings/preview-peers?roomId=YOUR_ROOM_ID' \
+  --header 'Accept: */*' \
+  --header 'x-api-key: {{API_KEY}}' \
+  --header 'Content-Type: application/json' \
+  
+      ```
+    </APIRequestContent>
+  </APIRequestCard>
+
+</div>
+
+<div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-10">
+<div className="text-start ">
+
+<div className="font-mono text-2xl font-bold text-[#f1f5f9]">Response</div>
+
+Upon success, the API will return a response with an array of previewPeer with the following fields:
+
+- **`displayName`** - The displayName of the peer created using the AccessToken.
+
+
+In case of an error, the API will return an error message with a corresponding status code.
+
+</div>
+
+<APIResponseCard>
+  <APIRequestContent value="Success">
+    ```jsx
+      {
+          {
+            "roomId": ",",
+            "previewPeers": [
+              {
+                "displayName": "axit.eth"
+              },
+            ]
+          }
+      }
+    ```
+  </APIRequestContent>
+
+  <APIRequestContent value="Error">
+
+    ```jsx
+    {
+        "message": "Input validation failed",
+        "code": "BAD_REQUEST",
+        "issues": [
+            {
+                "code": "invalid_type",
+                "expected": "string",
+                "received": "number",
+                "path": [
+                    "roomId"
+                ],
+                "message": "Expected string, received number"
+            }
+        ]
+    }
+    ```
+
+  </APIRequestContent>
+</APIResponseCard>
+
+</div>
