@@ -9,16 +9,60 @@ import Pill from '@components/common/Pill/Pill';
 
 The useRoomControls hook allows you to read and update the room's controls.
 
+<OptionTable
+  headers={['Name', 'Description', 'Return Type', 'Params']}
+  options={[
+      [
+        'roomControls',
+        'Object containing the current room controls.',
+        'Object',
+        ''
+      ],
+      [
+        'updateControls',
+        'Function to update the room controls.',
+        'void',
+        'data: NewRoomControls'
+      ]
+    ]}
+/>
+
+#### Example Usage
+
 ```tsx
+import { useRoomControls } from '@huddle01/react/hooks'; 
+
+type NewRoomControls = {
+    value: boolean;
+    type: 'roomLocked' | 'allowProduce' | 'allowConsume' | 'allowSendData';
+} | {
+    value: {
+        cam: boolean;
+        mic: boolean;
+        screen: boolean;
+    };
+    type: 'allowProduceSources';
+};
+
 const {
   roomControls,
   updateControls,
   } = useRoomControls({
   onRoomControlsUpdated(data: NewRoomControls) ();
-  onRoomLeave(data: RoomEvents['room-closed'][0]) ();
+  onRoomLeave(data: {
+      reason: 'LEFT' | 'CLOSED' | 'KICKED' | 'DENIED'; 
+      message?: string;
+    }) ();
   });
-```
 
+const lockRoom = () => {
+    updateControls({
+        type: 'roomLocked',
+        value: true,
+    });
+};
+// your code here
+```
 
 ## Props
 The useRoomControls hook accepts an object with the following fields as props.
@@ -83,7 +127,7 @@ const roomControls = useRoomControls({ onRoomControlsUpdated: (data) => {
   options={[
     [
       'data',
-      'RoomEvents["room-closed"][0]',
+      "{reason: 'LEFT' | 'CLOSED' | 'KICKED' | 'DENIED'; message?: string;}",
       'Object containing the new room controls.',
       'Yes',
     ],
@@ -99,51 +143,3 @@ const roomControls = useRoomControls({ onRoomLeave: (data) => {
     // your code here
 }});
 ```
-
-## Returns
-The useRoomControls hook returns an object with the following fields.
-
-{/* roomControls */}
-### <span className="font-mono font-semibold">roomControls</span>
-<div className='flex w-40 justify-between mt-4'>
-  <Pill>Object</Pill>
-  <Pill>Advanced</Pill>
-</div>
-<OptionTable
-  headers={['Description', 'Type']}
-  options={[
-    [
-      'The state of the currently joined room.',
-      'TRoomControls',
-    ],
-  ]}
-/>
-
-{/* updateControls */}
-### <span className="font-mono font-semibold">updateControls</span>
-<div className='flex w-40 justify-between mt-4'>
-  <Pill>Function</Pill>
-  <Pill>Advanced</Pill>
-</div>
-
-<OptionTable
-  headers={['Description', 'Return Type']}
-  options={[
-    [
-      'Update the room control.',
-      'void',
-    ],
-  ]}
-/>
-
-<OptionTable
-  headers={['Parameter Name', 'Type', 'Description', 'Required']}
-  options={[
-    [
-      'data',
-      'TNewRoomControls',
-      'Object containing the type of room control to be updated and it’s new value.',
-      'Yes',
-    ],
-  ]}
-/>
