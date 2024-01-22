@@ -1,0 +1,229 @@
+---
+title: 'useRemoteMedia'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import Pill from '@components/common/Pill/Pill';
+
+## useRemoteMedia
+
+The `useRemoteMedia` hook is used to fetch media from a remote peers. It gives an ability to stop and start consuming. 
+
+<OptionTable
+  headers={['Name', 'Description', 'Return Type']}
+  options={[
+    [
+        'state',
+        'The current state of the media from remote peer',
+        "'playable' | 'unavailable' | 'stopped' | 'paused' | 'available'",
+    ],
+    [
+        'track',
+        'MediaStreamTrack of the remote peer',
+        'MediaStreamTrack | null',
+    ],
+    [
+        'stream',
+        'MediaStream of the remote peer',
+        'MediaStream | null',
+    ],
+    [
+        'stopConsuming',
+        'Method to stop consuming media from remote peer',
+        'void',
+    ],
+    [
+        'startConsuming',
+        'Method to start consuming media from remote peer',
+        'Promise<void>'
+    ]
+  ]}
+/>
+
+#### Example usage 
+
+```tsx
+import { useRemoteMedia } from '@huddle01/react/hooks';
+
+const { 
+    state, 
+    track, 
+    stream, 
+    stopConsuming, 
+    startConsuming 
+  } = useRemoteMedia({
+    peerId: 'YOUR_PEER_ID',
+    label: 'YOUR_MEDIA_LABEL',
+    onClose() (),
+    onPlayable(data: {
+        track: MediaStreamTrack;
+        stream: MediaStream;
+        label: string;
+    }) (),
+    onStopped(reason: {
+        code: number;
+        tag: string;
+        message: string;
+    }) ()
+  })
+
+// Stop consuming media from remote peer
+const stop = (peerId: string) => {
+  stopConsuming(peerId);
+}
+
+// Start consuming media from remote peer
+const start = async (peerId: string) => {
+  await startConsuming();
+}
+```
+
+## Props 
+The `useRemoteMedia` hook accepts the following props: 
+
+{/* peerId */}
+### <span className="font-mono font-semibold">peerId</span>
+<div className='w-20 mt-4'>
+  <Pill>Required</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'PeerId of the remote peer',
+      'string',
+    ],
+  ]}
+/>
+
+#### Example usage 
+
+```tsx
+// Get state of media from remote peer
+const { state } = useRemoteMedia({
+    peerId,
+    label: 'YOUR_MEDIA_LABEL',
+})
+```
+
+{/* label */}
+### <span className="font-mono font-semibold">label</span>
+<div className='w-20 mt-4'>
+  <Pill>Required</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'Label of the media to consume from remote peer',
+      'string',
+    ],
+  ]}
+/>
+
+#### Example usage 
+
+```tsx
+// Get state of media from remote peer
+const { state } = useRemoteMedia({
+    peerId: 'YOUR_PEER_ID',
+    label,
+})
+```
+
+{/* onClose */}
+### <span className="font-mono font-semibold">onClose</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'Callback function to be called when the media is closed',
+      'void',
+    ],
+  ]}
+/>
+
+#### Example usage 
+
+```tsx
+useRemoteMedia({
+    peerId: 'YOUR_PEER_ID',
+    label: 'YOUR_MEDIA_LABEL',
+    onClose() {
+        console.log('Media closed')
+        // Your code here
+    }
+})
+```
+
+{/* onPlayable */}
+### <span className="font-mono font-semibold">onPlayable</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'Callback function to be called when the media is playable, i.e. start consuming',
+      'void',
+    ],
+  ]}
+/>
+
+#### Example usage 
+
+```tsx
+useRemoteMedia({
+    peerId: 'YOUR_PEER_ID',
+    label: 'YOUR_MEDIA_LABEL',
+    onPlayable(data: {
+        track: MediaStreamTrack;
+        stream: MediaStream;
+        label: string;
+    }) {
+        console.log('Media is playable')
+        // Your code here
+    }
+})
+```
+
+{/* onStopped */}
+### <span className="font-mono font-semibold">onStopped</span>
+<div className='w-20 mt-4'>
+  <Pill>Optional</Pill>
+</div>
+
+<OptionTable
+  headers={['Description', 'Type']}
+  options={[
+    [
+      'Callback function to be called when we stop consuming media',
+      'void',
+    ],
+  ]}
+/>
+
+#### Example usage 
+
+```tsx
+useRemoteMedia({
+    peerId: 'YOUR_PEER_ID',
+    label: 'YOUR_MEDIA_LABEL',
+    onStopped(reason: {
+        code: number;
+        tag: string;
+        message: string;
+    }) {
+        console.log('Media is stopped')
+        // Your code here
+    }
+})
+```

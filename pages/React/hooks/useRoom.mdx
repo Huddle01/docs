@@ -3,11 +3,69 @@ title: 'useRoom'
 ---
 import OptionTable from '@components/common/Table/OptionTable';
 import Pill from '@components/common/Pill/Pill';
+import { Callout } from 'nextra-theme-docs';
 
 
 # useRoom
 The useRoom hook exposes primitives to interact with a Huddle01 room, like joining, leaving, closing the room.
+
+<Callout type='info'>
+`state` can be `idle`, `connecting`, `connected`, `failed`, `left`, or `closed`
+</Callout>
+
+<OptionTable
+  headers={['Name', 'Description', 'Return Type', 'Params']}
+  options={[
+    [
+      'room',
+      'The currently joined room object.',
+      'Room',
+      '',
+    ],
+    [
+      'state',
+      'The state of the currently joined room.',
+      'RoomStates',
+      '',
+    ],
+    [
+      'joinRoom',
+      'Join the room.',
+      'Promise<Room>',
+      '{ roomId: string; token: string }',
+    ],
+    [
+      'leaveRoom',
+      'Leave the room.',
+      'void',
+      '',
+    ],
+    [
+      'closeRoom',
+      'Close the room.',
+      'void',
+      '',
+    ],
+    [
+      'kickPeer',
+      'Remove the peer.',
+      'void',
+      'string',
+    ],
+    [
+      'muteEveryone',
+      'Mute Everyone',
+      'void',
+      '',
+    ],
+  ]}
+/>
+
+#### Example Usage 
+
 ```tsx
+import { useRoom } from '@huddle01/react/hooks';
+
 const {
     room,
     state,
@@ -19,15 +77,54 @@ const {
     closeStreamOfLabel,
   } = useRoom({
   onJoin(data:Room) ();
-  onWaiting(data: RoomEvents['room-waiting'][0]) ();
-  onLeave(data: RoomEvents['room-closed'][0]) ();
-  onFailed(data: RoomEvents['room-joined-failed'][0]) ();
+  onWaiting(data: {
+    reason: 'WAITING_FOR_PERMISSIONS' | 'WAITING_FOR_ROOM_TO_START' | 'WAITING_FOR_ADMIN_TO_JOIN';
+    message?: string;
+  }) ();
+  onLeave(data: {
+    reason: 'LEFT' | 'CLOSED' | 'KICKED' | 'DENIED';
+    message?: string;
+  }) ();
+  onFailed(data: {
+      status: 'ROOM_NOT_FOUND' | 'ROOM_ERRORED';
+      message: string;
+  }) ();
   onPeerJoin(peerId: string) ();
   onPeerLeft(peerId: string) ();
   });
+
+// Join room
+const join = async () => {
+  await joinRoom({
+    roomId,
+    tokenId
+  })
+}
+
+// Leave room
+const leave = async () => {
+  await leaveRoom()
+}
+
+// Close room
+const close = async () => {
+  await closeRoom()
+}
+
+// Kick peer
+const kick = async () => {
+  await kickPeer(peerId)
+}
+
+// Mute everyone
+const mute = async () => {
+  await muteEveryone()
+}
 ```
+
+
 ## Props
-The useRoom hook accepts an object with the following fields as props.
+The useRoom hook has following props which you can use to handle various events.
 
 {/* onJoin */}
 ### <span className="font-mono font-semibold">onJoin</span>
@@ -81,7 +178,7 @@ const room = useRoom({ onJoin: (data) => {
   options={[
     [
       'data',
-      "RoomEvents['room-waiting'][0]",
+      "{reason:'WAITING_FOR_PERMISSIONS' | 'WAITING_FOR_ROOM_TO_START' | 'WAITING_FOR_ADMIN_TO_JOIN', message?: string}",
       'Object containing reasons.',
       'Yes',
     ],
@@ -114,7 +211,7 @@ const room = useRoom({ onWaiting: (data) => {
   options={[
     [
       'data',
-      "RoomEvents['room-closed'][0]",
+      "{reason:'LEFT' | 'CLOSED' | 'KICKED' | 'DENIED', message?: string}",
       'Object containing reasons.',
       'Yes',
     ],
@@ -147,7 +244,7 @@ const room = useRoom({ onLeave: (data) => {
   options={[
     [
       'data',
-      "RoomEvents['room-joined-failed'][0]",
+      "{status:'ROOM_NOT_FOUND' | 'ROOM_ERRORED', message: string}",
       'Object containing reasons.',
       'Yes',
     ],
@@ -226,147 +323,3 @@ const room = useRoom({ onPeerLeft: (peerId:string) => {
     // your code here
 }});
 ```
-
-## Returns
-The useRoom hook returns an object with the following fields.
-{/* room */}
-### <span className="font-mono font-semibold">room</span>
-<div className='w-20 mt-4'>
-  <Pill>Object</Pill>
-</div>
-<OptionTable
-  headers={['Description', 'Type']}
-  options={[
-    [
-      'The currently joined room object.',
-      'Room',
-    ],
-  ]}
-/>
-{/* state */}
-### <span className="font-mono font-semibold">state</span>
-<div className='w-20 mt-4'>
-  <Pill>Object</Pill>
-</div>
-<OptionTable
-  headers={['Description', 'Type']}
-  options={[
-    [
-      'The state of the currently joined room.',
-      'RoomStates',
-    ],
-  ]}
-/>
-{/* joinRoom */}
-### <span className="font-mono font-semibold">joinRoom</span>
-<div className='w-20 mt-4'>
-  <Pill>Function</Pill>
-</div>
-<OptionTable
-  headers={['Description', 'Return Type']}
-  options={[
-    [
-      'Join the room.',
-      'Promise<Room>',
-    ],
-  ]}
-/>
-<OptionTable
-  headers={['Params', 'Type', 'Description', 'Required']}
-  options={[
-    [
-      'data',
-      '{ roomId: string; token: string }',
-      'Object containing the roomId to be joined and the user’s access token.',
-      'Yes',
-    ],
-  ]}
-/>
-{/* leaveRoom */}
-### <span className="font-mono font-semibold">leaveRoom</span>
-<div className='w-20 mt-4'>
-  <Pill>Function</Pill>
-</div>
-<OptionTable
-  headers={['Description', 'Return Type']}
-  options={[
-    [
-      'Leave the room.',
-      'void',
-    ],
-  ]}
-/>
-
-{/* closeRoom */}
-### <span className="font-mono font-semibold">closeRoom</span>
-<div className='w-20 mt-4'>
-  <Pill>Function</Pill>
-</div>
-<OptionTable
-  headers={['Description', 'Return Type']}
-  options={[
-    [
-      'Close the room.',
-      'void',
-    ],
-  ]}
-/>
-
-
-{/* kickPeer */}
-### <span className="font-mono font-semibold">kickPeer</span>
-<div className='w-20 mt-4'>
-  <Pill>Function</Pill>
-</div>
-<OptionTable
-  headers={['Description', 'Return Type']}
-  options={[
-    [
-      'Remove the peer.',
-      'void',
-    ],
-  ]}
-/>
-
-
-{/* muteEveryone */}
-### <span className="font-mono font-semibold">muteEveryone</span>
-<div className='w-20 mt-4'>
-  <Pill>Function</Pill>
-</div>
-<OptionTable
-  headers={['Description', 'Return Type']}
-  options={[
-    [
-      'Mute Everyone',
-      'void',
-    ],
-  ]}
-/>
-
-
-{/* closeStreamOfLabel
-### <span className="font-mono font-semibold">closeStreamOfLabel</span>
-<div className='w-20 mt-4'>
-  <Pill>Function</Pill>
-</div>
-<OptionTable
-  headers={['Description', 'Return Type']}
-  options={[
-    [
-      'Mute Everyone',
-      'void',
-    ],
-  ]}
-/>
-
-<OptionTable
-  headers={['Parameter Name', 'Type',  'Required']}
-  options={[
-    [
-      'data',
-      "{labels:'video' | 'audio', peerIds:string[]}",
-      'Yes',
-    ],
-  ]}
-/> */}
