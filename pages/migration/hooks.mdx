@@ -3,6 +3,7 @@ title: 'Hooks'
 ---
 
 import {  Callout } from 'nextra-theme-docs';
+import HooksTable from "../../components/Migration/HooksTable"
 
 ## Migrating Hooks from 0.x to 1.x
 
@@ -10,79 +11,5 @@ import {  Callout } from 'nextra-theme-docs';
 
 ### Old Hooks Alternatives
 
-<table className='w-full lg:mt-8 mt-4 border-collapse'>
-  <thead className='text-start'>
-    <tr className='p-8'>
-      <th>Old Hooks</th>
-      <th>New Hooks</th>
-    {/* <th>Deprecated</th> */}
-    </tr>
-  </thead>
-  <tbody className='p-8'>
-    {[
-    { old: 'useRoom', new: {
-        one:"useRoom"
-    } },
-    { old: 'useLobby', new: {
-        one:"useLobby"
-    } },
-    { old: 'usePeers', new: {
-        one:"usePeersIds"
-    }},
-    {
-    old:"useAudio",new:{
-        one:"useLocalAudio",
-        two:"useRemoteAudio"
-    }
-    },
-     {
-    old:"useVideo",new:{
-        one:"useLocalVideo",
-        two:"useRemoteVideo"
-    }
-    },
-    {
-    old:"useScreenShare",new:{
-        one:"useLocalScreenShare",
-        two:"useRemoteScreenShare"
-    }
-    },
-     { old: '---', new: {
-        one:"useRoomControls"
-    } },
-     { old: '---', new: {
-        one:"useDataMessage"
-    } },
-    { old: '---', new: {
-        one:"useDevices"
-    } },
-       { old: '---', new: {
-        one:"useActivePeers"
-    } },
-       { old: '---', new: {
-        one:"useRoomMetadata"
-    } },
-       { old: 'useHuddle01', new:{
-        one:"---"
-    } },
-       { old: 'useAppUtils', new: {
-        one:"---"
-    }},
-      { old: 'useAcl', new: {
-        one:"---"
-    }},
-    { old: 'useLivestream', new: {
-        one:"---"
-    }},
-     { old: 'useRecording', new: {
-        one:"---"
-    }},
-    ].map((item,i) => (
-      <tr key={i}>
-        <td>{item.old}</td>
-        <td>{item.new.one} {item.new.two && `/ ${item.new.two}`}</td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+<HooksTable/>
 
