@@ -19,13 +19,13 @@ const TabStrip: React.FC<TabStripProps> = ({ children, version, date }) => {
       <div className="flex items-start gap-10 w-full">
         <VersionPill version={version} date={date ?? ""} />
 
-        <div className="text-[#9EA3AE] text-base font-normal w-[80%]">
+        <div className="text-[#9EA3AE] text-base font-normal lg:w-[80%]  w-[70%]">
           {isReadMore ? children : React.Children.toArray(children)[0]}
         </div>
       </div>
-      <button type="button" className="mt-2">
+      {/* <button type="button" className="mt-2">
         {CommonIcons[isReadMore ? "chevron-down" : "chevron-right"]}
-      </button>
+      </button> */}
     </div>
   );
 };
