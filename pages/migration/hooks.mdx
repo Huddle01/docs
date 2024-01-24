@@ -15,19 +15,72 @@ import {  Callout } from 'nextra-theme-docs';
     <tr className='p-8'>
       <th>Old Hooks</th>
       <th>New Hooks</th>
-    <th>Deprecated</th>
+    {/* <th>Deprecated</th> */}
     </tr>
   </thead>
   <tbody className='p-8'>
     {[
-      { country: 'France', flag: '🇫🇷',dep:"Yes" },
-      { country: 'Ukraine', flag: '🇺🇦',dep:"Yes" },
-        { country: 'India', flag: '🇺🇦',dep:"Yes" }
-    ].map(item => (
-      <tr key={item.country}>
-        <td>{item.country}</td>
-        <td>{item.flag}</td>
-         <td>{item.dep}</td>
+    { old: 'useRoom', new: {
+        one:"useRoom"
+    } },
+    { old: 'useLobby', new: {
+        one:"useLobby"
+    } },
+    { old: 'usePeers', new: {
+        one:"usePeersIds"
+    }},
+    {
+    old:"useAudio",new:{
+        one:"useLocalAudio",
+        two:"useRemoteAudio"
+    }
+    },
+     {
+    old:"useVideo",new:{
+        one:"useLocalVideo",
+        two:"useRemoteVideo"
+    }
+    },
+    {
+    old:"useScreenShare",new:{
+        one:"useLocalScreenShare",
+        two:"useRemoteScreenShare"
+    }
+    },
+     { old: '---', new: {
+        one:"useRoomControls"
+    } },
+     { old: '---', new: {
+        one:"useDataMessage"
+    } },
+    { old: '---', new: {
+        one:"useDevices"
+    } },
+       { old: '---', new: {
+        one:"useActivePeers"
+    } },
+       { old: '---', new: {
+        one:"useRoomMetadata"
+    } },
+       { old: 'useHuddle01', new:{
+        one:"---"
+    } },
+       { old: 'useAppUtils', new: {
+        one:"---"
+    }},
+      { old: 'useAcl', new: {
+        one:"---"
+    }},
+    { old: 'useLivestream', new: {
+        one:"---"
+    }},
+     { old: 'useRecording', new: {
+        one:"---"
+    }},
+    ].map((item,i) => (
+      <tr key={i}>
+        <td>{item.old}</td>
+        <td>{item.new.one} {item.new.two && `/ ${item.new.two}`}</td>
       </tr>
     ))}
   </tbody>
