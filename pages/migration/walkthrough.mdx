@@ -1,0 +1,234 @@
+---
+title: 'Walkthrough'
+---
+
+import { Steps, Tab, Tabs, Callout } from 'nextra-theme-docs';
+
+# Migrating from 0.x to 1.x
+
+<Callout>
+  These are the <b>beta</b> version of the SDKs. We are still working on them. If you have any feedback, please share it on our discord channel. For the previous latest stable release, please visit <a className="text-bold underline" href="https://legacy.docs.huddle01.com/docs">here</a>
+</Callout>
+
+## Walkthrough
+
+The following guide explains how you can integrate audio/video into your React web-app seamlessly using the Huddle01 React SDK.
+
+    <Steps>
+    ### Install `@huddle01/react` in your react app
+
+To power your React DApp with audio/video communication using Huddle01 install the following:
+
+      <Tabs items={['pnpm', 'npm', 'yarn']}>
+              <Tab>
+            ```bash 
+      pnpm i @huddle01/react@beta @huddle01/server-sdk@beta
+    ```
+            </Tab>
+  <Tab>
+      ```bash 
+    npm i @huddle01/react@beta @huddle01/server-sdk@beta
+    ```
+            </Tab>
+  <Tab>
+      ```bash 
+    yarn add @huddle01/react@beta @huddle01/server-sdk@beta
+    ```
+            </Tab>
+              </Tabs>
+
+### Initialization of project
+
+      {/* TODO: Add initialization of project link */}
+Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials: 
+
+- `API Key`
+- `projectId`
+
+Once done, initialize your project by adding the `HuddleProvider` and pass `projectId`  in params. 
+
+```tsx filename="app.tsx"
+import { HuddleClient, HuddleProvider } from '@huddle01/react';
+
+const huddleClient = new HuddleClient({
+  projectId: env.NEXT_PUBLIC_PROJECT_ID,
+  options: {
+    activeSpeakers: {
+      size: 8,
+    },
+  },
+});
+
+const Parent = () => {
+  return (
+    <HuddleProvider key="huddle01-provider" client={huddleClient}>
+      <App />
+    </HuddleProvider>
+  );
+};
+```
+
+### Generating the access token
+Room Id can be generated using the : [Create Room API](/apis/create-room/create-room)
+
+```tsx filename="api.ts" highlight={2,7,16-21}
+  import { AccessToken, Role } from '@huddle01/server-sdk/auth';
+
+   const accessToken = new AccessToken({
+        apiKey,
+        roomId: "YOUR_ROOM_ID",
+        role:  Role.HOST,
+        permissions: {
+          admin: true,
+          canConsume: true,
+          canProduce: true,
+          canProduceSources: {
+            cam: true,
+            mic: true,
+            screen: true,
+          },
+          canRecvData: true,
+          canSendData: true,
+          canUpdateMetadata: true,
+        },
+        options: {
+          metadata: { 
+             // you can add any custom attributes here which you want to associate with the user
+            walletAddress: "axit.eth"
+          },
+        },
+      });
+
+```
+### Joining and leaving the room
+
+
+  ```tsx filename="app.tsx" highlight={2,8-9,26-34}
+  import { useRoom } from '@huddle01/react/hooks';
+
+
+  const App = () => {
+    const { joinRoom, leaveRoom } = useRoom({
+      onJoin: () => {
+        console.log('Joined the room');
+      },
+      onLeave: () => {
+        console.log('Left the room');
+      },
+    });
+  
+    return (
+      <div>
+        <button onClick={() => {
+          joinRoom({
+            roomId: 'YOUR_ROOM_ID',
+            token: 'YOUR_ACCESS_TOKEN'
+          });
+        }}>
+          Join Room
+        </button>      
+        <button onClick={leaveRoom}>
+          Leave Room
+        </button> 
+      </div>
+    );
+  };
+
+```
+
+### Sending media across to other participants
+Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
+
+```tsx filename="app.tsx" highlight={9,14,51-65}
+  import { useLocalVideo, useLocalAudio } from '@huddle01/react/hooks';
+
+  const App = () => {
+    const { stream, enableVideo, disableVideo, changeVideoSource } = useLocalVideo();
+    const { stream, enableAudio, disableAudio, changeVideoSource } = useLocalAudio();
+
+    return (
+        {/* Webcam */} 
+        <button 
+          onClick={enableVideo} >
+          Fetch and Produce Video Stream
+        </button>
+
+        {/* Mic */} 
+       <button 
+          onClick={enableAudio} >
+          Fetch and Produce Audio Stream
+        </button>
+
+      </div>
+    );
+  };
+
+```
+
+#### Advanced: Using the `useLocalMedia` hook
+```tsx filename="app.tsx" highlight={9,14,51-65}
+  import { useLocalMedia } from '@huddle01/react/hooks';
+
+  const App = () => {
+    const { fetchStream } = useLocalMedia();
+
+    return (
+      <div>
+        {/* Webcam */} 
+        <button 
+          onClick={() => fetchStream({ mediaDeviceKind: 'cam' })} >
+          Fetch Cam Stream
+        </button>
+
+        {/* Mic */} 
+       <button 
+          onClick={() => fetchStream({ mediaDeviceKind: 'mic' })} >
+          Fetch Mic Stream
+        </button>
+
+      </div>
+    );
+  };
+
+```
+### Receiving the audio and video streams
+Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
+
+  ```tsx filename="RemotePeer.tsx"
+  import { usePeerIds } from '@huddle01/react/hooks';
+  import { FC } from 'react';
+
+  interface RemotePeerProps {
+    peerId: string;
+  }
+
+  const RemotePeer: FC<RemotePeerProps> = ({ peerId }) => {
+    
+    const { stream } = useRemoteVideo({ peerId });
+ 
+    return (
+      <div>
+        <Video stream={stream} />
+      </div>
+    ) 
+  }
+  
+
+  export default function() {
+    const { peerIds } = usePeerIds({ roles: [Role.HOST, Role.CO_HOST] }); // Get Hosts And Cohost's peerIds
+
+    return 
+      <div>
+        {peerIds.map(peerId => {
+          return <RemotePeer peerId={peerId}  />
+        })}
+      </div>
+  }
+  ```
+
+
+### You're all set! Happy Hacking! 🎉
+
+For more information, please refer to the [SDK Reference](/React).
+
+    </Steps>

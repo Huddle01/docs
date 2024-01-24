@@ -1,63 +1,70 @@
 {
-  "--Overview": {
-    "type": "separator",
-    "title": "Overview"
-  },
-  "index": {
-    "title": "Home",
-    "theme": {
-      "layout": "full"
-    }
-  },
-  "get-started": {
-    "title": "Get Started",
-    "theme": { "layout": "default" }
-  },
-  "concepts": "Concepts",
+	"--Overview": {
+		"type": "separator",
+		"title": "Overview"
+	},
+	"index": {
+		"title": "Home",
+		"theme": {
+			"layout": "full"
+		}
+	},
+	"get-started": {
+		"title": "Get Started",
+		"theme": { "layout": "default" }
+	},
+	"concepts": "Concepts",
 
-  "guides": {
-    "title": "Guides"
-  },
+	"guides": {
+		"title": "Guides"
+	},
+	"migration": {
+		"title": "Migrating to 1.x.x"
+	},
 
-  "showcase": {
-    "title": "Showcase",
-    "theme": {
-      "typesetting": "article",
-      "layout": "full"
-    }
-  },
-  "talk-to-sales": {
-    "type": "page",
-    "title": "Talk to sales",
-    "href": "http://cal.com/yashvendra",
-    "newWindow": true
-  },
-  "--SDKs": {
-    "type": "separator",
-    "title": "SDKs"
-  },
-  "Javascript": "",
-  "React": "",
-  "React-Native": "",
-  "Server-SDK": "",
-  "Flutter": "",
-  "--APIs": {
-    "type": "separator",
-    "title": "APIs"
-  },
-  "api-keys": "Get an API key",
-  "apis": "API Reference",
+	"showcase": {
+		"title": "Showcase",
+		"theme": {
+			"typesetting": "article",
+			"layout": "full"
+		}
+	},
+	"talk-to-sales": {
+		"type": "page",
+		"title": "Talk to sales",
+		"href": "http://cal.com/yashvendra",
+		"newWindow": true
+	},
+	"--APIs": {
+		"type": "separator",
+		"title": "APIs"
+	},
 
-  "--Quick Integration": {
-    "type": "separator",
-    "title": "Quick Integration"
-  },
-  "iFrame": "",
-  "release-note": {
-    "type": "page",
-    "title": "Release Notes",
-    "theme": {
-      "typesetting": "article"
-    }
-  }
+	"api-keys": "Get an API key",
+	"apis": "API Reference",
+
+	"--SDKs": {
+		"type": "separator",
+		"title": "SDKs"
+	},
+	"Javascript": "",
+	"React": "",
+	"React-Native": "",
+	"Server-SDK": "",
+	"Flutter": "",
+
+	"--Quick Integration": {
+		"type": "separator",
+		"title": "Quick Integration"
+	},
+	"iFrame": "",
+	"cli-tool": "CLI Tool",
+
+	"changelog": {
+		"type": "page",
+		"title": "Changelog",
+		"theme": {
+			"typesetting": "article"
+		}
+	}
 }
