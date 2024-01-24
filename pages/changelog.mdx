@@ -2,14 +2,366 @@
 title: 'Changelog'
 ---
 
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* Components */}
+import TabStrip from '@components/revamp/ChangelogContent/TabStrip.tsx';
+import ChangelogContent from "@components/revamp/ChangelogContent/ChangelogContent.tsx"
+
+
+<div className="flex w-full h-full">
+
+<div className="flex flex-col h-full  md:p-9 w-full">
 # Changelog
 
-- The Huddle01 SDK now supports the Core JS Framework, making it possible to integrate with all JS Frameworks through a single point of integration.
-- React Native Framework support has been added, allowing for the creation of mobile applications with Huddle01 SDK.
-- Token Gating API support has been added to the SDK, providing better control over access to resources.
-- Several new app utility methods, such as screenshare, have been added to the SDK for increased flexibility.
-- Base level methods, such as produce streams, have been added to the SDK for even greater flexibility.
-- Finite State Machine handling ensures that all edge cases and loading are handled, improving reliability and robustness.
-- The CLI Tool has undergone a revamp to provide a better user experience.
+Read all about the recent releases and the changes.
 
-[Check out previous version here](https://docs-v1.huddle01.com/)
+<ChangelogContent>
+
+<Tabs items={['Javascript', 'React JS', 'React Native']}>
+
+ {/* Javascript */}
+   <Tab>
+
+   <TabStrip version="0.0.17" date="4 Oct 2023"> 
+    `@huddle01/web-core@0.0.17`
+  - Admit/Deny peers
+  ```tsx
+   // Admit Peers
+  huddleClient.admitPeer(["peerId-1", "peerId-2"]);
+  huddleClient.denyPeer(["peerId-1", "peerId-2"]);
+  ```
+  - Lock/Unlock room 
+  ```tsx
+  // Lock Room 
+  huddleClient.changeRoomControls("roomLocked", true);
+  // Unlock Room
+  huddleClient.changeRoomControls("roomLocked", false);
+  ```
+  - Get `lobbyPeers` from `huddleClient` which are waiting in lobby to join the room
+  ```tsx
+  // Get lobbyPeers
+  const lobbyPeers = huddleClient.lobbyPeers;
+  ```
+  - Screen Share 
+  ```tsx
+  // Request Screen from browser
+  huddleClient.fetchScreenShare()
+
+  // Produce Screen Share to others
+  huddleClient.produceScreenShare()
+
+  // Stop Producing Screen Share to others
+  huddleClient.stopProducingScreenShare()
+
+  // Stop Screen Share Locally 
+  huddleClient.stopScreenShare()
+  ```
+   </TabStrip>    
+
+   <TabStrip version="0.0.16" date="20 Sept 2023"> 
+    `@huddle01/web-core@0.0.16`
+  - The `previewPeers` array can be accessed from `huddleClient`.
+  ```tsx
+   // Get previewPeers
+  const previewPeers = huddleClient.previewPeers;
+  ```
+   </TabStrip>    
+
+  <TabStrip version="0.0.15" date="26 July 2023"> 
+    `@huddle01/web-core@0.0.15`
+  - Features
+  - `sendData` func can be accessed from `huddleClient`
+  ```tsx
+     // Send data to all peers
+     huddleClient.sendData("*", anyData);
+
+     // Send data to multiple peers
+     huddleClient.sendData(["peerId1", "peerId2"], anyData); 
+  ```
+  `getMeId` can be accessed from `huddleClient`
+
+  ```tsx
+     const roomId = huddleClient.getRoomId(); 
+  ```
+   </TabStrip>    
+
+
+   <TabStrip version="0.0.14" date="5 July 2023"> 
+    `@huddle01/web-core@0.0.14`
+
+    - `app:cam-on` instead of `lobby:cam-on`
+    - `useMeetingMachine()` deprecated, `roomState` from `useHuddle01()`
+    - `fetchAudioStream()` and `fetchVideoStream()` can be called
+    - `useEventListener()` for events `app:cam-on` and `app:mic-on` , `stream` is received in callback params.
+
+   ```tsx
+       useEventListener("app:cam-on", (stream: MediaStream) => {
+		      console.log({stream});
+        }); 
+  ```
+   </TabStrip>    
+
+
+   <TabStrip version="0.0.13" date="19 April 2023"> 
+    `@huddle01/web-core@0.0.13`
+
+   - Added `useDisplayName()` hook which export 
+   - `setDisplayName(displayName: string)` method which accepts a Display Name of data-type `string`
+   - `displayName` - current Display Name of the user 
+   - `isLoading` - loading state while displayName is getting updated
+   - `error` - error if there was an error setting displayName
+   - Exported `useLivestream()` and `useRecording()` hooks from `@huddle01/react/hooks` 
+   - Added optional parameter accessToken to  joinLobby() method for token gating.
+   - `joinLobby(roomId: string, accessToken: string)`
+   - Added `room:audio-producing` and `room:video-producing` events
+   - Added `useRecorder()` hook to allow recorder to join.
+   - `roomId` is the first mandatory param
+   - `projectId` is the second mandatory param
+
+   </TabStrip>    
+   </Tab>
+
+
+   {/* React Js */}
+   <Tab>
+
+   <TabStrip version="0.0.16" date="4 Oct 2023"> 
+    `@huddle01/react@0.0.16`
+  - Lobby Peers 
+  ```tsx 
+    const { lobbyPeers } = useRoom();
+    console.log({ lobbyPeers })
+  ```
+  - Admit/Deny peers
+  ```tsx
+    const { admitPeer, denyPeer } = useAcl();
+
+    // Admit Peers
+    admitPeer(["peerId-1", "peerId-2"]);
+
+    // Deny Peers
+    denyPeer(["peerId-1", "peerId-2"]);
+  ```
+
+  - Lock/Unlock room
+  ```tsx
+    const { changeRoomControls } = useAcl();
+
+    // Lock Room 
+    changeRoomControls("roomLocked", true);
+
+    // Unlock Room
+    changeRoomControls("roomLocked", false);
+  ```
+
+  - Screen Share 
+  ```tsx 
+    const { 
+      fetchScreenShare, 
+      produceScreenShare, 
+      stopProducingScreenShare, 
+      stopScreenShare, 
+      stream, 
+      error, 
+      isScreenShareOn 
+    } = useScreenShare();
+
+    // Request Screen from browser
+    fetchScreenShare()
+
+    // Produce Screen Share to others
+    produceScreenShare()
+
+    // Stop Producing Screen Share to others
+    stopProducingScreenShare()
+
+    // Stop Screen Share Locally 
+    stopScreenShare()
+  ```
+  </TabStrip>
+
+   <TabStrip version="0.0.15" date="20 Sept 2023">
+    `@huddle01/react@0.0.15`
+    - `previewPeers` array can be de-structured from the `useLobby()` hook to check who all are present in the room from lobby. 
+    ```tsx
+    const { previewPeers } = useLobby();
+    console.log({ previewPeers })
+    ```
+    ```json
+    // Output: 
+    [
+      { 
+        displayName: "User1", 
+        avatarUrl: "https://someavatar.com/1.png" 
+      },
+      { 
+        displayName: "User2", 
+        avatarUrl: "https://someavatar.com/2.png" 
+      }
+    ]
+    ```
+   </TabStrip>
+
+    <TabStrip version="0.0.13" date="26 July 2023"> 
+     `@huddle01/react@0.0.13`
+    - Features
+    - `sendData` func can be destructured from `useAppUtils`
+
+    ```tsx
+     const { sendData } = useAppUtils()
+
+     const anyData = { message: "hi" };
+
+      // Send data to all peers
+      sendData("*", anyData);
+
+     // Send data to multiple peers
+     sendData(["peerId1", "peerId2"], anyData);
+    ```
+    - `roomId` can be destructured from `useRoom()`
+    ```tsx
+     const { roomId } = useRoom(); 
+    ```
+
+   -  `isAudio` can be destructured from `useAudio()`
+   -  `me` can be destructred from `useHuddle01()`, it has the following attributes
+   - peerId
+  - role
+   - displayName
+ 
+
+ ```tsx
+    const { me } = useHuddle01(); 
+
+    const { peerId, role, displayName } = me;
+
+    console.log({ peerId, role, displayName })
+ ```
+   </TabStrip>  
+
+    <TabStrip version="0.0.12" date="5 July 2023"> 
+      `@huddle01/react@0.0.12`
+
+       - `app:cam-on` instead of `lobby:cam-on`
+       - `useMeetingMachine()` deprecated, `roomState` from `useHuddle01()`
+       - `fetchAudioStream()` and `fetchVideoStream()` can be called
+       - `useEventListener()` for events `app:cam-on` and `app:mic-on` , `stream` is received in callback params.
+
+     ```tsx
+      useEventListener("app:cam-on", (stream: MediaStream) => {
+		      console.log({stream});
+      }); 
+    ```
+   </TabStrip>  
+
+   <TabStrip version="0.0.11" date="19 April 2023"> 
+    `@huddle01/react@0.0.11`
+
+   - Added `useDisplayName()` hook which export 
+   - `setDisplayName(displayName: string)` method which accepts a Display Name of data-type `string`
+   - `displayName` - current Display Name of the user 
+   - `isLoading` - loading state while displayName is getting updated
+   - `error` - error if there was an error setting displayName
+   - Exported `useLivestream()` and `useRecording()` hooks from `@huddle01/react/hooks` 
+   - Added optional parameter accessToken to  joinLobby() method for token gating.
+   - `joinLobby(roomId: string, accessToken: string)`
+   - Added `room:audio-producing` and `room:video-producing` events
+   - Added `useRecorder()` hook to allow recorder to join.
+   - `roomId` is the first mandatory param
+   - `projectId` is the second mandatory param
+
+   </TabStrip>    
+
+
+   </Tab> 
+
+
+{/* React-Native */}
+        <Tab>
+   <TabStrip version="0.0.14" date="26 July 2023"> 
+      `@huddle01/react-native@0.0.14`
+
+      - Bug Fixes
+      - Fixed - `setDisplayName` not updating peers array
+      - Fixed - `stopAudioStream` not deleting stream
+      - Features
+       -`sendData func can be destructured from `useAppUtils`
+
+
+       ```tsx
+    const { sendData } = useAppUtils()
+   
+    const anyData = { message: "hi" };
+
+    // Send data to all peers
+    sendData("*", anyData);
+
+     // Send data to multiple peers
+     sendData(["peerId1", "peerId2"], anyData); 
+       ```
+
+    - `roomId` can be destructured from `useRoom()`
+
+    ```tsx
+    const { roomId } = useRoom(); 
+    ```
+
+   - `isAudio` can be destructured from `useAudio()`
+   - `me` can be destructred from `useHuddle01()`, it has the following attributes
+   - peerId
+   - role
+   - displayName
+
+
+   ```tsx
+    const { me } = useHuddle01(); 
+
+    const { peerId, role, displayName } = me;
+
+    console.log({ peerId, role, displayName })
+   ```
+   </TabStrip>  
+
+
+
+           <TabStrip version="0.0.13" date="5 July 2023"> 
+      `@huddle01/react-native@0.0.13`
+
+       - `app:cam-on` instead of `lobby:cam-on`
+       - `useMeetingMachine()` deprecated, `roomState` from `useHuddle01()`
+       - `fetchAudioStream()` and `fetchVideoStream()` can be called
+       - `useEventListener()` for events `app:cam-on` and `app:mic-on` , `stream` is received in callback params.
+
+     ```tsx
+      useEventListener("app:cam-on", (stream: MediaStream) => {
+		      console.log({stream});
+      }); 
+    ```
+   </TabStrip>  
+
+
+          <TabStrip version="0.0.12" date="19 April 2023"> 
+    `@huddle01/react@0.0.12`
+
+   - Added `useDisplayName()` hook which export 
+   - `setDisplayName(displayName: string)` method which accepts a Display Name of data-type `string`
+   - `displayName` - current Display Name of the user 
+   - `isLoading` - loading state while displayName is getting updated
+   - `error` - error if there was an error setting displayName
+   - Exported `useLivestream()` and `useRecording()` hooks from `@huddle01/react/hooks` 
+   - Added optional parameter accessToken to  joinLobby() method for token gating.
+   - `joinLobby(roomId: string, accessToken: string)`
+   - Added `room:audio-producing` and `room:video-producing` events
+   - Added `useRecorder()` hook to allow recorder to join.
+   - `roomId` is the first mandatory param
+   - `projectId` is the second mandatory param
+
+   </TabStrip>    
+        </Tab> 
+      </Tabs>
+      </ChangelogContent>
+
+
+</div>
+</div>
