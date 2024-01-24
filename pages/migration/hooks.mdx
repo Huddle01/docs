@@ -1,3 +1,35 @@
 ---
 title: 'Hooks'
 ---
+
+import {  Callout } from 'nextra-theme-docs';
+
+## Migrating Hooks from 0.x to 1.x
+
+<Callout type="info">Test</Callout>
+
+### Old Hooks Alternatives
+
+<table className='w-full lg:mt-8 mt-4 border-collapse'>
+  <thead className='text-start'>
+    <tr className='p-8'>
+      <th>Old Hooks</th>
+      <th>New Hooks</th>
+    <th>Deprecated</th>
+    </tr>
+  </thead>
+  <tbody className='p-8'>
+    {[
+      { country: 'France', flag: '🇫🇷',dep:"Yes" },
+      { country: 'Ukraine', flag: '🇺🇦',dep:"Yes" },
+        { country: 'India', flag: '🇺🇦',dep:"Yes" }
+    ].map(item => (
+      <tr key={item.country}>
+        <td>{item.country}</td>
+        <td>{item.flag}</td>
+         <td>{item.dep}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
