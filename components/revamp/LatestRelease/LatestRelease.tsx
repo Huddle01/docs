@@ -4,7 +4,6 @@ import axios from "axios";
 // Assets
 import LandingIcons from "@components/assets/LandingIcons";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { useData } from "nextra/data";
 import Link from "next/link";
 
