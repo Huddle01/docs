@@ -3,9 +3,7 @@ import { useRouter } from "next/router";
 import { HooksData } from "./data";
 import { cn } from "helpers/utils";
 
-type HooksTableProps = {};
-
-const HooksTable: React.FC<HooksTableProps> = () => {
+const HooksTable: React.FC = () => {
   const { push } = useRouter();
   return (
     <table className="w-full lg:mt-8 mt-4">
@@ -18,13 +16,13 @@ const HooksTable: React.FC<HooksTableProps> = () => {
       <tbody className="p-8">
         {HooksData.map((item, i) => (
           <tr
-            key={i}
+            key={`hook-${i}`}
             className={`${i % 2 === 0 ? "bg-[#1D1F22]/40" : "bg-transparent"}`}
           >
             <td
               className={cn(
                 "border border-[#1D1F22] p-2",
-                i < 6 && "cursor-pointer"
+                i < 6 && "cursor-pointer underline"
               )}
               role="presentation"
               onClick={() => (i < 6 ? push(item.old.url) : null)}
@@ -37,7 +35,7 @@ const HooksTable: React.FC<HooksTableProps> = () => {
                   item.new.one && item.new.one === "Deprecated"
                     ? "text-red-400"
                     : null,
-                  item.new.one && item.new.one.startsWith("use")
+                  item.new.one?.startsWith("use")
                     ? "text-blue-500 underline"
                     : null
                 )}
@@ -48,7 +46,7 @@ const HooksTable: React.FC<HooksTableProps> = () => {
               </span>{" "}
               <span
                 className={cn(
-                  item.new.two && item.new.two.startsWith("use")
+                  item.new.two?.startsWith("use")
                     ? "text-blue-500 underline"
                     : null
                 )}
