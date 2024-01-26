@@ -21,7 +21,16 @@ const HooksTable: React.FC<HooksTableProps> = () => {
             key={i}
             className={`${i % 2 === 0 ? "bg-[#1D1F22]/40" : "bg-transparent"}`}
           >
-            <td className="border border-[#1D1F22] p-2">{item.old}</td>
+            <td
+              className={cn(
+                "border border-[#1D1F22] p-2",
+                i < 6 && "cursor-pointer"
+              )}
+              role="presentation"
+              onClick={() => (i < 6 ? push(item.old.url) : null)}
+            >
+              {item.old.one}
+            </td>
             <td className="border border-[#1D1F22] p-2 cursor-pointer">
               <span
                 className={cn(
