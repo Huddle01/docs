@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { HooksData } from "./data";
+import { cn } from "helpers/utils";
 
 type HooksTableProps = {};
 
@@ -12,7 +13,6 @@ const HooksTable: React.FC<HooksTableProps> = () => {
         <tr className="">
           <th className="border border-[#1D1F22] p-2">Old Hooks</th>
           <th className="border border-[#1D1F22] p-2">New Hooks</th>
-          {/* <th>Deprecated</th> */}
         </tr>
       </thead>
       <tbody className="p-8">
@@ -23,10 +23,29 @@ const HooksTable: React.FC<HooksTableProps> = () => {
           >
             <td className="border border-[#1D1F22] p-2">{item.old}</td>
             <td className="border border-[#1D1F22] p-2 cursor-pointer">
-              <span role="presentation" onClick={() => push(item.new.urlOne)}>
+              <span
+                className={cn(
+                  item.new.one && item.new.one === "Deprecated"
+                    ? "text-red-400"
+                    : null,
+                  item.new.one && item.new.one.startsWith("use")
+                    ? "text-blue-500 underline"
+                    : null
+                )}
+                role="presentation"
+                onClick={() => item.new.urlOne && push(item.new.urlOne)}
+              >
                 {item.new.one}
               </span>{" "}
-              <span role="presentation" onClick={() => push(item.new.UrlTwo)}>
+              <span
+                className={cn(
+                  item.new.two && item.new.two.startsWith("use")
+                    ? "text-blue-500 underline"
+                    : null
+                )}
+                role="presentation"
+                onClick={() => item.new.UrlTwo && push(item.new.UrlTwo)}
+              >
                 {item.new.two && `/ ${item.new.two}`}
               </span>
             </td>

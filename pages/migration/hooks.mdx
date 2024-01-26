@@ -17,43 +17,11 @@ import HooksTable from "../../components/Migration/HooksTable"
 
 ### Examples
 
-`useRoom`
+### useRoom
+The useRoom hook exposes primitives to interact with a Huddle01 room, like joining, leaving, closing the room.
 
 
-<Tabs items={['Old','New']}>
-
-<Tab>
-```tsx
-import { useRoom } from '@huddle01/react/hooks';
- 
-  const App = () => {
-    const { joinRoom, leaveRoom, isLoading, isRoomJoined, lobbyPeers, error, endRoom } = useRoom();
- 
-    if(isLoading) return (<div>...loading</div>)
-  
-    return (
-      <div> 
-        <button disabled={!joinRoom.isCallable} onClick={joinRoom}>
-          JOIN_ROOM 
-        </button>
- 
-        {isRoomJoined ? "room joined": error} 
- 
-        <div>lobbyPeers: {JSON.stringify(lobbyPeers)}</div>
- 
-        <button disabled={!leaveRoom.isCallable} onClick={leaveRoom}>
-          LEAVE_ROOM 
-        </button>
- 
-        <button disabled={!endRoom.isCallable} onClick={endRoom}>
-          END_ROOM 
-        </button>
-      </div>
-    );
-  };
-```
-</Tab>
-
+<Tabs items={['New',"Old"]}>
 
 <Tab>
 ```tsx
@@ -117,14 +85,79 @@ const mute = async () => {
 
 </Tab>
 
+
+<Tab>
+```tsx
+import { useRoom } from '@huddle01/react/hooks';
+ 
+  const App = () => {
+    const { joinRoom, leaveRoom, isLoading, isRoomJoined, lobbyPeers, error, endRoom } = useRoom();
+ 
+    if(isLoading) return (<div>...loading</div>)
+  
+    return (
+      <div> 
+        <button disabled={!joinRoom.isCallable} onClick={joinRoom}>
+          JOIN_ROOM 
+        </button>
+ 
+        {isRoomJoined ? "room joined": error} 
+ 
+        <div>lobbyPeers: {JSON.stringify(lobbyPeers)}</div>
+ 
+        <button disabled={!leaveRoom.isCallable} onClick={leaveRoom}>
+          LEAVE_ROOM 
+        </button>
+ 
+        <button disabled={!endRoom.isCallable} onClick={endRoom}>
+          END_ROOM 
+        </button>
+      </div>
+    );
+  };
+```
+</Tab>
+
 </Tabs>
 
 
 
-`useLobby`
+### useLobby
+The useLobby hook allows you to interact with peers in the lobby, i.e. who are waiting to join a locked room. As an admin, you can choose to admit these peers into the room or deny them from joining the room.
 
 
-<Tabs items={["Old","New"]}>
+<Tabs items={["New","Old"]}>
+
+<Tab>
+```tsx
+import { useLobby } from '@huddle01/react/hooks';
+ 
+const {
+    lobbyPeers,
+    admitPeer,
+    denyPeer,
+    getLobbyPeerMetadata
+  } = useLobby({
+     onLobbyPeersUpdated(lobbyPeers: string[]) ();
+  });
+ 
+// admit a peer into the room
+const admitPeer = (peerId: string) => {
+  admitPeer(peerId);
+}
+ 
+// deny a peer from joining the room
+const denyPeer = (peerId: string) => {
+  denyPeer(peerId);
+}
+ 
+// get metadata of a lobby peer
+const getLobbyPeerMetadata = (peerId: string) => {
+  getLobbyPeerMetadata(peerId);
+}
+```
+</Tab>
+
 <Tab>
 ```tsx
  import { useLobby } from '@huddle01/react/hooks';
@@ -158,68 +191,14 @@ const mute = async () => {
 ```
 </Tab>
 
-<Tab>
-```tsx
-import { useLobby } from '@huddle01/react/hooks';
- 
-const {
-    lobbyPeers,
-    admitPeer,
-    denyPeer,
-    getLobbyPeerMetadata
-  } = useLobby({
-     onLobbyPeersUpdated(lobbyPeers: string[]) ();
-  });
- 
-// admit a peer into the room
-const admitPeer = (peerId: string) => {
-  admitPeer(peerId);
-}
- 
-// deny a peer from joining the room
-const denyPeer = (peerId: string) => {
-  denyPeer(peerId);
-}
- 
-// get metadata of a lobby peer
-const getLobbyPeerMetadata = (peerId: string) => {
-  getLobbyPeerMetadata(peerId);
-}
-```
-</Tab>
-
 </Tabs>
 
 
-`usePeerIds`
+### usePeerIds
+The usePeerIds hook returns peerIds of all peers inside a Huddle01 room.
 
 
-<Tabs items={["Old","New"]}>
-<Tab>
-```tsx
- import { usePeers } from '@huddle01/react/hooks';
- 
-  const App = () => {
-    const { peerIds } = usePeers();
- 
-    return (
-      <div>
-        <div className="grid grid-cols-4">
-          {peerIds.map(peerId => (
-              <Video key={peer.peerId} peerId={peer.peerId} debug />
-          ))}
- 
-          {peerIds.map(peerId => (
-              <Audio key={peer.peerId} peerId={peer.peerId} debug />
-          ))}
-        </div>
-      </div>
-    );
-  }; 
-```
-
-</Tab>
-
+<Tabs items={["New","Old"]}>
 
 <Tab>
 ```tsx
@@ -244,38 +223,44 @@ return (
 )
 ```
 </Tab>
-</Tabs>
-
-
-`useLocalAudio / useRemoteAudio`
-
-<Tabs items={["Old","New"]}>
 
 <Tab>
 ```tsx
- import { useAudio } from '@huddle01/react/hooks';
+ import { usePeers } from '@huddle01/react/hooks';
  
-const App = () => {
-  const { fetchAudioStream, stopAudioStream, isProducing, stream, error} = useAudio();
+  const App = () => {
+    const { peerIds } = usePeers();
  
-  return (
-    <div>
-      
-     {/* Mic */} 
-      <button disabled={!fetchAudioStream.isCallable} onClick={fetchAudioStream}>
-        FETCH_AUDIO_STREAM
-      </button>
+    return (
+      <div>
+        <div className="grid grid-cols-4">
+          {peerIds.map(peerId => (
+              <Video key={peer.peerId} peerId={peer.peerId} debug />
+          ))}
  
-    </div>
-  );
-};
+          {peerIds.map(peerId => (
+              <Audio key={peer.peerId} peerId={peer.peerId} debug />
+          ))}
+        </div>
+      </div>
+    );
+  }; 
 ```
 
 </Tab>
+</Tabs>
+
+
+### useLocalAudio / useRemoteAudio
+
+<Tabs items={["New","Old"]}>
 
 <Tab>
 
 `useLocalAudio`
+
+The useLocalAudio hook exposes primitives to interact with your own audio stream - coming from your microphone device.
+
 ```tsx
 import { useLocalAudio } from "@huddle01/react/hooks";
  
@@ -305,6 +290,8 @@ const handleAudio = async () => {
 
 
 `useRemoteAudio`
+
+The useRemoteAudio hook exposes primitives to interact with audio streams coming from other peers in the room.
 
 ```tsx
 import { useRemoteAudio } from "@huddle01/react/hooks";
@@ -343,37 +330,41 @@ return (
 ```
 </Tab>
 
-</Tabs>
-
-
-
-`useLocalVideo /useRemoteVideo`
-
-
-<Tabs items={["Old","New"]}>
 <Tab>
 ```tsx
- import { useVideo } from '@huddle01/react/hooks';
+ import { useAudio } from '@huddle01/react/hooks';
  
 const App = () => {
-  const { fetchVideoStream, stopVideoStream, isProducing, stream, error} = useVideo();
+  const { fetchAudioStream, stopAudioStream, isProducing, stream, error} = useAudio();
  
   return (
     <div>
       
      {/* Mic */} 
-      <button disabled={!fetchVideoStream.isCallable} onClick={fetchVideoStream}>
-        FETCH_VIDEO_STREAM
+      <button disabled={!fetchAudioStream.isCallable} onClick={fetchAudioStream}>
+        FETCH_AUDIO_STREAM
       </button>
  
     </div>
   );
-}; 
+};
 ```
+
 </Tab>
+
+</Tabs>
+
+
+
+### useLocalVideo /useRemoteVideo
+
+
+<Tabs items={["New","Old"]}>
 
 <Tab>
 `useLocalVideo`
+
+The useLocalVideo hook exposes primitives to interact with your own video stream - coming from your camera device.
 
 ```tsx
 import { useLocalVideo } from '@huddle01/react/hooks';
@@ -407,6 +398,8 @@ const handleVideo = async () => {
 
 
 `useRemoteVideo`
+
+The useRemoteVideo hook exposes primitives to interact with video streams coming from other peers in the room.
 
 
 ```tsx
@@ -450,49 +443,40 @@ return (
 
 </Tab>
 
-</Tabs>
-
-
-
-`useLocalScreenShare /useRemoteScreenShare`
-
-
-<Tabs items={["Old" , "New"]}>
 <Tab>
 ```tsx
- import { useScreenShare } from '@huddle01/react/hooks';
+ import { useVideo } from '@huddle01/react/hooks';
  
 const App = () => {
-  const { fetchScreenShare, produceScreenShare, stopScreenShare, stopProducingScreenShare, stream: screenShareStream  } = useVideo();
+  const { fetchVideoStream, stopVideoStream, isProducing, stream, error} = useVideo();
  
   return (
     <div>
       
-      <button disabled={!fetchScreenShare.isCallable} onClick={fetchVideoStream}>
-        FETCH_SCREEN_SHARE
-      </button>
- 
-      <button disabled={!produceScreenShare.isCallable} onClick={() => produceScreenShare(screenShareStream)}>
-        PRODUCE_SCREEN_SHARE
-      </button>
- 
-      <button disabled={!stopScreenShare.isCallable} onClick={stopScreenShare}>
-        STOP_SCREEN_SHARE
-      </button>
- 
-      <button disabled={!stopProducingScreenShare.isCallable} onClick={stopProducingScreenShare}>
-        STOP_PRODUCING_SCREEN_SHARE
+     {/* Mic */} 
+      <button disabled={!fetchVideoStream.isCallable} onClick={fetchVideoStream}>
+        FETCH_VIDEO_STREAM
       </button>
  
     </div>
   );
-};  
+}; 
 ```
-
 </Tab>
+
+</Tabs>
+
+
+
+### useLocalScreenShare /useRemoteScreenShare
+
+
+<Tabs items={["New","Old"]}>
 
 <Tab>
 `useLocalScreenShare`
+
+The useLocalScreenShare hook allows you to share your screen with other peers in the room.
 
 ```tsx
 import { useLocalScreenShare } from "@huddle01/react/hooks"
@@ -520,6 +504,9 @@ const stopSharing = async () => {
 
 
 `useRemoteScreenShare`
+
+The useRemoteScreenShare hook allows you to receive the media stream for another peer's screen being shared
+
 ```tsx
 import { useRemoteScreenShare } from "@huddle01/react/hooks";
 import { useEffect, useRef } from 'react';
@@ -559,6 +546,39 @@ return (
     </div>
 );
 ```
+</Tab>
+
+<Tab>
+```tsx
+ import { useScreenShare } from '@huddle01/react/hooks';
+ 
+const App = () => {
+  const { fetchScreenShare, produceScreenShare, stopScreenShare, stopProducingScreenShare, stream: screenShareStream  } = useVideo();
+ 
+  return (
+    <div>
+      
+      <button disabled={!fetchScreenShare.isCallable} onClick={fetchVideoStream}>
+        FETCH_SCREEN_SHARE
+      </button>
+ 
+      <button disabled={!produceScreenShare.isCallable} onClick={() => produceScreenShare(screenShareStream)}>
+        PRODUCE_SCREEN_SHARE
+      </button>
+ 
+      <button disabled={!stopScreenShare.isCallable} onClick={stopScreenShare}>
+        STOP_SCREEN_SHARE
+      </button>
+ 
+      <button disabled={!stopProducingScreenShare.isCallable} onClick={stopProducingScreenShare}>
+        STOP_PRODUCING_SCREEN_SHARE
+      </button>
+ 
+    </div>
+  );
+};  
+```
+
 </Tab>
 </Tabs>
 
