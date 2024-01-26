@@ -85,31 +85,31 @@ export const HooksData = [
   {
     old: "useHuddle01",
     new: {
-      one: "---",
+      one: "Deprecated",
     },
   },
   {
     old: "useAppUtils",
     new: {
-      one: "---",
+      one: "Deprecated",
     },
   },
   {
     old: "useAcl",
     new: {
-      one: "---",
+      one: "Deprecated",
     },
   },
   {
     old: "useLivestream",
     new: {
-      one: "---",
+      one: "Deprecated",
     },
   },
   {
     old: "useRecording",
     new: {
-      one: "---",
+      one: "Deprecated",
     },
   },
 ];
