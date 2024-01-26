@@ -2,14 +2,62 @@
 title: 'Changelog'
 ---
 
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* Components */}
+import TabStrip from '@components/revamp/ChangelogContent/TabStrip.tsx';
+import ChangelogContent from "@components/revamp/ChangelogContent/ChangelogContent.tsx"
+
+
+<div className="flex w-full h-full">
+
+<div className="flex flex-col h-full  md:p-9 w-full">
 # Changelog
 
-- The Huddle01 SDK now supports the Core JS Framework, making it possible to integrate with all JS Frameworks through a single point of integration.
-- React Native Framework support has been added, allowing for the creation of mobile applications with Huddle01 SDK.
-- Token Gating API support has been added to the SDK, providing better control over access to resources.
-- Several new app utility methods, such as screenshare, have been added to the SDK for increased flexibility.
-- Base level methods, such as produce streams, have been added to the SDK for even greater flexibility.
-- Finite State Machine handling ensures that all edge cases and loading are handled, improving reliability and robustness.
-- The CLI Tool has undergone a revamp to provide a better user experience.
+Read all about the recent releases and the changes.harsh/dev-1701-changelogs
 
-[Check out previous version here](https://docs-v1.huddle01.com/)
+<ChangelogContent>
+
+<Tabs items={['Javascript', 'React JS / React Native', 'Server Sdk']}>
+
+ {/* Javascript */}
+   <Tab>
+  <TabStrip version="1.0.0-beta.15" date="24 January 2024"> 
+
+  Added support for `iife/umd` modules
+
+  
+
+  
+   </TabStrip>    
+  
+   </Tab>
+
+
+   {/* React Js /React-Native*/}
+   <Tab>
+
+   <TabStrip  version="1.0.0-beta.15" date="24 January 2024"> 
+
+ 
+   Added Audio/Video components in ` @huddle01/react/components`
+  </TabStrip>
+   </Tab> 
+
+
+{/* Server_sdk */}
+        <Tab>
+   <TabStrip version="1.0.0-beta.2" date="26 July 2023"> 
+    
+    Added support for Auth Tokens created for your custom server
+    
+   </TabStrip>  
+
+    
+        </Tab> 
+      </Tabs>
+      </ChangelogContent>
+
+
+</div>
+</div>
