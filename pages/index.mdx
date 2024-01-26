@@ -53,7 +53,7 @@ From Guides to SDKs to API references - find everything you need to build high-q
 
 
 {/*Get Started Cards Section */}
-<LandingCards className="mt-6" type="start" title="Get started quickly with SDKs" className="flex-col">
+<LandingCards className="mt-6 flex-col" type="start" title="Get started quickly with SDKs">
 <div className="grid lg:grid-cols-3 grid-cols-1 w-full mt-7 mb-6 gap-4">
 {GetStartedData.map(({title ,url}) => (
 <GetStartedCards key={title} title={title} url={url}/>
@@ -66,7 +66,7 @@ From Guides to SDKs to API references - find everything you need to build high-q
 {/* IFrame & API Ref. Section */}
 <div className="grid lg:grid-cols-2 grid-cols-1 md:gap-4 mt-6">
 {iFrameApiData.map(({title,type,desc,linksArr,url}) => (
-<LandingCards title={title} type={type} className="flex-col" key={title} url={url} className="flex flex-col cursor-pointer ease-in-out duration-300">
+<LandingCards title={title} type={type}  key={title} url={url} className="flex flex-col cursor-pointer ease-in-out duration-300">
 <p className="text-base font-normal text-custom-4 my-4">{desc}</p>
 <div className="flex items-center gap-4">
 {linksArr.map(({title,linkUrl}) => (
