@@ -1,27 +1,39 @@
 export const HooksData = [
   {
-    old: "useRoom",
+    old: {
+      one: "useRoom",
+      url: "hooks#useroom",
+    },
     new: {
       one: "useRoom",
       urlOne: "../React/hooks/useRoom",
     },
   },
   {
-    old: "useLobby",
+    old: {
+      one: "useLobby",
+      url: "hooks#uselobby",
+    },
     new: {
       one: "useLobby",
       urlOne: "../React/hooks/useLobby",
     },
   },
   {
-    old: "usePeers",
+    old: {
+      one: "usePeers",
+      url: "hooks#usepeerids",
+    },
     new: {
       one: "usePeersIds",
       urlOne: "../React/hooks/usePeerIds",
     },
   },
   {
-    old: "useAudio",
+    old: {
+      one: "useAudio",
+      url: "hooks#uselocalaudio--useremoteaudio",
+    },
     new: {
       one: "useLocalAudio",
       two: "useRemoteAudio",
@@ -30,7 +42,10 @@ export const HooksData = [
     },
   },
   {
-    old: "useVideo",
+    old: {
+      one: "useVideo",
+      url: "hooks#uselocalvideo-useremotevideo",
+    },
     new: {
       one: "useLocalVideo",
       two: "useRemoteVideo",
@@ -39,7 +54,10 @@ export const HooksData = [
     },
   },
   {
-    old: "useScreenShare",
+    old: {
+      one: "useScreenShare",
+      url: "hooks#uselocalscreenshare-useremotescreenshare",
+    },
     new: {
       one: "useLocalScreenShare",
       two: "useRemoteScreenShare",
@@ -48,66 +66,86 @@ export const HooksData = [
     },
   },
   {
-    old: "---",
+    old: {
+      one: "---",
+    },
     new: {
       one: "useRoomControls",
       urlOne: "../React/hooks/useRoomControls",
     },
   },
   {
-    old: "---",
+    old: {
+      one: "---",
+    },
     new: {
       one: "useDataMessage",
       urlOne: "../React/hooks/useDataMessage",
     },
   },
   {
-    old: "---",
+    old: {
+      one: "---",
+    },
     new: {
       one: "useDevices",
       urlOne: "../React/hooks/useDevices",
     },
   },
   {
-    old: "---",
+    old: {
+      one: "---",
+    },
     new: {
       one: "useActivePeers",
       urlOne: "../React/hooks/useActivePeers",
     },
   },
   {
-    old: "---",
+    old: {
+      one: "---",
+    },
     new: {
       one: "useRoomMetadata",
       urlOne: "../React/hooks/useRoomMetadata",
     },
   },
   {
-    old: "useHuddle01",
+    old: {
+      one: "useHuddle01",
+    },
     new: {
       one: "Deprecated",
     },
   },
   {
-    old: "useAppUtils",
+    old: {
+      one: "useAppUtils",
+    },
     new: {
       one: "Deprecated",
     },
   },
   {
-    old: "useAcl",
+    old: {
+      one: "useAcl",
+    },
     new: {
       one: "Deprecated",
     },
   },
   {
-    old: "useLivestream",
+    old: {
+      one: "useLivestream",
+    },
     new: {
       one: "Deprecated",
     },
   },
   {
-    old: "useRecording",
+    old: {
+      one: "useRecording",
+    },
     new: {
       one: "Deprecated",
     },
