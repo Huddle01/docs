@@ -1,8 +1,7 @@
 {
-	"concepts": "Concepts ",
-	"walkthrough": "Walkthrough",
-	"recording": "Recording/Livestreaming",
-	"apis": "APIs",
-	"hooks": "Hooks",
-	"faqs": "FAQs"
+  "concepts": "Concepts ",
+  "walkthrough": "Walkthrough",
+  "recording": "Recording/Livestreaming",
+  "hooks": "Hooks",
+  "faqs": "FAQs"
 }
