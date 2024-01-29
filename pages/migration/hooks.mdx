@@ -1,3 +1,587 @@
 ---
 title: 'Hooks'
 ---
+
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+import HooksTable from "../../components/Migration/HooksTable"
+
+## Migrating Hooks from 0.x to 1.x
+
+
+
+### Old Hooks Alternatives
+
+<HooksTable/>
+
+
+### Examples
+
+### useRoom
+The useRoom hook exposes primitives to interact with a Huddle01 room, like joining, leaving, closing the room.
+
+
+<Tabs items={['New',"Old"]}>
+
+<Tab>
+```tsx
+import { useRoom } from '@huddle01/react/hooks';
+ 
+const {
+    room,
+    state,
+    joinRoom,
+    leaveRoom,
+    closeRoom,
+    kickPeer,
+    muteEveryone,
+    closeStreamOfLabel,
+  } = useRoom({
+  onJoin(data:Room) ();
+  onWaiting(data: {
+    reason: 'WAITING_FOR_PERMISSIONS' | 'WAITING_FOR_ROOM_TO_START' | 'WAITING_FOR_ADMIN_TO_JOIN';
+    message?: string;
+  }) ();
+  onLeave(data: {
+    reason: 'LEFT' | 'CLOSED' | 'KICKED' | 'DENIED';
+    message?: string;
+  }) ();
+  onFailed(data: {
+      status: 'ROOM_NOT_FOUND' | 'ROOM_ERRORED';
+      message: string;
+  }) ();
+  onPeerJoin(peerId: string) ();
+  onPeerLeft(peerId: string) ();
+  });
+ 
+// Join room
+const join = async () => {
+  await joinRoom({
+    roomId,
+    tokenId
+  })
+}
+ 
+// Leave room
+const leave = async () => {
+  await leaveRoom()
+}
+ 
+// Close room
+const close = async () => {
+  await closeRoom()
+}
+ 
+// Kick peer
+const kick = async () => {
+  await kickPeer(peerId)
+}
+ 
+// Mute everyone
+const mute = async () => {
+  await muteEveryone()
+}
+```
+
+</Tab>
+
+
+<Tab>
+```tsx
+import { useRoom } from '@huddle01/react/hooks';
+ 
+  const App = () => {
+    const { joinRoom, leaveRoom, isLoading, isRoomJoined, lobbyPeers, error, endRoom } = useRoom();
+ 
+    if(isLoading) return (<div>...loading</div>)
+  
+    return (
+      <div> 
+        <button disabled={!joinRoom.isCallable} onClick={joinRoom}>
+          JOIN_ROOM 
+        </button>
+ 
+        {isRoomJoined ? "room joined": error} 
+ 
+        <div>lobbyPeers: {JSON.stringify(lobbyPeers)}</div>
+ 
+        <button disabled={!leaveRoom.isCallable} onClick={leaveRoom}>
+          LEAVE_ROOM 
+        </button>
+ 
+        <button disabled={!endRoom.isCallable} onClick={endRoom}>
+          END_ROOM 
+        </button>
+      </div>
+    );
+  };
+```
+</Tab>
+
+</Tabs>
+
+
+
+### useLobby
+The useLobby hook allows you to interact with peers in the lobby, i.e. who are waiting to join a locked room. As an admin, you can choose to admit these peers into the room or deny them from joining the room.
+
+
+<Tabs items={["New","Old"]}>
+
+<Tab>
+```tsx
+import { useLobby } from '@huddle01/react/hooks';
+ 
+const {
+    lobbyPeers,
+    admitPeer,
+    denyPeer,
+    getLobbyPeerMetadata
+  } = useLobby({
+     onLobbyPeersUpdated(lobbyPeers: string[]) ();
+  });
+ 
+// admit a peer into the room
+const admitPeer = (peerId: string) => {
+  admitPeer(peerId);
+}
+ 
+// deny a peer from joining the room
+const denyPeer = (peerId: string) => {
+  denyPeer(peerId);
+}
+ 
+// get metadata of a lobby peer
+const getLobbyPeerMetadata = (peerId: string) => {
+  getLobbyPeerMetadata(peerId);
+}
+```
+</Tab>
+
+<Tab>
+```tsx
+ import { useLobby } from '@huddle01/react/hooks';
+  
+  const App = () => {
+    const { joinLobby,leaveLobby, isLoading, isLobbyJoined, previewPeers, error } = useLobby();
+ 
+    if(isLoading) return (<div>...loading</div>)
+  
+    return (
+      <div>
+        <button 
+          disabled={!joinLobby.isCallable} 
+          onClick={() => joinLobby('YOUR_ROOM_ID');
+        }>
+          Join Lobby
+        </button>
+ 
+        {isLobbyJoined ? "lobby": error} 
+ 
+        <div>PreviewPeers: {JSON.stringify(previewPeers)}</div>
+ 
+        <button disabled={!leaveRoom.isCallable} onClick={leaveRoom}>
+          LEAVE_LOBBY 
+        </button>
+      </div>
+    );
+  };
+ 
+ 
+```
+</Tab>
+
+</Tabs>
+
+
+### usePeerIds
+The usePeerIds hook returns peerIds of all peers inside a Huddle01 room.
+
+
+<Tabs items={["New","Old"]}>
+
+<Tab>
+```tsx
+import { usePeerIds } from "@huddle01/react/hooks";
+import { RemotePeerCard } from "@components/RemotePeerCard";
+ 
+const {
+    peerIds
+  } = usePeerIds({
+  roles: [],
+  labels: [],
+  onPeerRoleUpdate(data) {}
+  });
+ 
+return (
+  <div>
+    {peerIds.map((peerId) => (
+      {/* Use this peerId and pass it in custom component which shows viewport by using hooks such as `useRemotePeer` */}
+      <RemotePeerCard key={peerId}>{peerId} />
+    ))}
+  </div>
+)
+```
+</Tab>
+
+<Tab>
+```tsx
+ import { usePeers } from '@huddle01/react/hooks';
+ 
+  const App = () => {
+    const { peerIds } = usePeers();
+ 
+    return (
+      <div>
+        <div className="grid grid-cols-4">
+          {peerIds.map(peerId => (
+              <Video key={peer.peerId} peerId={peer.peerId} debug />
+          ))}
+ 
+          {peerIds.map(peerId => (
+              <Audio key={peer.peerId} peerId={peer.peerId} debug />
+          ))}
+        </div>
+      </div>
+    );
+  }; 
+```
+
+</Tab>
+</Tabs>
+
+
+### useLocalAudio / useRemoteAudio
+
+<Tabs items={["New","Old"]}>
+
+<Tab>
+
+`useLocalAudio`
+
+The useLocalAudio hook exposes primitives to interact with your own audio stream - coming from your microphone device.
+
+```tsx
+import { useLocalAudio } from "@huddle01/react/hooks";
+ 
+const {
+    stream,
+    track,
+    isAudioOn,
+    enableAudio,
+    disableAudio,
+    replaceAudioStream,
+    changeAudioSource,
+  } = useLocalAudio({
+    onProduceStart(producer) {},
+    onProduceClose(label:string) {},
+    onProduceError() {},
+  });
+ 
+// enable and disable audio
+const handleAudio = async () => {
+  if (isAudioOn) {
+    await disableAudio();
+  } else {
+    await enableAudio();
+  }
+};
+```
+
+
+`useRemoteAudio`
+
+The useRemoteAudio hook exposes primitives to interact with audio streams coming from other peers in the room.
+
+```tsx
+import { useRemoteAudio } from "@huddle01/react/hooks";
+import { useEffect, useRef } from 'react';
+ 
+const {
+    state,
+    track,
+    stream,
+    isAudioOn
+  } = useRemoteAudio({
+    peerId: "remote-peer-id",
+     onPlayable(data:{
+      stream:Mediastream,
+      track:Mediatrack,
+      label:"audio"
+    }) {},
+    onClose(reason:{
+    code: number;
+    tag: string;
+    message: string;
+    }) {},
+  });
+ 
+const audioRef = useRef<HTMLAudioElement>(null);
+ 
+useEffect(() => {
+  if (audio.current && stream) {
+    audio.current.srcObject = stream;
+  }
+}, [stream]);
+ 
+return (
+  <audio ref={audioRef} autoplay>
+)
+```
+</Tab>
+
+<Tab>
+```tsx
+ import { useAudio } from '@huddle01/react/hooks';
+ 
+const App = () => {
+  const { fetchAudioStream, stopAudioStream, isProducing, stream, error} = useAudio();
+ 
+  return (
+    <div>
+      
+     {/* Mic */} 
+      <button disabled={!fetchAudioStream.isCallable} onClick={fetchAudioStream}>
+        FETCH_AUDIO_STREAM
+      </button>
+ 
+    </div>
+  );
+};
+```
+
+</Tab>
+
+</Tabs>
+
+
+
+### useLocalVideo /useRemoteVideo
+
+
+<Tabs items={["New","Old"]}>
+
+<Tab>
+`useLocalVideo`
+
+The useLocalVideo hook exposes primitives to interact with your own video stream - coming from your camera device.
+
+```tsx
+import { useLocalVideo } from '@huddle01/react/hooks';
+ 
+const {
+    stream,
+    track,
+    isVideoOn,
+    enableVideo,
+    disableVideo,
+    replaceVideoStream,
+    changeVideoSource,
+  } = useLocalVideo({
+    onProduceStart(producer) {},
+    onProduceClose(reason :{
+      code:number,
+      tag:string,
+      message:string
+    }) {},
+  });
+ 
+// enable and disable video
+const handleVideo = async () => {
+  if (isVideoOn) {
+    await disableVideo();
+  } else {
+    await enableVideo();
+  }
+};
+```
+
+
+`useRemoteVideo`
+
+The useRemoteVideo hook exposes primitives to interact with video streams coming from other peers in the room.
+
+
+```tsx
+import { useRemoteVideo } from '@huddle01/react/hooks';
+import { useEffect, useRef } from 'react';
+ 
+const {
+    state,
+    track,
+    stream,
+    isVideoOn,
+  } = useRemoteVideo({
+    peerId: "remote-peer-id",
+    onClose(reason:{
+    code: number;
+    tag: string;
+    message: string;
+    }) {},
+    onPlayable(data:{
+      stream:Mediastream,
+      track:Mediatrack,
+      label:"video"
+    }) {}
+  });
+ 
+const videoRef = useRef<HTMLVideoElement>(null);
+ 
+useEffect(() => {
+  if (videoRef.current && stream) {
+    videoRef.current.srcObject = stream;
+  }
+}, [stream]);
+ 
+return (
+  <div>
+    <video ref={videoRef} autoPlay muted />
+  </div>
+);
+```
+
+
+</Tab>
+
+<Tab>
+```tsx
+ import { useVideo } from '@huddle01/react/hooks';
+ 
+const App = () => {
+  const { fetchVideoStream, stopVideoStream, isProducing, stream, error} = useVideo();
+ 
+  return (
+    <div>
+      
+     {/* Mic */} 
+      <button disabled={!fetchVideoStream.isCallable} onClick={fetchVideoStream}>
+        FETCH_VIDEO_STREAM
+      </button>
+ 
+    </div>
+  );
+}; 
+```
+</Tab>
+
+</Tabs>
+
+
+
+### useLocalScreenShare /useRemoteScreenShare
+
+
+<Tabs items={["New","Old"]}>
+
+<Tab>
+`useLocalScreenShare`
+
+The useLocalScreenShare hook allows you to share your screen with other peers in the room.
+
+```tsx
+import { useLocalScreenShare } from "@huddle01/react/hooks"
+ 
+const {
+    shareStream,
+    startScreenShare,
+    stopScreenShare,
+    audioTrack,
+    videoTrack,
+  } = useLocalScreenShare({
+    onProduceStart(producer) {},
+    onProduceClose() {},
+    onProduceError() {},
+  });
+ 
+const startSharing = async () => {
+  await startScreenShare();
+}
+ 
+const stopSharing = async () => {
+  await stopScreenShare();
+}
+```
+
+
+`useRemoteScreenShare`
+
+The useRemoteScreenShare hook allows you to receive the media stream for another peer's screen being shared
+
+```tsx
+import { useRemoteScreenShare } from "@huddle01/react/hooks";
+import { useEffect, useRef } from 'react';
+ 
+const {
+    videoStream,
+    audioStream,
+    videoTrack,
+    audioTrack,
+    state,
+  } = useRemoteScreenShare({
+    peerId: "remote-peer-id",
+    onPlayable(data:{
+    track: MediaStreamTrack;
+    stream: MediaStream;
+    label: 'screen-share-video' | 'screen-share-audio';
+    }) {},
+    onClose() {},
+  });
+ 
+const videoRef = useRef<HTMLVideoElement>(null);
+const audioRef = useRef<HTMLAudioElement>(null);
+ 
+useEffect(() => {
+    if (videoStream && videoRef.current) {
+      videoRef.current.srcObject = videoStream;
+    }
+    if (audioStream && audioRef.current) {
+      audioRef.current.srcObject = audioStream;
+    }
+  }, [videoStream, audioStream]);
+ 
+return (
+    <div>
+        <video ref={videoRef} autoPlay muted/>
+        <audio ref={audioRef} autoPlay />
+    </div>
+);
+```
+</Tab>
+
+<Tab>
+```tsx
+ import { useScreenShare } from '@huddle01/react/hooks';
+ 
+const App = () => {
+  const { fetchScreenShare, produceScreenShare, stopScreenShare, stopProducingScreenShare, stream: screenShareStream  } = useVideo();
+ 
+  return (
+    <div>
+      
+      <button disabled={!fetchScreenShare.isCallable} onClick={fetchVideoStream}>
+        FETCH_SCREEN_SHARE
+      </button>
+ 
+      <button disabled={!produceScreenShare.isCallable} onClick={() => produceScreenShare(screenShareStream)}>
+        PRODUCE_SCREEN_SHARE
+      </button>
+ 
+      <button disabled={!stopScreenShare.isCallable} onClick={stopScreenShare}>
+        STOP_SCREEN_SHARE
+      </button>
+ 
+      <button disabled={!stopProducingScreenShare.isCallable} onClick={stopProducingScreenShare}>
+        STOP_PRODUCING_SCREEN_SHARE
+      </button>
+ 
+    </div>
+  );
+};  
+```
+
+</Tab>
+</Tabs>
+
+
+For more information please visit to [hooks](../React/hooks).
+
