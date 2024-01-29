@@ -182,7 +182,7 @@ const accessToken = new AccessToken({
         options: {
           metadata: { 
              // you can add any custom attributes here which you want to associate with the user
-            walletAddress: "vrajdesai.eth"
+            walletAddress: "mizanxali.eth"
           },
         },
   });
@@ -198,7 +198,7 @@ You can then call the `startRecording` method on the instance to start recording
 
 <Callout>
 The `startLivestream` method includes an optional `customLayoutUrl` attribute, allowing you to specify a URL for the bot to join the room and initiate recording. 
-By default, it will our predefined layout. 
+By default, it will use our predefined layout. 
 </Callout>
 
 ```jsx
@@ -254,13 +254,13 @@ You can get the recording by listening to `receive-data` event or `useDataMessag
 ###  Livestreaming
 
 To start livestreaming your room to any third party streaming platform, you need to first create a `Recorder` instance with your project ID and API key. 
-You can then call the `startLivestream` method to start livestreaming a meeting by passing the room IDg. 
-It accepts an array of `rtmpUrls` in which `rtmpUrl` is consist of `STREAM_URL` and `STREAM_KEY`  i.e. `YOUR_STREAM_URL/YOUR_STREAM_KEY`. 
+You can then call the `startLivestream` method to start livestreaming a meeting by passing the room IDs. 
+It accepts an array of `rtmpUrls` in which `rtmpUrl` consists of `STREAM_URL` and `STREAM_KEY` i.e. `YOUR_STREAM_URL/YOUR_STREAM_KEY`. 
 To stop the livestream, you can call the `stop` method on the `Recorder` instance.
 
 <Callout>
 The `startLivestream` method includes an optional `customLayoutUrl` attribute, allowing you to specify a URL for the bot to join the room and initiate recording. 
-By default, it will our predefined layout. 
+By default, it will use our predefined layout. 
 </Callout>
 
 ```jsx
