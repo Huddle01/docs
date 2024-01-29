@@ -23,6 +23,16 @@ export function makeRandomString(length: number) {
 
 export const randomString = makeRandomString(32);
 
+export const extractProjectName = (url: string) => {
+  const regex = /^https:\/\/([^.]+)\./;
+  const match = url.match(regex);
+  if (match && match[1]) {
+    return match[1];
+  } else {
+    return null;
+  }
+};
+
 export const isValidDomain = (text?: string) => {
   if (!text) return false;
   const regex =
