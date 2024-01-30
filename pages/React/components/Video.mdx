@@ -1,0 +1,27 @@
+---
+title: "Video"
+---
+
+import { Callout } from 'nextra-theme-docs';
+
+# Video Component
+
+You can directly use the `Video` component from `@huddle01/react/components` to show video stream. You need to pass the `stream` prop to the component.
+
+<Callout>
+`Video` component accepts all the props of `video` tag.
+</Callout>
+
+```tsx 
+import { Video } from '@huddle01/react/components';
+import { useRemoteVideo } from '@huddle01/react/hooks';
+
+const App = () => {
+  const { stream } = useRemoteVideo();
+  return (
+    {stream && <Video stream={audioStream} />}
+  );
+};
+
+export default App;
+```

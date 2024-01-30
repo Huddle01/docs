@@ -1,0 +1,28 @@
+---
+title: "Audio"
+---
+
+import { Callout } from 'nextra-theme-docs';
+
+# Audio Component
+
+You can directly use `Audio` component from `@huddle01/react/components` to play audio stream. You need to pass `stream` as a prop. It will automatically play the stream. 
+
+<Callout>
+`Audio` component accepts all the props of `audio` tag.
+</Callout>
+
+```tsx 
+import { Audio } from '@huddle01/react/components';
+import { useRemoteAudio } from '@huddle01/react/hooks';
+
+const App = () => {
+  const { stream } = useRemoteAudio();
+  return (
+    {stream && <Audio stream={audioStream} />}
+  );
+};
+
+export default App;
+```
+
