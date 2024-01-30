@@ -1,33 +1,29 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
-import CommonIcons from '@components/assets/CommonIcons';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAccount } from 'wagmi';
 
-import { cn, isValidDomain } from '../../helpers/utils';
+import { cn, extractProjectName } from '../../helpers/utils';
 
 interface props {
   apiKey: string;
-  exisitingDomain: string | null;
+  setProjectName: Dispatch<SetStateAction<string | null>>;
 }
 
-const DomainInputStrip: React.FC<props> = ({ apiKey, exisitingDomain }) => {
-  const [domain, setDomain] = useState<string>('');
-  const [isDomainValid, setIsDomainValid] = useState(true);
-
-  const [newDomain, setNewDomain] = useState<string>('');
-
+const DomainInputStrip: React.FC<props> = ({ apiKey, setProjectName }) => {
   const { isConnected } = useAccount();
+  const [newProjectName, setNewProjectName] = useState<string>('');
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDomain(e.target.value);
+    setNewProjectName(e.target.value);
   };
 
   const { mutate: sendDomain } = useMutation({
     mutationFn: async () => {
-      if (!apiKey.length || !domain.length) throw new Error('Invalid Domain');
+      if (!apiKey.length || !newProjectName.length)
+        throw new Error('Invalid Domain');
       const { data } = await axios.request<{
         message: string;
         domain: string;
@@ -36,7 +32,7 @@ const DomainInputStrip: React.FC<props> = ({ apiKey, exisitingDomain }) => {
         url: '/docs/api/addDomain',
         data: {
           apiKey,
-          domain,
+          domain: `https://${newProjectName}.com`,
         },
         headers: {
           'Content-Type': 'application/json',
@@ -45,75 +41,47 @@ const DomainInputStrip: React.FC<props> = ({ apiKey, exisitingDomain }) => {
 
       return data;
     },
-    onSuccess: ({ message, domain }) => {
-      setDomain('');
-      setNewDomain(domain);
-      toast.success(message);
+    onSuccess: ({ domain }) => {
+      const name = extractProjectName(domain);
+      setProjectName(name);
+      toast.success('Project name set successfully');
     },
-    onError: err => {
+    onError: (err) => {
       console.error(err);
       toast.error('Error adding domain');
     },
   });
 
   const handleSubmit = () => {
-    const isValid = isValidDomain(domain);
-    if (!isValid) {
-      setIsDomainValid(false);
-      setDomain('');
-      setTimeout(() => {
-        setIsDomainValid(true);
-      }, 2000);
-      return;
-    }
-    if (isConnected && isValid) {
+    if (isConnected && newProjectName.length > 0) {
       sendDomain();
     }
   };
 
-  useEffect(() => {
-    setNewDomain('');
-  }, [isConnected]);
-
   return (
-    <div className="flex flex-col gap-2 w-3/4">
-      <div className="flex gap-3 justify-between items-center">
-        <span className="font-semibold text-slate-400">Whitelist Domain</span>
-        {isConnected && exisitingDomain && !newDomain && (
-          <span className="bg-gray-500 self-end text-black font-bold text-sm p-1 rounded-sm w-fit ">
-            {exisitingDomain}
-          </span>
-        )}
-        {isConnected && newDomain && (
-          <span className="bg-gray-500 text-black font-bold text-sm p-1 rounded-md w-fit ">
-            {newDomain}
-          </span>
-        )}
+    <div className='flex flex-col gap-2 w-3/4'>
+      <div className='flex gap-3 justify-between items-center'>
+        <span className='font-semibold text-slate-400'>Project Name</span>
       </div>
 
-      <div className="bg-[#2D3748] flex gap-3  items-center justify-center rounded-lg shadow-md px-4 py-2">
+      <div className='bg-[#2D3748] flex gap-3  items-center justify-center rounded-lg shadow-md px-4 py-2'>
         <input
           disabled={!isConnected}
-          type="url"
+          type='url'
           className={cn(
             'grow text-lg rounded-lg p-2 border-none bg-transparent focus:outline-none outline-none',
             !isConnected ? 'blur-sm' : ''
           )}
-          value={domain}
+          value={newProjectName}
           onChange={onChangeHandler}
-          placeholder="Enter Domain to be Whitelisted"
+          placeholder='Enter your project name'
         />
-        {isDomainValid ? null : (
-          <span className="grow text-base text-red-500 text-right">
-            Invalid Domain
-          </span>
-        )}
         <button
           onClick={handleSubmit}
           disabled={!isConnected}
-          className="bg-blue-400 p-1 rounded-full"
+          className='bg-blue-400 p-2 rounded-lg text-black font-semibold'
         >
-          {CommonIcons.plus}
+          Submit
         </button>
       </div>
     </div>
