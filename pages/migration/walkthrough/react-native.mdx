@@ -1,14 +1,16 @@
 ---
-title: 'React'
+title: 'React-Native'
 ---
 
 import { Callout, Tabs, Tab } from 'nextra-theme-docs';
 
-# Migrating React SDK to 1.x.x
+# Migrating React Native SDK to 1.x.x
 
-This guide will help you migrate your existing React SDK i.e. `0.x.x` to the new `1.x.x` version.
+This guide will help you migrate your existing React Native SDK i.e. `0.x.x` to the new `1.x.x` version.
 
 ## Installation
+
+One of the biggest changes with 1.x.x versions of the SDKs is that **the `@huddle01/react-native` package has been deprecated** and now you can use the **new and unified `@huddle01/react` package** for building both web apps with React and mobile apps with React Native.
 
 Install the latest version of the React SDK using the following command
 
@@ -48,9 +50,16 @@ You can retrieve your `projectId` from [API Keys Page](/api-keys) by just connec
 
 <Tabs items={['1.x.x', '0.x.x']}>
 <Tab>
-```tsx filename="_app.tsx"
-import type { AppProps } from "next/app";
+```tsx filename="app.tsx"
+import React from 'react'
+import { Component } from 'react';
+import {
+  Text,
+  SafeAreaView
+} from 'react-native';
 import { HuddleClient, HuddleProvider } from "@huddle01/react";
+
+type Props = {};
 
 const huddleClient = new HuddleClient({
   projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
@@ -62,18 +71,25 @@ const huddleClient = new HuddleClient({
   },
 });
 
-export default function App({ Component, pageProps }: AppProps) {
-  return (
-    <HuddleProvider client={huddleClient}>
-      <Component {...pageProps} />
-    </HuddleProvider>
-  );
+export default class App extends Component<Props> {
+  render() {
+    return (
+      <HuddleProvider client={huddleClient}>
+        <SafeAreaView>
+          <Text>
+            Welcome to React Native!
+          </Text>
+        </SafeAreaView>
+       </HuddleProvider>
+    );
+  }
 }
 ```
 </Tab>
 <Tab>
 ```tsx filename="app.tsx"
-import { useHuddle01 } from '@huddle01/react';
+import {SafeAreaView, Text} from 'react-native';
+import { useHuddle01 } from '@huddle01/react-native';
 
 const App = () => {
   const { initialize, isInitialized } = useHuddle01();
@@ -83,7 +99,7 @@ const App = () => {
     initialize('YOUR_PROJECT_ID');
   }, []);
 
-  return <div>{isInitialized ? 'Hello World!' : 'Please initialize'}</div>;
+  return <SafeAreaView>{isInitialized ? <Text>Hello World!</Text> : <Text>Please initialize</Text>}</SafeAreaView>;
 };
 ```
 </Tab>
@@ -92,10 +108,9 @@ const App = () => {
 ## Room Creation 
 
 You need a `roomId` for joining a room, which you can get by calling the [Create Room](/apis/create-room/create-room) API. 
-Make sure that you are calling this API from server side. 
-If you are using pages router you can create an API route or for app router you can easily create a server side component. 
+Make sure that you are calling this API from server side. You can create an API route in a separate `Next.js` web app or create an `Express` server. 
 
-<Tabs items={['Pages Router', 'App Router']}>
+<Tabs items={['Next.js (Pages Router)', 'Express Server']}>
 <Tab>
 ```ts filename="pages/api/create-room.ts"
 import axios from 'axios';
@@ -125,27 +140,41 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 export default handler;
 ```
 </Tab>
+
 <Tab>
-```ts filename="createRoom.ts"
-"use server";
+```ts filename="server.ts"
+import express, { Request, Response } from 'express';
+import axios from 'axios';
 
-export const createRoom = async () => {
-  const response = await fetch("https://api.huddle01.com/api/v1/create-room", {
-    method: "POST",
-    body: JSON.stringify({
-      title: "Huddle01 Room",
-    }),
-    headers: {
-      "Content-type": "application/json",
-      "x-api-key": process.env.API_KEY!,
-    },
-    cache: "no-cache",
-  });
+const app = express();
+const port = 3000; // You can use any port you prefer
 
-  const data = await response.json();
-  const roomId = data.data.roomId;
-  return roomId;
-};
+app.use(express.json());
+
+app.post('/create-room', async (req: Request, res: Response) => {
+  try {
+    const { data } = await axios.post(
+      'https://api.huddle01.com/api/v1/create-room',
+      {
+        title: 'Huddle01 Meet',
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.API_KEY as string,
+        },
+      }
+    );
+
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 ```
 </Tab>
 </Tabs>
@@ -159,7 +188,9 @@ To generate an `accessToken` you need to use our [Server SDK](/Server-SDK)
 Use [Server SDK](/Server-SDK) on server side only, don't use it on client side.
 </Callout>
 
-<Tabs items={['Pages Router', 'App Router']}>
+You can create an API route in a separate `Next.js` web app or create an `Express` server to generate `accessToken`. 
+
+<Tabs items={['Next.js (Pages Router)', 'Express Server']}>
 <Tab>
 ```ts filename="pages/api/getAccessToken.ts"
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -201,43 +232,51 @@ export default async function handler(
 ```
 </Tab>
 <Tab>
-```ts filename="token/route.ts"
-import { AccessToken, Role } from "@huddle01/server-sdk/auth";
+```ts filename="server.ts"
+import express, { Request, Response } from 'express';
+import { AccessToken, Role } from '@huddle01/server-sdk/auth';
 
-export const dynamic = "force-dynamic";
+const app = express();
+const port = 3000; // You can use any port you prefer
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-
-  const roomId = searchParams.get("roomId");
+app.get('/getAccessToken', async (req: Request, res: Response) => {
+  const { roomId } = req.query;
 
   if (!roomId) {
-    return new Response("Missing roomId", { status: 400 });
+    return res.status(400).json({ error: 'roomId is required' });
   }
 
-  const accessToken = new AccessToken({
-    apiKey: process.env.API_KEY!,
-    roomId: roomId as string,
-    role: Role.HOST,
-    permissions: {
-      admin: true,
-      canConsume: true,
-      canProduce: true,
-      canProduceSources: {
-        cam: true,
-        mic: true,
-        screen: true,
+  try {
+    const accessToken = new AccessToken({
+      apiKey: process.env.API_KEY as string,
+      roomId: roomId as string,
+      role: Role.HOST,
+      permissions: {
+        admin: true,
+        canConsume: true,
+        canProduce: true,
+        canProduceSources: {
+          cam: true,
+          mic: true,
+          screen: true,
+        },
+        canRecvData: true,
+        canSendData: true,
+        canUpdateMetadata: true,
       },
-      canRecvData: true,
-      canSendData: true,
-      canUpdateMetadata: true,
-    }
-  });
+    });
 
-  const token = await accessToken.toJwt();
+    const token = await accessToken.toJwt();
 
-  return new Response(token, { status: 200 });
-}
+    return res.status(200).json({ token });
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to generate token' });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 ```
 </Tab>
 </Tabs>
@@ -255,7 +294,8 @@ You can call the APIs which we have created in previous steps to get `roomId` an
 
 <Tabs items={['1.x.x', '0.x.x']}>
 <Tab>
-```tsx filename="app.tsx" 
+```tsx filename="app.tsx"
+import {SafeAreaView, Button} from 'react-native';
 import { useRoom } from '@huddle01/react/hooks';
 
 const App = () => {
@@ -269,25 +309,28 @@ const App = () => {
   });
   
   return (
-    <div>
-      <button onClick={() => {
-        joinRoom({
-          roomId: 'YOUR_ROOM_ID',
-          token: 'YOUR_ACCESS_TOKEN'
-        });
-      }}>
-        Join Room
-      </button>      
-      <button onClick={leaveRoom}>
-        Leave Room
-      </button> 
-    </div>
+    <SafeAreaView>
+      <Button
+        title="Join Room"
+        onPress={() => {
+          joinRoom({
+            roomId: 'YOUR_ROOM_ID',
+            token: 'YOUR_ACCESS_TOKEN'
+          });
+        }}
+      />
+      <Button
+        title="Leave Room"
+        onPress={leaveRoom}
+      />
+    </SafeAreaView>
   );
 };
 ```
 </Tab>
 <Tab>
 ```tsx filename="app.tsx" 
+  import {SafeAreaView, Button} from 'react-native';
   import { useLobby, useRoom } from '@huddle01/react/hooks';
 
   const App = () => {
@@ -295,26 +338,25 @@ const App = () => {
     const { joinRoom, leaveRoom } = useRoom();
 
     return (
-      <div>
-        <button 
+      <SafeAreaView>
+        <Button
+          title="Join Lobby"
           disabled={!joinLobby.isCallable} 
-          onClick={() => joinLobby('YOUR_ROOM_ID');
-        }>
-          Join Lobby
-        </button>
-        <button 
+          onPress={() => joinLobby('YOUR_ROOM_ID')} 
+        />
+         
+        <Button 
+          title="Join Room"
           disabled={!joinRoom.isCallable} 
-          onClick={joinRoom}
-        >
-          Join Room
-        </button>
-        <button 
+          onPress={joinRoom}
+        />
+          
+        <Button 
+          title="Leave Room"
           disabled={!leaveRoom.isCallable} 
-          onClick={leaveRoom}
-        >
-          Leave Room
-        </button>
-      </div>
+          onPress={leaveRoom}
+        />
+      </SafeAreaView>
     );
   };
 ```
@@ -328,12 +370,13 @@ You can just call `enableVideo`, which is returned from `useLocalVideo` hook. Th
 Similarly, for audio as well you can just call `enableAudio` returned from `useLocalAudio` hook which will get your audio stream and start producing it inside the room.
 
 <Callout>
-You can also share you screen and consume other peer's screen, to learn more refer to [Screen Share](/React/hooks/useLocalScreenShare). 
+You can also share you screen and consume other peer's screen, to learn more refer to [Screen Share](/React-Native/hooks/useLocalScreenShare). 
 </Callout>
 
 <Tabs items={['1.x.x', '0.x.x']}>
 <Tab>
-```tsx filename="app.tsx" 
+```tsx filename="app.tsx"
+  import {SafeAreaView, Button} from 'react-native';
   import { useLocalVideo, useLocalAudio, useLocalScreenShare } from '@huddle01/react/hooks';
 
   const App = () => {
@@ -342,31 +385,31 @@ You can also share you screen and consume other peer's screen, to learn more ref
     const { startScreenShare, stopScreenShare, shareStream } = useLocalScreenShare();
 
     return (
-      <div>
+      <SafeAreaView>
         {/* Webcam */} 
-        <button 
-          onClick={() => {
+        <Button
+         title="Toggle Video"
+          onPress={() => {
             isVideoOn ? disableVideo() : enableVideo()
-          }}>
-          Fetch and Produce Video Stream
-        </button>
-
+          }}
+        />
+          
         {/* Mic */} 
-       <button 
-          onClick={() => {
+        <Button 
+          title="Toggle Audio"
+          onPress={() => {
             isAudioOn ? disableAudio() : enableAudio();
-          }}>
-          Fetch and Produce Audio Stream
-        </button>
-
+          }}
+        />
+         
         {/* Screen Share */}
-        <button 
-          onClick={() => {
+        <Button 
+          title="Toggle Screen Share"
+          onPress={() => {
             shareStream ? stopScreenShare() : startScreenShare();
-          }}>
-          Fetch and Produce Screen Share Stream
-        </button>
-      </div>
+          }}
+        />
+      </SafeAreaView>
     );
   };
 
@@ -374,6 +417,7 @@ You can also share you screen and consume other peer's screen, to learn more ref
 </Tab>
 <Tab>
 ```tsx filename="app.tsx"
+  import {SafeAreaView, Button} from 'react-native';
   import { useAudio, useVideo } from '@huddle01/react/hooks';
 
   const App = () => {
@@ -388,33 +432,21 @@ You can also share you screen and consume other peer's screen, to learn more ref
     } = useVideo(); 
   
     return (
-      <div>
-       {/* Mic */} 
-        <button disabled={!fetchAudioStream.isCallable} onClick={fetchAudioStream}>
-          FETCH_AUDIO_STREAM
-        </button>
+      <SafeAreaView>
+        {/* Mic */} 
+        <Button title="FETCH_AUDIO_STREAM" disabled={!fetchAudioStream.isCallable} onPress={fetchAudioStream} />
 
         {/* Webcam */} 
-        <button disabled={!fetchVideoStream.isCallable} onClick={fetchVideoStream}>
-          FETCH_VIDEO_STREAM
-        </button>
+        <Button title="FETCH_VIDEO_STREAM" disabled={!fetchVideoStream.isCallable} onPress={fetchVideoStream} />
 
-        <button disabled={!produceVideo.isCallable} onClick={() => produceVideo(camStream)}>
-          Produce Cam  
-        </button>
+        <Button title="Produce Cam" disabled={!produceVideo.isCallable} onPress={() => produceVideo(camStream)} />
 
-        <button disabled={!produceAudio.isCallable} onClick={() => produceAudio(micStream)}>
-          Produce Mic  
-        </button>
-
-        <button disabled={!stopProducingVideo.isCallable} onClick={stopProducingVideo}>
-          Stop Producing Cam  
-        </button>
-
-        <button disabled={!stopProducingAudio.isCallable} onClick={stopProducingAudio}>
-          Stop Producing Mic  
-        </button>
-      </div>
+        <Button title="Produce Mic" disabled={!produceAudio.isCallable} onPress={() => produceAudio(micStream)} />
+          
+        <Button title="Stop Producing Cam" disabled={!stopProducingVideo.isCallable} onPress={stopProducingVideo} />
+    
+        <Button title="Stop Producing Mic" disabled={!stopProducingAudio.isCallable} onPress={stopProducingAudio} />
+      </SafeAreaView>
     );
   };
 
@@ -428,7 +460,7 @@ You can also share you screen and consume other peer's screen, to learn more ref
 In `1.x.x` version of SDK, you have to use the `usePeerIds` hook to get an array of all the remote peers in the room. You can then use hooks such as `useRemoteAudio`, `useRemoteVideo` and `useRemoteScreenShare` for consuming their `audio`, `video` and `screen-share` streams.
 
 <Callout>
-You can refer to [usePeerIds](/React/hooks/usePeerIds), [useRemoteAudio](/React/hooks/useRemoteAudio), and [useRemoteVideo](/React/hooks/useRemoteVideo) to learn more.
+You can refer to [usePeerIds](/React-Native/hooks/usePeerIds), [useRemoteAudio](/React-Native/hooks/useRemoteAudio), and [useRemoteVideo](/React-Native/hooks/useRemoteVideo) to learn more.
 </Callout>
 
 <Tabs items={['1.x.x', '0.x.x']}>
@@ -442,6 +474,7 @@ You can refer to [usePeerIds](/React/hooks/usePeerIds), [useRemoteAudio](/React/
   } from '@huddle01/react/hooks';
   import { Audio, Video } from '@huddle01/react/components';
   import { FC } from 'react';
+  import {SafeAreaView, Button} from 'react-native';
 
   interface RemotePeerProps {
     peerId: string;
@@ -454,12 +487,12 @@ You can refer to [usePeerIds](/React/hooks/usePeerIds), [useRemoteAudio](/React/
     const { videoStream: screenVideoStream, audioStream: screenAudioStream } = useRemoteScreenShare({ peerId });
   
     return (
-      <div>
+      <SafeAreaView>
         {videoStream && <Video stream={videoStream}>}
         {audioStream && <Audio stream={audioStream}>}
         {screenVideoStream && <Video stream={screenVideoStream}>}
         {screenAudioStream && <Audio stream={screenAudioStream}>}
-      </div>
+      </SafeAreaView>
     )
   }
   
@@ -467,11 +500,11 @@ You can refer to [usePeerIds](/React/hooks/usePeerIds), [useRemoteAudio](/React/
     const { peerIds } = usePeerIds();
 
     return (
-      <div>
+      <SafeAreaView>
         {peerIds.map(peerId => {
           return <RemotePeer peerId={peerId}  />
         })}
-      </div>
+      </SafeAreaView>
     )
   }
 
@@ -480,6 +513,7 @@ You can refer to [usePeerIds](/React/hooks/usePeerIds), [useRemoteAudio](/React/
 </Tab>
 <Tab>
 ```tsx filename="app.tsx"
+  import {SafeAreaView, Button} from 'react-native';
   import { usePeers } from '@huddle01/react/hooks';
   import { Audio, Video } from '@huddle01/react/components';
 
@@ -487,8 +521,8 @@ You can refer to [usePeerIds](/React/hooks/usePeerIds), [useRemoteAudio](/React/
     const { peerIds } = usePeers();
 
     return (
-      <div>
-        <div className="grid grid-cols-4">
+      <SafeAreaView>
+        <SafeAreaView className="grid grid-cols-4">
           {peerIds.map(peerId => (
               <Video key={peer.peerId} peerId={peer.peerId} debug />
           ))}
@@ -496,8 +530,8 @@ You can refer to [usePeerIds](/React/hooks/usePeerIds), [useRemoteAudio](/React/
           {peerIds.map(peerId => (
               <Audio key={peer.peerId} peerId={peer.peerId} debug />
           ))}
-        </div>
-      </div>
+        </SafeAreaView>
+      </SafeAreaView>
     );
   };
 
@@ -550,10 +584,10 @@ const {
     };
 
     return (
-      <div>
-        <button onClick={sendDataToAllPeers}> Send data to all peers </button>
-        <button onClick={sendDataToSpecificPeer}> Send data to specific peer </button>
-      </div>
+      <SafeAreaView>
+        <Button title="Send data to all peers" onPress={sendDataToAllPeers} />
+        <Button title="Send data to specific peer" onPress={sendDataToSpecificPeer} />
+      </SafeAreaView>
     );
   };
 
@@ -564,11 +598,8 @@ const {
 ## Happy Hacking 🎉
 
 You can refer to the following sample apps build on Javascript SDK
-- [Client Next.js Example (Pages Router)](https://github.com/Huddle01/client-next-js-example)
-- [Client Next TS Example (Pages Router)](https://github.com/Huddle01/client-next-ts-example)
-- [Client Next.js Example (App Router)](https://github.com/Huddle01/next-app-router-js-example)
-- [Client Next TS Example (App Router)](https://github.com/Huddle01/next-app-router-ts-example)
-
+- [Client React Native JS Example](https://github.com/Huddle01/client-rn-js-example)
+- [Client React Native TS Example](https://github.com/Huddle01/client-rn-ts-example)
 
 Congratulations! If you have followed this guide till here, we hope that you have successfully migrated to `1.x.x`
 

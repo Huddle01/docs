@@ -2,6 +2,7 @@
   "quickstart": "Quickstart",
   "react-walkthrough": "React Walkthrough",
   "example": "Start from an example",
+  "components": "Components",
   "hooks": "Hooks",
   "advanced": "Advanced Hooks"
 }
