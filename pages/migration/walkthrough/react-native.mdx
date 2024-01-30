@@ -50,9 +50,16 @@ You can retrieve your `projectId` from [API Keys Page](/api-keys) by just connec
 
 <Tabs items={['1.x.x', '0.x.x']}>
 <Tab>
-```tsx filename="_app.tsx"
-import type { AppProps } from "next/app";
+```tsx filename="app.tsx"
+import React from 'react'
+import { Component } from 'react';
+import {
+  Text,
+  SafeAreaView
+} from 'react-native';
 import { HuddleClient, HuddleProvider } from "@huddle01/react";
+
+type Props = {};
 
 const huddleClient = new HuddleClient({
   projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
@@ -64,12 +71,18 @@ const huddleClient = new HuddleClient({
   },
 });
 
-export default function App({ Component, pageProps }: AppProps) {
-  return (
-    <HuddleProvider client={huddleClient}>
-      <Component {...pageProps} />
-    </HuddleProvider>
-  );
+export default class App extends Component<Props> {
+  render() {
+    return (
+      <HuddleProvider client={huddleClient}>
+        <SafeAreaView>
+          <Text>
+            Welcome to React Native!
+          </Text>
+        </SafeAreaView>
+       </HuddleProvider>
+    );
+  }
 }
 ```
 </Tab>
