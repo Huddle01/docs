@@ -2,8 +2,6 @@
 title: 'Get Recordings API'
 ---
 
-import JoinRoomToken from '@components/ApiRef/JoinRoomToken';
-import JoinRoomTokenResponse from '@components/ApiRef/JoinRoomTokenResponse';
 import RequestStrip from '@components/ApiRequest/RequestStrip';
 import {
   APIRequestCard,
@@ -22,8 +20,8 @@ The Get Recordings API provides the ability to fetch recordings that were create
 In order to use the API, you will need to obtain an API key by connecting to your wallet.
 
 ## **Endpoint**
-<div className="flex justify-between w-full">
-  <HighLight className="my-3 w-3/4">
+<div className="flex justify-between w-full lg:flex-row flex-col">
+  <HighLight className="my-3 lg:w-3/4 w-full">
     <RequestStrip
       method={'GET'}
       url={'https://api.huddle01.com/api/v1'}

@@ -1,10 +1,21 @@
 import React from "react";
 
-import { useRouter } from "next/router";
 import Link from "next/link";
+import Image from "next/image";
 
 const Container = () => {
-  const { push } = useRouter();
+  const roomData = [
+    { id: "1", name: "Create Room", href: "/apis/create-room" },
+    { id: "2", name: "Join Room Token", href: "/apis/join-room-token" },
+    { id: "3", name: "Meeting Details", href: "/apis/meeting-details" },
+    { id: "4", name: "Get Metrics", href: "/apis/get-metrics" },
+    { id: "5", name: "Get the list of Rooms", href: "/apis/get-rooms" },
+    {
+      id: "6",
+      name: "Get the list of Recordings",
+      href: "/apis/get-recordings",
+    },
+  ];
   return (
     <div>
       <p>
@@ -14,66 +25,25 @@ const Container = () => {
         are designed to provide flexibility and customization.
       </p>
 
-      <div className="grid grid-cols-3 grid-rows-2 mt-4 gap-4 gap-y-6 items-center">
-        <Link href="/apis/create-room">
-          <div
-            className="text-center rounded-xl shadow-lg h-fit py-4 flex items-center justify-center bg-slate-800 cursor-pointer text-sm md:text-base px-4"
-            role="presentation"
+      <div className="grid md:grid-cols-3 grid-cols-1 mt-6 gap-4 items-center">
+        {roomData.map(({ href, id, name }) => (
+          <Link
+            href={href}
+            key={id}
+            className="rounded-lg p-4 flex items-start flex-col gap-y-1 border border-custom-5 cursor-pointer "
           >
-            Create Room
-          </div>
-        </Link>
-
-        <Link href="/apis/join-room-token">
-          <div
-            className="rounded-xl h-fit py-4 shadow-lg cursor-pointer grid place-content-center bg-slate-800 text-sm md:text-base text-center"
-            role="presentation"
-          >
-            Join Room Token
-          </div>
-        </Link>
-
-        <Link href="/apis/meeting-details">
-          <div
-            className="text-center rounded-xl shadow-lg h-fit py-4 cursor-pointer grid place-content-center bg-slate-800 text-sm md:text-base px-2"
-            role="presentation"
-          >
-            Meeting Details
-          </div>
-        </Link>
-
-        <Link href="/apis/get-metrics">
-          <div
-            className="text-center rounded-xl shadow-lg h-fit py-4 flex items-center justify-center bg-slate-800 cursor-pointer text-sm md:text-base px-4"
-            role="presentation"
-          >
-            Key Metrics
-          </div>
-        </Link>
-
-        <Link href="/apis/get-rooms">
-          <div
-            className="rounded-xl h-fit py-4 shadow-lg cursor-pointer grid place-content-center bg-slate-800 text-sm md:text-base text-center"
-            role="presentation"
-          >
-            Get the list of Rooms
-          </div>
-        </Link>
-
-        <Link href="/apis/get-recordings">
-          <div
-            className="text-center rounded-xl shadow-lg h-fit py-4 cursor-pointer grid place-content-center bg-slate-800 text-sm md:text-base px-2"
-            role="presentation"
-          >
-            Get the list of Recordings
-          </div>
-        </Link>
-        {/* <p className="cursor-default">
-          This API is useful when you need to access information about a
-          previously created meeting, such as its start time or host wallets. It
-          can also be used to retrieve the meeting link, which can be shared
-          with participants who need to join the meeting.
-        </p> */}
+            <Image
+              src={`/docs/api/${name}.png`}
+              alt={name}
+              width={23}
+              height={23}
+              priority
+              quality={100}
+              className="object-contain"
+            />
+            <div className="text-sm text-slate-400 font-medium">{name}</div>
+          </Link>
+        ))}
       </div>
     </div>
   );
