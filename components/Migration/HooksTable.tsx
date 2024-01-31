@@ -16,7 +16,7 @@ const HooksTable: React.FC = () => {
       <tbody className="p-8">
         {HooksData.map((item, i) => (
           <tr
-            key={`hook-${i}`}
+            key={`hook-${item.old.one}`}
             className={`${i % 2 === 0 ? "bg-[#1D1F22]/40" : "bg-transparent"}`}
           >
             <td
@@ -33,7 +33,7 @@ const HooksTable: React.FC = () => {
               <span
                 className={cn(
                   item.new.one && item.new.one === "Deprecated"
-                    ? "text-red-400"
+                    ? "text-red-400 cursor-default"
                     : null,
                   item.new.one?.startsWith("use")
                     ? "text-blue-500 underline"
