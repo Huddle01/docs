@@ -16,8 +16,12 @@ import CustomBtn from "@components/revamp/CustomBtn/CustomBtn.tsx"
 import SubCard from "@components/revamp/LandingCards/SubCard.tsx"
 import LatestRelease, {getLatestReleaseData} from "@components/revamp/LatestRelease/LatestRelease.tsx"
 import LandingCards from "@components/revamp/LandingCards/LandingCards.tsx"
+import Guides from "@components/revamp/LandingCards/Guides.tsx"
 import {GetStartedCards,CLIToolCard,LinksIcon} from "@components/revamp/CommonCards/CommonCards.tsx"
 import { Callout } from 'nextra-theme-docs';
+
+
+{/* Static Props */}
 
 export const getStaticProps = getLatestReleaseData;
 
@@ -38,10 +42,12 @@ From Guides to SDKs to API references - find everything you need to build high-q
 {/* Popular Guides Section */}
 <LandingCards title="Popular guides" type="Guide" className="flex-col mt-10"> 
    <div className="grid lg:grid-cols-3 gap-4 grid-cols-1 mt-6">
-   {[{title:"Audio Spaces",url:"/guides/audio-spaces"},{title:"Video Meeting",url:"/React/react-walkthrough"},{title:"Token-gated Room",url:"/guides/token-gated"}].map(({title,url}) => (
+   {[{title:"Video Meeting",url:"/React/react-walkthrough"},{title:"Audio Spaces",url:"/guides/audio-spaces"},{title:"Token-gated Room",url:"/guides/token-gated"}].map(({title,url}) => (
     <SubCard key={title} title={title} url={url}/>
    ))}                                                                                                                                                                                                                                                                           
    </div>
+
+ <Guides/>
 </LandingCards> 
 
 
@@ -53,7 +59,7 @@ From Guides to SDKs to API references - find everything you need to build high-q
 
 {/*Get Started Cards Section */}
 <LandingCards className="mt-6 flex-col" type="start" title="Get started quickly with SDKs">
-<div className="grid lg:grid-cols-3 grid-cols-1 w-full mt-7 mb-6 gap-4">
+<div className="grid lg:grid-cols-2 grid-cols-1 w-full mt-7 mb-6 gap-4">
 {GetStartedData.map(({title ,url}) => (
 <GetStartedCards key={title} title={title} url={url}/>
 ))}
@@ -89,4 +95,5 @@ From Guides to SDKs to API references - find everything you need to build high-q
 </div>
 
 <LatestRelease />
+
 </div>
