@@ -22,14 +22,9 @@ const { twitter, insta, linkedin, youTube } = FooterIcons;
 export const NavigationData: TNavigationType = {
   support: [
     {
-      id: 4,
-      name: 'Release Notes',
-      href: '/release-note',
-    },
-    {
       id: 5,
       name: 'GitHub',
-      href: 'https://github.com/Huddle01/DAO',
+      href: 'https://github.com/Huddle01',
     },
     {
       id: 6,
