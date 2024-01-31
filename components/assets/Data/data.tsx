@@ -709,3 +709,75 @@ export const meetingDetailsApi = [
     },
   },
 ];
+
+// MigrationIndexData Data
+export const MigrationIndexData = [
+  {
+    href: "/migration/concepts",
+    name: "Concepts",
+    description:
+      "This section provides a brief overview of about the changed concepts between old SKds & new SDks.",
+    icon: Stopwatch,
+    pattern: {
+      y: 22,
+      squares: [[0, 1]],
+    },
+  },
+  {
+    href: "/migration/walkthrough/javascript",
+    name: "Walkthrough",
+    description:
+      "This section provides a step-by-step guide to migrate your existing JavaScript, React & React-Native SDK i.e. 0.x.x to the new 1.x.x version.",
+    icon: BookIcon,
+    pattern: {
+      y: 16,
+      squares: [
+        [0, 1],
+        [1, 3],
+      ],
+    },
+  },
+  {
+    href: "/migration/recording",
+    name: "Recoring and Livestreaming",
+    description:
+      "This section provides an overview of how we moved  the Recording and Livestreaming features to the ServerSDK that allows this feature on all platforms including mobile.",
+    icon: PaperAirplaneIcon,
+    pattern: {
+      y: -6,
+      squares: [
+        [-1, 2],
+        [1, 3],
+      ],
+    },
+  },
+  {
+    href: "/migration/hooks",
+    name: "Hooks",
+    description:
+      "This section provides an overview of the old SDks hooks which are deprecated and the new add-on SDks hooks.",
+    icon: PaperClipIcon,
+    pattern: {
+      y: 32,
+      squares: [
+        [0, 2],
+        [1, 4],
+      ],
+    },
+  },
+
+  {
+    href: "/migration/faqs",
+    name: "Faqs",
+    description:
+      "This section provides an description of the frequently asked questions which can came across while building the projects with the new SDKs.",
+    icon: PaperClipIcon,
+    pattern: {
+      y: 32,
+      squares: [
+        [0, 2],
+        [1, 4],
+      ],
+    },
+  },
+];

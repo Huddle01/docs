@@ -2,4 +2,19 @@
 title: 'Migrating to 1.x.x'
 ---
 
-TODO
+import { MigrationIndexData } from '@components/assets/Data/data';
+import GradientCard from '@components/common/GradientCard/GradientCard';
+
+# Huddle01 SDK migration guide.
+
+Huddle01 stable is bringing notable advancements to the protocol, including latency, scalability, network-performance,deployments & less re-rendering. To read more about the differences,
+please go through the following sections. 
+
+
+<div className="my-16 xl:max-w-none">
+  <div className="not-prose mt-4 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
+    {MigrationIndexData.map(resource => (
+      <GradientCard key={resource.href} resource={resource} />
+    ))}
+  </div>
+</div>
