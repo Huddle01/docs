@@ -307,7 +307,7 @@ export const GuidesData = [
   {
     href: '/guides/audio-spaces',
     name: 'Audio spaces',
-    description: 'Step by step guide to record an audio spaces session.',
+    description: 'Step by step guide to build your own audio spaces.',
     icon: SquaresPlusIcon,
     pattern: {
       y: 16,
@@ -321,7 +321,7 @@ export const GuidesData = [
     href: '/guides/recording-livestreaming',
     name: 'Recording and Livestreaming',
     description:
-      'Step by step guide to record an audio/video session, or livestream it to 3rd party streaming platforms.',
+      'Step by step guide to record or livestream to 3rd party streaming platforms.',
     icon: BookIcon,
     pattern: {
       y: 16,
@@ -334,7 +334,8 @@ export const GuidesData = [
   {
     href: '/guides/collaborative-whiteboard',
     name: 'Collaborative Whiteboard',
-    description: 'Step by step guide to create a collaborative whiteboard.',
+    description:
+      'Step by step guide to create a collaborative whiteboard with audio/video communication.',
     icon: Stopwatch,
     pattern: {
       y: 22,
@@ -345,7 +346,7 @@ export const GuidesData = [
     href: '/guides/selective-consuming',
     name: 'Selective Consuming',
     description:
-      'Step by step guide to receive media from only specific peers in a meeting.',
+      'Step by step guide to implement selective consuming in your application.',
     icon: PaperClipIcon,
     pattern: {
       y: 16,
@@ -358,7 +359,8 @@ export const GuidesData = [
   {
     href: '/guides/custom-auth',
     name: 'Custom Authentication',
-    description: 'Step by step guide to implement custom authentication.',
+    description:
+      'Step by step guide to implement custom authentication with Web3 Auth.',
     icon: SquaresPlusIcon,
     pattern: {
       y: 16,
@@ -440,11 +442,11 @@ export const ShowcaseData = [
       ],
     },
   },
-
   {
     href: 'https://buttrfly.app/',
     name: 'Buttrfly',
-    description: 'A Web3 Social Explorer build on lens protocol',
+    description:
+      'A Web3 Social Explorer build on lens protocol. You can experience audio spaces built with Huddle01 SDK.',
     icon: DocumentIcon,
     pattern: {
       y: 32,
@@ -454,7 +456,6 @@ export const ShowcaseData = [
       ],
     },
   },
-
   {
     href: 'https://ethermail.io/',
     name: 'Ethermail',
@@ -466,20 +467,8 @@ export const ShowcaseData = [
       squares: [[0, 1]],
     },
   },
-
   {
-    href: 'https://mindblowon.io/',
-    name: 'Parallax',
-    description:
-      'Launchpad for Web3 projects. By providing cutting-edge technology, project management and consultancy, Parallax empowers Creators, Brands & Businesses to explore Web3.',
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
-  {
-    href: 'https://www.soclly.com/',
+    href: 'https://app.soclly.com/',
     name: 'Soclly',
     description:
       'Join us on SOCLLY (a decentralized social network) to connect with a Web3 expert and be a part of the decentralized economy. Learn the lingo behind NFT, DeFi, and Blockchain',
@@ -489,140 +478,11 @@ export const ShowcaseData = [
       squares: [[0, 1]],
     },
   },
-
-  {
-    href: 'https://devfolio.co/projects/social-77db',
-    name: 'Social3',
-    description:
-      'Platform to find jobs and create token gated interviews with file access to the interview recording.',
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
-
-  {
-    href: 'https://ethglobal.com/showcase/hearthside-hangouts-ah41z',
-    name: 'Hearthside hangouts',
-    description:
-      'Hearthside Hangouts: Find bookclubs, meaningful conversations, milestone-based reading, drop-in audio rooms, easy club management.',
-    icon: DocumentIcon,
-    pattern: {
-      y: 16,
-      squares: [
-        [0, 1],
-        [1, 3],
-      ],
-    },
-  },
-
   {
     href: 'https://syncx.vercel.app/',
     name: 'SyncX',
     description:
       'SyncX is a tool that enables you to connect with your audience through 1:1 sessions - to share your knowledge and monetize your time better.',
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
-
-  {
-    href: 'https://www.meet3.club/',
-    name: 'Meet3Club',
-    description:
-      'Meet3Club is a video/voice chat platform that connects people randomly and is made using Huddle01​​.',
-    icon: DocumentIcon,
-    pattern: {
-      y: 16,
-      squares: [
-        [0, 1],
-        [1, 3],
-      ],
-    },
-  },
-
-  {
-    href: 'https://huddlescribe.vercel.app/',
-    name: 'Huddlescribe',
-    description:
-      'HuddleScribe: The Ultimate Meeting App for the Future of Collaboration!.',
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
-
-  {
-    href: 'https://ethglobal.com/showcase/hearthside-hangouts-ah41z',
-    name: 'Twype',
-    description: 'Twype is a platform that allows to mint and sell video Orbs.',
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
-
-  {
-    href: 'https://ethglobal.com/showcase/telemedic-mzhwm',
-    name: 'TeleMedic',
-    description: 'A  platform for telemedicine.',
-    icon: DocumentIcon,
-    pattern: {
-      y: 32,
-      squares: [
-        [0, 2],
-        [1, 4],
-      ],
-    },
-  },
-
-  {
-    href: 'https://ethglobal.com/showcase/digital-ticket-stream-kffp8',
-    name: 'Digital Ticket stream',
-    description: 'DST is a live ticketing system managed by an NFT protocol.',
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
-  {
-    href: 'https://ethglobal.com/showcase/spaces3-p2r17',
-    name: 'Spaces3',
-    description:
-      'Spaces3: Decentralized audio conferencing app for seamless, secure communication.',
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
-
-  {
-    href: 'https://ethglobal.com/showcase/dapp-classroom-q1xok',
-    name: 'dApp classroom',
-    description:
-      'DappClassroom is an innovative decentralized adaptation of Google Classroom, leveraging blockchain technology to provide a transparent and fair learning experience.',
-    icon: DocumentIcon,
-    pattern: {
-      y: 32,
-      squares: [
-        [0, 2],
-        [1, 4],
-      ],
-    },
-  },
-
-  {
-    href: 'https://ethglobal.com/showcase/wis3-91a0v',
-    name: 'Wis3',
-    description:
-      'Decentralised course platform, people can create, sell, buy course all in decentralised ecosystem. It allows seemless integration among SDK.',
     icon: DocumentIcon,
     pattern: {
       y: 22,
@@ -642,24 +502,20 @@ export const ShowcaseData = [
       ],
     },
   },
-
   {
-    href: 'https://ethglobal.com/showcase/xstream-c4bxm',
-    name: 'Xstream',
-    description:
-      'Xstream: Token-gated video streaming platform for exclusive content and chat with streamers using NFTs.',
+    href: 'https://studio-01.vercel.app/',
+    name: 'Studio 01',
+    description: 'Record studio quality podcasts and stream it live.',
     icon: DocumentIcon,
     pattern: {
       y: 22,
       squares: [[0, 1]],
     },
   },
-
   {
-    href: 'https://devfolio.co/projects/huddlerr-7fd1',
-    name: 'Xstdlerr',
-    description:
-      'decentralised social platform built on FVM and using Filecoin storage',
+    href: 'https://blinkr-five.vercel.app/',
+    name: 'Blinkr',
+    description: 'Randomly connect with people with same NFTs.',
     icon: DocumentIcon,
     pattern: {
       y: 22,
