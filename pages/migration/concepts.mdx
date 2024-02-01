@@ -35,26 +35,27 @@ title: 'Concepts'
 
 ## New SDK Concepts:
 
-1. **Room/States**
-   - *Description:* A Huddle01 meeting session containing participants and their media streams with associated states.
+1. **Room**
+   - *Description:* A room is a virtual entity inside which you can have Huddle01 meeting sessions. It contains all the participants and their media streams. Each room is identified by a unique roomID that is generated when you create a room. A room does not expire and you can have multiple meeting sessions inside the same room for as long as you want, one meeting session at a time.
 
+2. **Room States**
+   - *States:* `idle`, `connecting`, `connected`, `failed`, `left`, `closed` - Representing different states of a room.
 
-2. **Local**
+3. **Local**
    - *Description:* Operations related to your own Peer object inside a room, represented by the keyword local.
    - *Variables:* `localPeer`, `localAudio`, `localVideo`
 
-3. **Remote**
+4. **Remote**
    - *Description:* Operations related to other peers in the same room, represented by the keyword remote.
    - *Variables:* `remotePeer`, `remoteAudio`, `remoteVideo`
 
-4. **Data Message**
+5. **Data Message**
    - *Description:* Messages sent between peers in the form of text strings not exceeding 280 characters.
 
-5. **Metadata**
+6. **Metadata**
    - *Description:* A generic object that can be attached to Peers and the Room for storing additional information.
 
-6. **Room/App States**
-   - *States:* `idle`, `connecting`, `connected`, `failed`, `left`, `closed` - Representing different states of a room.
+
 
 
 ## States in Legacy SDK <span className="text-red-500">(Deprecated)</span>:
