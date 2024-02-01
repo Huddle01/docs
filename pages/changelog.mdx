@@ -9,6 +9,9 @@ import TabStrip from '@components/revamp/ChangelogContent/TabStrip.tsx';
 import ChangelogContent from "@components/revamp/ChangelogContent/ChangelogContent.tsx"
 
 
+import { ChangelogTabs } from '@components/assets/Data/changelog';
+
+
 <div className="flex w-full h-full">
 
 <div className="flex flex-col h-full  md:p-9 w-full">
@@ -16,45 +19,33 @@ import ChangelogContent from "@components/revamp/ChangelogContent/ChangelogConte
 
 Read all about the recent releases and the changes.
 
+{/* TODO: Fetch dynamically later with changesets */}
+
 <ChangelogContent>
 
-<Tabs items={['Javascript', 'React JS / React Native', 'Server Sdk']}>
+<Tabs items={Object.keys(ChangelogTabs)}>
 
- {/* Javascript */}
-   <Tab>
-  <TabStrip version="1.0.0-beta.15" date="24 January 2024"> 
+{
+  Object.entries(ChangelogTabs).map(([key, value]) => {
+    return (
+      <Tab>
 
-  Added support for `iife/umd` modules
-
-  
-
-  
-   </TabStrip>    
-  
-   </Tab>
-
-
-   {/* React Js /React-Native*/}
-   <Tab>
-
-   <TabStrip  version="1.0.0-beta.15" date="24 January 2024"> 
+        {
+          value.map((item) => {
+            return (
+              <TabStrip version={item.version} date={item.date}>
+                {item.content}
+              </TabStrip>
+            )
+          })
+        }
+      
+      </Tab>
+    )
+  })
+}
 
  
-   Added Audio/Video components in ` @huddle01/react/components`
-  </TabStrip>
-   </Tab> 
-
-
-{/* Server_sdk */}
-        <Tab>
-   <TabStrip version="1.0.0-beta.2" date="26 July 2023"> 
-    
-    Added support for Auth Tokens created for your custom server
-    
-   </TabStrip>  
-
-    
-        </Tab> 
       </Tabs>
       </ChangelogContent>
 

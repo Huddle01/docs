@@ -1,11 +1,11 @@
-import React from "react";
-import axios from "axios";
+import React from 'react';
+import axios from 'axios';
 
 // Assets
-import LandingIcons from "@components/assets/LandingIcons";
-import Image from "next/image";
-import { useData } from "nextra/data";
-import Link from "next/link";
+import LandingIcons from '@components/assets/LandingIcons';
+import Image from 'next/image';
+import { useData } from 'nextra/data';
+import Link from 'next/link';
 
 type PackageVersion = {
   version: string;
@@ -48,10 +48,10 @@ const LatestRelease = () => {
         <button
           type="button"
           className="calendarBtn py-2 px-4 rounded-md flex items-center gap-2"
-          onClick={() => window.open("http://cal.com/yashvendra")}
+          onClick={() => window.open('http://cal.com/yashvendra')}
         >
           <div className="text-xs font-semibold text-rgb-7">Contact Sales</div>
-          <div>{LandingIcons["chevron-right-btn"]}</div>
+          <div>{LandingIcons['chevron-right-btn']}</div>
         </button>
       </div>
     </div>
@@ -93,7 +93,7 @@ const Strip: React.FC<IStripProps> = ({ isUpdated, version, title, date }) => (
       <div className="flex items-center gap-2.5">
         <Image
           src={`/docs/images/${title}.png`}
-          alt={title ?? "latest-release-img"}
+          alt={title ?? 'latest-release-img'}
           width={20}
           height={20}
           className="object-contain"
@@ -108,43 +108,42 @@ const Strip: React.FC<IStripProps> = ({ isUpdated, version, title, date }) => (
         v {version}
       </div>
     ) : (
-      <div className="cursor-pointer">{LandingIcons["chevron-up"]}</div>
+      <div className="cursor-pointer">{LandingIcons['chevron-up']}</div>
     )}
   </div>
 );
 
 //getStaticProps method - called inside .mdx page file
 export const getLatestReleaseData = ({ params }) => {
-  let jsPackageVersion: PackageVersion = { date: "", version: "" };
-  let reactPackageVersion: PackageVersion = { date: "", version: "" };
-  let serverSdkPackageVersion: PackageVersion = { date: "", version: "" };
+  let jsPackageVersion: PackageVersion = { date: '', version: '' };
+  let reactPackageVersion: PackageVersion = { date: '', version: '' };
+  let serverSdkPackageVersion: PackageVersion = { date: '', version: '' };
 
   const formatDate = (date?: string) => {
     return date
       ? new Date(Date.parse(date)).toLocaleDateString(undefined, {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
         })
-      : "";
+      : '';
   };
 
-  const getPackageVersion: (
-    packageName: string
-  ) => Promise<PackageVersion> = async (packageName: string) => {
-    const { data } = await axios.request({
-      method: "GET",
-      url: `https://registry.npmjs.org/${packageName}`,
-    });
-    const version = data["dist-tags"].latest;
-    return { version, date: data.time[`${version}`] };
-  };
+  const getPackageVersion: (packageName: string) => Promise<PackageVersion> =
+    async (packageName: string) => {
+      const { data } = await axios.request({
+        method: 'GET',
+        url: `https://registry.npmjs.org/${packageName}`,
+      });
+      const version = data['dist-tags'].latest;
+      return { version, date: data.time[`${version}`] };
+    };
 
-  return getPackageVersion("@huddle01/web-core").then((data) => {
+  return getPackageVersion('@huddle01/web-core').then((data) => {
     jsPackageVersion = data;
-    return getPackageVersion("@huddle01/react").then((data) => {
+    return getPackageVersion('@huddle01/react').then((data) => {
       reactPackageVersion = data;
-      return getPackageVersion("@huddle01/server-sdk").then((data) => {
+      return getPackageVersion('@huddle01/server-sdk').then((data) => {
         serverSdkPackageVersion = data;
         return {
           props: {
@@ -153,29 +152,29 @@ export const getLatestReleaseData = ({ params }) => {
             ssg: {
               releaseData: [
                 {
-                  title: "Javascript",
+                  title: 'Javascript',
                   version: jsPackageVersion.version,
                   date: formatDate(jsPackageVersion.date),
-                  url: "/Javascript",
+                  url: '/Javascript',
                 },
                 {
-                  title: "React JS",
+                  title: 'React JS',
                   version: reactPackageVersion.version,
                   date: formatDate(reactPackageVersion.date),
-                  url: "/React",
+                  url: '/React',
                 },
                 {
-                  title: "React Native",
+                  title: 'React Native',
                   version: reactPackageVersion.version,
                   date: formatDate(reactPackageVersion.date),
-                  url: "/React-Native",
+                  url: '/React-Native',
                 },
 
                 {
-                  title: "Server Sdk",
+                  title: 'Server Sdk',
                   version: serverSdkPackageVersion.version,
                   date: formatDate(serverSdkPackageVersion.date),
-                  url: "/Server-SDK",
+                  url: '/Server-SDK',
                 },
               ],
             },

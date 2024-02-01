@@ -23,7 +23,7 @@ const SidebarIcons: {
       />
     </svg>
   ),
-  "Get Started": (
+  'Get Started': (
     <svg
       width="18"
       height="18"
@@ -206,7 +206,7 @@ const SidebarIcons: {
       />
     </svg>
   ),
-  "Migrating to 1.x.x": (
+  'Migrating to 1.x.x': (
     <svg
       width="18"
       height="18"
@@ -226,6 +226,35 @@ const SidebarIcons: {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  ),
+  'Talk to sales': (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#clip0_2104_34336)">
+        <path
+          opacity="0.12"
+          d="M9 16.5C13.1421 16.5 16.5 13.1421 16.5 9C16.5 4.85786 13.1421 1.5 9 1.5C4.85786 1.5 1.5 4.85786 1.5 9C1.5 13.1421 4.85786 16.5 9 16.5Z"
+          fill="#9EA3AE"
+        />
+        <path
+          d="M9 12V9M9 6H9.0075M16.5 9C16.5 13.1421 13.1421 16.5 9 16.5C4.85786 16.5 1.5 13.1421 1.5 9C1.5 4.85786 4.85786 1.5 9 1.5C13.1421 1.5 16.5 4.85786 16.5 9Z"
+          stroke="#9EA3AE"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_2104_34336">
+          <rect width="18" height="18" fill="white" />
+        </clipPath>
+      </defs>
     </svg>
   ),
   Changelog: (
@@ -308,7 +337,7 @@ const SidebarIcons: {
       </defs>
     </svg>
   ),
-  "Server-SDK": (
+  'Server-SDK': (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="22"
@@ -507,7 +536,7 @@ const SidebarIcons: {
       </defs>
     </svg>
   ),
-  "React Native": (
+  'React Native': (
     <svg
       width="18"
       height="18"
@@ -533,7 +562,7 @@ const SidebarIcons: {
       </defs>
     </svg>
   ),
-  "Get an API key": (
+  'Get an API key': (
     <svg
       width="18"
       height="18"
@@ -555,7 +584,7 @@ const SidebarIcons: {
       />
     </svg>
   ),
-  "API Reference": (
+  'API Reference': (
     <svg
       width="18"
       height="18"
@@ -572,7 +601,7 @@ const SidebarIcons: {
       />
     </svg>
   ),
-  "CLI Tool": (
+  'CLI Tool': (
     <svg
       width="18"
       height="18"
