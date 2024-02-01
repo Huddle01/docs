@@ -60,15 +60,15 @@ const config: DocsThemeConfig = {
         "Server-SDK",
       ].includes(title);
 
-      const version: {
-        [key: string]: string;
-      } = {
-        Javascript: "beta",
-        ReactJS: "beta",
-        "React Native": "beta",
-        Flutter: "beta",
-        "Server-SDK": "beta",
-      };
+      // const version: {
+      //   [key: string]: string;
+      // } = {
+      //   Javascript: "beta",
+      //   ReactJS: "beta",
+      //   "React Native": "beta",
+      //   Flutter: "beta",
+      //   "Server-SDK": "beta",
+      // };
 
       if (isSdkTitles) {
         return (
@@ -79,7 +79,7 @@ const config: DocsThemeConfig = {
               </span>
               {title}
             </div>
-            <VersionPill version={version[title] ?? ""} />
+            {/* <VersionPill version={version[title] ?? ""} /> */}
           </div>
         );
       }
