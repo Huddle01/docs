@@ -75,6 +75,120 @@ export const FlutterSDKData = [
 ];
 
 // React Js Data
+export const MigrationData = [
+  {
+    href: "/migration/quickstart",
+    name: "Quickstart",
+    description:
+      "This section provides a brief overview of how to quickly get started with using the Huddle01 SDK in a React project.",
+    icon: Stopwatch,
+    pattern: {
+      y: 22,
+      squares: [[0, 1]],
+    },
+  },
+  {
+    href: "/migration/walkthrough",
+    name: "Walkthrough",
+    description:
+      "This section provides a step-by-step guide to building a simple Huddle01-based video conferencing app in a React project.",
+    icon: BookIcon,
+    pattern: {
+      y: 16,
+      squares: [
+        [0, 1],
+        [1, 3],
+      ],
+    },
+  },
+  {
+    href: "/migration/example",
+    name: "Start from an Example",
+    description:
+      "This section provides instructions on how to clone and run a sample Huddle01 app in a React project.",
+    icon: PaperAirplaneIcon,
+    pattern: {
+      y: -6,
+      squares: [
+        [-1, 2],
+        [1, 3],
+      ],
+    },
+  },
+  {
+    href: "/migration/hooks",
+    name: "Hooks",
+    description:
+      "This section provides an overview of the available React hooks in the Huddle01 SDK that can be used to create custom functionality.",
+    icon: PaperClipIcon,
+    pattern: {
+      y: 32,
+      squares: [
+        [0, 2],
+        [1, 4],
+      ],
+    },
+  },
+];
+
+export const FlutterData = [
+  {
+    href: "/Flutter/quickstart",
+    name: "Quickstart",
+    description:
+      "This section provides a brief overview of how to quickly get started with using the Huddle01 SDK in a Flutter project.",
+    icon: Stopwatch,
+    pattern: {
+      y: 22,
+      squares: [[0, 1]],
+    },
+  },
+  {
+    href: "/Flutter/walkthrough",
+    name: "Walkthrough",
+    description:
+      "This section provides a step-by-step guide to building a simple Huddle01-based video conferencing app in a Flutter project.",
+    icon: BookIcon,
+    pattern: {
+      y: 16,
+      squares: [
+        [0, 1],
+        [1, 3],
+      ],
+    },
+  },
+  {
+    href: "/Flutter/example",
+    name: "Start from an Example",
+    description:
+      "This section provides instructions on how to clone and run a sample Huddle01 app in a Flutter project.",
+    icon: PaperAirplaneIcon,
+    pattern: {
+      y: -6,
+      squares: [
+        [-1, 2],
+        [1, 3],
+      ],
+    },
+  },
+  {
+    href: "/Flutter/methods/init",
+    name: "Methods",
+    description:
+      "This section provides an overview of the available Flutter methods in the Huddle01 SDK that can be used to create custom functionality.",
+    icon: PaperClipIcon,
+    pattern: {
+      y: 32,
+      squares: [
+        [0, 2],
+        [1, 4],
+      ],
+    },
+  },
+];
+
+// React Js Data
+
 export const ReactJsData = [
   {
     href: "/React/quickstart",
@@ -250,7 +364,7 @@ export const GuidesData = [
   {
     href: "/guides/audio-spaces",
     name: "Audio spaces",
-    description: "Step by step guide to record an audio spaces session.",
+    description: "Step by step guide to build your own audio spaces.",
     icon: SquaresPlusIcon,
     pattern: {
       y: 16,
@@ -264,7 +378,7 @@ export const GuidesData = [
     href: "/guides/recording-livestreaming",
     name: "Recording and Livestreaming",
     description:
-      "Step by step guide to record an audio/video session, or livestream it to 3rd party streaming platforms.",
+      "Step by step guide to record or livestream to 3rd party streaming platforms.",
     icon: BookIcon,
     pattern: {
       y: 16,
@@ -277,7 +391,8 @@ export const GuidesData = [
   {
     href: "/guides/collaborative-whiteboard",
     name: "Collaborative Whiteboard",
-    description: "Step by step guide to create a collaborative whiteboard.",
+    description:
+      "Step by step guide to create a collaborative whiteboard with audio/video communication.",
     icon: Stopwatch,
     pattern: {
       y: 22,
@@ -288,7 +403,7 @@ export const GuidesData = [
     href: "/guides/selective-consuming",
     name: "Selective Consuming",
     description:
-      "Step by step guide to receive media from only specific peers in a meeting.",
+      "Step by step guide to implement selective consuming in your application.",
     icon: PaperClipIcon,
     pattern: {
       y: 16,
@@ -301,7 +416,8 @@ export const GuidesData = [
   {
     href: "/guides/custom-auth",
     name: "Custom Authentication",
-    description: "Step by step guide to implement custom authentication.",
+    description:
+      "Step by step guide to implement custom authentication with Web3 Auth.",
     icon: SquaresPlusIcon,
     pattern: {
       y: 16,
@@ -368,246 +484,57 @@ export const ApisData = [
 ];
 
 // ShowcaseData
-export const ShowcaseData = [
+export const showcaseData = [
   {
     href: "https://meetwithwallet.xyz/",
     name: "Meet With Wallet",
     description:
-      "Meet with wallet provides an easy way to share you calendar and let people find the perfect time to meet with you, always ensuring your data is private. Booking for FREE by simply connecting a crypto wallet.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 32,
-      squares: [
-        [0, 2],
-        [1, 4],
-      ],
-    },
+      "Meeting Scheduler for Web3. Schedule meetings with your friends and colleagues using your wallet address.",
   },
-
   {
     href: "https://buttrfly.app/",
     name: "Buttrfly",
-    description: "A Web3 Social Explorer build on lens protocol",
-    icon: DocumentIcon,
-    pattern: {
-      y: 32,
-      squares: [
-        [0, 2],
-        [1, 4],
-      ],
-    },
+    description:
+      "A Web3 Social Explorer build on lens protocol. You can experience audio spaces built with Huddle01 SDK.",
   },
-
   {
     href: "https://ethermail.io/",
     name: "Ethermail",
     description:
-      "We are building the bridge between web 2.0 and web 3.0 email communication, bringing back to users full ownership, control and sovereignty of their inbox.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
-
-  {
-    href: "https://mindblowon.io/",
-    name: "Parallax",
-    description:
-      "Launchpad for Web3 projects. By providing cutting-edge technology, project management and consultancy, Parallax empowers Creators, Brands & Businesses to explore Web3.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
+      "EtherMail is the first email solution setting the standard for anonymous and encrypted wallet-to-wallet communication",
   },
   {
-    href: "https://www.soclly.com/",
+    href: "https://app.soclly.com/",
     name: "Soclly",
     description:
-      "Join us on SOCLLY (a decentralized social network) to connect with a Web3 expert and be a part of the decentralized economy. Learn the lingo behind NFT, DeFi, and Blockchain",
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
+      "A creator-centric community-focused decentralized social network.",
   },
-
-  {
-    href: "https://devfolio.co/projects/social-77db",
-    name: "Social3",
-    description:
-      "Platform to find jobs and create token gated interviews with file access to the interview recording.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
-
-  {
-    href: "https://ethglobal.com/showcase/hearthside-hangouts-ah41z",
-    name: "Hearthside hangouts",
-    description:
-      "Hearthside Hangouts: Find bookclubs, meaningful conversations, milestone-based reading, drop-in audio rooms, easy club management.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 16,
-      squares: [
-        [0, 1],
-        [1, 3],
-      ],
-    },
-  },
-
   {
     href: "https://syncx.vercel.app/",
     name: "SyncX",
     description:
-      "SyncX is a tool that enables you to connect with your audience through 1:1 sessions - to share your knowledge and monetize your time better.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
+      "SyncX is a tool that enables you to connect with your audience through 1:1 sessions",
   },
-
   {
-    href: "https://www.meet3.club/",
-    name: "Meet3Club",
+    href: "https://pixelmen.vercel.app/room/",
+    name: "Pixelmen",
     description:
-      "Meet3Club is a video/voice chat platform that connects people randomly and is made using Huddle01​​.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 16,
-      squares: [
-        [0, 1],
-        [1, 3],
-      ],
-    },
-  },
-
-  {
-    href: "https://huddlescribe.vercel.app/",
-    name: "Huddlescribe",
-    description:
-      "HuddleScribe: The Ultimate Meeting App for the Future of Collaboration!.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
-
-  {
-    href: "https://ethglobal.com/showcase/hearthside-hangouts-ah41z",
-    name: "Twype",
-    description: "Twype is a platform that allows to mint and sell video Orbs.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
-
-  {
-    href: "https://ethglobal.com/showcase/telemedic-mzhwm",
-    name: "TeleMedic",
-    description: "A  platform for telemedicine.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 32,
-      squares: [
-        [0, 2],
-        [1, 4],
-      ],
-    },
-  },
-
-  {
-    href: "https://ethglobal.com/showcase/digital-ticket-stream-kffp8",
-    name: "Digital Ticket stream",
-    description: "DST is a live ticketing system managed by an NFT protocol.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
-  {
-    href: "https://ethglobal.com/showcase/spaces3-p2r17",
-    name: "Spaces3",
-    description:
-      "Spaces3: Decentralized audio conferencing app for seamless, secure communication.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
-  },
-
-  {
-    href: "https://ethglobal.com/showcase/dapp-classroom-q1xok",
-    name: "dApp classroom",
-    description:
-      "DappClassroom is an innovative decentralized adaptation of Google Classroom, leveraging blockchain technology to provide a transparent and fair learning experience.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 32,
-      squares: [
-        [0, 2],
-        [1, 4],
-      ],
-    },
-  },
-
-  {
-    href: "https://ethglobal.com/showcase/wis3-91a0v",
-    name: "Wis3",
-    description:
-      "Decentralised course platform, people can create, sell, buy course all in decentralised ecosystem. It allows seemless integration among SDK.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
+      "A pixelated retro world where you can communicate with each other with spatial audio.",
   },
   {
     href: "https://peer-code.vercel.app/",
     name: "Peer Code",
     description: "A Remote developer collaboration platform.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 32,
-      squares: [
-        [0, 2],
-        [1, 4],
-      ],
-    },
   },
-
   {
-    href: "https://ethglobal.com/showcase/xstream-c4bxm",
-    name: "Xstream",
-    description:
-      "Xstream: Token-gated video streaming platform for exclusive content and chat with streamers using NFTs.",
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
+    href: "https://studio-01.vercel.app/",
+    name: "Studio 01",
+    description: "Record studio quality podcasts and stream it live.",
   },
-
   {
-    href: "https://devfolio.co/projects/huddlerr-7fd1",
-    name: "Xstdlerr",
-    description:
-      "decentralised social platform built on FVM and using Filecoin storage",
-    icon: DocumentIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
-    },
+    href: "https://blinkr-five.vercel.app/",
+    name: "Blinkr",
+    description: "Randomly connect with people with same NFTs.",
   },
 ];
 
@@ -642,6 +569,78 @@ export const meetingDetailsApi = [
     href: "/apis/meeting-details/participant-list",
     name: "Participant List API",
     description: " This API retrieves the list of participants in a meeting",
+    icon: PaperClipIcon,
+    pattern: {
+      y: 32,
+      squares: [
+        [0, 2],
+        [1, 4],
+      ],
+    },
+  },
+];
+
+// MigrationIndexData Data
+export const MigrationIndexData = [
+  {
+    href: "/migration/concepts",
+    name: "Concepts",
+    description:
+      "This section provides a brief overview of concepts which have changed between old and new SDK.",
+    icon: Stopwatch,
+    pattern: {
+      y: 22,
+      squares: [[0, 1]],
+    },
+  },
+  {
+    href: "/migration/walkthrough/javascript",
+    name: "Walkthrough",
+    description:
+      "This section provides a step-by-step guide on transitioning your current JavaScript, React, and React-Native SDK from v1 version 0.x.x to the updated v2 2.x.x version.",
+    icon: BookIcon,
+    pattern: {
+      y: 16,
+      squares: [
+        [0, 1],
+        [1, 3],
+      ],
+    },
+  },
+  {
+    href: "/migration/recording",
+    name: "Recording and Livestreaming",
+    description:
+      "This section provides an overview of Recording and Livestreaming using ServerSDK that allows this feature on all platforms including mobile.",
+    icon: PaperAirplaneIcon,
+    pattern: {
+      y: -6,
+      squares: [
+        [-1, 2],
+        [1, 3],
+      ],
+    },
+  },
+  {
+    href: "/migration/hooks",
+    name: "Hooks",
+    description:
+      "This section offers an overview of the newly introduced hooks in the 2.x.x version of the SDK, in comparison to the v1 0.x.x version of the SDK.",
+    icon: PaperClipIcon,
+    pattern: {
+      y: 32,
+      squares: [
+        [0, 2],
+        [1, 4],
+      ],
+    },
+  },
+
+  {
+    href: "/migration/faqs",
+    name: "Faqs",
+    description:
+      "This section includes frequently asked questions that may arise during the development of projects using the new SDKs.",
     icon: PaperClipIcon,
     pattern: {
       y: 32,

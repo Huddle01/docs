@@ -1,0 +1,137 @@
+---
+title: 'CLI Tool'
+---
+
+import { Tabs, Tab, Callout, Steps } from 'nextra-theme-docs';
+
+## Quick Start
+
+Using our CLI tool, you can quickly clone example apps for `Next.js`, `React` and `Vanilla JS`. 
+You can also get example app for `iFrame`. 
+
+<video
+  src="/docs/videos/cliTool.mp4"
+  muted
+  controls
+  className="my-8 rounded-lg"
+  width="100%"
+  height="100%"
+/>
+
+## Walkthrough
+
+<Steps>
+
+### Run the following command in your terminal.
+
+<Tabs items={['npx', 'bunx']}>
+<Tab>
+```bash 
+npx create-huddle01
+```
+</Tab>
+<Tab>
+```bash 
+bunx create-huddle01
+```
+</Tab>
+</Tabs>
+
+### Give a name to your project.
+
+You can give any name for your project. This will be the name of the folder where the example app will be cloned.
+
+### Pick an SDK
+
+Choose the SDK you want to use, it can be `Client SDK` or `iFrame`.  
+
+### Pick a platform 
+
+<Callout>
+Pick a platform is only for `Client SDK` and not for `iFrame`.
+</Callout>
+Choose the platform you want to use, it can be `Web` or `Mobile`. 
+
+### Pick a framework
+
+If you have selected `Web` in earlier step you can choose between `Vanilla`, `Next.js`, and `Vite JS`. 
+If you have selected `Mobile` in earlier step you can choose between `React-Native` and `Flutter`.
+
+### Choose project type 
+
+<Callout>
+You don't have this option if you have selected `Flutter` in earlier step
+</Callout>
+
+You have an option to choose between `Javascript` and `Typescript`. 
+
+<Callout type='info'>
+We always recommend to select Typescript over Javascript.
+</Callout>
+
+### Install Dependencies
+
+Run following command to install dependencies: 
+
+<Callout>
+ We prefer bun over pnpm, yarn or npm.
+</Callout>
+
+<Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+<Tab>
+```bash
+npm install
+```
+</Tab>
+<Tab>
+```bash
+yarn 
+```
+</Tab>
+<Tab>
+```bash
+pnpm i
+```
+</Tab>
+<Tab>
+```bash
+bun i 
+```
+</Tab>
+</Tabs>
+
+### Create a `.env.local` file 
+
+Create a new `.env.local` file in the root of your project and copy the contents of `.env.example`. 
+Now you need to add `API Key` and `Project ID` in your `.env.local`, which you can get from [API Keys](/api-keys) Page. 
+
+### Run the project
+
+You can run the project by running following command: 
+
+<Tabs items={['npm', 'yarn', 'pnpm', 'bun']}>
+<Tab>
+```bash
+npm run dev
+```
+</Tab>
+<Tab>
+```bash
+yarn dev
+```
+</Tab>
+<Tab>
+```bash
+pnpm dev
+```
+</Tab>
+<Tab>
+```bash
+bun dev
+```
+</Tab>
+</Tabs>
+
+### Congratulations, you did it 🥳
+
+</Steps>

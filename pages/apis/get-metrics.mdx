@@ -22,21 +22,14 @@ The Get Key Metrics API provides the ability to fetch the total number of minute
 In order to use the API, you will need to obtain an API key by connecting to your wallet.
 
 ## **Endpoint**
-<div className="flex justify-between w-full">
-  <HighLight className="my-3 w-3/4">
+<div className="flex justify-between w-full lg:flex-row flex-col">
+  <HighLight className="my-3 w-full">
     <RequestStrip
       method={'GET'}
       url={'https://api.huddle01.com/api/v1'}
       endpoint={'get-metrics'}
     />
   </HighLight>
-  <Button
-    variant="primary"
-    url="/api-keys"
-    text="Get your API Key"
-    isRouting
-    className=" my-2 w-auto px-8"
-  />
 </div>
 
 

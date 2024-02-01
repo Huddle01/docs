@@ -59,11 +59,28 @@ You can install the Huddle01 Vanilla JS SDK packages in two ways:
 1. Using the script tag: Add the following code snippet to the head of your HTML. 
 
     ```html
-    <script src="https://unpkg.com/@huddle01/web-core@latest/dist/index.js" />
-
-    <script type="module">
-	    // Initialize huddleClient
-	    const huddleClient = new HuddleClient({ projectId: "YOUR_PROJECT_ID" });
+    <script src="https://unpkg.com/@huddle01/web-core@umd/dist/index.global.js"></script>
+  
+    <script>
+    
+    let client;
+    
+    // call this function in onclick of `join room` button
+    const init = async () => {
+      client = new HuddleWebCore.HuddleClient({
+        projectId: "YOUR_PROJECT_ID",
+        options: {
+          activeSpeakers: {
+            // Number of active speaker visible in the grid, by default 8
+            size: 10,
+          },
+        },
+      });
+      const room = await client.joinRoom({
+        roomId: "YOUR_ROOM_ID",
+        token: "YOUR_ACCESS_TOKEN",
+      });
+    };
     </script>
     ```
 
@@ -72,19 +89,19 @@ You can install the Huddle01 Vanilla JS SDK packages in two ways:
   <Tabs items={['npm', 'yarn', 'bun']}>
     <Tab>
       ```bash 
-      npm install @huddle01/web-core@beta
+      npm install @huddle01/web-core
         ```
     </Tab>
 
     <Tab>
       ```bash
-      yarn add @huddle01/web-core@beta
+      yarn add @huddle01/web-core
       ```
     </Tab>
 
     <Tab>
       ```bash
-      bun install @huddle01/web-core@beta
+      bun install @huddle01/web-core
       ```
     </Tab>
   </Tabs>

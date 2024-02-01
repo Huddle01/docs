@@ -1,5 +1,11 @@
 {
-  "index": "Getting Started",
+  "index": {
+    "title": "Getting Started",
+    "theme": {
+      "layout": "full",
+      "toc": false
+    }
+  },
   "create-room": {
     "title": "Create Room APIs",
     "theme": {
@@ -44,6 +50,13 @@
   },
   "meeting-details": {
     "title": "Room & Meetings API",
+    "theme": {
+      "toc": false,
+      "layout": "full"
+    }
+  },
+  "preview-peers": {
+    "title": "Preview Live Meeting Peers AP",
     "theme": {
       "toc": false,
       "layout": "full"

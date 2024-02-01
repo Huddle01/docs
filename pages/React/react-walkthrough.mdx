@@ -7,12 +7,12 @@ import { Steps, Tab, Tabs, Callout } from 'nextra-theme-docs';
 # Building a React App with Huddle01
 
 <Callout>
-  These are the <b>beta</b> version of the SDKs. We are still working on them. If you have any feedback, please share it on our discord channel. For the previous latest stable release, please visit <a className="text-bold underline" href="https://legacy.docs.huddle01.com/docs">here</a>
+  We have upgraded our SDK to v2 `(2.x.x)`. For the previous stable release, please visit <a className="text-bold underline" href="https://legacy.docs.huddle01.com/docs">here</a>
 </Callout>
 
 ## Walkthrough
 
-The following guide explains how you can integrate audio/video into your React web-app seamlessly using the Huddle01 React SDK in your Next JS App.
+The following guide explains how you can integrate audio/video into your React web-app seamlessly using the Huddle01 React SDK in your Next.js App.
 
     <Steps>
     ### Install `@huddle01/react` in your react app
@@ -22,22 +22,22 @@ To power your React dApp with audio/video communication using Huddle01, install 
       <Tabs items={['pnpm', 'npm', 'yarn', 'bun']}>
               <Tab>
             ```bash 
-      pnpm i @huddle01/react@beta @huddle01/server-sdk@beta
+      pnpm i @huddle01/react @huddle01/server-sdk
     ```
             </Tab>
   <Tab>
       ```bash 
-    npm i @huddle01/react@beta @huddle01/server-sdk@beta
+    npm i @huddle01/react @huddle01/server-sdk
     ```
             </Tab>
   <Tab>
       ```bash 
-    yarn add @huddle01/react@beta @huddle01/server-sdk@beta
+    yarn add @huddle01/react @huddle01/server-sdk
     ```
             </Tab>
   <Tab>
       ```bash 
-    bun install @huddle01/react@beta @huddle01/server-sdk@beta
+    bun install @huddle01/react @huddle01/server-sdk
     ```
             </Tab>
               </Tabs>
@@ -108,7 +108,7 @@ export default function RootLayout({
 
 ## Room Creation 
 
-You need a `roomId` for joining a room, which you can get by calling a [Create Room](/apis/create-room/create-room) API. 
+You need a `roomId` for joining a room, which you can get by calling the [Create Room](/apis/create-room/create-room) API. 
 Make sure that you are calling this API from server side. 
 If you are using pages router you can create an API route or for app router you can easily create a server side component. 
 
@@ -297,7 +297,7 @@ const App = () => {
 To produce `video`,`audio`, and `screenShare` streams, you can use `useLocalVideo`,`useLocalAudio` and `useLocalScreenShare` hook. 
 
 ```tsx filename="app.tsx" highlight={9,14,51-65}
-  import { useLocalVideo, useLocalAudio } from '@huddle01/react/hooks';
+  import { useLocalVideo, useLocalAudio, useLocalScreenShare } from '@huddle01/react/hooks';
 
   const App = () => {
     const { stream, enableVideo, disableVideo, isVideoOn } = useLocalVideo();

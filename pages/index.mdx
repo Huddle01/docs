@@ -2,7 +2,6 @@
 title: 'Home'
 ---
 
-import Image from "next/image";
 
 {/* Assets */}
 import LandingIcons from '@components/assets/LandingIcons';
@@ -17,8 +16,12 @@ import CustomBtn from "@components/revamp/CustomBtn/CustomBtn.tsx"
 import SubCard from "@components/revamp/LandingCards/SubCard.tsx"
 import LatestRelease, {getLatestReleaseData} from "@components/revamp/LatestRelease/LatestRelease.tsx"
 import LandingCards from "@components/revamp/LandingCards/LandingCards.tsx"
+import Guides from "@components/revamp/LandingCards/Guides.tsx"
 import {GetStartedCards,CLIToolCard,LinksIcon} from "@components/revamp/CommonCards/CommonCards.tsx"
 import { Callout } from 'nextra-theme-docs';
+
+
+{/* Static Props */}
 
 export const getStaticProps = getLatestReleaseData;
 
@@ -30,7 +33,7 @@ export const getStaticProps = getLatestReleaseData;
 # Welcome to Huddle01 Builders’ Kit
 
 <Callout>
-  These are the <b>beta</b> version of the SDKs. We are still working on them. If you have any feedback, please share it on our discord channel. For the previous latest stable release, please visit <a className="text-bold underline" href="https://legacy.docs.huddle01.com/docs">here</a>
+  We have upgraded our SDK to v2 `(2.x.x)`. For the previous stable release, please visit <a className="text-bold underline" href="https://legacy.docs.huddle01.com/docs">here</a>
 </Callout>
 
 From Guides to SDKs to API references - find everything you need to build high-quality live audio and video experiences at one place. Scalable and customizable - our SDKs are built for both web and mobile applications.
@@ -39,10 +42,12 @@ From Guides to SDKs to API references - find everything you need to build high-q
 {/* Popular Guides Section */}
 <LandingCards title="Popular guides" type="Guide" className="flex-col mt-10"> 
    <div className="grid lg:grid-cols-3 gap-4 grid-cols-1 mt-6">
-   {[{title:"Audio Spaces",url:"/guides/audio-spaces"},{title:"Video Meeting",url:"/React/react-walkthrough"},{title:"Token-gated Room",url:"/guides/token-gated"}].map(({title,url}) => (
+   {[{title:"Video Meeting",url:"/React/react-walkthrough"},{title:"Audio Spaces",url:"/guides/audio-spaces"},{title:"Token-gated Room",url:"/guides/token-gated"}].map(({title,url}) => (
     <SubCard key={title} title={title} url={url}/>
    ))}                                                                                                                                                                                                                                                                           
    </div>
+
+ <Guides/>
 </LandingCards> 
 
 
@@ -53,8 +58,8 @@ From Guides to SDKs to API references - find everything you need to build high-q
 
 
 {/*Get Started Cards Section */}
-<LandingCards className="mt-6" type="start" title="Get started quickly with SDKs" className="flex-col">
-<div className="grid lg:grid-cols-3 grid-cols-1 w-full mt-7 mb-6 gap-4">
+<LandingCards className="mt-6 flex-col" type="start" title="Get started quickly with SDKs">
+<div className="grid lg:grid-cols-2 grid-cols-1 w-full mt-7 mb-6 gap-4">
 {GetStartedData.map(({title ,url}) => (
 <GetStartedCards key={title} title={title} url={url}/>
 ))}
@@ -66,7 +71,7 @@ From Guides to SDKs to API references - find everything you need to build high-q
 {/* IFrame & API Ref. Section */}
 <div className="grid lg:grid-cols-2 grid-cols-1 md:gap-4 mt-6">
 {iFrameApiData.map(({title,type,desc,linksArr,url}) => (
-<LandingCards title={title} type={type} className="flex-col" key={title} url={url} className="flex flex-col cursor-pointer ease-in-out duration-300">
+<LandingCards title={title} type={type} className="flex-col flex cursor-pointer ease-in-out duration-300" key={title} url={url} >
 <p className="text-base font-normal text-custom-4 my-4">{desc}</p>
 <div className="flex items-center gap-4">
 {linksArr.map(({title,linkUrl}) => (
@@ -78,16 +83,9 @@ From Guides to SDKs to API references - find everything you need to build high-q
 </div>
 
 
-{/* Get Started Section */}
-<div className="border-t border-custom-1 mt-10 pt-4 flex items-center justify-between">
-<div className="text-xs font-normal text-rgb-8">Last updated on June 16, 2023</div>
 
-<CustomBtn className="gap-2 border border-custom-5 rounded-lg py-2 px-4" url="/get-started">
-<div className="text-sm font-semibold text-rgb-7">Get Started</div>
-<div>{LandingIcons["chevron-right-btn"]}</div>
-</CustomBtn>
-</div>
 </div>
 
 <LatestRelease />
+
 </div>

@@ -1,0 +1,99 @@
+---
+title: 'Recording'
+---
+
+import {  Tabs, Tab } from 'nextra-theme-docs';
+
+
+# Recording / Livestreaming
+
+In the Legacy SDK, Recording and Livestreaming were handled by the `useRecording` hook which could be found in the React SDK. In the new SDK, this is handled by the `ServerSDK`. <br/>
+Moving the Recording and Livestreaming features to the `ServerSDK` now allows this feature on all platforms including mobile.
+
+
+<Tabs items={['New SDK', 'Legacy SDK']}>
+    
+    <Tab>
+        For details on the implementation, you can head over to the [Server SDK](/Server-SDK) documentation.
+
+        ```ts filename="index.ts"
+        import { Recorder } from '@huddle01/server-sdk/recorder';
+        import { AccessToken, Auth } from '@huddle01/server-sdk/auth';
+
+        const recorder = new Recorder("PROJECT_ID", "API_KEY");
+
+        const generateToken = async (roomId: string) => {
+        const token = new AccessToken({
+            apiKey: process.env.API_KEY!,
+            roomId: roomId as string,
+            role: Role.BOT,
+            permissions: {
+            admin: true,
+            canConsume: true,
+            canProduce: true,
+            canProduceSources: {
+                cam: true,
+                mic: true,
+                screen: true,
+            },
+            canRecvData: true,
+            canSendData: true,
+            canUpdateMetadata: true,
+            },
+        });
+        
+        const accessToken = await token.toJwt();
+
+        return accessToken;
+        }
+
+        const token = await generateToken("YOUR_ROOM_ID");
+
+        // Start Livestreaming
+        recorder.startLivestream({
+            roomId: 'YOUR_ROOM_ID',
+            token,
+        rtmpUrls: [`${"<STREAM_URL>"}/${"<STREAM_KEY>"}`] //passing the RTMP URL
+        })
+
+        // Stop Livestreaming
+        recorder.stop({
+            roomId: 'YOUR_ROOM_ID',
+        })
+        ```
+    </Tab>
+
+    <Tab>
+        ```tsx filename="Component.tsx"
+         
+        import { useRecording } from '@huddle01/react/hooks';
+        
+        const App = () => {
+            const { startRecording,stoprecording, isStarting, inProgress isStopping, error } = useRecording();
+        
+            if(inProgress) return (<div>...loading</div>)
+        
+            return (
+            <div>
+                <button 
+                    disabled={!startRecording.isCallable} 
+                    onClick={startRecording};
+                >
+                    START_RECORDING
+                </button>
+        
+                {isStarting ? "Recording is starting": error} 
+        
+        
+                <button disabled={!stoprecording.isCallable} onClick={stoprecording}>
+                STOP_RECORDING
+                </button>
+            </div>
+            );
+        };
+ 
+ 
+        ```
+    </Tab>
+
+</Tabs>

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import CommonIcons from '@components/assets/CommonIcons';
+import CommonIcons from "@components/assets/CommonIcons";
 
 type TabStripProps = {
   children: React.ReactNode;
@@ -14,18 +14,18 @@ const TabStrip: React.FC<TabStripProps> = ({ children, version, date }) => {
     <div
       className="border border-custom-1 rounded-lg md:p-4 p-2 flex items-start mb-6 justify-between cursor-pointer"
       role="presentation"
-      onClick={() => setIsReadMore(prev => !prev)}
+      onClick={() => setIsReadMore((prev) => !prev)}
     >
       <div className="flex items-start gap-10 w-full">
-        <VersionPill version={version} date={date ?? ''} />
+        <VersionPill version={version} date={date ?? ""} />
 
-        <div className="text-[#9EA3AE] text-base font-normal w-[80%]">
+        <div className="text-[#9EA3AE] text-base font-normal lg:w-[80%]  w-[70%]">
           {isReadMore ? children : React.Children.toArray(children)[0]}
         </div>
       </div>
-      <button type="button" className="mt-2">
-        {CommonIcons[isReadMore ? 'chevron-down' : 'chevron-right']}
-      </button>
+      {/* <button type="button" className="mt-2">
+        {CommonIcons[isReadMore ? "chevron-down" : "chevron-right"]}
+      </button> */}
     </div>
   );
 };
