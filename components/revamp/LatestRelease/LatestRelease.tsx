@@ -136,7 +136,7 @@ export const getLatestReleaseData = ({ params }) => {
       method: "GET",
       url: `https://registry.npmjs.org/${packageName}`,
     });
-    const version = data["dist-tags"].beta;
+    const version = data["dist-tags"].latest;
     return { version, date: data.time[`${version}`] };
   };
 
