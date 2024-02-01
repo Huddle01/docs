@@ -4,9 +4,9 @@ title: 'React'
 
 import { Callout, Tabs, Tab } from 'nextra-theme-docs';
 
-# Migrating React SDK to 1.x.x
+# Migrating React SDK to v2 (2.x.x)
 
-This guide will help you migrate your existing React SDK i.e. `0.x.x` to the new `1.x.x` version.
+This guide will help you migrate your existing React SDK i.e. `0.x.x` to the new `2.x.x` version.
 
 ## Installation
 
@@ -46,7 +46,7 @@ You can retrieve your `projectId` from [API Keys Page](/api-keys) by just connec
 </Callout>
 
 
-<Tabs items={['1.x.x', '0.x.x']}>
+<Tabs items={['2.x.x', '0.x.x']}>
 <Tab>
 ```tsx filename="_app.tsx"
 import type { AppProps } from "next/app";
@@ -152,7 +152,7 @@ export const createRoom = async () => {
 
 ## Authentication (Generating Access Token)
 
-In `1.x.x` version of SDK, you need an `accessToken` to join a room, without that you can't join a room using `joinRoom` method. 
+In `2.x.x` version of SDK, you need an `accessToken` to join a room, without that you can't join a room using `joinRoom` method. 
 To generate an `accessToken` you need to use our [Server SDK](/Server-SDK)
 
 <Callout type='warning'>
@@ -244,7 +244,7 @@ export async function GET(request: Request) {
 
 ## Joining/Leaving Room
 
-With our newer SDK i.e. `1.x.x`, we have streamlined the process by eliminating the additional step of joining a lobby before entering a room.
+With our newer SDK i.e. `2.x.x`, we have streamlined the process by eliminating the additional step of joining a lobby before entering a room.
 You can now directly join a room using `joinRoom` method returned from the `useRoom` hook.
 It requires one object parameter with two fields, `roomId` and `token` both of which have been generated in previous steps. 
 
@@ -253,7 +253,7 @@ You can call the APIs which we have created in previous steps to get `roomId` an
 </Callout>
 
 
-<Tabs items={['1.x.x', '0.x.x']}>
+<Tabs items={['2.x.x', '0.x.x']}>
 <Tab>
 ```tsx filename="app.tsx" 
 import { useRoom } from '@huddle01/react/hooks';
@@ -323,7 +323,7 @@ const App = () => {
 
 ## Producing Audio/Video
 
-In `1.x.x` version of SDK, you don't need to call `fetchVideoStream` and `produceVideo` methods separately. 
+In `2.x.x` version of SDK, you don't need to call `fetchVideoStream` and `produceVideo` methods separately. 
 You can just call `enableVideo`, which is returned from `useLocalVideo` hook. This will enable your camera and start producing your camera's video stream inside the room.
 Similarly, for audio as well you can just call `enableAudio` returned from `useLocalAudio` hook which will get your audio stream and start producing it inside the room.
 
@@ -331,7 +331,7 @@ Similarly, for audio as well you can just call `enableAudio` returned from `useL
 You can also share you screen and consume other peer's screen, to learn more refer to [Screen Share](/React/hooks/useLocalScreenShare). 
 </Callout>
 
-<Tabs items={['1.x.x', '0.x.x']}>
+<Tabs items={['2.x.x', '0.x.x']}>
 <Tab>
 ```tsx filename="app.tsx" 
   import { useLocalVideo, useLocalAudio, useLocalScreenShare } from '@huddle01/react/hooks';
@@ -425,13 +425,13 @@ You can also share you screen and consume other peer's screen, to learn more ref
 
 ## Showing Remote Peers and Consuming their Audio/Video
 
-In `1.x.x` version of SDK, you have to use the `usePeerIds` hook to get an array of all the remote peers in the room. You can then use hooks such as `useRemoteAudio`, `useRemoteVideo` and `useRemoteScreenShare` for consuming their `audio`, `video` and `screen-share` streams.
+In `2.x.x` version of SDK, you have to use the `usePeerIds` hook to get an array of all the remote peers in the room. You can then use hooks such as `useRemoteAudio`, `useRemoteVideo` and `useRemoteScreenShare` for consuming their `audio`, `video` and `screen-share` streams.
 
 <Callout>
 You can refer to [usePeerIds](/React/hooks/usePeerIds), [useRemoteAudio](/React/hooks/useRemoteAudio), and [useRemoteVideo](/React/hooks/useRemoteVideo) to learn more.
 </Callout>
 
-<Tabs items={['1.x.x', '0.x.x']}>
+<Tabs items={['2.x.x', '0.x.x']}>
 <Tab>
 ```tsx filename="ShowPeers.tsx"
   import { 
@@ -507,14 +507,14 @@ You can refer to [usePeerIds](/React/hooks/usePeerIds), [useRemoteAudio](/React/
 
 ## Sending/Receiving Data
 
-In `1.x.x` version of SDK, you can send and receive data using the `useDataMessage` hook.
+In `2.x.x` version of SDK, you can send and receive data using the `useDataMessage` hook.
 
 <Callout>
 You can also pass `label` while sending data, which will help you to identify 
 the type of data while receiving. 
 </Callout>
 
-<Tabs items={['1.x.x', '0.x.x']}>
+<Tabs items={['2.x.x', '0.x.x']}>
 <Tab>
 ```tsx 
 const {
@@ -570,5 +570,5 @@ You can refer to the following sample apps build on Javascript SDK
 - [Client Next TS Example (App Router)](https://github.com/Huddle01/next-app-router-ts-example)
 
 
-Congratulations! If you have followed this guide till here, we hope that you have successfully migrated to `1.x.x`
+Congratulations! If you have followed this guide till here, we hope that you have successfully migrated to `2.x.x`
 

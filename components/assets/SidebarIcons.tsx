@@ -23,7 +23,7 @@ const SidebarIcons: {
       />
     </svg>
   ),
-  'Get Started': (
+  "Get Started": (
     <svg
       width="18"
       height="18"
@@ -206,7 +206,7 @@ const SidebarIcons: {
       />
     </svg>
   ),
-  'Migrating to 1.x.x': (
+  "Migrating to v2 (2.x.x)": (
     <svg
       width="18"
       height="18"
@@ -228,7 +228,7 @@ const SidebarIcons: {
       />
     </svg>
   ),
-  'Talk to sales': (
+  "Talk to sales": (
     <svg
       width="18"
       height="18"
@@ -337,7 +337,7 @@ const SidebarIcons: {
       </defs>
     </svg>
   ),
-  'Server-SDK': (
+  "Server-SDK": (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="22"
@@ -536,7 +536,7 @@ const SidebarIcons: {
       </defs>
     </svg>
   ),
-  'React Native': (
+  "React Native": (
     <svg
       width="18"
       height="18"
@@ -562,7 +562,7 @@ const SidebarIcons: {
       </defs>
     </svg>
   ),
-  'Get an API key': (
+  "Get an API key": (
     <svg
       width="18"
       height="18"
@@ -584,7 +584,7 @@ const SidebarIcons: {
       />
     </svg>
   ),
-  'API Reference': (
+  "API Reference": (
     <svg
       width="18"
       height="18"
@@ -601,7 +601,7 @@ const SidebarIcons: {
       />
     </svg>
   ),
-  'CLI Tool': (
+  "CLI Tool": (
     <svg
       width="18"
       height="18"

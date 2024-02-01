@@ -4,9 +4,9 @@ title: 'JavaScript'
 
 import { Callout, Tabs, Tab } from 'nextra-theme-docs';
 
-# Migrating JavaScript SDK to 1.x.x
+# Migrating JavaScript SDK to v2 (2.x.x)
 
-This guide will help you migrate your existing JavaScript SDK i.e. `0.x.x` to the new `1.x.x` version.
+This guide will help you migrate your existing JavaScript SDK i.e. `0.x.x` to the new `2.x.x` version.
 
 ## Installation
 
@@ -54,7 +54,7 @@ You can retrieve your `projectId` from [API Keys Page](/api-keys) by just connec
 If you are using `commonjs` you can import `HuddleClient` using `require`. 
 </Callout>
 
-<Tabs items={['1.x.x', '0.x.x']}>
+<Tabs items={['2.x.x', '0.x.x']}>
 <Tab>
 ```js
 import { HuddleClient } from '@huddle01/web-core';
@@ -147,7 +147,7 @@ app.listen(port, () => {
 
 ## Authentication (Generating Access Token)
 
-In `1.x.x` version of SDK, you need an `accessToken` to join a room, without that you can't join a room using `joinRoom` method. 
+In `2.x.x` version of SDK, you need an `accessToken` to join a room, without that you can't join a room using `joinRoom` method. 
 To generate an `accessToken` you need to use our [Server SDK](/Server-SDK)
 
 <Callout type='warning'>
@@ -249,7 +249,7 @@ app.listen(port, () => {
 
 ## Joining/Leaving Room
 
-With our newer SDK i.e. `1.x.x`, we have streamlined the process by eliminating the additional step of joining a lobby before entering a room.
+With our newer SDK i.e. `2.x.x`, we have streamlined the process by eliminating the additional step of joining a lobby before entering a room.
 You can now directly join a room using `joinRoom` method accessible through `huddleClient`.
 It requires two parameters `roomId` and `token` both of which have been generated in previous steps. 
 
@@ -258,7 +258,7 @@ You can call the APIs which we have created in previous steps to get `roomId` an
 </Callout>
 
 
-<Tabs items={['1.x.x', '0.x.x']}>
+<Tabs items={['2.x.x', '0.x.x']}>
 <Tab>
 ```js
 // Use the `huddleClient` instance created in previous steps 
@@ -293,7 +293,7 @@ document.getElementById('leaveRoom').onclick = async () => {
 
 ## Producing Audio/Video
 
-In `1.x.x` version of SDK, you don't need to call `enableCam` and `produceCam` methods separately. 
+In `2.x.x` version of SDK, you don't need to call `enableCam` and `produceCam` methods separately. 
 You can just call `enableVideo` which will enable your camera and start producing if you have joined room.
 Similarly, for audio as well you can just call `enableAudio` which will get your audio stream and it will start producing if you have joined room.
 
@@ -301,7 +301,7 @@ Similarly, for audio as well you can just call `enableAudio` which will get your
 You can also share you screen and consume other peer's screen, to learn more refer to [Screen Share](/Javascript/methods/screenShare). 
 </Callout>
 
-<Tabs items={['1.x.x', '0.x.x']}>
+<Tabs items={['2.x.x', '0.x.x']}>
 <Tab>
 ```js
 document.getElementById('enableVideo').onclick = async () => {
@@ -376,17 +376,17 @@ document.getElementById('disableAudio').onclick = async () => {
 
 ## Showing Remote Peers
 
-In `1.x.x` version of SDK, you can get `remotePeers` from `huddleClient.room`. 
+In `2.x.x` version of SDK, you can get `remotePeers` from `huddleClient.room`. 
 `remotePeers` is a `Map<string,RemotePeer>`, where string is a `peerId` and `RemotePeer` is an object. 
 Once, you have access to `RemotePeer` object, you can get media streams and other information of that peer such as it's metadata. 
 
-With `1.x.x` we have remove methods like `setAvatarUrl` and `setDisplayName`, instead of these you can set any type of `metadata` for a peer. 
+With `2.x.x` we have remove methods like `setAvatarUrl` and `setDisplayName`, instead of these you can set any type of `metadata` for a peer. 
 
 <Callout>
 You can refer to [RemotePeer](/Javascript/methods/remotePeer) and [LocalPeer](/Javascript/methods/localPeer) to learn more.
 </Callout>
 
-<Tabs items={['1.x.x', '0.x.x']}>
+<Tabs items={['2.x.x', '0.x.x']}>
 <Tab>
 ```js
 // This will listen to new peer joined event
@@ -419,9 +419,9 @@ huddleClient.on('room:peer-joined', () => {
 
 ## Consuming Audio/Video
 
-In `1.x.x` version of SDK, to access stream of a `remotePeer` you need to access `consumer` and then you can get a stream from it.
+In `2.x.x` version of SDK, to access stream of a `remotePeer` you need to access `consumer` and then you can get a stream from it.
 
-<Tabs items={['1.x.x', '0.x.x']}>
+<Tabs items={['2.x.x', '0.x.x']}>
 <Tab>
 ```js
 // Listen to `stream-added` event 
@@ -485,7 +485,7 @@ huddleClient.on('room:peer-produce-stop', ({ peerId, mediaType }) => {
 
 ## Sending/Receiving Data
 
-In `1.x.x` version of SDK, you can send data using `sendData` method from `huddleClient.localPeer` and receive data 
+In `2.x.x` version of SDK, you can send data using `sendData` method from `huddleClient.localPeer` and receive data 
 by listening to `receive-data` event. 
 
 <Callout>
@@ -493,7 +493,7 @@ You can also pass `label` while sending data, which will help you to identify
 the type of data while receiving. 
 </Callout>
 
-<Tabs items={['1.x.x', '0.x.x']}>
+<Tabs items={['2.x.x', '0.x.x']}>
 <Tab>
 ```js 
 document.getElementById('sendData').onclick = async () => {
@@ -532,5 +532,5 @@ You can refer to the following sample apps build on Javascript SDK
 - [Client Vanilla TS Example](https://github.com/Huddle01/client-vanilla-ts-example)
 - [Client Vanilla IIFE](https://github.com/Huddle01/client-vanilla-iife)
 
-Congratulations! If you have followed this guide till here, we hope that you have successfully migrated to `1.x.x`
+Congratulations! If you have followed this guide till here, we hope that you have successfully migrated to `2.x.x`
 
