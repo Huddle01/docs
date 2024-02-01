@@ -1,5 +1,11 @@
 {
-  "index": "Getting Started",
+  "index": {
+    "title": "Getting Started",
+    "theme": {
+      "layout": "full",
+      "toc": false
+    }
+  },
   "create-room": {
     "title": "Create Room APIs",
     "theme": {
