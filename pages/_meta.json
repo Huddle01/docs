@@ -9,10 +9,6 @@
       "layout": "full"
     }
   },
-  "get-started": {
-    "title": "Get Started",
-    "theme": { "layout": "default" }
-  },
   "concepts": "Concepts",
 
   "guides": {
