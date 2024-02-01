@@ -25,12 +25,7 @@
       "layout": "full"
     }
   },
-  "talk-to-sales": {
-    "type": "page",
-    "title": "Talk to sales",
-    "href": "http://cal.com/yashvendra",
-    "newWindow": true
-  },
+
   "--APIs": {
     "type": "separator",
     "title": "APIs"
@@ -55,7 +50,12 @@
   },
   "iFrame": "",
   "cli-tool": "CLI Tool",
-
+  "talk-to-sales": {
+    "type": "page",
+    "title": "Talk to sales",
+    "href": "http://cal.com/yashvendra",
+    "newWindow": true
+  },
   "changelog": {
     "type": "page",
     "title": "Changelog",
