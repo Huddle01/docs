@@ -53,5 +53,9 @@ body {
 }
 
 .calendarBtn {
+  background-color: rgb(32, 35, 40) !important;
+  transition: all ease-in-out 300ms;
+}
+.calendarBtn:hover {
   background-color: rgba(32, 35, 40, 0.7) !important;
 }

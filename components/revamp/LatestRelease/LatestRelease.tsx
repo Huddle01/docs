@@ -47,7 +47,7 @@ const LatestRelease = () => {
         </div>
         <button
           type="button"
-          className="calendarBtn py-2 px-4 rounded-md flex items-center gap-2 w-36"
+          className="calendarBtn py-2 px-4 rounded-md flex items-center gap-2"
           onClick={() => window.open("http://cal.com/yashvendra")}
         >
           <div className="text-xs font-semibold text-rgb-7">Contact Sales</div>
