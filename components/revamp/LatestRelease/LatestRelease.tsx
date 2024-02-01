@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import axios from "axios";
 
 // Assets
@@ -7,14 +7,12 @@ import Image from "next/image";
 import { useData } from "nextra/data";
 import Link from "next/link";
 
-type LatestReleaseProps = {};
-
 type PackageVersion = {
   version: string;
   date: string;
 };
 
-const LatestRelease: React.FC<LatestReleaseProps> = () => {
+const LatestRelease = () => {
   const { releaseData } = useData();
 
   return (
@@ -32,6 +30,30 @@ const LatestRelease: React.FC<LatestReleaseProps> = () => {
           url={url}
         />
       ))}
+
+      <div className="card mt-10 p-4 flex flex-col items-start gap-y-4 w-full">
+        <Image
+          src="/docs/images/Calendar.png"
+          alt="calendar"
+          width={220}
+          height={220}
+          className="object-contain"
+          priority
+          quality={100}
+        />
+
+        <div className="calendarText text-sm font-medium font-inter">
+          Looking for integration help, enterprise support, or more?
+        </div>
+        <button
+          type="button"
+          className="calendarBtn py-2 px-4 rounded-md flex items-center gap-2 w-36"
+          onClick={() => window.open("http://cal.com/yashvendra")}
+        >
+          <div className="text-xs font-semibold text-rgb-7">Contact Sales</div>
+          <div>{LandingIcons["chevron-right-btn"]}</div>
+        </button>
+      </div>
     </div>
   );
 };
