@@ -21,7 +21,7 @@ import Image from 'next/image';
 The core principles around the architecture of Huddle01’s React SDK are what make using it a breeze. Below are some concepts and glossary that you should be familiar with before using the SDK.
 
 ## Room
-A room is a Huddle01 meeting session. It contains all the participants and their media streams.
+A room is a virtual entity inside which you can have Huddle01 meeting sessions. It contains all the participants and their media streams. Each room is identified by a unique roomID that is generated when you create a room. A room does not expire and you can have multiple meeting sessions inside the same room for as long as you want, one meeting session at a time.
 
 ## Peer
 A peer is a participant inside a room. It is an object containing all the media streams of a participant. Each peer is represented by a unique peerId. Every peer is associated with a room.
