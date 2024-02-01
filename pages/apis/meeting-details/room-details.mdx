@@ -23,20 +23,13 @@ This API lets you retrieve the room details using either the room ID or the titl
 
 ## **Using RoomId**
 <div className="flex justify-between lg:flex-row flex-col">
-  <HighLight className="my-3 lg:w-3/4 w-full">
+  <HighLight className="my-3 w-full">
     <RequestStrip
       method={'GET'}
       url={'https://api.huddle01.com/api/v1'}
       endpoint={'room-details/{roomId}'}
     />
   </HighLight>
-  <Button
-    variant="primary"
-    url="/api-keys"
-    text="Get your API Key"
-    isRouting
-    className=" my-2 w-auto px-8"
-  />
 </div>
 
 

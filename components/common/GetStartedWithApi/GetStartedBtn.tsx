@@ -41,7 +41,7 @@ export const Endpoint = () => (
       <div className="text-custom-6 text-lg font-medium">Endpoint</div>
     </div>
 
-    <div className="mt-6 bg-slate-700 border border-slate-600 rounded-lg p-3 w-full text-slate-50/2 font-sm font-normal">
+    <div className="mt-6 bg-[#202328] border border-slate-600 rounded-lg p-3 w-full text-slate-50/2 font-sm font-normal">
       https://api.huddle01.com/api/v1/
     </div>
   </Wrapper>
