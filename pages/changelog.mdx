@@ -1,0 +1,54 @@
+---
+title: 'Changelog'
+---
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+{/* Components */}
+import TabStrip from '@components/revamp/ChangelogContent/TabStrip.tsx';
+import ChangelogContent from "@components/revamp/ChangelogContent/ChangelogContent.tsx"
+
+
+import { ChangelogTabs } from '@components/assets/Data/changelog';
+
+
+<div className="flex w-full h-full">
+
+<div className="flex flex-col h-full  md:p-9 w-full">
+# Changelog
+
+Read all about the recent releases and the changes.
+
+{/* TODO: Fetch dynamically later with changesets */}
+
+<ChangelogContent>
+
+<Tabs items={Object.keys(ChangelogTabs)}>
+
+{
+  Object.entries(ChangelogTabs).map(([key, value]) => {
+    return (
+      <Tab>
+
+        {
+          value.map((item) => {
+            return (
+              <TabStrip version={item.version} date={item.date}>
+                {item.content}
+              </TabStrip>
+            )
+          })
+        }
+      
+      </Tab>
+    )
+  })
+}
+
+ 
+      </Tabs>
+      </ChangelogContent>
+
+
+</div>
+</div>

@@ -9,14 +9,13 @@
       "layout": "full"
     }
   },
-  "get-started": {
-    "title": "Get Started",
-    "theme": { "layout": "default" }
-  },
   "concepts": "Concepts",
 
   "guides": {
     "title": "Guides"
+  },
+  "migration": {
+    "title": "Migrating to v2 (2.x.x)"
   },
 
   "showcase": {
@@ -26,12 +25,15 @@
       "layout": "full"
     }
   },
-  "talk-to-sales": {
-    "type": "page",
-    "title": "Talk to sales",
-    "href": "http://cal.com/yashvendra",
-    "newWindow": true
+
+  "--APIs": {
+    "type": "separator",
+    "title": "APIs"
   },
+
+  "api-keys": "Get an API key",
+  "apis": "API Reference",
+
   "--SDKs": {
     "type": "separator",
     "title": "SDKs"
@@ -41,21 +43,22 @@
   "React-Native": "",
   "Server-SDK": "",
   "Flutter": "",
-  "--APIs": {
-    "type": "separator",
-    "title": "APIs"
-  },
-  "api-keys": "Get an API key",
-  "apis": "API Reference",
 
   "--Quick Integration": {
     "type": "separator",
     "title": "Quick Integration"
   },
   "iFrame": "",
-  "release-note": {
+  "cli-tool": "CLI Tool",
+  "talk-to-sales": {
     "type": "page",
-    "title": "Release Notes",
+    "title": "Talk to sales",
+    "href": "http://cal.com/yashvendra",
+    "newWindow": true
+  },
+  "changelog": {
+    "type": "page",
+    "title": "Changelog",
     "theme": {
       "typesetting": "article"
     }

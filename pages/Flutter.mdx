@@ -1,0 +1,37 @@
+---
+title: 'Flutter'
+---
+
+import { FlutterData } from '@components/assets/Data/data';
+import GradientCard from '@components/common/GradientCard/GradientCard';
+import { Callout } from 'nextra-theme-docs';
+
+# Flutter
+
+<Callout>
+  The current Flutter SDK version is still in `beta`. 
+</Callout>
+
+The Huddle01 Flutter SDK offers a comprehensive suite of methods and event listeners that allow for seamless real-time audio and video communication with minimal coding required.
+
+<div className="my-16 xl:max-w-none">
+  <div className="not-prose mt-4 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
+    {FlutterData.map(resource => (
+      <GradientCard key={resource.href} resource={resource} />
+    ))}
+  </div>
+</div>
+
+## Pre Requisites
+
+Before using the Huddle01 Flutter SDK, you must have Flutter and its build tools installed on your machine.
+
+- Install Flutter by following the instructions on this **[Official Flutter Page](https://docs.flutter.dev/get-started/install)**
+- Download [Android Studio](https://developer.android.com/studio) or [XCode](https://developer.apple.com/xcode/) to go ahead with Flutter development.
+
+
+After installing Flutter, verify it's installed by running the following command in your terminal:
+
+```jsx
+flutter doctor
+```

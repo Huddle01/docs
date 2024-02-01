@@ -1,8 +1,8 @@
 import React from 'react';
 
-import LandingIcons from '@components/assets/LandingIcons';
+// import LandingIcons from '@components/assets/LandingIcons';
 
-import CustomBtn from '../CustomBtn/CustomBtn';
+// import CustomBtn from '../CustomBtn/CustomBtn';
 
 type ChangelogContentProps = {
   children: React.ReactNode;
@@ -10,9 +10,9 @@ type ChangelogContentProps = {
 
 const ChangelogContent: React.FC<ChangelogContentProps> = ({ children }) => {
   return (
-    <div>
+    <div className="w-full">
       {children}
-      <div className="flex items-center justify-between w-full">
+      {/* <div className="flex items-center justify-between w-full">
         <div className="text-rgb-10 text-xs font-normal">
           Last updated on June 16, 2023
         </div>
@@ -21,9 +21,9 @@ const ChangelogContent: React.FC<ChangelogContentProps> = ({ children }) => {
           url="/get-started"
         >
           <div className="text-sm font-semibold text-rgb-7">Get Started</div>
-          <div>{LandingIcons['chevron-right-btn']}</div>
+          <div>{LandingIcons["chevron-right-btn"]}</div>
         </CustomBtn>
-      </div>
+      </div> */}
     </div>
   );
 };

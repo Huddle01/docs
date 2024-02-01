@@ -1,14 +1,14 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent } from "react";
 
 import {
   MotionValue,
   motion,
   useMotionTemplate,
   useMotionValue,
-} from 'framer-motion';
-import { useRouter } from 'next/router';
+} from "framer-motion";
+import { useRouter } from "next/router";
 
-import Icon from './Icon';
+import Icon from "./Icon";
 
 interface IPatterns {
   mouseX: MotionValue<number>;
@@ -62,7 +62,7 @@ const GradientCard: React.FC<Props> = ({ resource, isShowcase }) => {
   return (
     <div
       key={resource.href}
-      onMouseMove={e => onMouseMove(e)}
+      onMouseMove={(e) => onMouseMove(e)}
       className="group relative flex rounded-2xl transition-shadow hover:shadow-md bg-white/2.5 hover:shadow-black/5 cursor-pointer"
       onClick={() =>
         isShowcase ? window.open(resource.href) : push(resource.href)

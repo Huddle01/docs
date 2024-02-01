@@ -1,0 +1,574 @@
+---
+title: 'React'
+---
+
+import { Callout, Tabs, Tab } from 'nextra-theme-docs';
+
+# Migrating React SDK to v2 (2.x.x)
+
+This guide will help you migrate your existing React SDK i.e. `0.x.x` to the new `2.x.x` version.
+
+## Installation
+
+Install the latest version of the React SDK using the following command
+
+<Tabs items={['pnpm', 'npm', 'yarn', 'bun']}>
+    <Tab>
+```bash 
+pnpm i @huddle01/react@latest
+```
+    </Tab>
+    <Tab>
+```bash 
+npm i @huddle01/react@latest
+```
+    </Tab>
+    <Tab>
+```bash 
+yarn add @huddle01/react@latest
+```
+    </Tab>
+        <Tab>
+```bash 
+bun install @huddle01/react@latest
+```
+    </Tab>
+</Tabs>
+
+
+## Initialization 
+
+To initialize the SDK, you need to wrap your entire app inside `HuddleProvider` and pass `projectId` as a prop.
+After this, all methods used to interact with the SDK will be available to you via different hooks.
+
+<Callout>
+You can retrieve your `projectId` from [API Keys Page](/api-keys) by just connecting your wallet. 
+</Callout>
+
+
+<Tabs items={['2.x.x', '0.x.x']}>
+<Tab>
+```tsx filename="_app.tsx"
+import type { AppProps } from "next/app";
+import { HuddleClient, HuddleProvider } from "@huddle01/react";
+
+const huddleClient = new HuddleClient({
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
+  options: {
+    // `activeSpeakers` will be most active `n` number of peers, by default it's 8
+    activeSpeakers: {
+      size: 12,
+    },
+  },
+});
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <HuddleProvider client={huddleClient}>
+      <Component {...pageProps} />
+    </HuddleProvider>
+  );
+}
+```
+</Tab>
+<Tab>
+```tsx filename="app.tsx"
+import { useHuddle01 } from '@huddle01/react';
+
+const App = () => {
+  const { initialize, isInitialized } = useHuddle01();
+
+  useEffect(() => {
+    // its preferable to use env vars to store projectId
+    initialize('YOUR_PROJECT_ID');
+  }, []);
+
+  return <div>{isInitialized ? 'Hello World!' : 'Please initialize'}</div>;
+};
+```
+</Tab>
+</Tabs>
+
+## Room Creation 
+
+You need a `roomId` for joining a room, which you can get by calling the [Create Room](/apis/create-room/create-room) API. 
+Make sure that you are calling this API from server side. 
+If you are using pages router you can create an API route or for app router you can easily create a server side component. 
+
+<Tabs items={['Pages Router', 'App Router']}>
+<Tab>
+```ts filename="pages/api/create-room.ts"
+import axios from 'axios';
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    const { data } = await axios.post(
+      'https://api.huddle01.com/api/v1/create-room',
+      {
+        title: 'Huddle01 Meet',
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.API_KEY as string,
+        },
+      }
+    );
+
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+export default handler;
+```
+</Tab>
+<Tab>
+```ts filename="createRoom.ts"
+"use server";
+
+export const createRoom = async () => {
+  const response = await fetch("https://api.huddle01.com/api/v1/create-room", {
+    method: "POST",
+    body: JSON.stringify({
+      title: "Huddle01 Room",
+    }),
+    headers: {
+      "Content-type": "application/json",
+      "x-api-key": process.env.API_KEY!,
+    },
+    cache: "no-cache",
+  });
+
+  const data = await response.json();
+  const roomId = data.data.roomId;
+  return roomId;
+};
+```
+</Tab>
+</Tabs>
+
+## Authentication (Generating Access Token)
+
+In `2.x.x` version of SDK, you need an `accessToken` to join a room, without that you can't join a room using `joinRoom` method. 
+To generate an `accessToken` you need to use our [Server SDK](/Server-SDK)
+
+<Callout type='warning'>
+Use [Server SDK](/Server-SDK) on server side only, don't use it on client side.
+</Callout>
+
+<Tabs items={['Pages Router', 'App Router']}>
+<Tab>
+```ts filename="pages/api/getAccessToken.ts"
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { AccessToken, Role } from '@huddle01/server-sdk/auth';
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const { roomId } = req.query;
+
+  if (!roomId) {
+    return res.status(400).json({ error: 'roomId is required' });
+  }
+
+  const accessToken = new AccessToken({
+    apiKey: process.env.API_KEY!,
+    roomId: roomId as string,
+    role: Role.HOST,
+    permissions: {
+      admin: true,
+      canConsume: true,
+      canProduce: true,
+      canProduceSources: {
+        cam: true,
+        mic: true,
+        screen: true,
+      },
+      canRecvData: true,
+      canSendData: true,
+      canUpdateMetadata: true,
+    }
+  });
+
+  const token = await accessToken.toJwt();
+
+  return res.status(200).json({ token });
+}
+```
+</Tab>
+<Tab>
+```ts filename="token/route.ts"
+import { AccessToken, Role } from "@huddle01/server-sdk/auth";
+
+export const dynamic = "force-dynamic";
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+
+  const roomId = searchParams.get("roomId");
+
+  if (!roomId) {
+    return new Response("Missing roomId", { status: 400 });
+  }
+
+  const accessToken = new AccessToken({
+    apiKey: process.env.API_KEY!,
+    roomId: roomId as string,
+    role: Role.HOST,
+    permissions: {
+      admin: true,
+      canConsume: true,
+      canProduce: true,
+      canProduceSources: {
+        cam: true,
+        mic: true,
+        screen: true,
+      },
+      canRecvData: true,
+      canSendData: true,
+      canUpdateMetadata: true,
+    }
+  });
+
+  const token = await accessToken.toJwt();
+
+  return new Response(token, { status: 200 });
+}
+```
+</Tab>
+</Tabs>
+
+## Joining/Leaving Room
+
+With our newer SDK i.e. `2.x.x`, we have streamlined the process by eliminating the additional step of joining a lobby before entering a room.
+You can now directly join a room using `joinRoom` method returned from the `useRoom` hook.
+It requires one object parameter with two fields, `roomId` and `token` both of which have been generated in previous steps. 
+
+<Callout type='info'>
+You can call the APIs which we have created in previous steps to get `roomId` and `token`.
+</Callout>
+
+
+<Tabs items={['2.x.x', '0.x.x']}>
+<Tab>
+```tsx filename="app.tsx" 
+import { useRoom } from '@huddle01/react/hooks';
+
+const App = () => {
+  const { joinRoom, leaveRoom } = useRoom({
+    onJoin: () => {
+      console.log('Joined the room');
+    },
+    onLeave: () => {
+      console.log('Left the room');
+    },
+  });
+  
+  return (
+    <div>
+      <button onClick={() => {
+        joinRoom({
+          roomId: 'YOUR_ROOM_ID',
+          token: 'YOUR_ACCESS_TOKEN'
+        });
+      }}>
+        Join Room
+      </button>      
+      <button onClick={leaveRoom}>
+        Leave Room
+      </button> 
+    </div>
+  );
+};
+```
+</Tab>
+<Tab>
+```tsx filename="app.tsx" 
+  import { useLobby, useRoom } from '@huddle01/react/hooks';
+
+  const App = () => {
+    const { joinLobby } = useLobby();
+    const { joinRoom, leaveRoom } = useRoom();
+
+    return (
+      <div>
+        <button 
+          disabled={!joinLobby.isCallable} 
+          onClick={() => joinLobby('YOUR_ROOM_ID');
+        }>
+          Join Lobby
+        </button>
+        <button 
+          disabled={!joinRoom.isCallable} 
+          onClick={joinRoom}
+        >
+          Join Room
+        </button>
+        <button 
+          disabled={!leaveRoom.isCallable} 
+          onClick={leaveRoom}
+        >
+          Leave Room
+        </button>
+      </div>
+    );
+  };
+```
+</Tab>
+</Tabs>
+
+## Producing Audio/Video
+
+In `2.x.x` version of SDK, you don't need to call `fetchVideoStream` and `produceVideo` methods separately. 
+You can just call `enableVideo`, which is returned from `useLocalVideo` hook. This will enable your camera and start producing your camera's video stream inside the room.
+Similarly, for audio as well you can just call `enableAudio` returned from `useLocalAudio` hook which will get your audio stream and start producing it inside the room.
+
+<Callout>
+You can also share you screen and consume other peer's screen, to learn more refer to [Screen Share](/React/hooks/useLocalScreenShare). 
+</Callout>
+
+<Tabs items={['2.x.x', '0.x.x']}>
+<Tab>
+```tsx filename="app.tsx" 
+  import { useLocalVideo, useLocalAudio, useLocalScreenShare } from '@huddle01/react/hooks';
+
+  const App = () => {
+    const { stream, enableVideo, disableVideo, isVideoOn } = useLocalVideo();
+    const { stream, enableAudio, disableAudio, isAudioOn } = useLocalAudio();
+    const { startScreenShare, stopScreenShare, shareStream } = useLocalScreenShare();
+
+    return (
+      <div>
+        {/* Webcam */} 
+        <button 
+          onClick={() => {
+            isVideoOn ? disableVideo() : enableVideo()
+          }}>
+          Fetch and Produce Video Stream
+        </button>
+
+        {/* Mic */} 
+       <button 
+          onClick={() => {
+            isAudioOn ? disableAudio() : enableAudio();
+          }}>
+          Fetch and Produce Audio Stream
+        </button>
+
+        {/* Screen Share */}
+        <button 
+          onClick={() => {
+            shareStream ? stopScreenShare() : startScreenShare();
+          }}>
+          Fetch and Produce Screen Share Stream
+        </button>
+      </div>
+    );
+  };
+
+```
+</Tab>
+<Tab>
+```tsx filename="app.tsx"
+  import { useAudio, useVideo } from '@huddle01/react/hooks';
+
+  const App = () => {
+    const { 
+      fetchAudioStream, stopAudioStream, error: micError, 
+      produceAudio, stopProducingAudio 
+    } = useAudio();
+
+    const { 
+      fetchVideoStream, stopVideoStream, error: camError, 
+      produceVideo, stopProducingVideo 
+    } = useVideo(); 
+  
+    return (
+      <div>
+       {/* Mic */} 
+        <button disabled={!fetchAudioStream.isCallable} onClick={fetchAudioStream}>
+          FETCH_AUDIO_STREAM
+        </button>
+
+        {/* Webcam */} 
+        <button disabled={!fetchVideoStream.isCallable} onClick={fetchVideoStream}>
+          FETCH_VIDEO_STREAM
+        </button>
+
+        <button disabled={!produceVideo.isCallable} onClick={() => produceVideo(camStream)}>
+          Produce Cam  
+        </button>
+
+        <button disabled={!produceAudio.isCallable} onClick={() => produceAudio(micStream)}>
+          Produce Mic  
+        </button>
+
+        <button disabled={!stopProducingVideo.isCallable} onClick={stopProducingVideo}>
+          Stop Producing Cam  
+        </button>
+
+        <button disabled={!stopProducingAudio.isCallable} onClick={stopProducingAudio}>
+          Stop Producing Mic  
+        </button>
+      </div>
+    );
+  };
+
+```
+
+</Tab>
+</Tabs>
+
+## Showing Remote Peers and Consuming their Audio/Video
+
+In `2.x.x` version of SDK, you have to use the `usePeerIds` hook to get an array of all the remote peers in the room. You can then use hooks such as `useRemoteAudio`, `useRemoteVideo` and `useRemoteScreenShare` for consuming their `audio`, `video` and `screen-share` streams.
+
+<Callout>
+You can refer to [usePeerIds](/React/hooks/usePeerIds), [useRemoteAudio](/React/hooks/useRemoteAudio), and [useRemoteVideo](/React/hooks/useRemoteVideo) to learn more.
+</Callout>
+
+<Tabs items={['2.x.x', '0.x.x']}>
+<Tab>
+```tsx filename="ShowPeers.tsx"
+  import { 
+    usePeerIds, 
+    useRemoteVideo, 
+    useRemoteAudio, 
+    useRemoteScreenShare 
+  } from '@huddle01/react/hooks';
+  import { Audio, Video } from '@huddle01/react/components';
+  import { FC } from 'react';
+
+  interface RemotePeerProps {
+    peerId: string;
+  }
+
+  const RemotePeer: FC<RemotePeerProps> = ({ peerId }) => {
+    
+    const { stream: videoStream } = useRemoteVideo({ peerId });
+    const { stream: audioStream } = useRemoteAudio({ peerId });
+    const { videoStream: screenVideoStream, audioStream: screenAudioStream } = useRemoteScreenShare({ peerId });
+  
+    return (
+      <div>
+        {videoStream && <Video stream={videoStream}>}
+        {audioStream && <Audio stream={audioStream}>}
+        {screenVideoStream && <Video stream={screenVideoStream}>}
+        {screenAudioStream && <Audio stream={screenAudioStream}>}
+      </div>
+    )
+  }
+  
+  const ShowPeers = () => {
+    const { peerIds } = usePeerIds();
+
+    return (
+      <div>
+        {peerIds.map(peerId => {
+          return <RemotePeer peerId={peerId}  />
+        })}
+      </div>
+    )
+  }
+
+  export default ShowPeers;
+```
+</Tab>
+<Tab>
+```tsx filename="app.tsx"
+  import { usePeers } from '@huddle01/react/hooks';
+  import { Audio, Video } from '@huddle01/react/components';
+
+  const App = () => {
+    const { peerIds } = usePeers();
+
+    return (
+      <div>
+        <div className="grid grid-cols-4">
+          {peerIds.map(peerId => (
+              <Video key={peer.peerId} peerId={peer.peerId} debug />
+          ))}
+
+          {peerIds.map(peerId => (
+              <Audio key={peer.peerId} peerId={peer.peerId} debug />
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+```
+</Tab>
+</Tabs>
+
+## Sending/Receiving Data
+
+In `2.x.x` version of SDK, you can send and receive data using the `useDataMessage` hook.
+
+<Callout>
+You can also pass `label` while sending data, which will help you to identify 
+the type of data while receiving. 
+</Callout>
+
+<Tabs items={['2.x.x', '0.x.x']}>
+<Tab>
+```tsx 
+const {
+    sendData
+  } = useDataMessage({
+    onMessage(payload, from, label) {
+        //received data message
+        console.log(payload, from, label);
+    };
+  });
+ 
+  sendData({
+    to: '*',
+    payload: "Hello World!",
+    label: "chat"
+  });
+```
+</Tab>
+
+<Tab>
+```tsx filename="app.tsx"
+  import { useAppUtils } from "@huddle01/react/app-utils";
+
+  const App = () => {
+    const { sendData } = useAppUtils();
+
+    const sendDataToAllPeers = () => {
+      sendData("*", { message: "Hello World" })
+    };
+ 
+    const sendDataToSpecificPeer = () => {
+      sendData(["PEER_ID"], { message: "Hello World" })
+    };
+
+    return (
+      <div>
+        <button onClick={sendDataToAllPeers}> Send data to all peers </button>
+        <button onClick={sendDataToSpecificPeer}> Send data to specific peer </button>
+      </div>
+    );
+  };
+
+```
+</Tab>
+</Tabs>
+
+## Happy Hacking 🎉
+
+You can refer to the following sample apps build on Javascript SDK
+- [Client Next.js Example (Pages Router)](https://github.com/Huddle01/client-next-js-example)
+- [Client Next TS Example (Pages Router)](https://github.com/Huddle01/client-next-ts-example)
+- [Client Next.js Example (App Router)](https://github.com/Huddle01/next-app-router-js-example)
+- [Client Next TS Example (App Router)](https://github.com/Huddle01/next-app-router-ts-example)
+
+
+Congratulations! If you have followed this guide till here, we hope that you have successfully migrated to `2.x.x`
+

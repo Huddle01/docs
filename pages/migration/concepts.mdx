@@ -1,0 +1,72 @@
+---
+title: 'Concepts'
+---
+
+
+# How the concepts have changed
+
+## Comparison b/w LTS & Legacy SDK Concepts:
+
+1. **Room** - A space where you can conduct meeting sessions containing all participants and their media streams.
+ 
+2. **Lobby**
+   - *Legacy:* A pre-room staging area for enabling or disabling media streams before joining a room.
+   - *New:* Deprecated in the new SDK. (Note: You can use APIs now to fetch room user data)
+
+3. **Peer** - A participant inside a room with media streams, represented by a unique peerId.
+
+
+4. **MediaStream** - Represents a stream of media content associated with a peer.
+
+
+5. **MediaStreamTrack** - Represents a single media track within a MediaStream.
+
+
+6. **Produce** -  Sharing a participant’s media stream with other peers in a room.
+
+
+7. **Consume** - Receiving a peer’s shared media stream inside a room.
+
+8. **App States**
+   - *Legacy:* Four major states - Idle, Initialized, Lobby, Room - with associated methods.
+   - *New:* Four major updated room states - idle, connecting, connected, failed, left, closed 
+
+
+
+## New SDK Concepts:
+
+1. **Room**
+   - *Description:* A room is a virtual entity inside which you can have Huddle01 meeting sessions. It contains all the participants and their media streams. Each room is identified by a unique roomID that is generated when you create a room. A room does not expire and you can have multiple meeting sessions inside the same room for as long as you want, one meeting session at a time.
+
+2. **Room States**
+   - *States:* `idle`, `connecting`, `connected`, `failed`, `left`, `closed` - Representing different states of a room.
+
+3. **Local**
+   - *Description:* Operations related to your own Peer object inside a room, represented by the keyword local.
+   - *Variables:* `localPeer`, `localAudio`, `localVideo`
+
+4. **Remote**
+   - *Description:* Operations related to other peers in the same room, represented by the keyword remote.
+   - *Variables:* `remotePeer`, `remoteAudio`, `remoteVideo`
+
+5. **Data Message**
+   - *Description:* Messages sent between peers in the form of text strings not exceeding 280 characters.
+
+6. **Metadata**
+   - *Description:* A generic object that can be attached to Peers and the Room for storing additional information.
+
+
+
+
+## States in Legacy SDK <span className="text-red-500">(Deprecated)</span>:
+
+1. **Idle/Initialized**
+   - *Methods Available:* `initialize(projectId: string)` - `useHuddle01()`
+
+2. **Lobby**
+   - *Methods Available:* `fetchVideoStream()`, `fetchAudioStream()`, `joinRoom()`, `leaveLobby()`, `stopVideoStream()`, `stopAudioStream()` - Corresponding `useVideo()`, `useAudio()`, `useRoom()` hooks.
+
+3. **Room**
+   - *Methods Available:* `produceVideo()`, `produceAudio()`, `stopProducingVideo()`, `stopProducingAudio()`, `leaveRoom()` - Corresponding `useVideo()`, `useAudio()`, `useRoom()` hooks.
+
+ Please ensure to refer to the new SDK documentation for detailed information on each concept and its usage.

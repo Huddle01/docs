@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import RNCard from '@components/Card/RNCard';
+import RNCard from "@components/Card/RNCard";
 
-import reactNative from '../../Data/reactNative.json';
+import reactNative from "../../Data/reactNative.json";
 
 const Container = () => {
   return (
     <div className="flex justify-around items-center mt-10 w-full">
       {reactNative.map(({ title, url, icon }, i) => (
-        <RNCard key={i} title={title} url={url} icon={icon} />
+        <RNCard key={title} title={title} url={url} icon={icon} />
       ))}
     </div>
   );
