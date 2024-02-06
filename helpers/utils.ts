@@ -33,10 +33,9 @@ export const extractProjectName = (url: string) => {
   }
 };
 
-export const isValidDomain = (text?: string) => {
+export const isValidProjectName = (text?: string) => {
   if (!text) return false;
-  const regex =
-    /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
+  const regex = /^[a-zA-Z]*$/;
 
   return regex.test(text);
 };
