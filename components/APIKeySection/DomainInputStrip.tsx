@@ -3,24 +3,36 @@ import { toast } from 'react-hot-toast';
 
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
-import { useAccount } from 'wagmi';
+import { useAccount, useDisconnect } from 'wagmi';
 
-import { cn, extractProjectName } from '../../helpers/utils';
+import {
+  cn,
+  extractProjectName,
+  isValidProjectName,
+} from '../../helpers/utils';
 
 interface props {
   apiKey: string;
   setProjectName: Dispatch<SetStateAction<string | null>>;
+  setApiKey: Dispatch<SetStateAction<string>>;
+  setProjectId: Dispatch<SetStateAction<string>>;
 }
 
-const DomainInputStrip: React.FC<props> = ({ apiKey, setProjectName }) => {
-  const { isConnected } = useAccount();
+const DomainInputStrip: React.FC<props> = ({
+  apiKey,
+  setProjectName,
+  setApiKey,
+  setProjectId,
+}) => {
+  const { isConnected, address } = useAccount();
+  const { disconnect } = useDisconnect();
   const [newProjectName, setNewProjectName] = useState<string>('');
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewProjectName(e.target.value);
   };
 
-  const { mutate: sendDomain } = useMutation({
+  const { mutateAsync: sendDomain } = useMutation({
     mutationFn: async () => {
       if (!apiKey.length || !newProjectName.length)
         throw new Error('Invalid Domain');
@@ -52,9 +64,46 @@ const DomainInputStrip: React.FC<props> = ({ apiKey, setProjectName }) => {
     },
   });
 
-  const handleSubmit = () => {
-    if (isConnected && newProjectName.length > 0) {
-      sendDomain();
+  const { mutateAsync: addApiKey } = useMutation({
+    mutationFn: async ({ address }: { address: string; chain: string }) => {
+      const { data } = await axios.request<{
+        apiKey: string;
+        message: string;
+        projectId: string;
+        domain: string;
+      }>({
+        method: 'GET',
+        url: `/docs/api/getApiKey?address=${address}`,
+      });
+      return data;
+    },
+    onSuccess: ({ apiKey, projectId, domain }) => {
+      setApiKey(apiKey);
+      setProjectId(projectId);
+      if (!domain || !domain.length) return;
+      const name = extractProjectName(domain);
+      setProjectName(name);
+    },
+    onError: (err) => {
+      disconnect();
+      console.error(err);
+      toast.error('Error getting API Key');
+    },
+  });
+
+  const handleSubmit = async () => {
+    if (isConnected) {
+      if (newProjectName.length > 0 && isValidProjectName(newProjectName)) {
+        await addApiKey({
+          address,
+          chain: 'ETHEREUM',
+        });
+        await sendDomain();
+      } else {
+        toast.error('Invalid Project Name');
+      }
+    } else {
+      toast.error('Please connect your wallet first');
     }
   };
 
