@@ -15,30 +15,19 @@ const APISection = () => {
   const [projectId, setProjectId] = useState('');
   const [projectName, setProjectName] = useState<string | null>(null);
   const { disconnect } = useDisconnect();
+  const [isLoading, setIsLoading] = useState(false);
 
   const { mutateAsync: fetchApiKey } = useMutation({
-    mutationFn: async ({
-      address,
-      chain,
-    }: {
-      address: string;
-      chain: string;
-    }) => {
+    mutationFn: async ({ address }: { address: string }) => {
+      setIsLoading(true);
       const { data } = await axios.request<{
         apiKey: string;
         message: string;
         projectId: string;
         domain: string;
       }>({
-        method: 'POST',
-        url: '/docs/api/apiKey',
-        data: {
-          address,
-          walletChain: chain,
-        },
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        method: 'GET',
+        url: `/docs/api/getApiKey?address=${address}`,
       });
       return data;
     },
@@ -61,10 +50,10 @@ const APISection = () => {
       if (address) {
         fetchApiKey({
           address,
-          chain: 'ETHEREUM',
         })
           .then((res) => {
             console.log(res);
+            setIsLoading(false);
           })
           .catch((err) => {
             console.log(err);
@@ -84,7 +73,7 @@ const APISection = () => {
     <div className='flex flex-col gap-6 mt-10 justify-center items-center w-full'>
       <ConnectButton />
       <span className='font-bold text-lg'>{projectName}</span>
-      {isConnected && (
+      {isConnected && !isLoading && (
         <div className={cn('flex flex-col items-center gap-5 w-full')}>
           {projectName?.length > 0 ? (
             <>
@@ -92,7 +81,12 @@ const APISection = () => {
               <KeyStrip label='Project ID' text={projectId} />
             </>
           ) : (
-            <DomainInputStrip apiKey={apiKey} setProjectName={setProjectName} />
+            <DomainInputStrip
+              apiKey={apiKey}
+              setProjectName={setProjectName}
+              setApiKey={setApiKey}
+              setProjectId={setProjectId}
+            />
           )}
         </div>
       )}
