@@ -1,0 +1,63 @@
+---
+title: 'Components'
+---
+
+
+# Pre-made Audio/Video Components for React Native
+
+In case you want to skip the effort of building your own reusable components for rendering audio/video streams coming from the SDK, we have provided a set of pre-made components that you can use in your React Native application. Just copy paste them in your application and you are good to go.
+
+## **Audio**
+
+```tsx filename="RNAudio.tsx"
+import { MediaStream as RNMediaStream, RTCView } from 'react-native-webrtc';
+
+const RNAudio: React.FC<
+  {
+    audioStream: MediaStream | null;
+  } & Omit<
+    React.ComponentPropsWithoutRef<typeof RTCView>,
+    'streamURL' | 'style'
+  >
+> = ({ audioStream, ...props }) => {
+  return (
+    <RTCView
+      style={{ display: 'none' }}
+      // @ts-ignore
+      streamURL={(audioStream as RNMediaStream | null)?.toURL() ?? ''}
+      {...props}
+    />
+  );
+};
+
+export default RNAudio;
+```
+
+## **Video**
+
+```tsx filename="RNVideo.tsx"
+import { MediaStream as RNMediaStream, RTCView } from 'react-native-webrtc';
+
+const RNVideo: React.FC<
+  {
+    videoStream: MediaStream | null;
+  } & Omit<React.ComponentPropsWithoutRef<typeof RTCView>, 'streamURL'>
+> = ({ videoStream, ...props }) => {
+  return (
+    <RTCView
+      mirror={true}
+      objectFit={'cover'}
+      zOrder={0}
+      // @ts-ignore
+      streamURL={(videoStream as RNMediaStream | null)?.toURL() ?? ''}
+      {...props}
+    />
+  );
+};
+
+export default RNVideo;
+```
+
+Both these components accept the `audioStream` and `videoStream` as props and render the audio and video streams. You can also pass any other props that are accepted by the `RTCView` component from `react-native-webrtc` to these components, like `style`, `objectFit`, `zOrder`, etc.
+
+## You're all set! Happy Hacking! 🎉
