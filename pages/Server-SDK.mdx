@@ -2,7 +2,7 @@
 title: 'Server-SDK'
 ---
 
-import { on } from 'events';
+import Image from 'next/image';
 import { Tab, Tabs, Callout } from 'nextra-theme-docs';
 import OptionTable from '@components/common/Table/OptionTable';
 
@@ -308,6 +308,122 @@ recorder.stop({
 	roomId: 'YOUR_ROOM_ID',
 })
 ```
+
+
+## Default Layouts
+
+We provide two default layouts i.e. `grid` and `spotlight` for recording in video meetings. You can pass it to the `startRecording` method.
+
+```jsx
+import { Recorder } from '@huddle01/server-sdk/recorder';
+ 
+const recorder = new Recorder("PROJECT_ID", "API_KEY");
+ 
+const generateToken = async (roomId: string) => {
+  const token = new AccessToken({
+    apiKey: process.env.API_KEY!,
+    roomId: roomId as string,
+    role: Role.BOT,
+    permissions: {
+      admin: true,
+      canConsume: true,
+      canProduce: true,
+      canProduceSources: {
+        cam: true,
+        mic: true,
+        screen: true,
+      },
+      canRecvData: true,
+      canSendData: true,
+      canUpdateMetadata: true,
+    },
+  });
+ 
+  const accessToken = await token.toJwt();
+ 
+  return accessToken;
+}
+ 
+const token = await generateToken("YOUR_ROOM_ID");
+ 
+// Start Recording
+recorder.startRecording({
+	roomId: 'YOUR_ROOM_ID',
+	token,
+  layout:"grid" | "spotlight"
+})
+ 
+// Stop Recording
+recorder.stop({
+	roomId: 'YOUR_ROOM_ID',
+})
+```
+
+
+## Demonstration of Layouts
+
+### Grid
+
+- In the below image, you can see the `grid` layout for recording.
+
+<Image
+  src="/docs/images/Recording_Grid.png"
+  alt="architecture"
+  width={1000}
+  height={1000}
+  quality={100}
+  priority
+  className="my-8"
+/>
+
+### Spotlight
+
+- In the below image, you can see the `spotlight` layout for recording.
+
+<Image
+  src="/docs/images/Recording_spotlight.png"
+  alt="architecture"
+  width={1000}
+  height={1000}
+  quality={100}
+  priority
+  className="my-8"
+/>
+
+
+## Additional Add-ons
+
+#### Active speaker indication in recordings
+
+- With the Help of [useActivePeers](React/hooks/useActivePeers) hook you can get the active speaker in the room.
+ You can use this to highlight the active speaker in the recording.
+
+
+<Image
+  src="/docs/images/Recording_ActiveSpeaker.png"
+  alt="architecture"
+  width={1000}
+  height={1000}
+  quality={100}
+  priority
+  className="my-8"
+/>
+
+#### Option to pass NFT and showcase that in the recording instead of just display name
+
+- You can pass NFT or default avatars in the metadata of the user and showcase that in the recording instead of just display name.
+
+<Image
+  src="/docs/images/Recording_Avatar.png"
+  alt="architecture"
+  width={1000}
+  height={1000}
+  quality={100}
+  priority
+  className="my-8"
+/>
+
+
 {/* 
 ### Web Hooks
 
