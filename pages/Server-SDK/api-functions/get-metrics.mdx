@@ -2,13 +2,86 @@
 title: "getMetrics()"
 ---
 
+import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs';
+
+
 # Get Metrics 
 
 `getMetrics()` provides the ability to fetch the total number of minutes spent on meetings,
 total number of livestream, total number of recordings, total number of token gated meetings
 and total number of meetings. You need an `API_KEY` to use this function. 
 
+<Callout>
+Metrics which you get from `getMetrics()` will be based on the provided `API_KEY`. 
+</Callout>
+
 ### Example 
 
 ```ts 
+import { API } from '@huddle01/server-sdk/api';
+
+const metrics = async () => {
+  const api = new API({
+    apiKey: process.env.API_KEY!,
+  });
+
+  const metrics = await api.getMetrics();
+
+  return metrics?.data;
+};
 ```
+
+### Returns 
+
+`getMetrics()` will return an array of rooms with following fields
+
+<OptionTable
+    headers={["Name", "Type", "Description"]}
+    options={[
+        [
+            'livestreamCount',
+            'number',
+            'Total number of livestreams'
+        ],
+        [
+            'recordingCount',
+            'number',
+            'Total number of recordings'
+        ],
+        [
+            'tokenGatedMeetings',
+            'number',
+            'Total number of token gated meetings'
+        ],
+        [
+            'totalMeetings',
+            'number',
+            'Total number of meetings'
+        ],
+        [
+            'totalDuration',
+            'number',
+            'Total duration of meetings'
+        ],
+        [
+            'totalUsers',
+            'number',
+            'Total number of users'
+        ]
+    ]} 
+/>
+
+```json
+{
+  "data": {
+    "livestreamCount": 0,
+    "recordingCount": 0,
+    "tokenGatedMeetings": 0,
+    "totalMeetings": 0,
+    "totalDuration": 0,
+    "totalUsers": 0
+    }
+}
+```
+

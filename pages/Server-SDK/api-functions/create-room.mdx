@@ -29,7 +29,7 @@ const getRoomId = async () => {
     title: 'Huddle01 Room',
   });
 
-  const roomId = createNewRoom?.data?.data?.roomId;
+  const roomId = createNewRoom?.data;
 
   return roomId;
 };
@@ -61,7 +61,7 @@ const getRoomId = async () => {
     contractAddress: ['0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85'],
   });
 
-  const roomId = createNewTokenGatedRoom?.data?.data?.roomId;
+  const roomId = createNewTokenGatedRoom?.data;
 
   return roomId;
 };

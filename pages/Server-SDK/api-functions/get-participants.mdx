@@ -1,3 +1,79 @@
 ---
 title: 'getParticipants()'
 ---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs';
+
+# Get Participants 
+
+This method returns a list of participants in a meetings. By passing the `meetingId`, you can 
+easily access a list of participants who joined the meeting. 
+
+<Callout>
+You can retrieve the `meetingId` by using `getRoomMeetings()`. 
+</Callout>
+
+### Example 
+
+```ts 
+import { API } from '@huddle01/server-sdk/api';
+
+const participantsList = async () => {
+  const api = new API({
+    apiKey: process.env.API_KEY!,
+  });
+
+  const participants = await api.getParticipants({
+    meetingId: 'YOUR_MEETING_ID',
+  });
+
+  return participants?.data;
+};
+```
+
+### Returns 
+
+`getParticipants()` returns following details. 
+
+<OptionTable
+    headers={["Name", "Type", "Description"]}
+    options={[
+        [
+            'roomId',
+            'string',
+            'The room id of the meeting'
+        ],
+        [
+            'hostWalletAddress',
+            'string[]',
+            'list of host wallet addresses'
+        ],
+        [
+            'duration',
+            'number',
+            'The duration of the meeting in minutes'
+        ],
+        [
+            'participants',
+            '{ displayName: string, walletAddress: string }',
+            'Participants list with name and wallet address'
+        ],
+    ]}
+/>
+
+```json
+{
+    "data": {
+        "roomId": "YOUR_ROOM_ID",
+        "hostWalletAddress": [],
+        "duration": 23, // this will be in minutes
+        "participants": [
+            {
+                "displayName": "John Doe",
+                "walletAddress": "0x1234567890", // if walletAddress is passed while creating token
+            }
+        ]
+    }
+}
+```
