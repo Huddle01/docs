@@ -5,11 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAccount, useDisconnect } from 'wagmi';
 
-import {
-  cn,
-  extractProjectName,
-  isValidProjectName,
-} from '../../helpers/utils';
+import { cn, extractProjectName } from '../../helpers/utils';
 
 interface props {
   apiKey: string;
@@ -44,7 +40,7 @@ const DomainInputStrip: React.FC<props> = ({
         url: '/docs/api/addDomain',
         data: {
           apiKey,
-          domain: `https://${newProjectName}.com`,
+          domain: newProjectName,
         },
         headers: {
           'Content-Type': 'application/json',
@@ -54,8 +50,7 @@ const DomainInputStrip: React.FC<props> = ({
       return data;
     },
     onSuccess: ({ domain }) => {
-      const name = extractProjectName(domain);
-      setProjectName(name);
+      setProjectName(domain);
       toast.success('Project name set successfully');
     },
     onError: (err) => {
@@ -93,7 +88,7 @@ const DomainInputStrip: React.FC<props> = ({
 
   const handleSubmit = async () => {
     if (isConnected) {
-      if (newProjectName.length > 0 && isValidProjectName(newProjectName)) {
+      if (newProjectName.length > 0) {
         await addApiKey({
           address,
           chain: 'ETHEREUM',

@@ -34,9 +34,8 @@ const APISection = () => {
     onSuccess: ({ apiKey, projectId, domain }) => {
       setApiKey(apiKey);
       setProjectId(projectId);
-      if (!domain || !domain.length) return;
-      const name = extractProjectName(domain);
-      setProjectName(name);
+      if (!domain || domain === '[]') return;
+      setProjectName(domain);
     },
     onError: (err) => {
       disconnect();
