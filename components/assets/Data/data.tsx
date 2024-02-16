@@ -701,7 +701,7 @@ export const ServerSDKIndexData = [
 
 export const APIFunctionsData = [
   {
-    href: '/api-functions/create-room',
+    href: '/Server-SDK/api-functions/create-room',
     name: 'Create Room',
     description:
       'This section provides an overview of how to create a room using Server SDK.',
@@ -712,7 +712,7 @@ export const APIFunctionsData = [
     },
   },
   {
-    href: '/api-functions/get-rooms',
+    href: '/Server-SDK/api-functions/get-rooms',
     name: 'Get Rooms',
     description:
       'This section provides an overview of how to get all rooms using Server SDK.',
@@ -723,7 +723,7 @@ export const APIFunctionsData = [
     },
   },
   {
-    href: '/api-functions/get-live-meetings',
+    href: '/Server-SDK/api-functions/get-live-meetings',
     name: 'Get Live Meetings',
     description:
       'This section provides an overview of how to get live meetings using Server SDK.',
@@ -734,7 +734,7 @@ export const APIFunctionsData = [
     },
   },
   {
-    href: '/api-functions/get-metrics',
+    href: '/Server-SDK/api-functions/get-metrics',
     name: 'Get Metrics',
     description:
       'This section provides an overview of how to get metrics using Server SDK.',
@@ -745,7 +745,7 @@ export const APIFunctionsData = [
     },
   },
   {
-    href: '/api-functions/get-participants',
+    href: '/Server-SDK/api-functions/get-participants',
     name: 'Get Participants',
     description:
       'This section provides an overview of how to get participants using Server SDK.',
@@ -756,7 +756,7 @@ export const APIFunctionsData = [
     },
   },
   {
-    href: '/api-functions/get-room-details',
+    href: '/Server-SDK/api-functions/get-room-details',
     name: 'Get Room Details',
     description:
       'This section provides an overview of how to get room details using Server SDK.',
@@ -767,7 +767,7 @@ export const APIFunctionsData = [
     },
   },
   {
-    href: '/api-functions/get-room-meetings',
+    href: '/Server-SDK/api-functions/get-room-meetings',
     name: 'Get Room Meetings',
     description:
       'This section provides an overview of how to get room meetings using Server SDK.',
