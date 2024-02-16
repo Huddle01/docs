@@ -1,0 +1,75 @@
+---
+title: 'Installation'
+---
+
+import { Tab, Tabs, Callout } from 'nextra-theme-docs';
+
+# Server SDK
+
+The Server SDK helps you to perform server-side operation such as generating Access Token, calling APIs such as `Create Room`, `Live Meetings`, etc, starting and stopping recording and livestream, and send messages from server-side. 
+
+## Installation
+
+ <Tabs items={['pnpm', 'npm', 'yarn', 'bun']}>
+       <Tab>
+            ```bash 
+      npm install @huddle01/server-sdk@latest
+        ```
+              </Tab>
+
+    <Tab>
+          ```bash
+      yarn add @huddle01/server-sdk@latest
+      ```
+            </Tab>
+
+     <Tab>
+           ```bash
+      yarn add @huddle01/server-sdk@latest
+      ```
+            </Tab>
+            <Tab>
+           ```bash
+      bun install @huddle01/server-sdk@latest
+      ```
+            </Tab>
+          </Tabs>
+
+### Generating Access Token
+
+Access Token is required to join a room. You can generate access token using the following code.
+
+<Callout type='warning'>
+Use [Server SDK](/Server-SDK) on server side only, don't use it on client side.
+</Callout>
+
+```jsx
+const accessToken = new AccessToken({
+    apiKey: 'YOUR_API_KEY',
+    roomId: 'YOUR_ROOM_ID',
+    //available roles: Role.HOST, Role.CO_HOST, Role.SPEAKER, Role.LISTENER, Role.GUEST - depending on the privileges you want to give to the user
+    role: Role.HOST,
+    //custom permissions give you more flexibility in terms of the user privileges than a pre-defined role
+    permissions: {
+          admin: true,
+          canConsume: true,
+          canProduce: true,
+          canProduceSources: {
+            cam: true,
+            mic: true,
+            screen: true,
+          },
+          canRecvData: true,
+          canSendData: true,
+          canUpdateMetadata: true,
+        },
+        options: {
+          metadata: { 
+             // you can add any custom attributes here which you want to associate with the user
+            walletAddress: "mizanxali.eth"
+          },
+        },
+  });
+
+const token = accessToken.toJwt();
+```

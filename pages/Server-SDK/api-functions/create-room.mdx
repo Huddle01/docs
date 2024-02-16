@@ -1,0 +1,83 @@
+---
+title: 'createRoom()'
+---
+
+import CreateRoom from '@components/ApiRef/CreateRoom';
+import TokenGated from '@components/ApiRef/TokenGated';
+import CreateRoomResponse from '@components/ApiRef/CreateRoomResponse';
+
+# Create Room
+
+`createRoom()` will create a new meeting room and return the room ID. This room ID can be used to join the room using `joinRoom()` method on client side.
+While creating room, you can pass following details. 
+
+## Parameters 
+
+<CreateRoom />
+
+## Example
+
+```ts
+import { API } from '@huddle01/server-sdk/api';
+
+const getRoomId = async () => {
+  const api = new API({
+    apiKey: process.env.API_KEY!,
+  });
+
+  const createNewRoom = await api.createRoom({
+    title: 'Huddle01 Room',
+  });
+
+  const roomId = createNewRoom?.data;
+
+  return roomId;
+};
+```
+
+## Creating Token Gated Room 
+
+Token gated rooms are like normal rooms with an additional information about token gating. 
+While creating room, you can pass token gating details, which will be further used to authenticate user while joining room. 
+
+### Additional Parameters for Token Gating 
+
+<TokenGated />
+
+## Example
+
+```ts
+import { API } from '@huddle01/server-sdk/api';
+
+const getRoomId = async () => {
+  const api = new API({
+    apiKey: process.env.API_KEY!,
+  });
+
+  const createNewTokenGatedRoom = await api.createRoom({
+    title: 'Huddle01 Room',
+    chain: 'ETHEREUM',
+    tokenType: 'ERC721',
+    contractAddress: ['0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85'],
+  });
+
+  const roomId = createNewTokenGatedRoom?.data;
+
+  return roomId;
+};
+```
+
+## Returns 
+
+<CreateRoomResponse />
+
+```json
+{
+  "data": {
+    "message": "Room created successfully",
+    "data": {
+      "roomId": "YOUR_ROOM_ID"
+    }
+  }
+} 
+```

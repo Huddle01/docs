@@ -1,0 +1,98 @@
+---
+title: 'getRooms()'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs';
+
+# Get Rooms 
+
+`getRooms()` method will return all the rooms created from a given `API_KEY`. 
+
+```ts 
+import { API } from '@huddle01/server-sdk/api';
+
+const rooms = async () => {
+  const api = new API({
+    apiKey: process.env.API_KEY!,
+  });
+
+  const rooms = await api.getRooms();
+
+  console.log(rooms?.data);
+
+  return rooms?.data;
+};
+```
+
+### Returns 
+
+`getRooms()` method returns an array of rooms with following fields.
+
+<OptionTable
+    headers={['Name', 'Type', 'Description']}
+    options={[
+        [
+            'nextCursor',
+            'number',
+            'The cursor to fetch the next page of rooms.'
+        ],
+        [
+            'prevCursor',
+            'number',
+            'The cursor to fetch the previous page of rooms.'
+        ],
+        [
+            'count',
+            'number',
+            'The total number of rooms.'
+        ],
+        [
+            'rooms',
+            'rooms[]',
+            'An array of rooms'
+        ],
+        [
+            'roomId', 
+            'string',
+            'The unique identifier of the room.'
+        ],
+        [
+            'meetingUrl',
+            'string',
+            'The meeting URL of the room.'
+        ],
+        [
+            'startTime',
+            'number',
+            'The start time of the room in timestamp epoch format.'
+        ],
+        [
+            'expiryTime',
+            'number',
+            'The expiry time of the room in timestamp epoch format.'
+        ],
+        [
+            'roomType',
+            "'VIDEO' | 'AUDIO'",
+            'The type of the room. It can be either VIDEO or AUDIO.'
+        ]
+    ]}
+/>
+
+```json
+  {
+      "nextCursor": 1,
+      "prevCursor": 0,
+      "count": 1,
+      "rooms": [
+        {
+            "roomId": "dummy-room-id",
+            "meetingUrl": "https://app.huddle01.com/dummy-room-id",
+            "startTime": null, // start time in timestamp epoch format
+            "expiryTime": null, // expiry time in timestamp epoch format
+            "roomType": "VIDEO" // VIDEO or AUDIO
+        }
+      ]
+  }
+```

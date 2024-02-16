@@ -1,0 +1,20 @@
+---
+title: 'API Functions'
+---
+
+import { APIFunctionsData } from '@components/assets/Data/data'
+import GradientCard from '@components/common/GradientCard/GradientCard';
+
+# API Functions 
+
+We have created functions for each [API](/apis) endpoint. 
+You can use these functions directly without calling any APIs. 
+You just need an [API Key](api-keys) to use these functions.
+
+<div className="my-16 xl:max-w-none">
+  <div className="not-prose mt-4 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
+    {APIFunctionsData.map(resource => (
+      <GradientCard key={resource.href} resource={resource} />
+    ))}
+  </div>
+</div>

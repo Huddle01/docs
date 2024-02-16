@@ -1,0 +1,71 @@
+---
+title: 'getRoomMeetings()'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs';
+
+# Get Room Meetings 
+
+`getRoomMeetings()` returns all the meetings from given `roomId`. 
+By passing `roomId` you can get list of meetings along with their start and end time. 
+
+<Callout>
+`meetingId` and `roomId` are different, one `roomId` can have multiple meetings i.e. multiple `meetingId`s. 
+</Callout>
+
+```ts 
+import { API } from '@huddle01/server-sdk/api';
+
+const meetingsList = async () => {
+  const api = new API({
+    apiKey: process.env.API_KEY!,
+  });
+
+  const meetingsList = await api.getRoomMeetings({
+    roomId: 'YOUR_ROOM_ID',
+  });
+
+  return meetingsList?.data;
+};
+```
+
+### Returns 
+
+`getRoomMeetings()` returns a list of meetings with following fields. 
+
+<OptionTable
+    headers={['Name', 'Type', 'Description']}
+    options={[
+        [
+            'meetingId',
+            'string',
+            'Your meeting ID',
+        ],
+        [
+            'startTime',
+            'string',
+            'Start time of the meeting in epoch timestamp format',
+        ],
+        [
+            'endTime',
+            'string',
+            'End time of the meeting in epoch timestamp format',
+        ],
+    ]}
+/>  
+
+```json
+{
+    "data": {
+        "meetings": [
+            {
+                "meetingId": "YOUR_MEETING_ID",
+                "startTime": 1707929199649, // epoch timestamp
+                "endTime": 1707933488746 // epoch timestamp
+            }
+        ]
+    }
+}
+```
+
