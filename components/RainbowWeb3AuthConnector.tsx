@@ -25,10 +25,9 @@ export const rainbowWeb3AuthConnector = ({ chains }) => {
   };
 
   const web3AuthInstance = new Web3AuthNoModal({
-    clientId:
-      'BPi5PB_UiIZ-cPz1GtV5i1I2iOSOHuimiXBI0e-Oe_u6X3oVAbCiAZOTEBtTXw4tsluTITPqA8zMsfxIKMjiqNQ',
+    clientId: process.env.NEXT_PUBLIC_WEB3AUTH!,
     chainConfig,
-    web3AuthNetwork: OPENLOGIN_NETWORK.SAPPHIRE_MAINNET,
+    web3AuthNetwork: OPENLOGIN_NETWORK.SAPPHIRE_DEVNET,
   });
 
   // Add openlogin adapter for customisations
