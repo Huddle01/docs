@@ -1,28 +1,44 @@
-import "../styles/global.css";
+import '../styles/global.css';
 
-import { Toaster } from "react-hot-toast";
+import { Toaster } from 'react-hot-toast';
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { NextLayoutComponentType } from "next";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { NextLayoutComponentType } from 'next';
+import { rainbowWallet, metaMaskWallet } from '@rainbow-me/rainbowkit/wallets';
 
-import "@rainbow-me/rainbowkit/styles.css";
+import '@rainbow-me/rainbowkit/styles.css';
 
 import {
   RainbowKitProvider,
+  connectorsForWallets,
   darkTheme,
   getDefaultWallets,
-} from "@rainbow-me/rainbowkit";
-import { WagmiConfig, configureChains, createClient } from "wagmi";
-import { mainnet } from "wagmi/chains";
-import { publicProvider } from "wagmi/providers/public";
+} from '@rainbow-me/rainbowkit';
+import { WagmiConfig, configureChains, createClient } from 'wagmi';
+import { mainnet } from 'wagmi/chains';
+import { publicProvider } from 'wagmi/providers/public';
+import { m } from 'framer-motion';
+import { rainbowWeb3AuthConnector } from '@components/RainbowWeb3AuthConnector';
 
 const { chains, provider } = configureChains([mainnet], [publicProvider()]);
 
-const { connectors } = getDefaultWallets({
-  appName: "My RainbowKit App",
-  projectId: process.env.PROJECT_ID || "my-rainbowkit-app",
-  chains,
-});
+const connectors = connectorsForWallets([
+  {
+    groupName: 'Recommended',
+    wallets: [
+      rainbowWallet({
+        projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT,
+        chains,
+      }),
+      metaMaskWallet({
+        projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT,
+        chains,
+      }),
+      rainbowWeb3AuthConnector({ chains }),
+    ],
+  },
+]);
+
 const wagmiClient = createClient({
   autoConnect: false,
   connectors,
@@ -46,12 +62,12 @@ export default function Nextra({
           <RainbowKitProvider
             coolMode
             chains={chains}
-            theme={darkTheme({ overlayBlur: "small" })}
+            theme={darkTheme({ overlayBlur: 'small' })}
           >
             {getLayout(<Component {...pageProps} />)}
           </RainbowKitProvider>
         </WagmiConfig>
-        <Toaster position="bottom-right" />
+        <Toaster position='bottom-right' />
       </QueryClientProvider>
     </>
   );
