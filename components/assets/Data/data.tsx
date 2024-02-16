@@ -676,7 +676,7 @@ export const ServerSDKIndexData = [
     },
   },
   {
-    href: '/Server-SDK/api',
+    href: '/Server-SDK/api-functions',
     name: 'API Functions',
     description:
       'This section provides an overview of various API functions available in the Server SDK.',
