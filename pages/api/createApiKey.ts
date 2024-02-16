@@ -6,7 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { address } = req.body as { address: string };
+  const { address } = req.query;
 
   try {
     const { data } = await axios.request<{
