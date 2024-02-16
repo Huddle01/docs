@@ -68,7 +68,7 @@ const DomainInputStrip: React.FC<props> = ({
         domain: string;
       }>({
         method: 'GET',
-        url: `/docs/api/getApiKey?address=${address}`,
+        url: `/docs/api/createApiKey?address=${address}`,
       });
       return data;
     },

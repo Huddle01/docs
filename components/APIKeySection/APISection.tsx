@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAccount, useDisconnect } from 'wagmi';
 
-import { cn, extractProjectName } from '../../helpers/utils';
+import { cn } from '../../helpers/utils';
 import DomainInputStrip from './DomainInputStrip';
 import KeyStrip from './KeyStrip';
 
@@ -14,7 +13,6 @@ const APISection = () => {
   const [apiKey, setApiKey] = useState('');
   const [projectId, setProjectId] = useState('');
   const [projectName, setProjectName] = useState<string | null>(null);
-  const { disconnect } = useDisconnect();
   const [isLoading, setIsLoading] = useState(false);
 
   const { mutateAsync: fetchApiKey } = useMutation({
@@ -37,11 +35,6 @@ const APISection = () => {
       if (!domain || domain === '[]') return;
       setProjectName(domain);
     },
-    onError: (err) => {
-      disconnect();
-      console.error(err);
-      toast.error('Error getting API Key');
-    },
   });
 
   const { isConnected, status } = useAccount({
@@ -50,12 +43,12 @@ const APISection = () => {
         fetchApiKey({
           address,
         })
-          .then((res) => {
-            console.log(res);
+          .then(() => {
             setIsLoading(false);
           })
           .catch((err) => {
-            console.log(err);
+            setIsLoading(false);
+            console.error(err);
           });
       }
     },
