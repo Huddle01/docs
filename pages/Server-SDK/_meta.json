@@ -1,4 +1,6 @@
 {
   "quickstart": "Quickstart",
-  "access-token": "Access Token"
+  "access-token": "Access Token",
+  "recorder": "Recording/Livestreaming",
+  "webhooks": "Webhooks"
 }

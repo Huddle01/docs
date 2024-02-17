@@ -1,9 +1,10 @@
 ---
-title: 'Server-SDK'
+title: "Server-SDK"
 ---
-import { ServerSDKIndexData } from '@components/assets/Data/data'
-import GradientCard from '@components/common/GradientCard/GradientCard';
-import { Tab, Tabs, Callout } from 'nextra-theme-docs';
+
+import { ServerSDKIndexData } from "@components/assets/Data/data";
+import GradientCard from "@components/common/GradientCard/GradientCard";
+import { Tab, Tabs, Callout } from "nextra-theme-docs";
 
 # Server SDK
 
@@ -11,12 +12,11 @@ The Huddle01 Server SDK allows you to perform protected admin actions on your se
 
 <div className="my-16 xl:max-w-none">
   <div className="not-prose mt-4 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
-    {ServerSDKIndexData.map(resource => (
+    {ServerSDKIndexData.map((resource) => (
       <GradientCard key={resource.href} resource={resource} />
     ))}
   </div>
 </div>
-
 
 ## Pre Requisites
 

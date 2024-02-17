@@ -1,26 +1,26 @@
-import "../styles/global.css";
+import '../styles/global.css';
 
-import { Toaster } from "react-hot-toast";
+import { Toaster } from 'react-hot-toast';
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { NextLayoutComponentType } from "next";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { NextLayoutComponentType } from 'next';
 
-import "@rainbow-me/rainbowkit/styles.css";
+import '@rainbow-me/rainbowkit/styles.css';
 
 import {
   RainbowKitProvider,
   darkTheme,
   getDefaultWallets,
-} from "@rainbow-me/rainbowkit";
-import { WagmiConfig, configureChains, createClient } from "wagmi";
-import { mainnet } from "wagmi/chains";
-import { publicProvider } from "wagmi/providers/public";
+} from '@rainbow-me/rainbowkit';
+import { WagmiConfig, configureChains, createClient } from 'wagmi';
+import { mainnet } from 'wagmi/chains';
+import { publicProvider } from 'wagmi/providers/public';
 
 const { chains, provider } = configureChains([mainnet], [publicProvider()]);
 
 const { connectors } = getDefaultWallets({
-  appName: "My RainbowKit App",
-  projectId: process.env.PROJECT_ID || "my-rainbowkit-app",
+  appName: 'My RainbowKit App',
+  projectId: process.env.PROJECT_ID || 'my-rainbowkit-app',
   chains,
 });
 const wagmiClient = createClient({
@@ -46,7 +46,7 @@ export default function Nextra({
           <RainbowKitProvider
             coolMode
             chains={chains}
-            theme={darkTheme({ overlayBlur: "small" })}
+            theme={darkTheme({ overlayBlur: 'small' })}
           >
             {getLayout(<Component {...pageProps} />)}
           </RainbowKitProvider>
