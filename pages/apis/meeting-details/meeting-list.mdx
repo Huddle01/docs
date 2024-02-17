@@ -19,20 +19,27 @@ import { Callout } from 'nextra-theme-docs';
 
 
 ## **Meeting List API**
-<div className="flex justify-between lg:flex-row flex-col">
-  <HighLight className="my-3 w-full">
+<div className="flex justify-between">
+  <HighLight className="my-3 w-3/4">
     <RequestStrip
       method={'GET'}
       url={'https://api.huddle01.com/api/v1'}
       endpoint={'rooms/meetings?roomId={roomId}'}
     />
   </HighLight>
+  <Button
+    variant="primary"
+    url="/api-keys"
+    text="Get your API Key"
+    isRouting
+    className=" my-2 w-auto px-8"
+  />
 </div>
 
 
 <Paragraph className="mt-5">
-  The Meeting List API is a useful tool for retrieving all the meetings held in a room. By passing in the roomId as a parameter, you can easily
-  access the list of meetings along with their start and end time.
+  The Meeting List API is a useful tool for retrieving all the meetings held in a room. A same room can we used again to differentiate between each room sessions
+  we call each session on a room a meeting, so this API will return all the meetings held in a given room.
 
 </Paragraph>
 
@@ -51,6 +58,10 @@ import { Callout } from 'nextra-theme-docs';
 The API supports a **GET** request with the following required parameters:
 
 - **`roomId`** - The RoomId of the room, for which you need to get the meeting list.
+- **`cursor`** - The cursor to fetch the next set of meetings.
+- **`limit`** - Max number of entries to be returned in the response.
+
+You can change next round of cursor based on the limit passed, e.g if you have done 10 meetings for a roomId, and cursor is 2 and limit is 3, then you will get all the meetings skipped 2 * 3 entries.
 
 
 </div>
@@ -62,7 +73,7 @@ The API supports a **GET** request with the following required parameters:
   >
     <APIRequestContent value="cUrl">
       ```bash
-        curl --location --request GET 'https://api.huddle01.com/api/v1/rooms/meetings?roomId={roomId}' \
+        curl --location --request GET 'https://api.huddle01.com/api/v1/rooms/meetings?roomId={roomId}&limit=3&cursor=2' \
         --header 'x-api-key: {{API_KEY}}' \
         --header 'Content-Type: application/json' \
       ```
@@ -70,7 +81,7 @@ The API supports a **GET** request with the following required parameters:
     
     <APIRequestContent value="fetch">
       ```js
-        const  response = await fetch("https://api.huddle01.com/api/v1/rooms/meetings?roomId={roomId}", {
+        const  response = await fetch("https://api.huddle01.com/api/v1/rooms/meetings?roomId={roomId}&limit=3&cursor=2", {
           method: "GET",
           headers: {
               "Content-type": "application/json",
@@ -83,7 +94,7 @@ The API supports a **GET** request with the following required parameters:
     <APIRequestContent value="axios">
       ```js
       const response = await axios.get(
-        'https://api.huddle01.com/api/v1/rooms/meetings?roomId={roomId}',
+        'https://api.huddle01.com/api/v1/rooms/meetings?roomId={roomId}&limit=3&cursor=2',
         {
           headers: {
             'Content-Type': 'application/json',
@@ -123,8 +134,8 @@ In case of an error, the API will return an error message with a corresponding s
       "meetings": [
         {
           "meetingId": "03dec8c8-ad63-4f3a-9615-0a2b0049790d",
-          "startTime": null,
-          "endTime": null
+          "startTime": 1708004287797,
+          "endTime": 1936414284269
         }
       ]
     

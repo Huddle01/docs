@@ -19,14 +19,21 @@ import { Callout } from 'nextra-theme-docs';
 
 
 ## **Participant List API**
-<div className="flex justify-between lg:flex-row flex-col">
-  <HighLight className="my-3 w-full">
+<div className="flex justify-between">
+  <HighLight className="my-3 w-3/4">
     <RequestStrip
       method={'GET'}
       url={'https://api.huddle01.com/api/v1'}
       endpoint={'rooms/paticipant-list?meetingId={meetingId}'}
     />
   </HighLight>
+  <Button
+    variant="primary"
+    url="/api-keys"
+    text="Get your API Key"
+    isRouting
+    className=" my-2 w-auto px-8"
+  />
 </div>
 
 
@@ -114,9 +121,6 @@ The API supports a **GET** request with the following required parameters:
 
 Upon success, the API will return a response with the following fields:
 
-- **`roomId`** - The room ID of the newly created room.
-- **`hostWalletAddress`** - The host wallet address of the room.	.
-- **`duration`** - The duration of the meeting.
 - **`participants`** - The list of `displayName` and `walletAdddress` of the participants who joined the meeting.
 
 In case of an error, the API will return an error message with a corresponding status code.
@@ -134,12 +138,16 @@ In case of an error, the API will return an error message with a corresponding s
       "duration": 244,
       "participants": [
         {
-          "displayName": "John Doe",
-          "walletAddress": "0x123456789"
+          "displayName": "OmG",
+          "walletAddress": "0x123456789",
+          "joinedAt": "2023-07-10T09:33:34.771Z",
+          "exitedAt": "2023-07-10T09:34:40.436Z",,
         },
         {
-          "displayName": "Jane Doe",
-          "walletAddress": null
+          "displayName": "Axit",
+          "walletAddress": null,
+          "joinedAt": "2023-07-10T09:06:12.157Z",
+          "exitedAt": "2023-07-10T09:34:40.436Z",,
         }
       ]
     }
