@@ -1,7 +1,6 @@
 import React from 'react';
 
 import ApiRefTable from './ApiRefTable';
-import { CreateRoomAPI } from './data/CreateRoomData';
 import { TokenGatedRoomAPI } from './data/TokenGatedRoomData';
 
 export type IApiDataType = {
@@ -14,21 +13,8 @@ export type IApiDataType = {
   validValues?: string;
 };
 
-interface Props {
-  data: IApiDataType[];
-}
-
-const TokenGated: React.FC<Props> = ({ data = CreateRoomAPI }) => {
-  const values = data.map(item => {
-    return [
-      item.title,
-      item.description,
-      item.type,
-      item.required ? 'Y' : item.default ? item.default : 'N',
-    ];
-  });
-
-  const tokenValues = TokenGatedRoomAPI.map(item => {
+const TokenGated: React.FC = () => {
+  const tokenValues = TokenGatedRoomAPI.map((item) => {
     return [
       item.title,
       item.description,
@@ -38,17 +24,10 @@ const TokenGated: React.FC<Props> = ({ data = CreateRoomAPI }) => {
   });
 
   return (
-    <div className="overflow-x-hidden">
-      <ApiRefTable
-        headers={['Params', 'Definition', 'Data Type', 'Mandatory']}
-        options={values}
-      />
-
-      <ApiRefTable
-        headers={['Params', 'Definition', 'Data Type', 'Options']}
-        options={tokenValues}
-      />
-    </div>
+    <ApiRefTable
+      headers={['Params', 'Definition', 'Data Type', 'Options']}
+      options={tokenValues}
+    />
   );
 };
 

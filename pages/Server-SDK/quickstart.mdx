@@ -3,153 +3,46 @@ title: "Installation"
 ---
 
 import { Tab, Tabs, Callout } from "nextra-theme-docs";
-import OptionTable from "@components/common/Table/OptionTable";
 
 # Server SDK
 
-The Huddle01 Server SDK allows you to perform protected admin actions on your server side, like generating peer access tokens and starting and stopping meeting recordings and livestreams.
+The Server SDK helps you to perform server-side operation such as generating Access Token, calling APIs such as `Create Room`, `Live Meetings`, etc, starting and stopping recording and livestream, and send messages from server-side.
 
 ## Installation
 
-<Tabs items={["bun", 'pnpm', 'yarn','npm']}>
-    <Tab>
-        ```bash 
-        pnpm add @huddle01/server-sdk
-        ```
-    </Tab>
-    <Tab>
-        ```bash 
-        pnpm add @huddle01/server-sdk
-        ```
-    </Tab>
-
-    <Tab>
-        ```bash
-        npm i @huddle01/server-sdk
-        ```
-    </Tab>
-
-    <Tab>
-        ```bash
-        yarn add @huddle01/server-sdk
-        ```
-    </Tab>
-
-</Tabs>
-
-## Access Token
-
-<Callout>
-  You can generate `roomId` using [Create Room](/apis/create-room/create-room)
-  API.
-</Callout>
-
-To join a Huddle01 room, every peer needs a unique access token. You need `apiKey` and `roomId` to generate an access Token.
-
-<Callout type="info">
-  Make sure that you are using the same `apiKey` which you used to generate
-  `roomId`.
-</Callout>
-
-### Permissions
-
-Access Token gives an ability to set your own custom permissions. Let's see each permission in detail.
-
-<OptionTable
-  headers={["Permission", "Description"]}
-  options={[
-    [
-      "admin",
-      " The peer will have admin privileges. Admins can perform all actions on the room.",
-    ],
-    ["canConsume", "The peer will be able to consume tracks from other peers."],
-    ["canProduce", "The peer will be able to publish tracks to the room."],
-    [
-      "canProduceSources",
-      "The peer will be able to publish tracks from the specified sources such as `cam`, `mic`, and `screen`.",
-    ],
-    [
-      "canRecvData",
-      "The peer will be able to receive data messages from other peers.",
-    ],
-    [
-      "canSendData",
-      "the peer will be able to send data messages to other peers.",
-    ],
-    ["canUpdateMetadata", "The peer will be able to update its own metadata."],
-  ]}
-/>
-
-### Role
-
-You can set a `role` from the following list of roles, or you can create your own custom role as well.
-
-<Callout type="info">
-  If you create a custom role, you can give custom permission. Predifined roles
-  have predefined permissions.
-</Callout>
-
-<OptionTable
-  headers={["Role", "Description"]}
-  options={[
-    [
-      "host",
-      "Hosts can perform all actions on the room, they have `admin` as a true in permissions.",
-    ],
-    [
-      "coHost",
-      "Co-hosts can perform all actions on the room just like `host`, but they can't update role to `host`.",
-    ],
-    [
-      "guest",
-      "Guests can can publish all tracks and send/receive data to the room, but can't perform admin actions.",
-    ],
-    [
-      "speaker",
-      "Speakers can publish only `audio` tracks to the room, and remaining same as `guest` role.",
-    ],
-    [
-      "listener",
-      "Listeners can consume tracks and send/receive data from other peers.",
-    ],
-    [
-      "bot",
-      "This can only consume tracks from other peers and won't able to send/receive data unlike `listener`",
-    ],
-  ]}
-/>
-
-To get access these pre-defined roles, you can import `Role` from Server SDK.
-
-```ts
-import { Role } from "@huddle01/server-sdk/auth";
-
-// Access Host Role
-console.log(Role.HOST);
-```
-
-### Generating Access Token
-
-You need to create an instance of `AccessToken` where you can pass `permission`, `role` and `metadata`.
-
-<Callout>`metadata` can be of any type.</Callout>
-
-<Tabs items={['module','commonjs']}>
+ <Tabs items={['pnpm', 'npm', 'yarn', 'bun']}>
        <Tab>
-            ```ts 
-      import { AccessToken, Role } from '@huddle01/server-sdk/auth';
+            ```bash 
+      npm install @huddle01/server-sdk@latest
         ```
               </Tab>
 
     <Tab>
-          ```js
-      const HuddleAuth = require('@huddle01/server-sdk/auth');
-      const { AccessToken, Role } = HuddleAuth
+          ```bash
+      yarn add @huddle01/server-sdk@latest
       ```
             </Tab>
 
-
+     <Tab>
+           ```bash
+      yarn add @huddle01/server-sdk@latest
+      ```
+            </Tab>
+            <Tab>
+           ```bash
+      bun install @huddle01/server-sdk@latest
+      ```
+            </Tab>
           </Tabs>
+
+### Generating Access Token
+
+Access Token is required to join a room. You can generate access token using the following code.
+
+<Callout type="warning">
+  Use [Server SDK](/Server-SDK) on server side only, don't use it on client
+  side.
+</Callout>
 
 ```jsx
 const accessToken = new AccessToken({

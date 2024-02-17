@@ -1,0 +1,166 @@
+---
+title: 'getRoomDetails()'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs';
+
+# Get Room Details 
+
+`getRoomDetails()` method helps to retrieve information about specific `roomId`. 
+
+```ts 
+import { API } from '@huddle01/server-sdk/api';
+
+const roomDetails = async () => {
+  const api = new API({
+    apiKey: process.env.API_KEY!,
+  });
+
+  const roomDetails = await api.getRoomDetails({
+    roomId: 'YOUR_ROOM_ID',
+  });
+
+  return roomDetails?.data;
+};
+```
+
+### Returns 
+
+`getRoomDetails()` will return all details about room, if it's token gated it will 
+also return `tokenGatingInfo`. 
+
+<OptionTable
+    headers={['Name', 'Type', 'Description']}
+    options={[
+        [
+            'roomId',
+            'string',
+            'Unique identifier of the room'
+        ],
+        [
+            'appData',
+            'any',
+            'Custom data'
+        ],
+        [
+            'title',
+            'string',
+            'Title of the room'
+        ],
+        [
+            'description',
+            'string',
+            'Description of the room'
+        ],
+        [
+            'meetingLink',
+            'string',
+            'Meeting link of the room'
+        ],
+        [
+            'startTime',
+            'string',
+            'Start time of the room'
+        ],
+        [
+            'expiryTime',
+            'string',
+            'Expiry time of the room'
+        ],
+        [
+            'videoOnEntry',
+            'boolean',
+            'Video on entry'
+        ],
+        [
+            'muteOnEntry',
+            'boolean',
+            'Mute on entry'
+        ],
+        [
+            'roomLocked',
+            'boolean',
+            'Boolean to check if room is locked or not'
+        ],
+        [
+            'hostWalletAddress',
+            'string[]',
+            'List of host wallet addresses'
+        ],
+        [
+            'tokenGatingInfo',
+            'Object',
+            'Token gating info'
+        ],
+        [
+            'roomType',
+            "'VIDEO' | 'AUDIO'",
+            'Room type'
+        ],
+        [
+            'roomSize',
+            "'NORMAL' | 'LARGE'",
+            'Room size'
+        ],
+        [
+            'tokenType',
+            'string',
+            'Type of token such as ERC20, ERC721 etc',
+        ],
+        [
+            'chain',
+            'string',
+            'Chain such as Ethereum, BSC, Polygon, etc',
+        ],
+        [
+            'contractAddress',
+            'string',
+            'Contract address of token',
+        ],
+        [
+            'conditionType',
+            'string',
+            'Condition type such as COLLECT_POST, FOLLOW_HANDLE, etc',
+        ],
+        [
+            'conditionValue',
+            'string',
+            'Condition value such as token id for ERC1155',
+        ],
+    ]}
+/>
+
+```json
+{
+   "data": {
+      "roomId": "emo-orrj-uvh",
+      "appData": null,
+      "title": "Test Meeting",
+      "description": null,
+      "meetingLink": "https://app.huddle01.com/emo-orrj-uvh",
+      "startTime": null,
+      "expiryTime": null,
+      "videoOnEntry": false,
+      "muteOnEntry": false,
+      "roomLocked": false,
+      "hostWalletAddress": [],
+      "tokenGatingInfo": {
+        "id": "TOKEN_GATING_ID",
+        "tokenGatingConditions": [
+          {
+            "id": "TOKEN_GATING_CONDITIONS_ID",
+            "tokenType": "TOKEN_TYPE",
+            "chain": "CHAIN",
+            "contractAddress": "CONTRACT_ADDRESS",
+            "conditionType": null,
+            "conditionValue": null,
+          }
+        ]
+      },
+      "roomType": "VIDEO | AUDIO",
+      "roomSize": "NORMAL | LARGE"
+    }
+}
+```
+
