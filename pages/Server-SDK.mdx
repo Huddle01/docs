@@ -1,11 +1,10 @@
 ---
-title: 'Server-SDK'
+title: "Server-SDK"
 ---
 
-import Image from 'next/image';
-import { Tab, Tabs, Callout } from 'nextra-theme-docs';
-import OptionTable from '@components/common/Table/OptionTable';
-
+import Image from "next/image";
+import { Tab, Tabs, Callout } from "nextra-theme-docs";
+import OptionTable from "@components/common/Table/OptionTable";
 
 # Server SDK
 
@@ -33,112 +32,102 @@ The Huddle01 Server SDK allows you to perform protected admin actions on your se
             </Tab>
           </Tabs>
 
-
 ## Access Token
 
 <Callout>
-You can generate `roomId` using [Create Room](/apis/create-room/create-room) API. 
+  You can generate `roomId` using [Create Room](/apis/create-room/create-room)
+  API.
 </Callout>
 
-To join a Huddle01 room, every peer needs a unique access token. You need `apiKey` and `roomId` to generate an access Token. 
+To join a Huddle01 room, every peer needs a unique access token. You need `apiKey` and `roomId` to generate an access Token.
 
-<Callout type='info'>
-Make sure that you are using the same `apiKey` which you used to generate `roomId`. 
+<Callout type="info">
+  Make sure that you are using the same `apiKey` which you used to generate
+  `roomId`.
 </Callout>
 
 ### Permissions
 
-Access Token gives an ability to set your own custom permissions. Let's see each permission in detail. 
+Access Token gives an ability to set your own custom permissions. Let's see each permission in detail.
 
 <OptionTable
-  headers={['Permission', 'Description']}
+  headers={["Permission", "Description"]}
   options={[
     [
-      'admin',
-      ' The peer will have admin privileges. Admins can perform all actions on the room.'
+      "admin",
+      " The peer will have admin privileges. Admins can perform all actions on the room.",
+    ],
+    ["canConsume", "The peer will be able to consume tracks from other peers."],
+    ["canProduce", "The peer will be able to publish tracks to the room."],
+    [
+      "canProduceSources",
+      "The peer will be able to publish tracks from the specified sources such as `cam`, `mic`, and `screen`.",
     ],
     [
-      'canConsume',
-      "The peer will be able to consume tracks from other peers."
+      "canRecvData",
+      "The peer will be able to receive data messages from other peers.",
     ],
     [
-      'canProduce',
-      "The peer will be able to publish tracks to the room."
+      "canSendData",
+      "the peer will be able to send data messages to other peers.",
     ],
-    [
-      'canProduceSources',
-      "The peer will be able to publish tracks from the specified sources such as `cam`, `mic`, and `screen`."
-    ],
-    [
-      'canRecvData',
-      'The peer will be able to receive data messages from other peers.'
-    ],
-    [
-      'canSendData',
-      "the peer will be able to send data messages to other peers."
-    ],
-    [
-      'canUpdateMetadata',
-      "The peer will be able to update its own metadata."
-    ]    
+    ["canUpdateMetadata", "The peer will be able to update its own metadata."],
   ]}
 />
 
 ### Role
 
-You can set a `role` from the following list of roles, or you can create your own custom role as well. 
+You can set a `role` from the following list of roles, or you can create your own custom role as well.
 
-<Callout type='info'>
-If you create a custom role, you can give custom permission. Predifined roles have predefined permissions.
+<Callout type="info">
+  If you create a custom role, you can give custom permission. Predifined roles
+  have predefined permissions.
 </Callout>
 
-
 <OptionTable
-  headers={['Role', 'Description']}
+  headers={["Role", "Description"]}
   options={[
     [
-      'host',
-      'Hosts can perform all actions on the room, they have `admin` as a true in permissions.'
+      "host",
+      "Hosts can perform all actions on the room, they have `admin` as a true in permissions.",
     ],
     [
-      'coHost',
+      "coHost",
       "Co-hosts can perform all actions on the room just like `host`, but they can't update role to `host`.",
     ],
     [
-      'guest',
+      "guest",
       "Guests can can publish all tracks and send/receive data to the room, but can't perform admin actions.",
     ],
     [
-      'speaker',
+      "speaker",
       "Speakers can publish only `audio` tracks to the room, and remaining same as `guest` role.",
     ],
     [
-      'listener',
-      'Listeners can consume tracks and send/receive data from other peers.',
+      "listener",
+      "Listeners can consume tracks and send/receive data from other peers.",
     ],
     [
-      'bot',
-      "This can only consume tracks from other peers and won't able to send/receive data unlike `listener`"
-    ]
+      "bot",
+      "This can only consume tracks from other peers and won't able to send/receive data unlike `listener`",
+    ],
   ]}
 />
 
-To get access these pre-defined roles, you can import `Role` from Server SDK. 
+To get access these pre-defined roles, you can import `Role` from Server SDK.
 
 ```ts
-import { Role } from '@huddle01/server-sdk/auth';
+import { Role } from "@huddle01/server-sdk/auth";
 
-// Access Host Role 
+// Access Host Role
 console.log(Role.HOST);
 ```
 
-### Generating Access Token 
+### Generating Access Token
 
-You need to create an instance of `AccessToken` where you can pass `permission`, `role` and `metadata`.  
+You need to create an instance of `AccessToken` where you can pass `permission`, `role` and `metadata`.
 
-<Callout>
-`metadata` can be of any type. 
-</Callout>
+<Callout>`metadata` can be of any type.</Callout>
 
 <Tabs items={['module','commonjs']}>
        <Tab>
@@ -154,51 +143,49 @@ You need to create an instance of `AccessToken` where you can pass `permission`,
       ```
             </Tab>
 
-   
+
           </Tabs>
 
-
 ```jsx
-
 const accessToken = new AccessToken({
-    apiKey: 'YOUR_API_KEY',
-    roomId: 'YOUR_ROOM_ID',
-    //available roles: Role.HOST, Role.CO_HOST, Role.SPEAKER, Role.LISTENER, Role.GUEST - depending on the privileges you want to give to the user
-    role: Role.HOST,
-    //custom permissions give you more flexibility in terms of the user privileges than a pre-defined role
-    permissions: {
-          admin: true,
-          canConsume: true,
-          canProduce: true,
-          canProduceSources: {
-            cam: true,
-            mic: true,
-            screen: true,
-          },
-          canRecvData: true,
-          canSendData: true,
-          canUpdateMetadata: true,
-        },
-        options: {
-          metadata: { 
-             // you can add any custom attributes here which you want to associate with the user
-            walletAddress: "mizanxali.eth"
-          },
-        },
-  });
+  apiKey: "YOUR_API_KEY",
+  roomId: "YOUR_ROOM_ID",
+  //available roles: Role.HOST, Role.CO_HOST, Role.SPEAKER, Role.LISTENER, Role.GUEST - depending on the privileges you want to give to the user
+  role: Role.HOST,
+  //custom permissions give you more flexibility in terms of the user privileges than a pre-defined role
+  permissions: {
+    admin: true,
+    canConsume: true,
+    canProduce: true,
+    canProduceSources: {
+      cam: true,
+      mic: true,
+      screen: true,
+    },
+    canRecvData: true,
+    canSendData: true,
+    canUpdateMetadata: true,
+  },
+  options: {
+    metadata: {
+      // you can add any custom attributes here which you want to associate with the user
+      walletAddress: "mizanxali.eth",
+    },
+  },
+});
 
 const token = accessToken.toJwt();
-
 ```
 
 ## Recording
 
-To start recording for your room, you need to first create a `Recorder` instance using your project ID and API key. 
+To start recording for your room, you need to first create a `Recorder` instance using your project ID and API key.
 You can then call the `startRecording` method on the instance to start recording a meeting by passing the room ID. To stop the recording, you can call the `stop` method on the instance.
 
 <Callout>
-The `startLivestream` method includes an optional `customLayoutUrl` attribute, allowing you to specify a URL for the bot to join the room and initiate recording. 
-By default, it will use our predefined layout. 
+  The `startLivestream` method includes an optional `customLayoutUrl` attribute,
+  allowing you to specify a URL for the bot to join the room and initiate
+  recording. By default, it will use our predefined layout.
 </Callout>
 
 ```jsx
@@ -225,7 +212,7 @@ const generateToken = async (roomId: string) => {
       canUpdateMetadata: true,
     },
   });
- 
+
   const accessToken = await token.toJwt();
 
   return accessToken;
@@ -247,20 +234,23 @@ recorder.stop({
 
 All processed recordings can then be fetched at any time using the : [Get Recordings API](/apis/get-recordings)
 
-<Callout type='info'>
-You can get the recording by listening to `receive-data` event or `useDataMessage` hook. You will receive recording URL as a message from a server with label `server-message`. 
+<Callout type="info">
+  You can get the recording by listening to `receive-data` event or
+  `useDataMessage` hook. You will receive recording URL as a message from a
+  server with label `server-message`.
 </Callout>
 
-###  Livestreaming
+### Livestreaming
 
-To start livestreaming your room to any third party streaming platform, you need to first create a `Recorder` instance with your project ID and API key. 
-You can then call the `startLivestream` method to start livestreaming a meeting by passing the room IDs. 
-It accepts an array of `rtmpUrls` in which `rtmpUrl` consists of `STREAM_URL` and `STREAM_KEY` i.e. `YOUR_STREAM_URL/YOUR_STREAM_KEY`. 
+To start livestreaming your room to any third party streaming platform, you need to first create a `Recorder` instance with your project ID and API key.
+You can then call the `startLivestream` method to start livestreaming a meeting by passing the room IDs.
+It accepts an array of `rtmpUrls` in which `rtmpUrl` consists of `STREAM_URL` and `STREAM_KEY` i.e. `YOUR_STREAM_URL/YOUR_STREAM_KEY`.
 To stop the livestream, you can call the `stop` method on the `Recorder` instance.
 
 <Callout>
-The `startLivestream` method includes an optional `customLayoutUrl` attribute, allowing you to specify a URL for the bot to join the room and initiate recording. 
-By default, it will use our predefined layout. 
+  The `startLivestream` method includes an optional `customLayoutUrl` attribute,
+  allowing you to specify a URL for the bot to join the room and initiate
+  recording. By default, it will use our predefined layout.
 </Callout>
 
 ```jsx
@@ -288,7 +278,7 @@ const generateToken = async (roomId: string) => {
       canUpdateMetadata: true,
     },
   });
- 
+
   const accessToken = await token.toJwt();
 
   return accessToken;
@@ -309,16 +299,15 @@ recorder.stop({
 })
 ```
 
-
 ## Default Layouts
 
 We provide two default layouts i.e. `grid` and `spotlight` for recording in video meetings. You can pass it to the `startRecording` method.
 
 ```jsx
 import { Recorder } from '@huddle01/server-sdk/recorder';
- 
+
 const recorder = new Recorder("PROJECT_ID", "API_KEY");
- 
+
 const generateToken = async (roomId: string) => {
   const token = new AccessToken({
     apiKey: process.env.API_KEY!,
@@ -338,27 +327,26 @@ const generateToken = async (roomId: string) => {
       canUpdateMetadata: true,
     },
   });
- 
+
   const accessToken = await token.toJwt();
- 
+
   return accessToken;
 }
- 
+
 const token = await generateToken("YOUR_ROOM_ID");
- 
+
 // Start Recording
 recorder.startRecording({
 	roomId: 'YOUR_ROOM_ID',
 	token,
   layout:"grid" | "spotlight"
 })
- 
+
 // Stop Recording
 recorder.stop({
 	roomId: 'YOUR_ROOM_ID',
 })
 ```
-
 
 ## Demonstration of Layouts
 
@@ -390,14 +378,12 @@ recorder.stop({
   className="my-8"
 />
 
-
 ## Additional Add-ons
 
 #### Active speaker indication in recordings
 
 - With the Help of [useActivePeers](React/hooks/useActivePeers) hook you can get the active speaker in the room.
- You can use this to highlight the active speaker in the recording.
-
+  You can use this to highlight the active speaker in the recording.
 
 <Image
   src="/docs/images/Recording_ActiveSpeaker.png"
@@ -423,105 +409,82 @@ recorder.stop({
   className="my-8"
 />
 
-
-{/* 
 ### Web Hooks
 
 ```jsx
-import { WebhookReceiver } from '@huddle01/server-sdk/webhooks';
+import { WebhookReceiver } from "@huddle01/server-sdk/webhooks";
 
 const webhookReceiver = new WebhookReceiver({
-  apiKey: 'YOUR_API_KEY',
-  apiSecret: 'YOUR_API_SECRET',
+  apiKey: "YOUR_API_KEY",
+  apiSecret: "YOUR_API_SECRET",
 });
 ```
 
 ### Events
 
-You can listen to these event on your server side and perform various actions based on the events. Following is the list of events you can listen to: 
+You can listen to these event on your server side and perform various actions based on the events. Following is the list of events you can listen to:
 
+`**meeting:started**`
 
-
- `**meeting:started**`
-    
-    
     | Attributes | Type |
     | --- | --- |
     | roomId | string |
     | createdAt | number |
+
 - `**meeting:ended**`
-    
-    
-    | Attributes | Type |
-    | --- | --- |
-    | roomId | string |
-    | createdAt | number |
-    | endedAt | number |
-    | duration | number |
-    | participants | number |
-    | maxParticipants | number |
+  | Attributes | Type |
+  | --------------- | ------ |
+  | roomId | string |
+  | createdAt | number |
+  | endedAt | number |
+  | duration | number |
+  | participants | number |
+  | maxParticipants | number |
 - `**peer:joined**`
-    
-    
-    | Attributes | Type |
-    | --- | --- |
-    | id | string |
-    | roomId | string |
-    | joinedAt | number |
-    | metadata | string? |
-    | role | string? |
-    | browser | Browser |
-    | device | Device |
-    
-    **Browser**
-    
-    | name | string? |
-    | --- | --- |
-    | version | string? |
-    
-    **Device**
-    
-    | model | string? |
-    | --- | --- |
-    | type | string? |
-    | vendor | string? |
-    
+  | Attributes | Type |
+  | ---------- | ------- |
+  | id | string |
+  | roomId | string |
+  | joinedAt | number |
+  | metadata | string? |
+  | role | string? |
+  | browser | Browser |
+  | device | Device |
+  **Browser**
+  | name | string? |
+  | ------- | ------- |
+  | version | string? |
+  **Device**
+  | model | string? |
+  | ------ | ------- |
+  | type | string? |
+  | vendor | string? |
 - `**peer:left**`
-    
-    
-    | Attributes | Type |
-    | --- | --- |
-    | id | string |
-    | roomId | string |
-    | leftAt | number |
-    | duration | number |
-    | metadata | string? |
-    | role | string? |
+  | Attributes | Type |
+  | ---------- | ------- |
+  | id | string |
+  | roomId | string |
+  | leftAt | number |
+  | duration | number |
+  | metadata | string? |
+  | role | string? |
 - `**peer:trackPublished**`
-    
-    
-    | Attributes | Type |
-    | --- | --- |
-    | id | string |
-    | track | string |
+  | Attributes | Type |
+  | ---------- | ------ |
+  | id | string |
+  | track | string |
 - **`peer:trackUnpublished`**
-    
-    
-    | Attributes | Type |
-    | --- | --- |
-    | id | string |
-    | track | string |
+  | Attributes | Type |
+  | ---------- | ------ |
+  | id | string |
+  | track | string |
 - `**recording:started**`
-    
-    
-    | Attributes | Type |
-    | --- | --- |
-    | id | string |
-    | roomId | string |
+  | Attributes | Type |
+  | ---------- | ------ |
+  | id | string |
+  | roomId | string |
 - **`recording:stopped`**
-    
-    
-    | Attributes | Type |
-    | --- | --- |
-    | id | string |
-    | roomId | string | */}
+  | Attributes | Type |
+  | ---------- | ------ | ---- |
+  | id | string |
+  | roomId | string | \*/} |

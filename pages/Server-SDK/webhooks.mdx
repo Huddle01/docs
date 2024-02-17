@@ -1,0 +1,201 @@
+---
+title: "Webhooks"
+---
+
+import { Callout } from "nextra-theme-docs";
+
+## Web Hooks
+
+{" "}
+
+<Callout>
+  Reachout to the Huddle01 Team to set your webhook URL for your subdomain,
+  you'll be able to set it up from the dashboard soon.
+</Callout>
+
+### Usage:
+
+```ts
+import { WebhookReceiver } from "@huddle01/server-sdk/webhooks";
+
+const webhookReceiver = new WebhookReceiver({
+  apiKey: "YOUR_API_KEY",
+});
+```
+
+<details>
+  <summary>
+    Express Example to listen to webhooks events
+  </summary>
+    <Callout>
+    To make the webhook work on localhost, you'll have to use something like `ngrok` for port forwarding.
+    </Callout>
+
+    ```ts
+    import express, { Request, Response } from "express";
+    import bodyParser from "body-parser";
+    import { WebhookReceiver } from "@huddle01/server-sdk/webhooks";
+
+    type Err = { message: string };
+
+    const receiver = new WebhookReceiver({
+    apiKey: "YOUR_API_KEY",
+    });
+
+    const app = express();
+    const port: number = 3002;
+
+    // Middleware to parse JSON bodies
+    app.use(bodyParser.text());
+
+    app.post("/", (req: Request, res: Response) => {
+    try {
+    const header: string | undefined = req.headers[
+    "huddle01-signature"
+    ] as string;
+
+        const data = receiver.receive(req.body, header);
+
+        console.log({ data });
+
+        res.status(200).send({ success: true });
+
+    } catch (error) {
+    console.error({ error });
+    }
+    });
+
+    app.listen(port, () => {
+    console.log(`🦊 Express server running at http://localhost:${port}`);
+    });
+
+    ```
+
+</details>
+
+### Events
+
+You can listen to these event on your server side and perform various actions based on the events. Following is the list of events you can listen to:
+
+<details>
+    <summary>
+    **`meeting:started`**
+    </summary>
+
+| Attributes | Type   |
+| ---------- | ------ |
+| roomId     | string |
+| createdAt  | number |
+
+</details>
+
+<details>
+    <summary>
+    **`meeting:ended`**
+    </summary>
+
+| Attributes      | Type   |
+| --------------- | ------ |
+| roomId          | string |
+| createdAt       | number |
+| endedAt         | number |
+| duration        | number |
+| participants    | number |
+| maxParticipants | number |
+
+</details>
+
+<details>
+    <summary>
+    **`peer:joined`**
+    </summary>
+
+| Attributes | Type    |
+| ---------- | ------- |
+| id         | string  |
+| roomId     | string  |
+| joinedAt   | number  |
+| metadata   | string? |
+| role       | string? |
+| browser    | Browser |
+| device     | Device  |
+
+**Browser**
+| Attributes | Type |
+| ---------- | ------- |
+| name | string? |
+| version | string? |
+
+**Device**
+
+| Attributes | Type    |
+| ---------- | ------- |
+| model      | string? |
+| type       | string? |
+| vendor     | string? |
+
+</details>
+
+<details>
+    <summary>
+    **`peer:left`**
+    </summary>
+
+| Attributes | Type    |
+| ---------- | ------- |
+| id         | string  |
+| roomId     | string  |
+| leftAt     | number  |
+| duration   | number  |
+| metadata   | string? |
+| role       | string? |
+
+</details>
+
+<details>
+    <summary>
+    **`peer:trackPublished`**
+    </summary>
+
+| Attributes | Type   |
+| ---------- | ------ |
+| id         | string |
+| track      | string |
+
+</details>
+
+<details>
+    <summary>
+    **`peer:trackUnpublished`**
+    </summary>
+
+| Attributes | Type   |
+| ---------- | ------ |
+| id         | string |
+| track      | string |
+
+</details>
+
+<details>
+    <summary>
+    **`recording:started`**
+    </summary>
+
+| Attributes | Type   |
+| ---------- | ------ |
+| id         | string |
+| roomId     | string |
+
+</details>
+
+<details>
+    <summary>
+    **`recording:stopped`**
+    </summary>
+
+| Attributes | Type   |
+| ---------- | ------ |
+| id         | string |
+| roomId     | string |
+
+</details>

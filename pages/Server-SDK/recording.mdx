@@ -1,0 +1,238 @@
+---
+title: "Recording/Livestreaming"
+---
+
+import { Callout } from "nextra-theme-docs";
+import Image from "next/image";
+
+## Recording
+
+To start recording for your room, you need to first create a `Recorder` instance using your project ID and API key.
+You can then call the `startRecording` method on the instance to start recording a meeting by passing the room ID. To stop the recording, you can call the `stop` method on the instance.
+
+<Callout>
+  The `startLivestream` method includes an optional `customLayoutUrl` attribute,
+  allowing you to specify a URL for the bot to join the room and initiate
+  recording. By default, it will use our predefined layout.
+</Callout>
+
+```jsx
+import { Recorder } from '@huddle01/server-sdk/recorder';
+
+const recorder = new Recorder("PROJECT_ID", "API_KEY");
+
+const generateToken = async (roomId: string) => {
+  const token = new AccessToken({
+    apiKey: process.env.API_KEY!,
+    roomId: roomId as string,
+    role: Role.BOT,
+    permissions: {
+      admin: true,
+      canConsume: true,
+      canProduce: true,
+      canProduceSources: {
+        cam: true,
+        mic: true,
+        screen: true,
+      },
+      canRecvData: true,
+      canSendData: true,
+      canUpdateMetadata: true,
+    },
+  });
+
+  const accessToken = await token.toJwt();
+
+  return accessToken;
+}
+
+const token = await generateToken("YOUR_ROOM_ID");
+
+// Start Recording
+recorder.startRecording({
+	roomId: 'YOUR_ROOM_ID',
+	token,
+})
+
+// Stop Recording
+recorder.stop({
+	roomId: 'YOUR_ROOM_ID',
+})
+```
+
+All processed recordings can then be fetched at any time using the : [Get Recordings API](/apis/get-recordings)
+
+<Callout type="info">
+  You can get the recording by listening to `receive-data` event or
+  `useDataMessage` hook. You will receive recording URL as a message from a
+  server with label `server-message`.
+</Callout>
+
+### Livestreaming
+
+To start livestreaming your room to any third party streaming platform, you need to first create a `Recorder` instance with your project ID and API key.
+You can then call the `startLivestream` method to start livestreaming a meeting by passing the room IDs.
+It accepts an array of `rtmpUrls` in which `rtmpUrl` consists of `STREAM_URL` and `STREAM_KEY` i.e. `YOUR_STREAM_URL/YOUR_STREAM_KEY`.
+To stop the livestream, you can call the `stop` method on the `Recorder` instance.
+
+<Callout>
+  The `startLivestream` method includes an optional `customLayoutUrl` attribute,
+  allowing you to specify a URL for the bot to join the room and initiate
+  recording. By default, it will use our predefined layout.
+</Callout>
+
+```jsx
+import { Recorder } from '@huddle01/server-sdk/recorder';
+import { AccessToken, Auth } from '@huddle01/server-sdk/auth';
+
+const recorder = new Recorder("PROJECT_ID", "API_KEY");
+
+const generateToken = async (roomId: string) => {
+  const token = new AccessToken({
+    apiKey: process.env.API_KEY!,
+    roomId: roomId as string,
+    role: Role.BOT,
+    permissions: {
+      admin: true,
+      canConsume: true,
+      canProduce: true,
+      canProduceSources: {
+        cam: true,
+        mic: true,
+        screen: true,
+      },
+      canRecvData: true,
+      canSendData: true,
+      canUpdateMetadata: true,
+    },
+  });
+
+  const accessToken = await token.toJwt();
+
+  return accessToken;
+}
+
+const token = await generateToken("YOUR_ROOM_ID");
+
+// Start Livestreaming
+recorder.startLivestream({
+	roomId: 'YOUR_ROOM_ID',
+	token,
+  rtmpUrls: [`${"<STREAM_URL>"}/${"<STREAM_KEY>"}`] //passing the RTMP URL
+})
+
+// Stop Livestreaming
+recorder.stop({
+	roomId: 'YOUR_ROOM_ID',
+})
+```
+
+## Default Layouts
+
+We provide two default layouts i.e. `grid` and `spotlight` for recording in video meetings. You can pass it to the `startRecording` method.
+
+```jsx
+import { Recorder } from '@huddle01/server-sdk/recorder';
+
+const recorder = new Recorder("PROJECT_ID", "API_KEY");
+
+const generateToken = async (roomId: string) => {
+  const token = new AccessToken({
+    apiKey: process.env.API_KEY!,
+    roomId: roomId as string,
+    role: Role.BOT,
+    permissions: {
+      admin: true,
+      canConsume: true,
+      canProduce: true,
+      canProduceSources: {
+        cam: true,
+        mic: true,
+        screen: true,
+      },
+      canRecvData: true,
+      canSendData: true,
+      canUpdateMetadata: true,
+    },
+  });
+
+  const accessToken = await token.toJwt();
+
+  return accessToken;
+}
+
+const token = await generateToken("YOUR_ROOM_ID");
+
+// Start Recording
+recorder.startRecording({
+	roomId: 'YOUR_ROOM_ID',
+	token,
+  layout:"grid" | "spotlight"
+})
+
+// Stop Recording
+recorder.stop({
+	roomId: 'YOUR_ROOM_ID',
+})
+```
+
+## Demonstration of Layouts
+
+### Grid
+
+- In the below image, you can see the `grid` layout for recording.
+
+<Image
+  src="/docs/images/Recording_Grid.png"
+  alt="architecture"
+  width={1000}
+  height={1000}
+  quality={100}
+  priority
+  className="my-8"
+/>
+
+### Spotlight
+
+- In the below image, you can see the `spotlight` layout for recording.
+
+<Image
+  src="/docs/images/Recording_Spotlight.png"
+  alt="architecture"
+  width={1000}
+  height={1000}
+  quality={100}
+  priority
+  className="my-8"
+/>
+
+## Additional Add-ons
+
+#### Active speaker indication in recordings
+
+- With the Help of [useActivePeers](React/hooks/useActivePeers) hook you can get the active speaker in the room.
+  You can use this to highlight the active speaker in the recording.
+
+<Image
+  src="/docs/images/Recording_ActiveSpeaker.png"
+  alt="architecture"
+  width={1000}
+  height={1000}
+  quality={100}
+  priority
+  className="my-8"
+/>
+
+#### Option to pass NFT and showcase that in the recording instead of just display name
+
+- You can pass NFT or default avatars in the metadata of the user and showcase that in the recording instead of just display name.
+
+<Image
+  src="/docs/images/Recording_Avatar.png"
+  alt="architecture"
+  width={1000}
+  height={1000}
+  quality={100}
+  priority
+  className="my-8"
+/>
