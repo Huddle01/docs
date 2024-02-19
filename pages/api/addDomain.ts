@@ -6,17 +6,23 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { apiKey, domain } = req.body as { apiKey: string; domain: string };
+  const { apiKey, domain, email } = req.body as {
+    apiKey: string;
+    domain: string;
+    email: string;
+  };
   try {
     const { data } = await axios.request<{
       message: string;
       domain: string;
+      email: string;
     }>({
       method: 'POST',
       url: `${process.env.IRIKO_URL}/api/v1/admin/add-whitelist-domains`,
       data: {
         apiKey,
         domain,
+        email,
       },
       headers: {
         'x-api-key': process.env.ADMIN_API_KEY,

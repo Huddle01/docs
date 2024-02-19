@@ -33,8 +33,11 @@ export default async function handler(
         const apiKey = ApiKeyData.apiKey;
         const whitelistedDomains = ApiKeyData.whitelistedDomains;
         const projectId = ApiKeyData.projectId;
+        const email = ApiKeyData.email;
 
-        res.status(200).json({ apiKey, domain: whitelistedDomains, projectId });
+        res
+          .status(200)
+          .json({ apiKey, domain: whitelistedDomains, projectId, email });
       } else {
         res.status(500).json({ message: 'Something went wrong' });
       }

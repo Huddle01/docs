@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAccount, useDisconnect } from 'wagmi';
 
-import { cn } from '../../helpers/utils';
+import { cn, extractProjectName } from '../../helpers/utils';
 import DomainInputStrip from './DomainInputStrip';
 import KeyStrip from './KeyStrip';
 
@@ -13,6 +13,7 @@ const APISection = () => {
   const [apiKey, setApiKey] = useState('');
   const [projectId, setProjectId] = useState('');
   const [projectName, setProjectName] = useState<string | null>(null);
+  const [emailName, setEmailName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const { mutateAsync: fetchApiKey } = useMutation({
@@ -23,21 +24,28 @@ const APISection = () => {
         message: string;
         projectId: string;
         domain: string;
+        email: string;
       }>({
         method: 'GET',
         url: `/docs/api/getApiKey?address=${address}`,
       });
       return data;
     },
-    onSuccess: ({ apiKey, projectId, domain }) => {
+    onSuccess: ({ apiKey, projectId, domain, email }) => {
       setApiKey(apiKey);
       setProjectId(projectId);
       if (!domain || domain === '[]') return;
-      setProjectName(domain);
+      if (domain.startsWith('http')) {
+        const name = extractProjectName(domain);
+        setProjectName(name);
+      } else {
+        setProjectName(domain);
+      }
+      setEmailName(email);
     },
   });
 
-  const { isConnected, status } = useAccount({
+  const { isConnected } = useAccount({
     onConnect({ address }) {
       if (address) {
         fetchApiKey({
@@ -57,17 +65,22 @@ const APISection = () => {
     },
   });
 
-  useEffect(() => {
-    console.log('status', status);
-  }, [status]);
-
   return (
     <div className='flex flex-col gap-6 mt-10 justify-center items-center w-full'>
       <ConnectButton />
-      <span className='font-bold text-lg'>{projectName}</span>
+      {projectName?.length > 0 && emailName?.length > 0 ? (
+        <span className='font-bold text-lg'>{projectName}</span>
+      ) : (
+        isConnected && (
+          <span className='font-bold text-lg text-center w-1/2'>
+            To access your API keys, kindly provide the Project Name along with
+            your Email ID
+          </span>
+        )
+      )}
       {isConnected && !isLoading && (
         <div className={cn('flex flex-col items-center gap-5 w-full')}>
-          {projectName?.length > 0 ? (
+          {projectName?.length > 0 && emailName?.length > 0 ? (
             <>
               <KeyStrip label='API Key' text={apiKey} />
               <KeyStrip label='Project ID' text={projectId} />
@@ -75,7 +88,9 @@ const APISection = () => {
           ) : (
             <DomainInputStrip
               apiKey={apiKey}
+              projectName={projectName}
               setProjectName={setProjectName}
+              setEmail={setEmailName}
               setApiKey={setApiKey}
               setProjectId={setProjectId}
             />
