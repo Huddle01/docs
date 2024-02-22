@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useAccount, useDisconnect } from 'wagmi';
 
 import { cn, extractProjectName, isValidEmail } from '../../helpers/utils';
@@ -25,23 +25,21 @@ const DomainInputStrip: React.FC<props> = ({
   setEmail,
 }) => {
   const { isConnected, address } = useAccount();
-  const { disconnect } = useDisconnect();
   const [newProjectName, setNewProjectName] = useState<string>(projectName);
   const [newEmail, setNewEmail] = useState<string>('');
 
-  const { mutateAsync: sendDomain } = useMutation({
-    mutationFn: async () => {
-      if (!apiKey.length || newProjectName.length === 0)
-        throw new Error('Invalid Domain');
+  const { mutateAsync: addApiKey } = useMutation({
+    mutationFn: async ({ address }: { address: string; chain: string }) => {
       const { data } = await axios.request<{
-        message: string;
-        domain: string;
+        apiKey: string;
         email: string;
+        projectId: string;
+        domain: string;
       }>({
         method: 'POST',
-        url: '/docs/api/addDomain',
+        url: '/docs/api/createApiKey',
         data: {
-          apiKey,
+          address,
           domain: newProjectName,
           email: newEmail,
         },
@@ -49,43 +47,14 @@ const DomainInputStrip: React.FC<props> = ({
           'Content-Type': 'application/json',
         },
       });
-
       return data;
     },
-    onSuccess: ({ domain, email }) => {
-      setProjectName(domain);
-      setEmail(email);
-      toast.success('Project name & email set successfully');
-    },
-    onError: (err) => {
-      console.error(err);
-      toast.error('Error adding domain');
-    },
-  });
-
-  const { mutateAsync: addApiKey } = useMutation({
-    mutationFn: async ({ address }: { address: string; chain: string }) => {
-      const { data } = await axios.request<{
-        apiKey: string;
-        message: string;
-        projectId: string;
-        domain: string;
-      }>({
-        method: 'GET',
-        url: `/docs/api/createApiKey?address=${address}`,
-      });
-      return data;
-    },
-    onSuccess: ({ apiKey, projectId, domain }) => {
+    onSuccess: ({ apiKey, projectId, domain, email }) => {
       setApiKey(apiKey);
       setProjectId(projectId);
       if (!domain || !domain.length) return;
       setProjectName(domain);
-    },
-    onError: (err) => {
-      disconnect();
-      console.error(err);
-      toast.error('Error getting API Key');
+      if (email) setEmail(email);
     },
   });
 
@@ -95,11 +64,20 @@ const DomainInputStrip: React.FC<props> = ({
     } else if (!isValidEmail(newEmail)) {
       toast.error('Invalid Email');
     } else {
-      await addApiKey({
-        address,
-        chain: 'ETHEREUM',
-      });
-      await sendDomain();
+      try {
+        await addApiKey({
+          address,
+          chain: 'ETHEREUM',
+        });
+      } catch (err) {
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 400) {
+            toast.error(
+              'This email is already registered with another project'
+            );
+          }
+        }
+      }
     }
   };
 
