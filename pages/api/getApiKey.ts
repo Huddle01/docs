@@ -28,13 +28,17 @@ export default async function handler(
       const firstUser = dashboardUser[0];
 
       if (firstUser.ApiKey) {
-        const ApiKeyData = firstUser.ApiKey[0];
+        const totalApis = firstUser.ApiKey.length;
+        const ApiKeyData = totalApis > 1 ? firstUser.ApiKey[totalApis - 1] : firstUser.ApiKey[0];
 
         const apiKey = ApiKeyData.apiKey;
         const whitelistedDomains = ApiKeyData.whitelistedDomains;
         const projectId = ApiKeyData.projectId;
+        const email = ApiKeyData.email;
 
-        res.status(200).json({ apiKey, domain: whitelistedDomains, projectId });
+        res
+          .status(200)
+          .json({ apiKey, domain: whitelistedDomains, projectId, email });
       } else {
         res.status(500).json({ message: 'Something went wrong' });
       }

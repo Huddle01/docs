@@ -26,11 +26,10 @@ export const randomString = makeRandomString(32);
 export const extractProjectName = (url: string) => {
   const regex = /^https:\/\/([^.]+)\./;
   const match = url.match(regex);
-  if (match && match[1]) {
+  if (match?.[1]) {
     return match[1];
-  } else {
-    return null;
-  }
+  } 
+  return null;
 };
 
 export const isValidProjectName = (text?: string) => {
@@ -38,4 +37,9 @@ export const isValidProjectName = (text?: string) => {
   const regex = /^[a-zA-Z]*$/;
 
   return regex.test(text);
+};
+
+export const isValidEmail = (email: string) => {
+  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  return regex.test(email);
 };
