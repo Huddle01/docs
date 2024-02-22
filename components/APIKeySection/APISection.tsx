@@ -68,15 +68,12 @@ const APISection = () => {
   return (
     <div className='flex flex-col gap-6 mt-10 justify-center items-center w-full'>
       <ConnectButton />
-      {projectName?.length > 0 && emailName?.length > 0 ? (
-        <span className='font-bold text-lg'>{projectName}</span>
-      ) : (
-        isConnected && (
-          <span className='font-bold text-lg text-center w-1/2'>
-            To access your API keys, kindly provide the Project Name along with
-            your Email ID
-          </span>
-        )
+      {isConnected && !isLoading && (
+        <span className='font-bold text-lg text-center w-1/2'>
+          {projectName?.length > 0 && emailName?.length > 0
+            ? projectName
+            : 'To access your API keys, kindly provide the Project Name along with your Email ID'}
+        </span>
       )}
       {isConnected && !isLoading && (
         <div className={cn('flex flex-col items-center gap-5 w-full')}>

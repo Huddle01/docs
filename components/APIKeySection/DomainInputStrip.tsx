@@ -55,6 +55,7 @@ const DomainInputStrip: React.FC<props> = ({
       if (!domain || !domain.length) return;
       setProjectName(domain);
       if (email) setEmail(email);
+      toast.success('API Key generated successfully');
     },
   });
 
