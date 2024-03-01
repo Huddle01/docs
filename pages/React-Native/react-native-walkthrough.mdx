@@ -7,7 +7,7 @@ import { Callout, Steps, Tab, Tabs } from 'nextra-theme-docs';
 # Building a React Native App with Huddle01
 
 <Callout>
-  We have upgraded our SDK to v2 `(2.x.x)`. For the previous stable release, please visit <a className="text-bold underline" href="https://legacy.docs.huddle01.com/docs">here</a>
+  We have upgraded our SDK to v2 `(2.x.x)`. For the previous stable release, please visit <a className="text-bold underline" href = "https://legacy.docs.huddle01.com/docs">here</a>
 </Callout>
 
 
@@ -20,7 +20,7 @@ The following guide explains how you can integrate audio/video into your React N
 
 To power your React Native app with audio/video communication using Huddle01 install the following:
 
-      <Tabs items={['pnpm', 'npm', 'yarn']}>
+      <Tabs items = { ['pnpm', 'npm', 'yarn']}>
               <Tab>
             ```bash 
       pnpm i @huddle01/react @huddle01/server-sdk react-native-get-random-values react-native-webrtc 
@@ -38,7 +38,7 @@ To power your React Native app with audio/video communication using Huddle01 ins
             </Tab>
               </Tabs>
 
-      <Callout type="info">
+      <Callout type = "info">
       Important Step: Make sure to add camera and mic permissions to your `AndroidManifest.xml` file [(for Android)](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/AndroidInstallation.md) and `Info.plist` file [(for iOS)](https://github.com/react-native-webrtc/react-native-webrtc/blob/master/Documentation/iOSInstallation.md).
 
 If you are building for iOS, don’t forget to run `pod install` inside the ios directory to install the iOS native dependencies.
@@ -63,7 +63,7 @@ That’s all the SDK setup we need to build a full-fledged video conferencing ap
 
 ### Initialization of project
 
-      {/* TODO: Add initialization of project link */}
+      { /* TODO: Add initialization of project link */}
 Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials: 
 
 - `API Key`
@@ -135,7 +135,7 @@ AccessToken for each peer is to be generated on a backend server using the: [Ser
 ```
 
 ### Sending media across to other participants
-Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
+Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams. Make sure to ask the user for the necessary permissions to access the device cam/mic before enabling the media devices.
 
 ```tsx filename="app.tsx" highlight={9,14,51-65}
   import { useLocalVideo, useLocalAudio } from '@huddle01/react/dist/hooks';
@@ -143,18 +143,32 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
   const App = () => {
     const { stream: videoStream, enableVideo, disableVideo, changeVideoSource } = useLocalVideo();
     const { stream: audioStream, enableAudio, disableAudio, changeAudioSource } = useLocalAudio();
+    const { getPermission: getCamPermission } = useDevices({ type: 'cam' });
+    const { getPermission: getMicPermission } = useDevices({ type: 'mic' });
 
     return (
         {/* Webcam */} 
         <Button 
         title="Fetch and Produce Video Stream"
-          onPress={enableVideo} />
+        onPress={async () => {
+          const status = await getCamPermission();
+          if (status.permission === 'granted') {
+            await enableVideo();
+          }
+        }}
+        />
           
 
         {/* Mic */} 
        <Button 
        title=" Fetch and Produce Audio Stream"
-          onPress={enableAudio} />
+       onPress={async () => {
+          const status = await getMicPermission();
+          if (status.permission === 'granted') {
+            await enableAudio();
+          }
+        }}
+        />
          
 
       </View>
