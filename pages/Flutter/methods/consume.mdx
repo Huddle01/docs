@@ -1,0 +1,77 @@
+---
+title: 'Consume'
+---
+
+import OptionTable from '@components/common/Table/OptionTable';
+
+### Consume 
+
+The **`consume`** method allows the Local Peer to consume a stream from a Remote Peer. This method receives the **`producerId`**, **`peerId`**, and optional application data. 
+The consumed stream can be played on the Local Peer's device.
+
+**Parameters**
+
+<OptionTable
+    headers={['Name', 'Type', 'Description']}
+    options={[
+    [
+        'peerId',
+        'string',
+        'The peer ID of the Remote Peer to consume from.'
+    ],
+    [
+        'label',
+        'string',
+        'The label of the stream to be consumed.'
+    ],
+    [
+        'appData',
+        'AppData (optional)',
+        'Custom application data for the consumer.'
+    ],
+    ]}
+/>
+
+**Example**
+
+```js 
+// Consume a stream from a Remote Peer
+const stream = await localPeer.consume({
+  peerId: "remotePeerID",
+  label: "streamLabel",
+  appData: { key: "value" },
+});
+```
+
+### Stop Consuming
+
+The stopConsuming method stops the Local Peer from consuming a specific stream with a given label. It does not notify Remote Peers about stopping the consumption.
+
+**Parameters**
+
+<OptionTable
+    headers={['Name', 'Type', 'Description']}
+    options={[
+    [
+        'peerId',
+        'string',
+        'The peer ID of the Remote Peer.'
+    ],
+    [
+        'label',
+        'string',
+        'The label of the stream to stop consuming.'
+    ]
+    ]}
+/>
+
+**Example**
+
+```js
+// Stop consuming a specific stream
+await huddleClient.localPeer.stopConsuming({
+  peerId: "remotePeerID",
+  label: "streamLabel", // stream label can be 'video', 'audio', 'screen'
+});
+```
+

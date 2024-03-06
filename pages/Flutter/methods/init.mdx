@@ -2,48 +2,19 @@
 title: 'Init'
 ---
 
-## Init
+## Init 
 
-Initializes and sets up the app state required by the library. This method should be invoked first at all times.
+You need to create a new `huddleClient` instance which will be used to access various methods. 
 
-```dart filename="meeting_screen.dart" highlight={2,22,28} showLineNumbers
-import 'package:flutter/material.dart';
-import 'package:huddle01_flutter_client/huddle_client.dart';
+```js
 
-
-class MeetingScreen extends StatefulWidget {
-  ...
-}
-
-class _MeetingScreenState extends State<MeetingScreen> {
-  late HuddleClient huddleClient;
-
-  @override
-  void initState() {
-    ...
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children:[
-        ElevatedButton(
-          onPressed:(){
-            huddleClient.unmuteMic();
-          },
-          child: const Text("Unmute Mic"),
-        ),
-        ElevatedButton(
-          onPressed:(){
-            huddleClient.muteMic();
-          },
-          child: const Text("Mute Mic"),
-        ),
-      ]
-    );
-  }
-}
+const huddleClient = new HuddleClient({
+ projectID: "YOUR_PROJECT_ID",
+  options: {
+    activeSpeakers: {
+      // Number of active speaker visible in the grid, by default 8
+      size: 10,
+    },
+  },
+});
 ```
-
-
-

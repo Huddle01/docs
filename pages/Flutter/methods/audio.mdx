@@ -1,64 +1,79 @@
 ---
-title: 'Audio'
+title: 'Audio' 
 ---
 
-import  { Callout } from "nextra-theme-docs"
 import OptionTable from '@components/common/Table/OptionTable';
 
-## Audio
+## Audio 
 
+### Enable Audio 
+
+The `enableAudio` method enables the local microphone and starts producing the audio stream with the label `audio`.
+
+
+**Example**
+```js
+// Enable audio stream
+await huddleClient.localPeer.enableAudio();
+```
+
+### Disable Audio
+
+The `disableAudio` method stops the local audio stream and also stops producing the audio stream with remote peers.
+
+
+**Example**
+```js
+// Disable audio stream
+await huddleClient.localPeer.disableAudio();
+```
+
+### replaceAudioStream
+
+The `replaceAudioStream` method replaces the current audio stream with the new stream.
+
+**Parameters**
 <OptionTable
-  headers={['Name', "Type","Description"]}
+    headers={['Params',"Type", "Description" , 'Return Type']}
   options={[
     [
-      'fetchAudioStream(deviceId?: string)',
-      'Function',
-      "Enables audio stream from user’s device mic(lobby)"
+      'mediastream',
+      "MediaStream",
+      "This function replaces the audio stream",
+      'Promise<void>'
     ],
-    ['stopAudioStream()', 'Function',"Disables audio stream from user’s device mic(lobby)"],
-    [
-      'produceAudio(micStream: MediaStream, peerIds?: string[])',
-      'Function',
-      "Starts sharing user’s audio stream with other peers in the room"
-    ],
-    ['stopProducingAudio()', 'Function',"Stops sharing user’s audio stream with other peers in the room"],
-    ['enumerateDevices()', 'Function', "Returns the list of audio devices"],
-    ['createSingleConsumer(peerId: string, "mic")', 'Function', "Starts consuming audio stream for given peerId"],
-    ['closeSingleConsumer(peerId: string, "mic")', 'Function', "Stops consuming audio stream for given peerId"],
-  ]} 
+  ]}
 />
 
-## Example 
+**Example**
 
-```dart filename="meeting_screen.dart" highlight={2,22} showLineNumbers
-import 'package:flutter/material.dart';
-import 'package:huddle01_flutter_client/huddle_client.dart';
+```jsx
+// Usage
+await huddleClient.localPeer.replaceAudioStream({MediaStream});
+```
 
 
-class MeetingScreen extends StatefulWidget {
-  ...
-}
+### changeAudioSource
 
-class _MeetingScreenState extends State<MeetingScreen> {
-  late HuddleClient huddleClient;
+The `changeAudioSource` changes the Audio source to the given deviceId, sets the preferred mic device as the given deviceId
 
-  @override
-  void initState() {
-    ...
-  }
+**Parameters**
+<OptionTable
+    headers={['Params',"Type","Description" , 'Return Type']}
+  options={[
+    [
+      'deviceId',
+      "string",
+      "changes the audio source to the given deviceId",
+      'Promise<void>'
+    ],
+  ]}
+/>
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children:[
-        ElevatedButton(
-          onPressed:(){
-            huddleClient.fetchAudioStream();
-          },
-          child: const Text("Fetch Audio Stream"),
-        )
-      ]
-    );
-  }
-}
+**Example**
+
+
+```jsx
+// Usage
+await huddleClient.localPeer.changeAudioSource({deviceId});
 ```

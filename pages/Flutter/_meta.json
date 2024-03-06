@@ -2,12 +2,5 @@
   "quickstart": "Quickstart",
   "walkthrough": "Walkthrough",
   "example": "Start from an example",
-  "methods": "Methods",
-  "events": {
-    "title": "Events",
-    "theme": {
-      "toc": false,
-      "layout": "full"
-    }
-  }
+  "methods": "Methods"
 }

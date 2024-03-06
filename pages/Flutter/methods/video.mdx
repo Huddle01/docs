@@ -1,65 +1,86 @@
 ---
-title: 'Video'
+title: 'Video' 
 ---
 
-import  { Callout } from "nextra-theme-docs"
 import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs';
 
-## Video
+## Video 
 
+### Enable Video 
+
+The `enableVideo` method enables the local microphone and starts producing the video stream with the label `video`.
+
+<Callout type='info'>
+  `enableVideo` method calls both `fetchStream` and `produce` method internally.It also return `MediaStream` which can be used to render the screen share stream in the UI.
+</Callout>
+
+**Example**
+
+```js
+// Enable Video stream
+const stream = await huddleClient.localPeer.enableVideo();
+```
+
+- ### Disable Video
+
+The `disableVideo` method stops the local video stream and also stops producing the video stream with remote peers.
+
+**Example**
+
+```js
+// Disable video stream
+await huddleClient.localPeer.disableVideo();
+```
+
+
+### replaceVideoStream
+
+The `replacevideoStream` method replaces the current video stream with the new stream.
+
+**Parameters**
 <OptionTable
-  headers={['Name', "Type", "Description"]}
+    headers={['Params',"Type", "Description" , 'Return Type']}
   options={[
     [
-      'fetchVideoStream(deviceId?: string)',
-      'Function',
-      "Enables video stream from user’s device cam(lobby)"
+      'mediastream',
+      "MediaStream",
+      "This function replaces the video stream",
+      'Promise<void>'
     ],
-    ['stopVideoStream()', 'Function',"Disables video stream from user’s device cam(lobby)"],
-    [
-      'produceVideo(camStream: MediaStream, peerIds?: string[])',
-      'Function',
-      "Starts sharing user’s webcam stream with other peers in the room"
-    ],
-    ['stopProducingVideo()', 'Function',"Stops sharing user’s webcam stream with other peers in the room"],
-    ['enumerateDevices()', 'Function', "Returns the list of video devices"],
-    ['createSingleConsumer(peerId: string, "cam")', 'Function', "Starts consuming video stream for given peerId"],
-    ['closeSingleConsumer(peerId: string, "cam")', 'Function', "Stops consuming video stream for given peerId"],
-  ]} 
+  ]}
 />
 
-## Example 
+**Example**
 
 
-```dart filename="meeting_screen.dart" highlight={2,22} showLineNumbers
-import 'package:flutter/material.dart';
-import 'package:huddle01_flutter_client/huddle_client.dart';
+```jsx
+// Usage
+await huddleClient.localPeer.replaceVideoStream({MediaStream});
+```
 
 
-class MeetingScreen extends StatefulWidget {
-  ...
-}
+### changeVideoSource
 
-class _MeetingScreenState extends State<MeetingScreen> {
-  late HuddleClient huddleClient;
+The `changeVideoSource` changes the Video source to the given deviceId, sets the preferred cam device as the given deviceId
 
-  @override
-  void initState() {
-    ...
-  }
+**Parameters**
+<OptionTable
+    headers={['Params',"Type","Description" , 'Return Type']}
+  options={[
+    [
+      'deviceId',
+      "string",
+      "This function changes the video stream",
+      'Promise<void>'
+    ],
+  ]}
+/>
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children:[
-        ElevatedButton(
-          onPressed:(){
-            huddleClient.fetchVideoStream();
-          },
-          child: const Text("Fetch Video Stream"),
-        )
-      ]
-    );
-  }
-}
+**Example**
+
+
+```jsx
+// Usage
+await huddleClient.localPeer.changeVideoSource({deviceId});
 ```

@@ -3,75 +3,476 @@ title: 'Room'
 ---
 
 import OptionTable from '@components/common/Table/OptionTable';
+import { Callout } from 'nextra-theme-docs';
 
-## Room
+# Room
 
-Room is the place where the actual meeting takes place. It is the place where the user can interact with other peers.
+The room is the place where the actual meeting takes place. It is the place where the user can interact with other peers.
+
+## Methods 
+
+### Join Room
+
+<Callout>
+You can generate Access Token using our [Server SDK](/Server-SDK). To generate `roomId` you can use our [Create Room API](/apis/create-room/create-room).
+</Callout>
+
+```jsx
+// Joining the room
+const room = await huddleClient.joinRoom({
+	roomId: "YOUR_ROOM_ID",
+	token: "YOUR_ACCESS_TOKEN"
+});
+```
+
+
+ {/* ### connect
+
+Function `connect` connects to the room and returns the instance of the room.
 
 <OptionTable
-  headers={['Name', "Type","Description"]}
+    headers={["Description",'Return Type']}
   options={[
     [
-      'joinRoom()',
-      'Function',
-      "moves user from lobby to actual room with other peers"
+      "Connects to the room and returns the instance of the room",
+      'room'
     ],
-    [
-      'leaveRoom()',
-      'Function',
-      "removes user from room, back to the lobby"
-    ],
-    [
-      'endRoom()',
-      'Function',
-      "Ends the room for all, only `host` has the ability to call this function"
-    ]
   ]}
 />
 
-### Sample Code
+**Example**
+```jsx
+// Usage
+ await room.connect();
+``` */}
 
-```dart filename="meeting_screen.dart" highlight={2,22,28,34} showLineNumbers
-import 'package:flutter/material.dart';
-import 'package:huddle01_flutter_client/huddle_client.dart';
+### remotePeerExists
+
+Function `remotePeerExists` checks if the remote peer exists in the room. Returns `null` if the peer does not exist.
+
+<OptionTable
+    headers={["Params","Type","Description",'Return Type']}
+  options={[
+    [
+      "peerId",
+      "string",
+      "Checks if the remote peer exists in the room",
+      'RemotePeer | null'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+const remotePeer = await room.remotePeerExists("PEER_ID");
+```
+
+### getRemotePeerById
+
+Function `getRemotePeerById` returns the Remote Peer if present in room. 
+
+<OptionTable
+    headers={["Params","Type","Description",'Return Type']}
+  options={[
+    [
+      "peerId",
+      "string",
+      "Returns the Remote Peer if present in room",
+      'RemotePeer'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+const remotePeer = await room.getRemotePeerById("PEER_ID");
+```
 
 
-class MeetingScreen extends StatefulWidget {
-  ...
-}
+ ### getLobbyPeerMetadata
 
-class _MeetingScreenState extends State<MeetingScreen> {
-  late HuddleClient huddleClient;
+Function `getLobbyPeerMetadata` gets the Metadata of the lobby peer.
 
-  @override
-  void initState() {
-    ...
-  }
+<OptionTable
+    headers={["Params","Type","Description",'Return Type']}
+  options={[
+    ["peerId",
+    "string",
+      "Gets the Metadata of the lobby peer",
+      'room'
+    ],
+  ]}
+/>
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children:[
-        ElevatedButton(
-          onPressed:(){
-            huddleClient.joinRoom(roomId);
-          },
-          child: const Text("Join Room"),
-        ),
-        ElevatedButton(
-          onPressed:(){
-            huddleClient.leaveRoom();
-          },
-          child: const Text("Leave Room"),
-        ),
-        ElevatedButton(
-          onPressed:(){
-            huddleClient.endRoom();
-          },
-          child: const Text("End Room"),
-        ),
-      ]
-    );
-  }
-}
+**Example**
+```jsx
+// Usage
+await room.getLobbyPeerMetadata({peerId: string});
+```
+
+
+- ### getMetadata
+
+Function `getMetadata` gets Metadata of the room.
+
+<OptionTable
+    headers={["Params","Type","Description",'Return Type']}
+  options={[
+    ["data",
+    "unknown",
+      "gets Metadata of the room",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.getMetadata({data: unknown});
+```
+
+ ### updateMetadata
+
+Function `updateMetadata` update Metadata of the room.
+
+<OptionTable
+    headers={["Description",'Return Type']}
+  options={[
+    [
+      "Update Metadata of the room",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.updateMetadata({data: unknown});
+```
+
+
+- ### getRemotePeerById
+
+Function `getRemotePeerById` returns the Remote Peer if present in room.
+
+<OptionTable
+    headers={["Params","Type","Description",'Return Type']}
+  options={[
+    [
+     "peerId",
+     "string",
+      "Returns the Remote Peer if present in room",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.getRemotePeerById(peerId:string);
+```
+
+ ### updateRoomControls
+
+Function `updateRoomControls` update room control booleans - roomLocked, allowProduce, allowConsume, allowSendData.
+
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    ["data",
+    "NewRoomControls",
+      "update room control booleans - roomLocked, allowProduce, allowConsume, allowSendData",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.updateRoomControls({data: NewRoomControls});
+```
+
+
+ ### closeStreamOfLabel
+
+Function `closeStreamOfLabel` will close a particular stream of remote peers in the room.
+
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    ["lables | peerIds(optional)",
+    "Label of the stream | PeerIds of the remote peers, if not provided, it will close the stream of all the remote peers",
+      "close a particular stream of remote peers in the room",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.closeStreamOfLabel({labels:,peerIds?:string[]});
+```
+
+
+ ### muteEveryone
+
+Function `muteEveryone` will close the audio stream of all the remote peers who dont have admin permissions in the room.
+
+<OptionTable
+    headers={["Description" , 'Return Type']}
+  options={[
+    [
+      "Close the audio stream of all the remote peers who dont have admin permissions",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.muteEveryone();
+```
+
+ ### admitPeer
+
+Function `admitPeer` admits a Peer to the room who is in the lobby.
+
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    [
+      "peerId",
+      "string",
+      "Admit a Peer to the room who is in the lobby",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.admitPeer(peerId:string);
+```
+
+ ### denyPeer
+
+Function `denyPeer` denies the peer from joining the room, who is in the lobby.
+
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    [
+      "peerId",
+      "string",
+      "Denies the peer from joining the room, who is in the lobby",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.denyPeer(peerId:string);
+```
+
+ ### kickPeer
+
+Function `kickPeer` kick peer from room with respective peerId
+
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    [
+      "peerId",
+      "string",
+      "kick peer from room with respective peerId",
+      'void'
+    ],
+  ]}
+/>
+
+**Example**
+```jsx
+// Usage
+await room.kickPeer(peerId:string);
+```
+
+
+### close
+
+Function `close` closes the room with respective reason.
+
+<OptionTable
+    headers={["Params","Type","Description" , 'Return Type']}
+  options={[
+    [
+      "reason ['LEFT' | 'CLOSED' | 'KICKED' | 'DENIED']",
+      "string",
+      "closes the room with respective reason",
+      'void'
+    ],
+  ]}
+/>
+
+
+**Example**
+```jsx
+// Usage
+await room.close(reason);
+```
+
+## Attributes
+
+<OptionTable 
+    headers={['Name', 'Description', 'Type']}
+    options={[
+        [
+            'roomId',
+            'Room Id of the currently joined room.',
+            'string or null'
+        ],
+        [
+            'lobbyPeerSet',
+            'Lobby peers as a Set.',
+            'Set<string>'
+        ],
+        [
+            'lobbyPeerIds',
+            'Lobby peers as an array.',
+            'string[]'
+        ],
+        [
+            'config',
+            'Room configuration settings including permissions and room state.',
+            'TRoomInfo["config"] (object)'
+        ],
+        [
+            'remotePeers',
+            'Remote peers in the room.',
+            'Map<string, RemotePeer>'
+        ],
+        [
+            'peerIds',
+            'Peer IDs of remote peers in the room.',
+            'string[]'
+        ]
+    ]}
+/>
+
+**Example**
+
+```js
+// Get room ID
+const roomId = room.roomId;
+
+// Get lobby peers as a Set
+const lobbyPeerSet = room.lobbyPeerSet;
+
+// Get lobby peers as an array
+const lobbyPeerIds = room.lobbyPeerIds;
+
+// Get room configuration settings
+const config = room.config;
+```
+
+## Events
+
+<OptionTable 
+    headers={['Event Name', 'Description', 'Returns']}
+    options={[
+        [
+            'room-joined',
+            'Invoked when a user successfully joins a room.',
+            'None'
+        ],
+        [
+            'room-joined-failed',
+            "Invoked when a user's attempt to join a room fails.",
+            '{ message: string, status: string }'
+        ],
+        [
+            'room-closed',
+            'Invoked when a room is closed.',
+            'None'
+        ],
+        [
+            'room-left',
+            'Invoked when a user leaves a room.',
+            'None'
+        ],
+        [
+            'room-connecting',
+            'Invoked when a room is in the process of connecting.',
+            'None'
+        ],
+        [
+            'new-peer-joined',
+            'Invoked when a new peer joins the room.',
+            'data (object): Information about the new peer.'
+        ],
+        [
+            'lobby-peers-updated',
+            'Invoked when the list of lobby peers is updated.',
+            'peerIds (array): An array of lobby peer IDs.'
+        ],
+        [
+            'peer-left',
+            'Invoked when a peer leaves the room.',
+            'peerId (string): The ID of the peer who left.'
+        ],
+        [
+            'room-controls-updated',
+            "Invoked when the room's control settings are updated.",
+            'data (object): Information about the updated control settings.'
+        ],
+        [
+          'room-role-updated',
+          "Invoked when any remote peer's role is updated.",
+          'data (object): Information about the updated role.'
+        ],
+        [
+          'room-awaiting',
+          "Invoked when a user is awaiting to join the room.",
+          'data (object): Reason and message for peer awaiting to join room.'
+        ],
+        [
+          'stream-added',
+          "Invoked when a new remote peer's stream is added to the room.",
+          'data (object): Information about the new stream.'
+        ],
+        [
+          'stream-closed',
+          "Invoked when a remote peer's stream is closed.",
+          'data (object): Information about the closed stream.'
+        ]
+    ]}
+/>
+
+**Example**
+
+```js
+// Event listeners for the Room events
+room.on("room-joined", () => {
+  console.log("You have successfully joined the room.");
+  console.log("Room ID:", room.roomId);
+});
+
+room.on("new-peer-joined", (data) => {
+  console.log("A new peer has joined the room:");
+  console.log("Peer ID:", data.peerId);
+});
+
+room.on("room-closed", () => {
+  console.log("The room has been closed.");
+});
 ```
