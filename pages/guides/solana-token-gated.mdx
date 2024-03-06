@@ -91,7 +91,6 @@ const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
     const wallets = useMemo(
         () => [new PhantomWalletAdapter(), new SolflareWalletAdapter({ network }), new TorusWalletAdapter()],
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         [network]
     );
 
@@ -143,7 +142,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
     return (
         <>
             <Head>
-                <title>Solan Token Gated Example</title>
+                <title>Solana Token Gated Example</title>
             </Head>
             <ContextProvider>
                 <HuddleProvider client={huddleClient}>
@@ -385,35 +384,39 @@ const ReactUIWalletMultiButtonDynamic = dynamic(
     { ssr: false }
 );
 
-const wallet = useWallet();
-const { joinRoom, state } = useRoom();
+export default function Home() {
+    // rest of the code
+    
+    const wallet = useWallet();
+    const { joinRoom, state } = useRoom();
 
-useEffect(() => {
-    const handleWallet = async () => {
-        const token = await handleSignIn(
-            router.query.roomId as string,
-            displayName,
-            wallet.signMessage,
-            wallet.publicKey
-        );
-        if (token) {
-            await joinRoom({
-                token,
-                roomId: router.query.roomId as string,
-            });
+    useEffect(() => {
+        const handleWallet = async () => {
+            const token = await handleSignIn(
+                router.query.roomId as string,
+                displayName,
+                wallet.signMessage,
+                wallet.publicKey
+            );
+            if (token) {
+                await joinRoom({
+                    token,
+                    roomId: router.query.roomId as string,
+                });
+            }
+        };
+        if (wallet.connected && state === 'idle') {
+            handleWallet();
         }
-    };
-    if (wallet.connected && state === 'idle') {
-        handleWallet();
-    }
-}, [wallet.connected]);
+    }, [wallet.connected]);
 
-return (
-    <>
-    {/* Rest UI */}
-        <ReactUIWalletMultiButtonDynamic />
-    </>
-);
+    return (
+        <>
+        {/* Rest UI */}
+            <ReactUIWalletMultiButtonDynamic />
+        </>
+    );
+};
 ```
 
 ### You're all set! Happy Hacking! 🎉
