@@ -428,9 +428,24 @@ export const GuidesData = [
     },
   },
   {
-    href: '/guides/token-gated-rooms',
-    name: 'Token Gated Rooms',
-    description: 'Step by step guide to create and join token-gated rooms.',
+    href: '/guides/token-gated',
+    name: 'Token Gated Rooms (EVM)',
+    description:
+      'Step by step guide to create and join token-gated rooms on EVM Chains.',
+    icon: BookIcon,
+    pattern: {
+      y: 16,
+      squares: [
+        [0, 1],
+        [1, 3],
+      ],
+    },
+  },
+  {
+    href: '/guides/solana-token-gated',
+    name: 'Token Gated Rooms (Solana)',
+    description:
+      'Step by step guide to create and join token-gated rooms on Solana.',
     icon: BookIcon,
     pattern: {
       y: 16,
