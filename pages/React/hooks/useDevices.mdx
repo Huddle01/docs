@@ -1,53 +1,43 @@
 ---
-title: 'useDevices'
+title: "useDevices"
 ---
 
-import OptionTable from '@components/common/Table/OptionTable';
-import Pill from '@components/common/Pill/Pill';
+import OptionTable from "@components/common/Table/OptionTable";
+import Pill from "@components/common/Pill/Pill";
 
 # useDevices
 
 The useDevices hook provides functionality to interact with the different media devices available to you, like your camera, microphone, and speaker.
 
 <OptionTable
-  headers={['Name', 'Description', 'Return Type', 'Params']}
+  headers={["Name", "Description", "Return Type", "Params"]}
   options={[
+    ["devices", "The available media devices.", "MediaDeviceInfo[]", ""],
     [
-      'devices',
-      'The available media devices.',
-      'MediaDeviceInfo[]',
-      ''
-    ],
-   [
-      'preferredDeviceId',
+      "preferredDeviceId",
       "The preferred media device's ID.",
-      'string | null',
-      ''
+      "string | null",
+      "",
     ],
-   [
-      'preferredDevice',
-      'The preferred media device.',
-      'MediaDeviceInfo | null',
-      ''
+    [
+      "preferredDevice",
+      "The preferred media device.",
+      "MediaDeviceInfo | null",
+      "",
     ],
-   [
-      'fetchStream',
-      'Fetch media stream from the selected media device.',
-      'Promise<FetchStreamResponse>',
-      '{ mediaDeviceKind: "mic" | "cam"; }'
+    [
+      "fetchStream",
+      "Fetch media stream from the selected media device.",
+      "Promise<FetchStreamResponse>",
+      '{ mediaDeviceKind: "mic" | "cam"; }',
     ],
-   [
-      'getPermission',
-      'Get permission to access the selected media device.',
+    [
+      "getPermission",
+      "Get permission to access the selected media device.",
       'Promise<{permission: "granted" | "denied"; error?: StreamPermissionsError | undefined;}>',
-      ''
+      "",
     ],
-   [
-      'setPreferredDevice',
-      'Set the preferred media device.',
-      'void',
-      'string'
-   ]
+    ["setPreferredDevice", "Set the preferred media device.", "void", "string"],
   ]}
 />
 
@@ -55,18 +45,18 @@ The useDevices hook provides functionality to interact with the different media 
 
 ```tsx
 const {
-    devices,
-    preferredDeviceId,
-    preferredDevice,
-    fetchStream,
-    getPermission,
-    setPreferredDevice,
-  } = useDevices({
-    type: "cam",
-    onPermissionGranted() {},
-    onPermissionDenied() {},
-    onDeviceChanged(deviceId: string) {},
-  });
+  devices,
+  preferredDeviceId,
+  preferredDevice,
+  fetchStream,
+  getPermission,
+  setPreferredDevice,
+} = useDevices({
+  type: "cam",
+  onPermissionGranted() {},
+  onPermissionDenied() {},
+  onDeviceChanged(deviceId: string) {},
+});
 
 // Change preferred device
 const changePreferredDevice = (deviceId: string) => {
@@ -80,28 +70,26 @@ const fetchMediaStream = async () => {
   });
   if (error) {
     return;
-  } 
+  }
   return stream;
 };
 ```
 
 ## Props
+
 The useDevices hook accepts an object with the following fields as props.
 
 {/* type */}
+
 ### <span className="font-mono font-semibold">type</span>
-<div className='w-20 mt-4'>
+
+<div className="w-20 mt-4">
   <Pill>Required</Pill>
 </div>
 
 <OptionTable
-  headers={['Description', 'Type']}
-  options={[
-    [
-      'The device type.',
-      `"mic" | "cam" | "speaker"`,
-    ],
-  ]}
+  headers={["Description", "Type"]}
+  options={[["The device type.", `"mic" | "cam" | "speaker"`]]}
 />
 
 #### Example Usage
@@ -118,17 +106,19 @@ const { devices } = useDevices({ type: "speaker" });
 ```
 
 {/* onPermissionGranted */}
+
 ### <span className="font-mono font-semibold">onPermissionGranted</span>
-<div className='w-20 mt-4'>
+
+<div className="w-20 mt-4">
   <Pill>Optional</Pill>
 </div>
 
 <OptionTable
-  headers={['Description', 'Return Type']}
+  headers={["Description", "Return Type"]}
   options={[
     [
-      'This function will be called when the permission for accessing the device is granted.',
-      'void',
+      "This function will be called when the permission for accessing the device is granted.",
+      "void",
     ],
   ]}
 />
@@ -136,24 +126,29 @@ const { devices } = useDevices({ type: "speaker" });
 #### Example Usage
 
 ```tsx
-useDevices({ type: "cam", onPermissionGranted: () => {
-	console.log("Permission for accessing the device was granted!");
+useDevices({
+  type: "cam",
+  onPermissionGranted: () => {
+    console.log("Permission for accessing the device was granted!");
     // your code here
-}});
+  },
+});
 ```
 
 {/* onPermissionDenied */}
+
 ### <span className="font-mono font-semibold">onPermissionDenied</span>
-<div className='w-20 mt-4'>
+
+<div className="w-20 mt-4">
   <Pill>Optional</Pill>
 </div>
 
 <OptionTable
-  headers={['Description', 'Return Type']}
+  headers={["Description", "Return Type"]}
   options={[
     [
-      'This function will be called when the permission for accessing the device is denied.',
-      'void',
+      "This function will be called when the permission for accessing the device is denied.",
+      "void",
     ],
   ]}
 />
@@ -161,46 +156,48 @@ useDevices({ type: "cam", onPermissionGranted: () => {
 #### Example Usage
 
 ```tsx
-useDevices({ type: "cam", onPermissionDenied: () => {
-	console.log("Permission for accessing the device was denied!");
+useDevices({
+  type: "cam",
+  onPermissionDenied: () => {
+    console.log("Permission for accessing the device was denied!");
     // your code here
-}});
+  },
+});
 ```
 
 {/* OnDeviceChanged */}
+
 ### <span className="font-mono font-semibold">onDeviceChanged</span>
-<div className='w-20 mt-4'>
+
+<div className="w-20 mt-4">
   <Pill>Optional</Pill>
 </div>
 
 <OptionTable
-  headers={['Description', 'Return Type']}
+  headers={["Description", "Return Type"]}
   options={[
     [
-      'This function will be called when the preferred device is changed.',
-      'void',
+      "This function will be called when the preferred device is changed.",
+      "void",
     ],
   ]}
 />
 
 <OptionTable
-  headers={['Parameter Name', 'Type', 'Description', 'Required']}
+  headers={["Parameter Name", "Type", "Description", "Required"]}
   options={[
-    [
-      'deviceId',
-      "string",
-      'Device ID of changed preferred device.',
-      'Yes',
-    ],
+    ["deviceId", "string", "Device ID of changed preferred device.", "Yes"],
   ]}
 />
 
 #### Example Usage
 
 ```tsx
-useDevices({ type: "cam", onDeviceChanged: (deviceId: string) => {
-  console.log("Changed preferred device to: ", deviceId);
+useDevices({
+  type: "cam",
+  onDeviceChanged: (deviceId: string) => {
+    console.log("Changed preferred device to: ", deviceId);
     // your code here
-}});
+  },
+});
 ```
-

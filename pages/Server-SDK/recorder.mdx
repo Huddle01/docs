@@ -4,6 +4,7 @@ title: "Recording and Livestreaming"
 
 import Image from "next/image";
 import { Callout } from "nextra-theme-docs";
+import OptionTable from "@components/common/Table/OptionTable";
 
 # Recording and Livestreaming
 
@@ -212,6 +213,8 @@ recorder.stop({
 
 ## Additional Add-ons
 
+The additional add-ons are the optional options provided by Huddle01 Sdks to enhance your recording experience.
+
 #### Active speaker indication in recordings
 
 - With the Help of [useActivePeers](../React/hooks/useActivePeers) hook you can get the active speaker in the room.
@@ -242,6 +245,14 @@ recorder.stop({
 />
 
 #### Option to get separate audio and video files in Recording SDK
+
+<Callout type="info">
+
+- If audioOnly is true, video will not be recorded
+- If videoOnly is true, audio will not be recorded
+- If both are true, an error will be thrown
+
+</Callout>
 
 - You can get separate audio and video files in the recording SDK by passing the optional `egressOpts` in the `startRecording` method.
 
@@ -281,10 +292,85 @@ const token = await generateToken("YOUR_ROOM_ID");
 recorder.startRecording({
 	roomId: 'YOUR_ROOM_ID',
 	token,
-   egressOpts: {
-    audio: true,
-    video: true,
+   options: {
+    audioOnly: boolean,
+    videoOnly: boolean,
   }
+})
+
+// Stop Recording
+recorder.stop({
+	roomId: 'YOUR_ROOM_ID',
+})
+```
+
+#### Add Watermark to Your Recording
+
+Huddle01's watermark feature enables you to include an image as a watermark in your recording.
+To add watermark, configure the following parameters to `startRecording` function.
+
+<OptionTable
+  headers={["Params", "Description", "Return Type"]}
+  options={[
+    ["URL", "Specify the URL of the watermark image.", "string | optional"],
+    [
+      "position",
+       "top-left, top-right, bottom-left, bottom-right. Default value is bottom-right.",
+      "string | optional",
+    ],
+    [
+      "Size",
+      "Specify the height and width of the watermark",
+      "number | optional",
+    ],
+
+]}
+/>
+
+```jsx
+import { Recorder } from '@huddle01/server-sdk/recorder';
+
+const recorder = new Recorder("PROJECT_ID", "API_KEY");
+
+const generateToken = async (roomId: string) => {
+  const token = new AccessToken({
+    apiKey: process.env.API_KEY!,
+    roomId: roomId as string,
+    role: Role.BOT,
+    permissions: {
+      admin: true,
+      canConsume: true,
+      canProduce: true,
+      canProduceSources: {
+        cam: true,
+        mic: true,
+        screen: true,
+      },
+      canRecvData: true,
+      canSendData: true,
+      canUpdateMetadata: true,
+    },
+  });
+
+  const accessToken = await token.toJwt();
+
+  return accessToken;
+}
+
+const token = await generateToken("YOUR_ROOM_ID");
+
+// Start Recording
+recorder.startRecording({
+	roomId: 'YOUR_ROOM_ID',
+	token,
+    watermark:{
+        url: "https://example.com/watermark.png",
+        position: "top-right" | "top-left" | "bottom-right" | "bottom-left",
+        size:{
+          width:number,
+          height:number
+    }
+ }
 })
 
 // Stop Recording
