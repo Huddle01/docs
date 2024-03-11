@@ -4,5 +4,6 @@
   "selective-consuming": "Selective Consuming",
   "collaborative-whiteboard": "Collaborative Whiteboard",
   "custom-auth": "Custom Authentication",
-  "token-gated": "Token Gated Rooms"
+  "token-gated": "Token Gated Rooms",
+  "solana-token-gated": "Solana Token Gated Rooms"
 }

@@ -1,0 +1,427 @@
+---
+title: "Solana Token Gated Rooms"
+---
+
+import { Steps, Tab, Tabs, Callout } from "nextra-theme-docs";
+
+# Token Gated Rooms On Solana
+
+In this guide, we will walk through how to create token gated rooms on Solana such that only users who hold an NFT from a specific collection can join the room. 
+
+## Demo 
+
+Before we get started, here's a demo of what we'll be building:
+
+<video
+  src="/docs/videos/solana-token-gated.mp4"
+  muted
+  controls
+  className="my-4 rounded-lg"
+  width="100%"
+  height="100%"
+/>
+
+## Walkthrough
+
+We will use [Create Room API Function](/Server-SDK/api-functions/create-room) to create a token gated room and get token gating information from [Get Room Details API Function](/Server-SDK/api-functions/get-room-details).
+Once we get token gating details we will use to verify whether the user has the required NFT or not to join the room. If the user has the required NFT, we will create an access token and use it to join the room.
+
+<Steps>
+### Create Token Gated Room 
+
+Create a token gated room using [Create Room API Function](/Server-SDK/api-functions/create-room). 
+Let's create an API to create a token gated room.
+
+<Callout>
+  Make sure you create .env file and add your API key. To get the API key, visit [API Key Page](/api-keys)
+</Callout>
+
+```ts filename="pages/api/createRoom.ts"
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { API } from '@huddle01/server-sdk/api';
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    const { collectionAddress } = req.query;
+
+    if (!collectionAddress) {
+        return res.status(400).json({ error: 'collectionAddress is required' });
+    }
+
+    const api = new API({
+        apiKey: process.env.API_KEY!,
+    });
+
+    const createNewRoom = await api.createRoom({
+        title: 'Token Gated Room',
+        tokenType: 'SPL',
+        chain: 'SOLANA',
+        contractAddress: [collectionAddress as string],
+    });
+
+    if (createNewRoom.error) {
+        return res.status(500).json({
+            error: createNewRoom.error,
+        });
+    }
+
+    return res.status(200).json({
+        roomId: createNewRoom.data.data.roomId,
+    });
+}
+```
+
+### Adding Solana Wallet Adapter 
+
+We will create a `WalletContextProvider` to handle the connection to Solana Wallet. 
+We need to add this provider to the root of our application to make the wallet available to all components.
+
+```tsx filename="components/ContextProvider.tsx"
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import { WalletModalProvider as ReactUIWalletModalProvider } from '@solana/wallet-adapter-react-ui';
+import { PhantomWalletAdapter, SolflareWalletAdapter, TorusWalletAdapter } from '@solana/wallet-adapter-wallets';
+import { clusterApiUrl } from '@solana/web3.js';
+import type { FC, ReactNode } from 'react';
+import React, { useMemo } from 'react';
+
+const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
+    const network = WalletAdapterNetwork.Mainnet;
+
+    const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+
+    const wallets = useMemo(
+        () => [new PhantomWalletAdapter(), new SolflareWalletAdapter({ network }), new TorusWalletAdapter()],
+        [network]
+    );
+
+    return (
+        <ConnectionProvider endpoint={endpoint}>
+            <WalletProvider wallets={wallets}>
+                <ReactUIWalletModalProvider>{children}</ReactUIWalletModalProvider>
+            </WalletProvider>
+        </ConnectionProvider>
+    );
+};
+
+export const ContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
+    return <WalletContextProvider>{children}</WalletContextProvider>;
+};
+```
+
+### Adding Huddle01 Provider 
+
+We will add `HuddleProvider` to the root of our application to make the Huddle01 SDK available to all components.
+
+<Callout>
+  Make sure you add NEXT_PUBLIC_HUDDLE_PROJECT_ID in your .env file. To get the Project ID, visit [API Key Page](/api-keys)
+</Callout>
+
+```tsx filename="pages/_app.tsx"
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import type { FC } from 'react';
+import React from 'react';
+import { ContextProvider } from '../components/ContextProvider';
+import { Toaster } from 'react-hot-toast';
+import { HuddleClient, HuddleProvider } from '@huddle01/react';
+
+// Use require instead of import since order matters
+require('@solana/wallet-adapter-react-ui/styles.css');
+require('../styles/globals.css');
+
+const huddleClient = new HuddleClient({
+    projectId: process.env.NEXT_PUBLIC_HUDDLE_PROJECT_ID!,
+    options: {
+        activeSpeakers: {
+            size: 8,
+        },
+    },
+});
+
+const App: FC<AppProps> = ({ Component, pageProps }) => {
+    return (
+        <>
+            <Head>
+                <title>Solana Token Gated Example</title>
+            </Head>
+            <ContextProvider>
+                <HuddleProvider client={huddleClient}>
+                    <Toaster position="bottom-right" />
+                    <Component {...pageProps} />
+                </HuddleProvider>
+            </ContextProvider>
+        </>
+    );
+};
+
+export default App;
+```
+
+### Implement Sign In With Solana Wallet
+
+We will create a helper class `SignInMessage` which prepares the message to sign and validates the signature.
+
+```ts filename="src/lib/SignInMessage.ts"
+import bs58 from 'bs58';
+import nacl from 'tweetnacl';
+
+type SignMessage = {
+    domain: string;
+    publicKey: string;
+    expTime: string;
+    statement: string;
+};
+
+export class SigninMessage {
+    domain: any;
+    publicKey: any;
+    expTime: any;
+    statement: any;
+
+    constructor({ domain, publicKey, expTime, statement }: SignMessage) {
+        this.domain = domain;
+        this.publicKey = publicKey;
+        this.expTime = expTime;
+        this.statement = statement;
+    }
+
+    prepare() {
+        return `${this.statement}
+
+${this.domain} 
+
+Expires on ${this.expTime}`;
+    }
+
+    async validate(signature: string) {
+        const msg = this.prepare();
+        const signatureUint8 = bs58.decode(signature);
+        const msgUint8 = new TextEncoder().encode(msg);
+        const pubKeyUint8 = bs58.decode(this.publicKey);
+
+        return nacl.sign.detached.verify(msgUint8, signatureUint8, pubKeyUint8);
+    }
+}
+```
+
+Create a function to sign the message and send it's signature to the server for verification. 
+
+```ts filename="components/SignIn.tsx"
+import { SigninMessage } from '../lib/SignInMessage';
+import base58 from 'bs58';
+import axios, { isAxiosError } from 'axios';
+import toast from 'react-hot-toast';
+
+export const handleSignIn = async (roomId: string, displayName: string, signIn: any, publicKey: any) => {
+    try {
+        const time = {
+            issuedAt: Date.now(),
+            expiresAt: Date.now() + 1000 * 60 * 5,
+        };
+
+        const signInMessage = new SigninMessage({
+            domain: window.location.host,
+            publicKey: publicKey.toBase58(),
+            expTime: new Date(time.expiresAt).toISOString(),
+            statement: 'Please Sign In to verify wallet',
+        });
+
+        const data = new TextEncoder().encode(signInMessage.prepare());
+
+        const signature = await signIn(data);
+
+        const serializedSignature = base58.encode(signature);
+
+        const token = await axios.request({
+            method: 'POST',
+            url: '/api/getAccessToken',
+            data: {
+                displayName,
+                roomId,
+                address: publicKey.toBase58(),
+                expirationTime: time.expiresAt,
+                domain: window.location.host,
+                signature: serializedSignature,
+            },
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        return token?.data?.token;
+    } catch (error: any) {
+        if (isAxiosError(error)) {
+            toast.error(error.response?.data?.error);
+        }
+    }
+};
+```
+
+### Create an API to verify wallet and generate access token
+
+Here, we will first verify the signature and expiration time and then we will use [Shyft](https://docs.shyft.to/solana-apis/nft#get-sol-v1-nft-search) API 
+to verify whether the user has the required NFT or not. 
+If the user has the required NFT, we will create an access token and use it to join the room.
+
+<Callout>
+  Make sure you add SHYFT_API_KEY in your .env file. To get the API key, visit [Shyft API Key Page](https://shyft.to/get-api-key)
+</Callout>
+
+```ts filename="pages/api/getAccessToken.ts"
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { AccessToken, Role } from '@huddle01/server-sdk/auth';
+import { API } from '@huddle01/server-sdk/api';
+import { SigninMessage } from '../../lib/SignInMessage';
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    const { roomId, address, displayName, expirationTime, signature, domain } = req.body as {
+        roomId: string;
+        address: string;
+        expirationTime: number;
+        displayName: string;
+        domain: string;
+        signature: string;
+    };
+
+    if (!roomId || !address) {
+        return res.status(400).json({ error: 'Invalid Request' });
+    }
+
+    if (expirationTime < Date.now()) {
+        return res.status(400).json({ error: 'Signature expired' });
+    }
+
+    const api = new API({
+        apiKey: process.env.API_KEY!,
+    });
+
+    const { data: roomDetails } = await api.getRoomDetails({
+        roomId: roomId,
+    });
+
+    if (!roomDetails?.tokenGatingInfo) {
+        return res.status(400).json({ error: 'Room is not token gated' });
+    }
+
+    const signInMessage = new SigninMessage({
+        domain,
+        publicKey: address,
+        expTime: new Date(expirationTime).toISOString(),
+        statement: 'Please Sign In to verify wallet',
+    });
+
+    const isVerified = await signInMessage.validate(signature);
+
+    if (!isVerified) {
+        return res.status(400).json({ error: 'Invalid Signature' });
+    }
+
+    const collectionAddress = roomDetails?.tokenGatingInfo?.tokenGatingConditions[0]?.contractAddress;
+
+    const apiResponse = await fetch(
+        `https://api.shyft.to/sol/v1/nft/search?wallet=${address}&network=mainnet-beta&size=1&collection=${collectionAddress}`,
+        {
+            method: 'GET',
+            headers: {
+                'x-api-key': process.env.SHYFT_API_KEY!,
+            },
+        }
+    );
+
+    const nftData = (await apiResponse.json()) as {
+        result: {
+            nfts: any[];
+        };
+    };
+
+    if (nftData.result.nfts.length === 0) {
+        return res.status(400).json({ error: 'User does not own the required NFT' });
+    }
+
+    const accessToken = new AccessToken({
+        apiKey: process.env.API_KEY!,
+        roomId: roomId as string,
+        role: Role.HOST,
+        permissions: {
+            admin: true,
+            canConsume: true,
+            canProduce: true,
+            canProduceSources: {
+                cam: true,
+                mic: true,
+                screen: true,
+            },
+            canRecvData: true,
+            canSendData: true,
+            canUpdateMetadata: true,
+        },
+        options: {
+            metadata: {
+                displayName: displayName,
+                walletAddress: address,
+            },
+        },
+    });
+
+    const token = await accessToken.toJwt();
+
+    return res.status(200).json({ token });
+}
+```
+
+### Joining Room if user has the required NFT
+
+We will add `ReactUiWalletButton` to connect with Solana Wallet and call `handleSignIn` function to sign the message and get the token from our API. 
+On wallet connected, we will call `handleSignIn` function and join the room if we get the token. 
+
+```tsx filename="pages/[roomId].tsx"
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useEffect } from 'react';
+import { useRoom } from '@huddle01/react/hooks';
+
+const ReactUIWalletMultiButtonDynamic = dynamic(
+    async () => (await import('@solana/wallet-adapter-react-ui')).WalletMultiButton,
+    { ssr: false }
+);
+
+export default function Home() {
+    // rest of the code
+    
+    const wallet = useWallet();
+    const { joinRoom, state } = useRoom();
+
+    useEffect(() => {
+        const handleWallet = async () => {
+            const token = await handleSignIn(
+                router.query.roomId as string,
+                displayName,
+                wallet.signMessage,
+                wallet.publicKey
+            );
+            if (token) {
+                await joinRoom({
+                    token,
+                    roomId: router.query.roomId as string,
+                });
+            }
+        };
+        if (wallet.connected && state === 'idle') {
+            handleWallet();
+        }
+    }, [wallet.connected]);
+
+    return (
+        <>
+        {/* Rest UI */}
+            <ReactUIWalletMultiButtonDynamic />
+        </>
+    );
+};
+```
+
+### You're all set! Happy Hacking! 🎉
+
+Thank you for following this guide till end. 
+You can find the full source code [here](https://github.com/Huddle01/solana-token-gated-example-app). 
+
+</Steps>
