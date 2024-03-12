@@ -1,65 +1,58 @@
 ---
-title: 'Local Peer Methods'
+title: "Local Peer Methods"
 ---
 
-import OptionTable from '@components/common/Table/OptionTable';
+import OptionTable from "@components/common/Table/OptionTable";
 
-# Local Peer 
+# Local Peer
 
-`localPeer` object from `huddleClient` allows you to intereact with your own Peer object, which is how you are represented in the Huddle01 room. 
+`localPeer` object from `huddleClient` allows you to intereact with your own Peer object, which is how you are represented in the Huddle01 room.
 
 **Metadata**
 
 The `updateMetadata` method enables the Local Peer to update its metadata. You can add any custom metadata you want to the Local Peer.
 
-```js
+```dart
 // Update the metadata of the Local Peer
-huddleClient.localPeer.updateMetadata({ 
+huddleClient.localPeer.updateMetadata({
     displayName: "TEST",
     avatarUrl: "AVATAR_URL"
  });
 
 // Get the metadata of the Local Peer
-const metadata = huddleClient.localPeer.metadata;
+final metadata = huddleClient.localPeer.metadata;
 ```
- 
 
 <OptionTable
-    headers={['Event Name', 'Description', 'Returns']}
+  headers={["Event Name", "Description", "Returns"]}
   options={[
     [
-      'metadata-updated',
-      'Triggered when metadata is updated',
-      'metadata: unknown'
+      "metadata-updated",
+      "Triggered when metadata is updated",
+      "metadata: unknown",
     ],
   ]}
 />
 
- ### updateRole
+### updateRole
 
 `updateRole` update the role of the Local Peer in the Room, this will emit an event `updated` with the updated role.
 
 **Parameters**
+
 <OptionTable
-    headers={["Params","Type","Description" , 'Return Type']}
+  headers={["Params", "Type", "Description", "Return Type"]}
   options={[
-    [
-      "role",
-      "string",
-      "update the role of the Local Peer in the Room",
-      'void'
-    ],
+    ["role", "string", "update the role of the Local Peer in the Room", "void"],
   ]}
 />
 
 **Example**
 
-
-```jsx
+```dart
 // Usage
-await huddleClient.localPeer.updateRole({role:string});
+huddleClient.localPeer.updateRole({role:string});
 ```
-
 
 ## Events
 
@@ -129,24 +122,22 @@ await huddleClient.localPeer.updateRole({role:string});
             '{ data: Socket }'
         ],
     ]}
-/>
 
+/>
 
 **Example**
 
-```js
-
+```dart
 // Event listeners for the Remote Peer
 localPeer.on("metadata-updated", () => {
-  console.log("successfully updated remote peer metatdat.");
+  print("successfully updated remote peer metatdat.");
 });
 
 localPeer.once("stream-available", (data) => {
-  console.log("Remote Peer stream is avaialble.");
-
+  print("Remote Peer stream is avaialble.");
 });
 
 localPeer.off("stream-closed", () => {
-  console.log("Remote Peer Stream is closed.");
+  print("Remote Peer Stream is closed.");
 });
 ```
