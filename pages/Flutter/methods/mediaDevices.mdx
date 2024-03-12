@@ -1,153 +1,27 @@
 ---
-title: 'Media Devices'
+title: "Media Devices"
 ---
 
-import OptionTable from '@components/common/Table/OptionTable';
-
-# Media Devices
-
-### Check permission 
-
-`checkPermission` method helps to check whether permission is given or not for given type. 
-
-**Parameters**
-<OptionTable
-    headers={['Name', 'Type', 'Description']}
-  options={[
-    [
-      'mediaDeviceKind',
-      "'cam' | 'mic' | 'speaker'",
-      'Type of device whose permission you want to check'
-    ],
-  ]}
-/>
-
-**Example** 
-
-```js
-const isCamPermission = await huddleClient.localPeer.deviceHandler.checkPermission({
-	mediaDeviceKind: 'cam'
-});
-
-const isMicPermission = await huddleClient.localPeer.deviceHandler.checkPermission({
-	mediaDeviceKind: 'mic'
-});
-```
-
-### getMediaPermission
-
-`getMediaPermission` method retrieves the media permission for the specified device type.
-
-**Parameters**
-<OptionTable
-    headers={['Name', 'Type', 'Description']}
-  options={[
-    [
-      'mediaDeviceKind',
-      "'cam' | 'mic' | 'speaker'",
-      'Type of device'
-    ],
-  ]}
-/>
-
-**Example**
-
-```jsx
-// Get permission for cam
-await huddleClient.localPeer.deviceHandler.getMediaPermission({
-	mediaDeviceKind: 'cam'
-});
-
-// Get permission for mic
-await huddleClient.localPeer.deviceHandler.getMediaPermission({
-	mediaDeviceKind: 'mic'
-});
-```
-
-### getMediaDevices
-
-`getMediaDevices` method returns `MediaDeviceInfo[]`, which contains a list of all the devices available in the system based on the specified `deviceKind`.
-
-**Parameters**
-<OptionTable
-    headers={['Name', 'Type', 'Description']}
-  options={[
-    [
-      'filterByDeviceKind',
-      "'mic' | 'cam' | 'speaker'",
-      'Type of device'
-    ],
-  ]}
-/>
-
-**Example**
-```jsx
-const camDevices = await huddleClient.localPeer.deviceHandler.getMediaDevices({
-	filterByDeviceKind: 'cam' 
-});
-
-const micDevices = await huddleClient.localPeer.deviceHandler.getMediaDevices({
-	filterByDeviceKind: 'mic' 
-});
-
-const speakerDevices = await huddleClient.localPeer.deviceHandler.getMediaDevices({
-	filterByDeviceKind: 'speaker' 
-});
-```
-
-### setPreferredDevice
-
-`setPreferredDevice` method sets the preferred device for the specified media kind. 
-
-**Parameters**
-
-<OptionTable
-    headers={['Name', 'Type', 'Description']}
-  options={[
-    [
-      'deviceId',
-      'string',
-      'devideId of the device you want to set as preferred'
-    ],
-    [
-      'deviceKind',
-      "'cam' | 'mic' | 'speaker'",
-      'Type of device'
-    ]
-  ]}
-/>
-
-**Example**
-
-```js
-// Set preferred cam device
-await huddleClient.localPeer.deviceHandler.setPreferredDevice({
-  deviceId: 'YOUR_DEVICE_ID',
-  deviceKind: 'cam'
-});
-```
+import OptionTable from "@components/common/Table/OptionTable";
 
 ### fetchStream
 
 `fetchStream` method retrieves the stream from the device for the specified media kind. If no preferred device is found, it will throw an error.
 
 **Parameters**
+
 <OptionTable
-    headers={['Name', 'Type', 'Description']}
-  options={[
-    [
-      'mediaDeviceKind',
-      "'mic' | 'cam'",
-      'Type of device'
-    ],
-  ]}
+  headers={["Name", "Type", "Description"]}
+  options={[["mediaDeviceKind", "'mic' | 'cam'", "Type of device"]]}
 />
 
 **Example**
-```jsx
-const streamResponse = await huddleClient.localPeer.deviceHandler.fetchStream({mediaDeviceKind: 'cam'});
 
-const stream = streamResponse.stream;
+```dart
+final stream = await huddleClient.localPeer.deviceHandler.fetchStream({
+  mediaDevice: CustomMediaDevice.cam,
+});
+
 ```
 
 ### stopStream
@@ -155,66 +29,14 @@ const stream = streamResponse.stream;
 `stopStream` method stops the stream from the device for the specified media kind. If no preferred device is found, it will throw an error.
 
 **Parameters**
-<OptionTable
-    headers={['Name', 'Type', 'Description']}
-  options={[
-    [
-      'mediaDeviceKind',
-      "'mic' | 'cam'",
-      'Type of device'
-    ],
-  ]}
-/>
-
-**Example**
-```jsx
-await huddleClient.localPeer.deviceHandler.stopStream({mediaDeviceKind: 'cam'});
-```
-
-### fetchScreen 
-
-`fetchScreen` method retrieves the screen stream from the device.
-
-**Example**
-
-```jsx
-const streamResponse = await huddleClient.localPeer.deviceHandler.fetchScreen();
-
-const stream = streamResponse.stream;
-```
-
-## Events 
 
 <OptionTable
-  headers={['Name', 'Description', 'Returns']}
-  options={[
-  [
-    'device-change',
-    'Emitted when a device is added or removed',
-    ''
-  ],
-  [
-    'permission-granted',
-    'Emitted when permission is granted for a device',
-    "{ deviceKind: 'cam' | 'mic' | 'speaker' }"
-  ],
-  [
-    'permission-denied',
-    'Emitted when permission is denied for a device',
-    "{ deviceKind: 'cam' | 'mic' | 'speaker', error: Error }"
-  ],
-  [
-    'preferred-device-changed',
-    'Emitted when preferred device is changed',
-    "{ deviceKind: 'cam' | 'mic' | 'speaker', deviceId: string | null }"
-  ]
-  ]}
+  headers={["Name", "Type", "Description"]}
+  options={[["mediaDeviceKind", "'mic' | 'cam'", "Type of device"]]}
 />
 
 **Example**
 
-```js
-huddleClient.localPeer.deviceHandler.on('device-change', (devices) => {
-  console.log('devices', devices);
-});
+```dart
+await huddleClient.localPeer.deviceHandler.stopStream(stream);
 ```
