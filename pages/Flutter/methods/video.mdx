@@ -1,25 +1,27 @@
 ---
-title: 'Video' 
+title: "Video"
 ---
 
-import OptionTable from '@components/common/Table/OptionTable';
-import { Callout } from 'nextra-theme-docs';
+import OptionTable from "@components/common/Table/OptionTable";
+import { Callout } from "nextra-theme-docs";
 
-## Video 
+## Video
 
-### Enable Video 
+### Enable Video
 
 The `enableVideo` method enables the local microphone and starts producing the video stream with the label `video`.
 
 <Callout type='info'>
-  `enableVideo` method calls both `fetchStream` and `produce` method internally.It also return `MediaStream` which can be used to render the screen share stream in the UI.
+  `enableVideo` method calls both `fetchStream` and `produce` method
+  internally.It also return `MediaStream` which can be used to render the screen
+  share stream in the UI.
 </Callout>
 
 **Example**
 
-```js
+```dart
 // Enable Video stream
-const stream = await huddleClient.localPeer.enableVideo();
+final stream = await huddleClient.localPeer.enableVideo();
 ```
 
 - ### Disable Video
@@ -28,59 +30,7 @@ The `disableVideo` method stops the local video stream and also stops producing 
 
 **Example**
 
-```js
+```dart
 // Disable video stream
-await huddleClient.localPeer.disableVideo();
-```
-
-
-### replaceVideoStream
-
-The `replacevideoStream` method replaces the current video stream with the new stream.
-
-**Parameters**
-<OptionTable
-    headers={['Params',"Type", "Description" , 'Return Type']}
-  options={[
-    [
-      'mediastream',
-      "MediaStream",
-      "This function replaces the video stream",
-      'Promise<void>'
-    ],
-  ]}
-/>
-
-**Example**
-
-
-```jsx
-// Usage
-await huddleClient.localPeer.replaceVideoStream({MediaStream});
-```
-
-
-### changeVideoSource
-
-The `changeVideoSource` changes the Video source to the given deviceId, sets the preferred cam device as the given deviceId
-
-**Parameters**
-<OptionTable
-    headers={['Params',"Type","Description" , 'Return Type']}
-  options={[
-    [
-      'deviceId',
-      "string",
-      "This function changes the video stream",
-      'Promise<void>'
-    ],
-  ]}
-/>
-
-**Example**
-
-
-```jsx
-// Usage
-await huddleClient.localPeer.changeVideoSource({deviceId});
+huddleClient.localPeer.disableVideo();
 ```
