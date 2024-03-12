@@ -1,66 +1,49 @@
 ---
-title: 'Send Data'
+title: "Send Data"
 ---
 
-import OptionTable from '@components/common/Table/OptionTable';
+import OptionTable from "@components/common/Table/OptionTable";
 
-### Send Data 
+### Send Data
 
 The `sendData` method allows the Local Peer to send data messages to other peers in the room. It is limited to 280 characters per message.
 
 **Parameters**
 
 <OptionTable
-    headers={['Name', 'Type', 'Description']}
-    options={[
-    [
-        'to',
-        'string[] | "*"',
-        'An array of peer IDs or "*" for all peers.'
-    ],
-    [
-        'payload',
-        'string',
-        'The data message to send (limited to 1KB).'
-    ],
-    [
-        'label',
-        'string',
-        'The label of the data message.'
-    ]
-    ]}
+  headers={["Name", "Type", "Description"]}
+  options={[
+    ["to", 'string[] | "*"', 'An array of peer IDs or "*" for all peers.'],
+    ["payload", "string", "The data message to send (limited to 1KB)."],
+    ["label", "string", "The label of the data message."],
+  ]}
 />
 
 ## Events
 
 <OptionTable
-    headers={['Name', 'Description', 'Returns']}
-    options={[
+  headers={["Name", "Description", "Returns"]}
+  options={[
+    ["receive-data", "Triggered when data is received.", "TDataMessage"],
     [
-        'receive-data',
-        'Triggered when data is received.',
-        'TDataMessage'
+      "receive-volatile-data",
+      "Invoked when a new volatile data message is received from the other Remote Peers",
+      "{ data: TDataMessage }",
     ],
-    [
-        'receive-volatile-data',
-        'Invoked when a new volatile data message is received from the other Remote Peers',
-        '{ data: TDataMessage }'
-    ]
-    ]}
+  ]}
 />
 
 **Example**
 
-```js 
+```dart
 // Send a message to specific peers
-huddleClient.localPeer.sendData({ to: ["peerID1", "peerID2"], payload: "Hello, everyone!", label: 'chat' });
+huddleClient.localPeer.sendData( to: ["peerID1", "peerID2"], payload: "Hello, everyone!", label: 'chat' );
 
 // Sending message to all peers
-huddleClient.localPeer.sendData({ to: "*", payload: "Hello, everyone!", label: 'greeting' });
+huddleClient.localPeer.sendData( to: "*", payload: "Hello, everyone!", label: 'greeting' );
 
 // Listen for data messages
 huddleClient.localPeer.on('receive-data', (data) => {
     console.log(data);
 });
 ```
-
