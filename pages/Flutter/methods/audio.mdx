@@ -1,18 +1,18 @@
 ---
-title: 'Audio' 
+title: "Audio"
 ---
 
-import OptionTable from '@components/common/Table/OptionTable';
+import OptionTable from "@components/common/Table/OptionTable";
 
-## Audio 
+## Audio
 
-### Enable Audio 
+### Enable Audio
 
 The `enableAudio` method enables the local microphone and starts producing the audio stream with the label `audio`.
 
-
 **Example**
-```js
+
+```dart
 // Enable audio stream
 await huddleClient.localPeer.enableAudio();
 ```
@@ -21,59 +21,9 @@ await huddleClient.localPeer.enableAudio();
 
 The `disableAudio` method stops the local audio stream and also stops producing the audio stream with remote peers.
 
-
 **Example**
-```js
+
+```dart
 // Disable audio stream
-await huddleClient.localPeer.disableAudio();
-```
-
-### replaceAudioStream
-
-The `replaceAudioStream` method replaces the current audio stream with the new stream.
-
-**Parameters**
-<OptionTable
-    headers={['Params',"Type", "Description" , 'Return Type']}
-  options={[
-    [
-      'mediastream',
-      "MediaStream",
-      "This function replaces the audio stream",
-      'Promise<void>'
-    ],
-  ]}
-/>
-
-**Example**
-
-```jsx
-// Usage
-await huddleClient.localPeer.replaceAudioStream({MediaStream});
-```
-
-
-### changeAudioSource
-
-The `changeAudioSource` changes the Audio source to the given deviceId, sets the preferred mic device as the given deviceId
-
-**Parameters**
-<OptionTable
-    headers={['Params',"Type","Description" , 'Return Type']}
-  options={[
-    [
-      'deviceId',
-      "string",
-      "changes the audio source to the given deviceId",
-      'Promise<void>'
-    ],
-  ]}
-/>
-
-**Example**
-
-
-```jsx
-// Usage
-await huddleClient.localPeer.changeAudioSource({deviceId});
+huddleClient.localPeer.disableAudio();
 ```
