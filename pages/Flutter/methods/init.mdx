@@ -1,20 +1,12 @@
 ---
-title: 'Init'
+title: "Init"
 ---
 
-## Init 
+## Init
 
-You need to create a new `huddleClient` instance which will be used to access various methods. 
+You need to create a new `huddleClient` instance which will be used to access various methods.
 
-```js
+```dart
 
-const huddleClient = new HuddleClient({
- projectID: "YOUR_PROJECT_ID",
-  options: {
-    activeSpeakers: {
-      // Number of active speaker visible in the grid, by default 8
-      size: 10,
-    },
-  },
-});
+  HuddleClient huddleClient = HuddleClient(projectId: "YOUR_PROJECT_ID");
 ```
