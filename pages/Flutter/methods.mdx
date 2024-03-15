@@ -15,7 +15,7 @@ import { Tab, Tabs, Card, Cards, Callout } from 'nextra-theme-docs';
 
 <Card icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
   <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
-</svg>} title="Room" href="ethods/room"/>
+</svg>} title="Room" href="methods/room"/>
 
 <Card icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
   <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
@@ -35,10 +35,6 @@ import { Tab, Tabs, Card, Cards, Callout } from 'nextra-theme-docs';
 
 <Card icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
   <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
-</svg>} title="Screen Share" href="methods/screenShare"/>
-
-<Card icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
 </svg>} title="Remote Peer" href="methods/remotePeer"/>
 
 <Card icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -54,77 +50,29 @@ import { Tab, Tabs, Card, Cards, Callout } from 'nextra-theme-docs';
 </svg>} title="Send Data" href="methods/sendData"/>
 </Cards>
 
-You can install the Huddle01 Vanilla JS SDK packages in two ways:
+You can install the Huddle01 Flutter SDK packages in the following way:
 
-1. Using the script tag: Add the following code snippet to the head of your HTML. 
+2. Run the following command in your terminal to install the package:
 
-    ```html
-    <script src="https://unpkg.com/@huddle01/web-core@umd/dist/index.global.js"></script>
-  
-    <script>
-    
-    let client;
-    
-    // call this function in onclick of `join room` button
-    const init = async () => {
-      client = new HuddleWebCore.HuddleClient({
-        projectId: "YOUR_PROJECT_ID",
-        options: {
-          activeSpeakers: {
-            // Number of active speaker visible in the grid, by default 8
-            size: 10,
-          },
-        },
-      });
-      const room = await client.joinRoom({
-        roomId: "YOUR_ROOM_ID",
-        token: "YOUR_ACCESS_TOKEN",
-      });
-    };
-    </script>
+  ```bash 
+      flutter pub add huddle01_flutter_client 
     ```
-
-2. Using npm or any other package manager: Run the following command in your terminal to install the package:
-
-  <Tabs items={['npm', 'yarn', 'bun']}>
-    <Tab>
-      ```bash 
-      npm install @huddle01/web-core
-        ```
-    </Tab>
-
-    <Tab>
-      ```bash
-      yarn add @huddle01/web-core
-      ```
-    </Tab>
-
-    <Tab>
-      ```bash
-      bun install @huddle01/web-core
-      ```
-    </Tab>
-  </Tabs>
 
 ## Using client to access Methods
 
-Once you initialise `huddleClient` you can access various methods such as `joinRoom` and other methods. 
 
+Once done, you can initialize your project with the `HuddleClient` class by passing in your `projectId` and access various methods such as `joinRoom` and other methods. 
+ 
 <Callout>
 You can generate Access Token using our [Server SDK](/Server-SDK). To generate `roomId` you can use our [Create Room API](/apis/create-room/create-room).
 </Callout>
 
-```html 
-<script>
-// Joining room
-huddleClient.joinRoom({
-	roomId: "YOUR_ROOM_ID",
-	token: "YOUR_ACCESS_TOKEN"
-});
+  ```dart filename="app.dart"
+  import 'package:huddle01_flutter_client/huddle01_flutter_client.dart';
 
-// Listening to room joined event
-huddleClient.room.on(eventName: "room-joined", () => {
-	console.log("Room Joined");
-}) 
-</script>
-```
+  String projectId = 'YOUR-PROJECT-ID';
+  String roomId = 'YOUR-ROOM-ID';
+
+  // Initialize your huddleClient 
+  HuddleClient huddleClient = HuddleClient(projectId);
+  ```
