@@ -1,0 +1,143 @@
+---
+title: "Local Peer Methods"
+---
+
+import OptionTable from "@components/common/Table/OptionTable";
+
+# Local Peer
+
+`localPeer` object from `huddleClient` allows you to intereact with your own Peer object, which is how you are represented in the Huddle01 room.
+
+**Metadata**
+
+The `updateMetadata` method enables the Local Peer to update its metadata. You can add any custom metadata you want to the Local Peer.
+
+```dart
+// Update the metadata of the Local Peer
+huddleClient.localPeer.updateMetadata({
+    displayName: "TEST",
+    avatarUrl: "AVATAR_URL"
+ });
+
+// Get the metadata of the Local Peer
+final metadata = huddleClient.localPeer.metadata;
+```
+
+<OptionTable
+  headers={["Event Name", "Description", "Returns"]}
+  options={[
+    [
+      "metadata-updated",
+      "Triggered when metadata is updated",
+      "metadata: unknown",
+    ],
+  ]}
+/>
+
+### updateRole
+
+`updateRole` update the role of the Local Peer in the Room, this will emit an event `updated` with the updated role.
+
+**Parameters**
+
+<OptionTable
+  headers={["Params", "Type", "Description", "Return Type"]}
+  options={[
+    ["role", "string", "update the role of the Local Peer in the Room", "void"],
+  ]}
+/>
+
+**Example**
+
+```dart
+// Usage
+huddleClient.localPeer.updateRole({role:string});
+```
+
+## Events
+
+<OptionTable 
+    headers={['Event Name', 'Description', 'Returns']}
+    options={[
+        [
+            'metadata-updated',
+            'Invoked when a local user metadata successfully updates.',
+            '{ metadata: unknown }'
+        ],
+        [
+            'permissions-updated',
+            'Invoked when a local user permissions successfully updates.',
+            '{ permissions: TPermissions; role?: string }'
+        ],
+        [
+            'role-updated',
+            "Invoked when a local user's role successfully updates.",
+            '{ role: string }'
+        ],
+        [
+            'stream-fetched',
+            'Invoked when a local peer stream is fetched.',
+            "{ mediaKind: 'cam' | 'mic' | 'speaker', stream: MediaStream, label: string }"
+        ],
+        [
+            'stream-closed',
+            'Invoked when a local peer stream is closed.',
+            "{ label: string, mediaKind: 'cam' | 'mic' | 'speaker', reason?: { code: number, tag: string, message: string } }"
+        ],
+        [
+            'stream-playable',
+            'Invoked when a local peer stream is playable.',
+            "{ label: string, producer: Producer }"
+        ],
+        [
+            'device-created',
+            'Invoked when a new device is created',
+            '{ device: Device }'
+        ],
+
+       [
+            'new-recv-transport',
+            'Invoked when a local peer is ready to consume stream',
+            '{ transport: Transport }'
+        ],
+
+         [
+            'new-send-transport',
+            'Invoked when a local peer is ready to produce stream',
+            '{ transport: Transport }'
+        ],
+        [
+            'receive-data',
+            'Invoked when a new data message is received from the other Remote Peers',
+            '{ data: TDataMessage }'
+        ],
+        [
+            'receive-volatile-data',
+            'Invoked when a new volatile data message is received from the other Remote Peers',
+            '{ data: TDataMessage }'
+        ],
+        [
+            'reconnected',
+            'Invoked when a local peer is reconnected.',
+            '{ data: Socket }'
+        ],
+    ]}
+
+/>
+
+**Example**
+
+```dart
+// Event listeners for the Remote Peer
+localPeer.on("metadata-updated", () => {
+  print("successfully updated remote peer metatdat.");
+});
+
+localPeer.once("stream-available", (data) => {
+  print("Remote Peer stream is avaialble.");
+});
+
+localPeer.off("stream-closed", () => {
+  print("Remote Peer Stream is closed.");
+});
+```

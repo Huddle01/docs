@@ -1,0 +1,42 @@
+---
+title: "Media Devices"
+---
+
+import OptionTable from "@components/common/Table/OptionTable";
+
+### fetchStream
+
+`fetchStream` method retrieves the stream from the device for the specified media kind. If no preferred device is found, it will throw an error.
+
+**Parameters**
+
+<OptionTable
+  headers={["Name", "Type", "Description"]}
+  options={[["mediaDeviceKind", "'mic' | 'cam'", "Type of device"]]}
+/>
+
+**Example**
+
+```dart
+final stream = await huddleClient.localPeer.deviceHandler.fetchStream({
+  mediaDevice: CustomMediaDevice.cam,
+});
+
+```
+
+### stopStream
+
+`stopStream` method stops the stream from the device for the specified media kind. If no preferred device is found, it will throw an error.
+
+**Parameters**
+
+<OptionTable
+  headers={["Name", "Type", "Description"]}
+  options={[["mediaDeviceKind", "'mic' | 'cam'", "Type of device"]]}
+/>
+
+**Example**
+
+```dart
+await huddleClient.localPeer.deviceHandler.stopStream(stream);
+```

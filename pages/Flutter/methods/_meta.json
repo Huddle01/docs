@@ -1,10 +1,12 @@
 {
   "init": "Init",
-  "lobby": "Lobby",
   "room": "Room",
   "audio": "Audio",
   "video": "Video",
-  "peers": "Peers",
-  "utility": "Utility Methods",
-  "acl": "Access Control List"
+  "localPeer": "Local Peer",
+  "remotePeer": "Remote Peer",
+  "mediaDevices": "Media Devices",
+  "produce": "Produce",
+  "consume": "Consume",
+  "sendData": "Send Data"
 }

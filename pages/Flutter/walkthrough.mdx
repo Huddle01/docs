@@ -22,6 +22,43 @@ The following guide explains how you can integrate audio/video into your Flutter
       flutter pub add huddle01_flutter_client 
     ```
 
+### Handling Permissions
+
+Before you can start using the Huddle01 SDK, you need to enable your app to handle some permissions required for audio/video communication.
+
+  **Android**
+
+   Add the following permissions to your `AndroidManifest.xml` file:
+
+    ```xml
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    ```
+
+  **iOS**
+
+   Add the following permissions to your `Info.plist` file:
+
+    ```xml
+    <key>NSMicrophoneUsageDescription</key>
+    <string>{YOUR_SDK_APP} wants to use your microphone</string>
+    <key>NSCameraUsageDescription</key>
+    <string>{YOUR_SDK_APP} wants to use your camera</string>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>{YOUR_SDK_APP} App wants to use your local network</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>{YOUR_SDK_APP} needs access to bluetooth to connect to nearby devices.</string>
+    ```
+
 ### Initialization of project
 
 Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials: 
@@ -29,302 +66,157 @@ Head over to [API Keys Page](/api-keys) and connect your wallet to get your proj
   - `API Key`
   - `projectId`
 
-  Once done, initialize your project by calling the `initialize()` method and pass `projectId`  in params. 
+  Once done, you can initialize your project with the `HuddleClient` class by passing in your `projectId`. 
 
 
-  ```tsx filename="app.dart"
+  ```dart filename="app.dart"
+  import 'package:huddle01_flutter_client/huddle01_flutter_client.dart';
+
   String projectId = 'YOUR-PROJECT-ID';
   String roomId = 'YOUR-ROOM-ID';
 
   // Initialize your huddleClient 
-  HuddleClient huddleClient = HuddleClient();
-
-  // Initialize project
-  huddleClient.initialize(projectId);
+  HuddleClient huddleClient = HuddleClient(projectId);
   ```
-
-### Joining the lobby
-Room Id can be generated using the : [Create Room API](/apis/create-room/create-room)
-Add the following `TextButton` to your jsx and call the `joinLobby()` method.
-
-    ```dart
-    import 'package:flutter/material.dart';
-    import 'package:huddle01_flutter_client/huddle_client.dart';
-
-      class MeetingScreen extends StatefulWidget {
-        const MeetingScreen({super.key});
-
-        @override
-        State<MeetingScreen> createState() => _MeetingScreenState();
-      }
-
-      class _MeetingScreenState extends State<MeetingScreen> {
-        HuddleClient huddleClient = HuddleClient();
-        String roomId = 'MY-ROOM-ID';
-        @override
-        Widget build(BuildContext context) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text("My Meeting App"),
-            ),
-            body: Column(children: [
-              TextButton(
-                child: const Text('JOIN-LOBBY'),
-                onPressed: () {
-                  if (huddleClient.isJoinLobbyCallable()) {
-                    huddleClient.joinLobby(roomId);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('JOIN-LOBBY -> not callable yet'),
-                      backgroundColor: Colors.red,
-                      elevation: 4,
-                      behavior: SnackBarBehavior.floating,
-                      margin: EdgeInsets.all(5),
-                      duration: Duration(seconds: 1),
-                    ));
-                  }
-                },
-              ),
-            ]),
-          );
-        }
-      }
-    ```
 
 ### Joining and leaving the room
 
+Once you initialise `huddleClient` you can access various methods such as `joinRoom`. You can generate roomId using this [API](https://docs.huddle01.com/docs/apis/create-room/create-room) and an access token to join that particular room using our [Server SDK](https://docs.huddle01.com/docs/Server-SDK). The access token should always be generated on a backend server.
+
 Add the `joinRoom()` and `leaveRoom()` methods for joining and leaving functionalities.
 
-  ```dart filename="app.dart" showLineNumbers {57, 63}
+  ```dart filename="app.dart"
     import 'package:flutter/material.dart';
-    import 'package:huddle01_flutter_client/huddle_client.dart';
+    import 'package:huddle01_flutter_client/huddle01_flutter_client.dart';
 
-        class MeetingScreen extends StatefulWidget {
-          const MeetingScreen({super.key});
+    class MeetingScreen extends StatefulWidget {
+      const MeetingScreen({super.key});
 
-          @override
-          State<MeetingScreen> createState() => _MeetingScreenState();
-        }
+      @override
+      State<MeetingScreen> createState() => _MeetingScreenState();
+    }
 
-        class _MeetingScreenState extends State<MeetingScreen> {
-          HuddleClient huddleClient = HuddleClient();
-          String roomId = 'MY-ROOM-ID';
-          @override
-          Widget build(BuildContext context) {
-            return Scaffold(
-              appBar: AppBar(
-                title: const Text("My Meeting App"),
-              ),
-              body: Column(children: [
-                TextButton(
-                  child: const Text('JOIN-LOBBY'),
-                  onPressed: () {
-                    if (huddleClient.isJoinLobbyCallable()) {
-                      huddleClient.joinLobby(roomId);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('JOIN-LOBBY -> not callable yet'),
-                        backgroundColor: Colors.red,
-                        elevation: 4,
-                        behavior: SnackBarBehavior.floating,
-                        margin: EdgeInsets.all(5),
-                        duration: Duration(seconds: 1),
-                      ));
-                    }
-                  },
-                ),
-                TextButton(
-                  child: const Text('FETCH-AUDIO'),
-                  onPressed: () {
-                    if (huddleClient.isFetchAudioStreamCallable()) {
-                      huddleClient.fetchAudioStream();
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('FETCH-AUDIO -> not callable yet'),
-                        backgroundColor: Colors.red,
-                        elevation: 4,
-                        behavior: SnackBarBehavior.floating,
-                        margin: EdgeInsets.all(5),
-                        duration: Duration(seconds: 1),
-                      ));
-                    }
-                  },
-                TextButton(
-                  child: const Text('JOIN-ROOM'),
-                  onPressed: () {
-                      huddleClient.joinRoom(roomId);
-                  },
-                ),
-                TextButton(
-                  child: const Text('LEAVE-ROOM'),
-                  onPressed: () {
-                      huddleClient.leaveRoom();
-                  },
-                ),
-              ]),
-            );
-          }
-        }
-  ```
+    class _MeetingScreenState extends State<MeetingScreen> {
+      String projectId = 'YOUR-PROJECT-ID';
+      String roomId = 'YOUR-ROOM-ID';
+      String accessToken = 'YOUR-ACCESS-TOKEN';
+
+      HuddleClient huddleClient = HuddleClient(projectId);
 
 
-
-  <Callout type="info">
-  Clicking on the **JOIN_ROOM** button, will make the user join the room and will allow them to send/receive media with other participants.
-  </Callout>
-
-### Sending media across to other participants
-Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
-
-```dart filename="app.dart" showLineNumbers {69, 75}
-    import 'package:flutter/material.dart';
-    import 'package:huddle01_flutter_client/huddle_client.dart';
-
-      class MeetingScreen extends StatefulWidget {
-        const MeetingScreen({super.key});
-
-        @override
-        State<MeetingScreen> createState() => _MeetingScreenState();
-      }
-
-      class _MeetingScreenState extends State<MeetingScreen> {
-        HuddleClient huddleClient = HuddleClient();
-        String roomId = 'MY-ROOM-ID';
-        @override
-        Widget build(BuildContext context) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text("My Meeting App"),
-            ),
-            body: Column(children: [
-              TextButton(
-                child: const Text('JOIN-LOBBY'),
-                onPressed: () {
-                  if (huddleClient.isJoinLobbyCallable()) {
-                    huddleClient.joinLobby(roomId);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('JOIN-LOBBY -> not callable yet'),
-                      backgroundColor: Colors.red,
-                      elevation: 4,
-                      behavior: SnackBarBehavior.floating,
-                      margin: EdgeInsets.all(5),
-                      duration: Duration(seconds: 1),
-                    ));
-                  }
-                },
-              ),
-              TextButton(
-                child: const Text('FETCH-AUDIO'),
-                onPressed: () {
-                  if (huddleClient.isFetchAudioStreamCallable()) {
-                    huddleClient.fetchAudioStream();
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('FETCH-AUDIO -> not callable yet'),
-                      backgroundColor: Colors.red,
-                      elevation: 4,
-                      behavior: SnackBarBehavior.floating,
-                      margin: EdgeInsets.all(5),
-                      duration: Duration(seconds: 1),
-                    ));
-                  }
-                },
-              TextButton(
-                child: const Text('JOIN-ROOM'),
-                onPressed: () {
-                    huddleClient.joinRoom(roomId);
-                },
-              ),
-              TextButton(
-                child: const Text('LEAVE-ROOM'),
-                onPressed: () {
-                    huddleClient.leaveRoom();
-                },
-              ),
-              TextButton(
-                child: const Text('PRODUCE_AUDIO'),
-                onPressed: () {
-                    huddleClient.produceAudio(stream);
-                },
-              ),
-              TextButton(
-                child: const Text('STOP-PRODUCING-AUDIO'),
-                onPressed: () {
-                    huddleClient.stopProducingAudio();
-                },
-              ),
-            ]),
-          );
-        }
-      }
-    ```
-
-### Receiving the audio and video streams
-Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
-
-<details>
-  <summary>
-    Getting access to remote video/audio streams
-  </summary>
-  JSX:
-  ```dart
-  // remote-stream
-  RTCVideoRenderer? remoteRenderer;
-  initilialize() async {
-    remoteRenderer = RTCVideoRenderer();
-    await remoteRenderer!.initialize();
-    remoteRenderer!.srcObject = huddleClient.getRemoteStream();
-  }
-  ```
-</details>
-
-
-```dart filename="app.dart" 
-  const Text(
-              "Local Stream",
-              style: TextStyle(fontSize: 18),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-              child: Container(
-                  color: Colors.grey,
-                  width: 500,
-                  height: 250,
-                  child: huddleClient.getRenderer() != null
-                      ? RTCVideoView(
-                          huddleClient.getRenderer()!,
-                          objectFit:
-                              RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-                        )
-                      : null),
-            ),
+      @override
+      Widget build(BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("My Meeting App"),
+          ),
+          body: Column(children: [
             TextButton(
-              child: const Text(
-                'Get Remote Stream',
-                style: TextStyle(fontSize: 18),
-              ),
+              child: const Text('JOIN_ROOM'),
               onPressed: () {
-                initilialize();
+                  huddleClient.joinRoom(roomId, token);
               },
             ),
-          
-            Padding(
-              padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-              child: Container(
-                  color: Colors.grey,
-                  width: 500,
-                  height: 250,
-                  child: huddleClient.getConsumers().isNotEmpty
-                      ? RTCVideoView(
-                          remoteRenderer!,
-                          objectFit:
-                              RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-                        )
-                      : null),
+            TextButton(
+              child: const Text('LEAVE_ROOM'),
+              onPressed: () {
+                  huddleClient.leaveRoom();
+              },
             ),
+          ]),
+        );
+      }
+    }
+  ```
 
-```
+  < Callout type = "info" >
+  Clicking on the **JOIN_ROOM** button, will make the user join the room and will allow them to send/receive media with other participants.
+  < /Callout>
+
+### Enabling and Disabling Audio and Video
+Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams. 
+
+
+**Audio**
+
+The `enableAudio` method enables the local microphone and starts producing the audio stream with the label `audio`. The `disableAudio` method stops the local audio stream and also stops producing the audio stream with remote peers.
+
+**Video**
+
+The `enableVideo` method enables the local microphone and starts producing the video stream with the label `video`. The `disableVideo` method stops the local video stream and also stops producing the video stream with remote peers.
+
+These functions are available on the `huddleClient.localPeer` object.
+
+```dart filename="app.dart"
+    import 'package:flutter/material.dart';
+    import 'package:huddle01_flutter_client/huddle01_flutter_client.dart';
+
+    class MeetingScreen extends StatefulWidget {
+      const MeetingScreen({super.key});
+
+      @override
+      State<MeetingScreen> createState() => _MeetingScreenState();
+    }
+
+    class _MeetingScreenState extends State<MeetingScreen> {
+      String projectId = 'YOUR-PROJECT-ID';
+      String roomId = 'YOUR-ROOM-ID';
+      String accessToken = 'YOUR-ACCESS-TOKEN';
+
+      HuddleClient huddleClient = HuddleClient(projectId);
+
+
+      @override
+      Widget build(BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("My Meeting App"),
+          ),
+          body: Column(children: [
+            TextButton(
+              child: const Text('JOIN_ROOM'),
+              onPressed: () {
+                  huddleClient.joinRoom(roomId, token);
+              },
+            ),
+            TextButton(
+              child: const Text('LEAVE_ROOM'),
+              onPressed: () {
+                  huddleClient.leaveRoom();
+              },
+            ),
+            TextButton(
+              child: const Text('ENABLE_AUDIO'),
+              onPressed: () {
+                  huddleClient.localPeer.enableAudio();
+              },
+            ),
+            TextButton(
+              child: const Text('DISABLE_AUDIO'),
+              onPressed: () {
+                  huddleClient.localPeer.disableAudio();
+              },
+            ),
+            TextButton(
+              child: const Text('ENABLE_VIDEO'),
+              onPressed: () {
+                  huddleClient.localPeer.enableVideo();
+              },
+            ),
+            TextButton(
+              child: const Text('DISABLE_VIDEO'),
+              onPressed: () {
+                  huddleClient.localPeer.disableVideo();
+              },
+            ),
+          ]),
+        );
+      }
+    }
+  ```
+
+### Show remote peers in the room
+{ /* TODO: */}
 
 ### You're all set! Happy Hacking! 🎉
 

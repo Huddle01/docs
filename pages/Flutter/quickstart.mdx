@@ -4,9 +4,9 @@ title: 'Quickstart'
 
 import { Tab, Tabs } from 'nextra-theme-docs';
 
-## Quickstart
+# Quickstart
 
-### Installing the packages:
+## Installing the packages
 
 To get started with the Huddle01 Flutter SDK, you can install the package using npm or yarn:
 
@@ -18,7 +18,7 @@ To get started with the Huddle01 Flutter SDK, you can install the package using 
   </Tab>
 </Tabs>
 
-## Creating a room:
+## Creating a room
 ```dart
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -39,29 +39,19 @@ Future<String> createMeeting() async {
 ```
 
 
-## Initializing the SDK:
+## Initializing the SDK
 
 After installing the package, you can initialize the SDK by using the **`useHuddle01`** hook:
 
 ```dart
+import 'package:huddle01_flutter_client/huddle01_flutter_client.dart';
+
 String projectId = 'YOUR-PROJECT-ID';
 String roomId = 'YOUR-ROOM-ID';
 
 // Initialize your huddleClient 
-HuddleClient huddleClient = HuddleClient();
+HuddleClient huddleClient = HuddleClient(projectId);
 
-// Initialize project
-huddleClient.initialize(projectId);
+// Join Room
+huddleClient.joinRoom(roomId, token);
 ```
-
-### Example Video
-
-<video
-  src="/docs/videos/flutter-example-demo-vid.mp4"
-  muted
-  controls
-  className="my-8 rounded-lg w-full md:w-1/2"
-  height="100%"
-  autoPlay
-  loop
-/>

@@ -1,0 +1,166 @@
+---
+title: "Remote Peer"
+---
+
+import OptionTable from "@components/common/Table/OptionTable";
+
+# Remote Peer
+
+Remote peers are peers who are present in the room. It doesn't include local peer.
+
+**Example**
+
+```dart
+// This will have an array of remote peers
+final remotePeers = huddleClient.room.remotePeers;
+```
+
+### getConsumer
+
+`getConsumer` gets the associated consumer for the labels.
+
+**Parameters**
+
+<OptionTable
+  headers={["Params", "Type", "Description", "Return Type"]}
+  options={[
+    [
+      "role",
+      "video | audio",
+      "gets the associated consumer for the labels",
+      "consumer",
+    ],
+  ]}
+/>
+
+**Example**
+
+```dart
+// This will get consumer of remote peer
+await huddleClient.room
+  .getRemotePeerById("YOUR_PEER_ID")
+  .getConsumer("YOUR_LABEL");
+```
+
+### getMetadata
+
+`getMetadata` gets the metadata of the Remote Peer in the Room.
+
+**Parameters**
+
+<OptionTable
+  headers={["Description", "Return Type"]}
+  options={[["gets the metadata of the Remote Peer in the Room", "void"]]}
+/>
+
+**Example**
+
+```dart
+// This will get metadata of remote peer
+await await huddleClient.room.getRemotePeerById("YOUR_PEER_ID").getMetadata();
+```
+
+### updateRole
+
+`updateRole` update the role of the Remote Peer in the Room, this will emit an event `updated` with the updated role.
+
+**Parameters**
+
+<OptionTable
+  headers={["Params", "Type", "Description", "Return Type"]}
+  options={[
+    [
+      "role",
+      "string",
+      "update the role of the Remote Peer in the Room",
+      "void",
+    ],
+  ]}
+/>
+
+**Example**
+
+```dart
+// This will update role of remote peer
+await huddleClient.room
+  .getRemotePeerById("YOUR_PEER_ID")
+  .updateRole( role: string );
+```
+
+### updatePermissions
+
+`updatePermissions` updates the Permissions of the Remote Peer in the Room. This will emit an event `updated` with the updated permissions.
+
+**Parameters**
+
+<OptionTable
+  headers={["Params", "Type", "Description", "Return Type"]}
+  options={[
+    [
+      "data",
+      "TPermissions",
+      "updates the Permissions of the Remote Peer in the Room",
+      "Promise<void>",
+    ],
+  ]}
+/>
+
+**Example**
+
+```dart
+// This will update permissions of remote peer
+await huddleClient.room.getRemotePeerById('YOUR_PEER_ID').updatePermissions(data:TPermissions);
+```
+
+## Events
+
+<OptionTable
+  headers={["Event Name", "Description", "Returns"]}
+  options={[
+    [
+      "metadata-updated",
+      "Invoked when a remote user metadata successfully updates.",
+      "{ metadata?: string }",
+    ],
+    [
+      "role-updated",
+      "Invoked when a rempote user's role successfully updates.",
+      "{ role?: string }",
+    ],
+    [
+      "stream-available",
+      "Invoked when a remote peer stream is available.",
+      "{label: string, labelData: { producerId: string }}",
+    ],
+    [
+      "stream-closed",
+      "Invoked when a remote peer stream is closed.",
+      "{label: string, reason?: {code: number; tag: string; message: string;}}",
+    ],
+    [
+      "stream-playable",
+      "Invoked when a remote peer stream is playable.",
+      "{label: string, labelData: { consumer: Consumer }}",
+    ],
+  ]}
+/>
+
+**Example**
+
+```dart
+// get remote peer
+final remotePeer = huddleClient.room.getRemotePeerById('YOUR_PEER_ID');
+
+// Event listeners for the Remote Peer
+remotePeer.on("metadata-updated", () => {
+  console.log("successfully updated remote peer metadata.");
+});
+
+remotePeer.once("stream-available", (data) => {
+  console.log("Remote Peer stream is available.");
+});
+
+remotePeer.off("stream-closed", () => {
+  console.log("Remote Peer Stream is closed.");
+});
+```
