@@ -1,8 +1,8 @@
 ---
-title: 'React iFrame'
+title: "React iFrame"
 ---
 
-import { Callout, Tab, Tabs } from 'nextra-theme-docs';
+import { Callout, Tab, Tabs } from "nextra-theme-docs";
 
 # React iFrame
 
@@ -40,8 +40,10 @@ To install the **`@huddle01/iframe`** package, use either **npm**, **pnpm** or *
 </Tabs>
 
 ### Usage
+
 <Callout emoji="⚠️">
-   `@huddle01/huddle01-iframe` has been deprecated, use `@huddle01/iframe` instead.
+  `@huddle01/huddle01-iframe` has been deprecated, use `@huddle01/iframe`
+  instead.
 </Callout>
 Import the **`HuddleIframe`** component from the **`@huddle01/iframe`** package.
 
@@ -50,7 +52,7 @@ Import the **`HuddleIframe`** component from the **`@huddle01/iframe`** package.
 
     ```tsx filename=app.tsx
     import { HuddleIframe } from "@huddle01/iframe";
-  
+
     function App() {
         return (
             <div>
@@ -92,25 +94,27 @@ Import the **`HuddleIframe`** component from the **`@huddle01/iframe`** package.
 You can also use the instance methods provided by the package to interact with the Huddle video conference. Here's how to use them:
 
 <Callout emoji="⚠️">
-   `@huddle01/huddle01-iframe` has been deprecated, use `@huddle01/iframe` instead.
+  `@huddle01/huddle01-iframe` has been deprecated, use `@huddle01/iframe`
+  instead.
 </Callout>
 
 ```jsx
 // JavaScript | TypeScript
-import { iframeApi } from '@huddle01/iframe';
+import { iframeApi } from "@huddle01/iframe";
 ```
 
 ### **Methods**
 
-To use the methods listed below, you first need to get the iFrame element and its content window. After adding the CDN to your code you can call the methods in the following way: 
+To use the methods listed below, you first need to get the iFrame element and its content window. After adding the CDN to your code you can call the methods in the following way:
 
 ```jsx
-iframeApi.initialize({background: ""})
+iframeApi.initialize({ background: "" });
 ```
 
 **Available Methods**
 
 - **`initialize()`**: Pass a config to customize iframe room with the following attributes:
+
   - `logoUrl`: Set logoUrl to change the logo in the lobby
   - `logoHeight` : The height of the logo you want to set to increase or decrease the size.
   - `logoWidth` : The width of the logo you want to set to increase or decrease the size.
@@ -118,12 +122,10 @@ iframeApi.initialize({background: ""})
   - `defaultChainId` : The `chainId` of the chain you want as default when the huddle01 app loads. e.g. `137` for polygon mainnet.
   - `redirectUrlOnLeave`: You can pass any url a webpage you want to redirect to after the meeting ends
   - `virtualBgs` : Links to additional virtual backgrounds you’d wanna set in the meeting.
-  - `wallets`: You can choose multiple wallets to be used in the lobby. (i.e. '*', 'metamask', 'walletconnect', 'keplr', 'templewallet', 'lens', 'ud', 'cyberconnect', 'okxwallet', 'phantom',)
-  
+  - `wallets`: You can choose multiple wallets to be used in the lobby. (i.e. '\*', 'metamask', 'walletconnect', 'keplr', 'templewallet', 'lens', 'ud', 'cyberconnect', 'okxwallet', 'phantom',)
 
-  <Callout emoji="⚠️">
-    Use "*" to show all wallets 
-  </Callout>
+  <Callout emoji="⚠️">Use "*" to show all wallets</Callout>
+
 - **`muteMic()`**: Mutes the user's microphone.
 - **`unmuteMic()`**: Unmutes the user's microphone.
 - **`enableShare()`**: Enables screen sharing.
@@ -132,25 +134,31 @@ iframeApi.initialize({background: ""})
 - **`stopRecording()`**: Stops recording the meeting.
 - **`sendReaction(emogi)`**: Sends a reaction during the meeting. Allowed emojis are: 😂, 😢, 😦, 😍, 🤔, 👀, 🙌, 👍, 👎, 🔥, 🍻, 🚀, 🎉, ❤️, 💯.
 - **`changeAvatarUrl()`**: Change the avatarUrl for your peer once joined room.
-{/* - **`connectWallet(accessToken)`**: Accepts an accessToken that can be generated via the [Auth Simulator](https://auth-simulator.vercel.app/) or the Huddle01 [Auth Package](https://www.npmjs.com/package/@huddle01/auth). */}
-
-
+- **`startLiveStream()`**: Start Livestreaming the meeting.
+  ```jsx
+  iframeApi.startLiveStream({
+    streamUrl: "rtmp://xyz",
+    streamKey: "sldheolfhdsf",
+  });
+  ```
+  {/* - **`connectWallet(accessToken)`**: Accepts an accessToken that can be generated via the [Auth Simulator](https://auth-simulator.vercel.app/) or the Huddle01 [Auth Package](https://www.npmjs.com/package/@huddle01/auth). */}
 
 ### **Initializing for the first time**
+
 <Callout emoji="⚠️">
-   Don't use the `useEffect` hook to call `iframeApi.initialize()` for the first time, use the `useEventListener` hook instead
+  Don't use the `useEffect` hook to call `iframeApi.initialize()` for the first
+  time, use the `useEventListener` hook instead
 </Callout>
 
 ```jsx
-// the `lobby:initialized`  event can be used to know when the lobby has been loaded 
+// the `lobby:initialized`  event can be used to know when the lobby has been loaded
 useEventListener("lobby:initialized", () => {
-    iframeApi.initialize({
-      redirectUrlOnLeave: "https://huddle01.com",
-      wallets: ["metamask"],
-    });
+  iframeApi.initialize({
+    redirectUrlOnLeave: "https://huddle01.com",
+    wallets: ["metamask"],
+  });
 });
 ```
-
 
 ## **Events**
 
@@ -180,7 +188,6 @@ import { useEventListener } from "@huddle01/iframe";
 useEventListener("lobby:joined", (data) => console.log({ data }));
 ```
 
-
 ## **Color Customisation**
 
 This code snippet demonstrates how to implement the HuddleIframe component from the `@huddle01/iframe` package in a React application. It shows three different ways to apply themes: using predefined **light** and **dark** themes for a consistent and quick styling, and a custom color theme option where specific color values can be assigned to various interface elements, allowing for a personalized and branded appearance.
@@ -190,19 +197,19 @@ import { darkTheme, lightTheme } from "@huddle01/iframe/types";
 import { HuddleIframe } from "@huddle01/iframe";
 
 // Light Theme
-<HuddleIframe  
+<HuddleIframe
 		roomUrl="https://iframe.huddle01.com"
 		theme={lightTheme}
 />
 
 // Dark Theme
-<HuddleIframe  
+<HuddleIframe
 		roomUrl="https://iframe.huddle01.com"
 		theme={darkTheme}
 />
 
 // Custom Colors
-<HuddleIframe  
+<HuddleIframe
 		roomUrl="https://iframe.huddle01.com"
 		theme={{
 			iconColor: '#94A3B8',
