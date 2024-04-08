@@ -24,7 +24,7 @@ import { Callout } from 'nextra-theme-docs';
     <RequestStrip
       method={'GET'}
       url={'https://api.huddle01.com/api/v1'}
-      endpoint={'rooms/paticipant-list?meetingId={meetingId}'}
+      endpoint={'rooms/participant-list?meetingId={meetingId}'}
     />
   </HighLight>
   <Button
@@ -38,7 +38,7 @@ import { Callout } from 'nextra-theme-docs';
 
 
 <Paragraph className="mt-5">
-  The Paticipant List API is a useful tool for retrieving information about a
+  The Participant List API is a useful tool for retrieving information about a
   specific meeting room. By passing in the meetingId as a parameter, you can easily
   access a list of participants who joined the meeting.
 
@@ -55,12 +55,12 @@ Retrieve the meetingId by utilizing the [Meeting List API](/apis/meeting-details
 <div>
 <div className="flex items-center gap-4">
 <Pill >GET</Pill>
-<div className="text-sm font-normal text-slate-50">`/rooms/paticipant-list?meetingId={meetingId}`</div>
+<div className="text-sm font-normal text-slate-50">`/rooms/participant-list?meetingId={meetingId}`</div>
 
 </div>
 
 <div className="mt-7 font-mono text-2xl font-bold text-[#f1f5f9]">
-  Paticipant List API
+  Participant List API
 </div>
 
 The API supports a **GET** request with the following required parameters:
@@ -72,12 +72,12 @@ The API supports a **GET** request with the following required parameters:
 
 <APIRequestCard
     requestType = "GET"
-    route="rooms/paticipant-list?meetingId={meetingId}"
+    route="rooms/participant-list?meetingId={meetingId}"
     
   >
     <APIRequestContent value="cUrl">
       ```bash
-        curl --location --request GET 'https://api.huddle01.com/api/v1/rooms/paticipant-list?meetingId={meetingId}' \
+        curl --location --request GET 'https://api.huddle01.com/api/v1/rooms/participant-list?meetingId={meetingId}' \
         --header 'x-api-key: {{API_KEY}}' \
         --header 'Content-Type: application/json' \
       ```
@@ -85,7 +85,7 @@ The API supports a **GET** request with the following required parameters:
     
     <APIRequestContent value="fetch">
       ```js
-        const  response = await fetch("https://api.huddle01.com/api/v1/rooms/paticipant-list?meetingId={meetingId}", {
+        const  response = await fetch("https://api.huddle01.com/api/v1/rooms/participant-list?meetingId={meetingId}", {
           method: "GET",
           headers: {
               "Content-type": "application/json",
@@ -98,7 +98,7 @@ The API supports a **GET** request with the following required parameters:
     <APIRequestContent value="axios">
       ```js
       const response = await axios.get(
-        'https://api.huddle01.com/api/v1/rooms/paticipant-list?meetingId={meetingId}',
+        'https://api.huddle01.com/api/v1/rooms/participant-list?meetingId={meetingId}',
         {
           headers: {
             'Content-Type': 'application/json',
