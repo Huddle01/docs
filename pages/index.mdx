@@ -1,7 +1,6 @@
 ---
-title: 'Home'
+title: "Home"
 ---
-
 
 {/* Assets */}
 import LandingIcons from '@components/assets/LandingIcons';
@@ -9,7 +8,6 @@ import LandingIcons from '@components/assets/LandingIcons';
 {/* Data */}
 import iFrameApiData from "Data/iFrame&Api.json";
 import GetStartedData from "Data/GetStarted.json";
-
 
 {/* Components */}
 import CustomBtn from "@components/revamp/CustomBtn/CustomBtn.tsx"
@@ -20,7 +18,6 @@ import Guides from "@components/revamp/LandingCards/Guides.tsx"
 import {GetStartedCards,CLIToolCard,LinksIcon} from "@components/revamp/CommonCards/CommonCards.tsx"
 import { Callout } from 'nextra-theme-docs';
 
-
 {/* Static Props */}
 
 export const getStaticProps = getLatestReleaseData;
@@ -29,17 +26,12 @@ export const getStaticProps = getLatestReleaseData;
 
 <div className="flex flex-col h-full md:border-x border-rgb-1 md:p-9">
 
-
 # Welcome to Huddle01 Builders’ Kit
-
-<Callout>
-  We have upgraded our SDK to v2 `(2.x.x)`. For the previous stable release, please visit <a className="text-bold underline" href="https://legacy.docs.huddle01.com/docs">here</a>
-</Callout>
 
 From Guides to SDKs to API references - find everything you need to build high-quality live audio and video experiences at one place. Scalable and customizable - our SDKs are built for both web and mobile applications.
 
-
 {/* Popular Guides Section */}
+
 <LandingCards title="Popular guides" type="Guide" className="flex-col mt-10"> 
    <div className="grid lg:grid-cols-3 gap-4 grid-cols-1 mt-6">
    {[{title:"Video Meeting",url:"/React/react-walkthrough"},{title:"Audio Spaces",url:"/guides/audio-spaces"},{title:"Token-gated Room",url:"/guides/token-gated"}].map(({title,url}) => (
@@ -48,41 +40,54 @@ From Guides to SDKs to API references - find everything you need to build high-q
    </div>
 
  <Guides/>
-</LandingCards> 
-
+</LandingCards>
 
 {/* API Key Card Section */}
-<LandingCards title="Get your API Key" type="apiKey" className="flex-row items-center justify-between cursor-pointer mb-6 mt-10 hover:bg-[#101114] duration-300 ease-in-out" url="/api-keys">
-<div>{LandingIcons["chevron-right"]}</div>
+
+<LandingCards
+  title="Get your API Key"
+  type="apiKey"
+  className="flex-row items-center justify-between cursor-pointer mb-6 mt-10 hover:bg-[#101114] duration-300 ease-in-out"
+  url="/api-keys"
+>
+  <div>{LandingIcons["chevron-right"]}</div>
 </LandingCards>
 
+{/* Get Started Cards Section */}
 
-{/*Get Started Cards Section */}
-<LandingCards className="mt-6 flex-col" type="start" title="Get started quickly with SDKs">
-<div className="grid lg:grid-cols-2 grid-cols-1 w-full mt-7 mb-6 gap-4">
-{GetStartedData.map(({title ,url}) => (
-<GetStartedCards key={title} title={title} url={url}/>
-))}
-</div>
-<CLIToolCard/>
+<LandingCards
+  className="mt-6 flex-col"
+  type="start"
+  title="Get started quickly with SDKs"
+>
+  <div className="grid lg:grid-cols-2 grid-cols-1 w-full mt-7 mb-6 gap-4">
+    {GetStartedData.map(({ title, url }) => (
+      <GetStartedCards key={title} title={title} url={url} />
+    ))}
+  </div>
+  <CLIToolCard />
 </LandingCards>
-
 
 {/* IFrame & API Ref. Section */}
+
 <div className="grid lg:grid-cols-2 grid-cols-1 md:gap-4 mt-6">
-{iFrameApiData.map(({title,type,desc,linksArr,url}) => (
-<LandingCards title={title} type={type} className="flex-col flex cursor-pointer ease-in-out duration-300" key={title} url={url} >
-<p className="text-base font-normal text-custom-4 my-4">{desc}</p>
-<div className="flex items-center gap-4">
-{linksArr.map(({title,linkUrl}) => (
-<LinksIcon title={title} linkUrl={linkUrl} key={title}/>
-))}
+  {iFrameApiData.map(({ title, type, desc, linksArr, url }) => (
+    <LandingCards
+      title={title}
+      type={type}
+      className="flex-col flex cursor-pointer ease-in-out duration-300"
+      key={title}
+      url={url}
+    >
+      <p className="text-base font-normal text-custom-4 my-4">{desc}</p>
+      <div className="flex items-center gap-4">
+        {linksArr.map(({ title, linkUrl }) => (
+          <LinksIcon title={title} linkUrl={linkUrl} key={title} />
+        ))}
+      </div>
+    </LandingCards>
+  ))}
 </div>
-</LandingCards>
-))}
-</div>
-
-
 
 </div>
 
