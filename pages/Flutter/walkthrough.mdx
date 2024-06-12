@@ -1,8 +1,8 @@
 ---
-title: 'Walkthrough'
+title: "Walkthrough"
 ---
 
-import { Callout, Steps, Tab, Tabs } from 'nextra-theme-docs';
+import { Callout, Steps, Tab, Tabs } from "nextra-theme-docs";
 
 # Building a Flutter App with Huddle01
 
@@ -14,21 +14,21 @@ The following guide explains how you can integrate audio/video into your Flutter
 
 ### Installation
 
-  **Install `huddle01_flutter_client` in your flutter app**
+**Install `huddle01_flutter_client` in your flutter app**
 
     To power your Flutter dApp with audio communication using Huddle01 install the following:
 
-    ```bash 
-      flutter pub add huddle01_flutter_client 
+    ```bash
+      flutter pub add huddle01_flutter_client
     ```
 
 ### Handling Permissions
 
 Before you can start using the Huddle01 SDK, you need to enable your app to handle some permissions required for audio/video communication.
 
-  **Android**
+**Android**
 
-   Add the following permissions to your `AndroidManifest.xml` file:
+Add the following permissions to your `AndroidManifest.xml` file:
 
     ```xml
     <uses-feature android:name="android.hardware.camera"/>
@@ -44,9 +44,9 @@ Before you can start using the Huddle01 SDK, you need to enable your app to hand
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     ```
 
-  **iOS**
+**iOS**
 
-   Add the following permissions to your `Info.plist` file:
+Add the following permissions to your `Info.plist` file:
 
     ```xml
     <key>NSMicrophoneUsageDescription</key>
@@ -61,23 +61,22 @@ Before you can start using the Huddle01 SDK, you need to enable your app to hand
 
 ### Initialization of project
 
-Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials: 
+Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials:
 
-  - `API Key`
-  - `projectId`
+- `API Key`
+- `projectId`
 
-  Once done, you can initialize your project with the `HuddleClient` class by passing in your `projectId`. 
+Once done, you can initialize your project with the `HuddleClient` class by passing in your `projectId`.
 
+```dart filename="app.dart"
+import 'package:huddle01_flutter_client/huddle01_flutter_client.dart';
 
-  ```dart filename="app.dart"
-  import 'package:huddle01_flutter_client/huddle01_flutter_client.dart';
+String projectId = 'YOUR-PROJECT-ID';
+String roomId = 'YOUR-ROOM-ID';
 
-  String projectId = 'YOUR-PROJECT-ID';
-  String roomId = 'YOUR-ROOM-ID';
-
-  // Initialize your huddleClient 
-  HuddleClient huddleClient = HuddleClient(projectId);
-  ```
+// Initialize your huddleClient
+HuddleClient huddleClient = HuddleClient(projectId);
+```
 
 ### Joining and leaving the room
 
@@ -85,57 +84,59 @@ Once you initialise `huddleClient` you can access various methods such as `jo
 
 Add the `joinRoom()` and `leaveRoom()` methods for joining and leaving functionalities.
 
-  ```dart filename="app.dart"
-    import 'package:flutter/material.dart';
-    import 'package:huddle01_flutter_client/huddle01_flutter_client.dart';
+```dart filename="app.dart"
+  import 'package:flutter/material.dart';
+  import 'package:huddle01_flutter_client/huddle01_flutter_client.dart';
 
-    class MeetingScreen extends StatefulWidget {
-      const MeetingScreen({super.key});
+  class MeetingScreen extends StatefulWidget {
+    const MeetingScreen({super.key});
 
-      @override
-      State<MeetingScreen> createState() => _MeetingScreenState();
-    }
+    @override
+    State<MeetingScreen> createState() => _MeetingScreenState();
+  }
 
-    class _MeetingScreenState extends State<MeetingScreen> {
-      String projectId = 'YOUR-PROJECT-ID';
-      String roomId = 'YOUR-ROOM-ID';
-      String accessToken = 'YOUR-ACCESS-TOKEN';
+  class _MeetingScreenState extends State<MeetingScreen> {
+    String projectId = 'YOUR-PROJECT-ID';
+    String roomId = 'YOUR-ROOM-ID';
+    String accessToken = 'YOUR-ACCESS-TOKEN';
 
-      HuddleClient huddleClient = HuddleClient(projectId);
+    HuddleClient huddleClient = HuddleClient(projectId);
 
 
-      @override
-      Widget build(BuildContext context) {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text("My Meeting App"),
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("My Meeting App"),
+        ),
+        body: Column(children: [
+          TextButton(
+            child: const Text('JOIN_ROOM'),
+            onPressed: () {
+                huddleClient.joinRoom(roomId, token);
+            },
           ),
-          body: Column(children: [
-            TextButton(
-              child: const Text('JOIN_ROOM'),
-              onPressed: () {
-                  huddleClient.joinRoom(roomId, token);
-              },
-            ),
-            TextButton(
-              child: const Text('LEAVE_ROOM'),
-              onPressed: () {
-                  huddleClient.leaveRoom();
-              },
-            ),
-          ]),
-        );
-      }
+          TextButton(
+            child: const Text('LEAVE_ROOM'),
+            onPressed: () {
+                huddleClient.leaveRoom();
+            },
+          ),
+        ]),
+      );
     }
-  ```
+  }
+```
 
-  < Callout type = "info" >
-  Clicking on the **JOIN_ROOM** button, will make the user join the room and will allow them to send/receive media with other participants.
-  < /Callout>
+{" "}
+<Callout type='info'>
+  Clicking on the **JOIN_ROOM** button, will make the user join the room and
+  will allow them to send/receive media with other participants.
+</Callout>
 
 ### Enabling and Disabling Audio and Video
-Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams. 
 
+Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
 
 **Audio**
 
@@ -213,10 +214,58 @@ These functions are available on the `huddleClient.localPeer` object.
         );
       }
     }
-  ```
+```
 
 ### Show remote peers in the room
-{ /* TODO: */}
+
+Remote peers are peers who are present in the room. It doesn't include local peer.
+
+```dart
+    import 'package:flutter/material.dart';
+    import 'package:huddle01_flutter_client/huddle01_flutter_client.dart';
+
+    class MeetingScreen extends StatefulWidget {
+      const MeetingScreen({super.key});
+
+      @override
+      State<MeetingScreen> createState() => _MeetingScreenState();
+    }
+
+    class _MeetingScreenState extends State<MeetingScreen> {
+      String projectId = 'YOUR-PROJECT-ID';
+      String roomId = 'YOUR-ROOM-ID';
+      String accessToken = 'YOUR-ACCESS-TOKEN';
+
+      HuddleClient huddleClient = HuddleClient(projectId);
+
+      RemotePeer getRemotePeerId(String peerId) {
+        return huddleClient.room.getRemotePeerById(peerId);
+      }
+
+      @override
+      Widget build(BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("My Meeting App"),
+          ),
+          body: Column(children: [
+            TextButton(
+              child: const Text('RemotePeer Role'),
+              onPressed: () {
+                  print(getRemotePeerId("PEER-ID").role);
+              },
+            ),
+            TextButton(
+              child: const Text('RemotePeer Labels'),
+              onPressed: () {
+                  print(getRemotePeerId("PEER-ID").labels);
+              },
+            ),
+          ]),
+        );
+      }
+    }
+```
 
 ### You're all set! Happy Hacking! 🎉
 
