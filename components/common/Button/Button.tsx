@@ -26,7 +26,7 @@ export const Button: React.FC<Props> = ({
       className={cn(
         variant === "primary" ? "customPrimaryButton" : "customSecondaryButton",
         className,
-        "transition-all flex items-center justify-center duration-300 ease-in-out h-14 w-auto border rounded-lg font-bold text-xl"
+        "transition-all flex items-center justify-center duration-300 ease-in-out h-14 w-auto border rounded-lg font-bold text-xl cursor-pointer"
       )}
     >
       {text}

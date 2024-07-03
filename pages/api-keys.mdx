@@ -5,14 +5,19 @@ title: 'API Keys'
 
 # API Keys
 
-import APISection from '@components/APIKeySection/APISection';
 import { Callout } from 'nextra-theme-docs';
-
-## Get Credentials
+import { Button } from '@components/common/Button/Button';
 
 <Callout>
-  Connect your ethereum wallet to get access to the Huddle01 API Key, which will
-  be used to authorize you to access Huddle01 infrastructure
+  You can now access your API keys from the Huddle01 Developer Dashboard. Below is a quick video showing how.
 </Callout>
 
-<APISection />
+<video src="https://huddle01-assets-frontend.s3.amazonaws.com/docs/api-key-demo.mp4" autoPlay muted controls className='w-full my-4' / >
+<div className="flex items-center justify-center">
+<Button
+    variant="secondary"
+    url="https://huddle01.dev"
+    text="Go to Huddle01 Developer Dashboard"
+    className="my-2 w-auto px-8"
+  />
+  </div>
