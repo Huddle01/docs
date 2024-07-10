@@ -1,99 +1,155 @@
 ---
-title: 'Vanilla iFrame'
+title: "Vanilla iFrame"
 ---
 
-import { Callout } from 'nextra-theme-docs';
+import { Callout } from "nextra-theme-docs";
+import OptionTable from "@components/common/Table/OptionTable";
 
 # Vanilla iFrame
 
 The Huddle01 Vanilla iFrame provides a simple way to embed real-time audio and video communication into your application.
-
-After embedding the iFrame, you will have access to the provided methods to easily control audio and video settings, recording, reactions, and the hand raise feature during your meeting. Additionally, you can customize the source attribute of the iFrame to specify the room you wish to join, as well as adjust the height and width attributes to fit your unique needs.
+After embedding the iFrame, you can customise the appearance using the configuration options provided by the package.
 
 ### Step by step guide:
 
 To begin, you can copy and paste the iFrame markup provided below into your HTML document.
 
 **Include the below CDN**
+
 ```html
-<script src="https://unpkg.com/@huddle01/iframe@0.0.11/dist/huddle01-iframe.umd.min.js"></script>
+<script src="https://unpkg.com/@huddle01/iframe@0.0.15/dist/index.global.js"></script>
 ```
-
-
 
 **Markup**
 Paste the below code into your web app's markup
 
+<Callout>
+  You need to generate `roomId` using our [Create Room
+  API](/apis/create-room/create-room) and `projectId` from [Developer
+  Dashboard](https://huddle01.dev)
+</Callout>
+
 ```jsx
 <iframe
-  id="huddle01-iframe"
-  src="https://iframe.huddle01.com/some-room"
-  name="myiFrame"
-  scrolling="no"
-  height="90%"
-  width="90%"
+  id='huddle01-iframe'
+  src='https://iframe.huddle01.com/your-room-id'
+  name='myiFrame'
+  scrolling='no'
+  height='90%'
+  width='90%'
   allowFullScreen
-  allow="camera; microphone; clipboard-read; clipboard-write; display-capture"
+  allow='camera; microphone; clipboard-read; clipboard-write; display-capture'
+  projectId={"your-project-id"}
 ></iframe>
 ```
 
-<Callout>
- 
- **NOTE:** `src` can be a subdomain of your own instead of `iframe.huddle01.com`
-
-</Callout>
-
 ### **Methods**
 
-To use the methods listed below, you first need to get the iFrame element and its content window. After adding the CDN to your code you can call the methods in the following way: 
+### Initialize
+
+To use the methods listed below, you first need to get the iFrame element and its content window. After adding the CDN to your code you can call the methods in the following way:
 
 ```jsx
-HIframe.iframeApi.initialize({background: ""})
+<OptionTable
+  headers={["Method", "Description", "Parameter"]}
+  options={[
+    ["logoUrl", "Change the default logo in the meeting room", "string"],
+    ["background", "Change the background of the meeting room", "string"],
+    [
+      "redirectUrlOnLeave",
+      "Redirect to a given URL after the meeting ends",
+      "string",
+    ],
+    [
+      "virtualBgs",
+      "Links to additional virtual backgrounds for the meeting.",
+      "string[]",
+    ],
+  ]}
+/>
 ```
-**Available Methods**
 
-- **`initialize()`**: Pass a config to customize iframe room with the following attributes:
-  - `logoUrl`: Set logoUrl to change the logo in the lobby
-  - `logoHeight` : The height of the logo you want to set to increase or decrease the size.
-  - `logoWidth` : The width of the logo you want to set to increase or decrease the size.
-  - `background`: You can pass any url of an image here to set the background of the meeting room
-  - `defaultChainId` : The `chainId` of the chain you want as default when the huddle01 app loads. e.g. `137` for polygon mainnet.
-  - `redirectUrlOnLeave`: You can pass any url a webpage you want to redirect to after the meeting ends
-  - `virtualBgs` : Links to additional virtual backgrounds you’d wanna set in the meeting.
-  - `wallets`: You can choose multiple wallets to be used in the lobby. (i.e. '*', 'metamask', 'walletconnect', 'keplr', 'templewallet', 'lens', 'ud', 'cyberconnect', 'okxwallet', 'phantom',)
-  <Callout emoji="⚠️">
-    Use "*" to show all wallets 
-  </Callout>
-- **`muteMic()`**: Mutes the user's microphone.
-- **`unmuteMic()`**: Unmutes the user's microphone.
-- **`enableShare()`**: Enables screen sharing.
-- **`disableShare()`**: Disables screen sharing.
-- **`startRecording()`**: Starts recording the meeting.
-- **`stopRecording()`**: Stops recording the meeting.
-- **`sendReaction(emogi)`**: Sends a reaction during the meeting. Allowed emojis are: 😂, 😢, 😦, 😍, 🤔, 👀, 🙌, 👍, 👎, 🔥, 🍻, 🚀, 🎉, ❤️, 💯.
-- **`changeAvatarUrl()`**: Change the avatarUrl for your peer once joined room.
-{/* - **`connectWallet(accessToken)`**: Accepts an accessToken that can be generated via the [Auth Simulator](https://auth-simulator.vercel.app/) or the Huddle01 [Auth Package](https://www.npmjs.com/package/@huddle01/auth). */}
+**Example:**
 
+```jsx
+HIframe.iframeApi.initialize({
+  background: "YOUR_BACKGROUND_URL",
+  logoUrl: "YOUR_LOGO_URL",
+});
+```
 
-## **Color Customisation**
+### Enable/Disable Features
 
-This code snippet illustrates how to dynamically apply themes to the `HuddleIframe` using the setTheme method of the `iframeApi` object. It demonstrates the application of predefined **light** and **dark** themes for easy and consistent styling, as well as the customization of individual theme properties like icon color, text color, and border color. This allows for a flexible and dynamic approach to theming, enabling real-time theme changes and personalization according to specific branding or user preference.
+You can enable or disable the following features by calling `HIframe.iframeApi.updateFeatures()` method.
 
-```tsx
-// Light Theme
-HIframe.iframeApi.setTheme(lightTheme)
+<OptionTable
+  headers={["Method", "Description", "Parameter", "Default"]}
+  options={[
+    ["isChatEnabled", "Enable chat feature", "boolean", "true"],
+    ["isReactionsEnabled", "Enable reactions feature", "boolean", "true"],
+    [
+      "isVirtualBgEnabled",
+      "Enable virtual background feature",
+      "boolean",
+      "true",
+    ],
+    [
+      "isCopyInviteLinkEnabled",
+      "Enable copy invite link feature",
+      "boolean",
+      "false",
+    ],
+    ["isRecordingEnabled", "Enable recording functionality", "boolean", "true"],
+    ["isScreenShareEnabled", "Enable screen share feature", "boolean", "true"],
+    ["isRoomLocked", "Enable lock screen option", "boolean", "true"],
+  ]}
+/>
 
-// Dark Theme
-HIframe.iframeApi.setTheme(darkTheme)
+**Example Usage**
 
-// Custom Colors
-HIframe.iframeApi.setTheme({
-  iconColor: '#94A3B8',
-  textColor: 'red',
-  borderColor: '#1C1E24',
-  brandColor: 'blue',
-  interfaceColor: '#181A20',
-  onBrandColor: '#ffffff',
-})
+```jsx
+HIframe.iframeApi.updateFeatures({
+  isChatEnabled: false,
+  isReactionsEnabled: false,
+  isVirtualBgEnabled: false,
+  isCopyInviteLinkEnabled: false,
+  isRecordingEnabled: false,
+  isScreenShareEnabled: false,
+  isRoomLocked: false,
+});
+```
 
+### **Other Methods**
+
+You can also handle media devices, send reactions and other actions using the following methods:
+
+<OptionTable
+  headers={["Method", "Description", "Parameter"]}
+  options={[
+    ["muteMic", "Mute the user's microphone", "void"],
+    ["unmuteMic", "Unmute the user's microphone", "void"],
+    ["enableShare", "Enable screen sharing", "void"],
+    ["disableShare", "Disable screen sharing", "void"],
+    ["startRecording", "Start recording the meeting", "void"],
+    ["stopRecording", "Stop recording the meeting", "void"],
+    ["sendReaction", "Send a reaction during the meeting", "string"],
+    [
+      "changeAvatarUrl",
+      "Change the avatarUrl for your peer once joined room",
+      "string",
+    ],
+  ]}
+/>
+
+**Example Usage**
+
+```jsx
+HIframe.iframeApi.muteMic();
+HIframe.iframeApi.unmuteMic();
+HIframe.iframeApi.enableShare();
+HIframe.iframeApi.disableShare();
+HIframe.iframeApi.startRecording();
+HIframe.iframeApi.stopRecording();
+HIframe.iframeApi.sendReaction("😂");
+HIframe.iframeApi.changeAvatarUrl("YOUR_AVATAR_URL");
 ```
