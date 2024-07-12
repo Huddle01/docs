@@ -6,13 +6,6 @@
       "layout": "full"
     }
   },
-  "create-iframe-room": {
-    "title": "Iframe Room API",
-    "theme": {
-      "toc": false,
-      "layout": "full"
-    }
-  },
   "token-gated-room": {
     "title": "Token Gated API"
   }

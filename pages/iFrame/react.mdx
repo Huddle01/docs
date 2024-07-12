@@ -3,10 +3,11 @@ title: "React iFrame"
 ---
 
 import { Callout, Tab, Tabs } from "nextra-theme-docs";
+import OptionTable from "@components/common/Table/OptionTable";
 
 # React iFrame
 
-Our iFrame package allows you to embed a Huddle video conference in your React application. You can customize the appearance using the configuration options provided by the package.
+Our iFrame package allows you to embed ready to use Huddle01 app in your React application. You can customize the appearance using the configuration options provided by the package.
 
 ### **Prerequisites**
 
@@ -41,187 +42,217 @@ To install the **`@huddle01/iframe`** package, use either **npm**, **pnpm** or *
 
 ### Usage
 
-<Callout emoji="⚠️">
+<Callout emoji='⚠️'>
   `@huddle01/huddle01-iframe` has been deprecated, use `@huddle01/iframe`
   instead.
 </Callout>
+
+<Callout>
+  You need to generate `roomId` using our [Create Room
+  API](/apis/create-room/create-room) and `projectId` from [Developer
+  Dashboard](https://huddle01.dev)
+</Callout>
+
 Import the **`HuddleIframe`** component from the **`@huddle01/iframe`** package.
 
-<Tabs items={['tsx', 'jsx']}>
-  <Tab>
+```tsx filename=app.tsx
+import { HuddleIframe } from "@huddle01/iframe";
 
-    ```tsx filename=app.tsx
-    import { HuddleIframe } from "@huddle01/iframe";
-
-    function App() {
-        return (
-            <div>
-                <HuddleIframe roomUrl="https://iframe.huddle01.com/YOUR_ROOM_ID" className="w-full aspect-video" />
-            </div>
-        );
-    }
-
-    ```
-
-  </Tab>
-  <Tab>
-
-    ```jsx filename=app.jsx
-    import { HuddleIframe } from "@huddle01/react-huddle-iframe";
-
-    const iframeConfig = {
-        roomUrl: "https://iframe.huddle01.com/123",
-        height: "600px",
-        width: "80%",
-        noBorder: false, // false by default
-    };
-
-    function App() {
-        return (
-            <div>
-                <HuddleIframe config={iframeConfig} />
-            </div>
-        );
-    }
-    ```
-
-  </Tab>
-
-</Tabs>
-
-### **Instance Methods**
-
-You can also use the instance methods provided by the package to interact with the Huddle video conference. Here's how to use them:
-
-<Callout emoji="⚠️">
-  `@huddle01/huddle01-iframe` has been deprecated, use `@huddle01/iframe`
-  instead.
-</Callout>
-
-```jsx
-// JavaScript | TypeScript
-import { iframeApi } from "@huddle01/iframe";
+function App() {
+  return (
+    <div>
+      <HuddleIframe
+        roomUrl='https://iframe.huddle01.com/YOUR_ROOM_ID'
+        className='w-full aspect-video'
+        projectId={"YOUR_PROJECT_ID"}
+      />
+    </div>
+  );
+}
 ```
 
 ### **Methods**
 
-To use the methods listed below, you first need to get the iFrame element and its content window. After adding the CDN to your code you can call the methods in the following way:
+You can also use the instance methods to interact with the iFrame.
+To use the methods listed below, you first need to get the iFrame element and its content window. It's better to call these methods after `app:initialized` event is triggered.
+
+<Callout emoji='⚠️'>
+  `@huddle01/huddle01-iframe` has been deprecated, use `@huddle01/iframe`
+  instead.
+</Callout>
 
 ```jsx
-iframeApi.initialize({ background: "" });
+import { HuddleIframe, iframeApi, useEventListener } from "@huddle01/iframe";
+
+useEventListener("app:initialized", () => {
+  iframeApi.initialize({
+    background: "YOUR_BACKGROUND_URL",
+    logoUrl: "YOUR_LOGO_URL",
+  });
+
+  iframeApi.changeAvatarUrl("YOUR_AVATAR_URL");
+});
 ```
 
-**Available Methods**
+## **Available Methods**
 
-- **`initialize()`**: Pass a config to customize iframe room with the following attributes:
+### Initialize
 
-  - `logoUrl`: Set logoUrl to change the logo in the lobby
-  - `logoHeight` : The height of the logo you want to set to increase or decrease the size.
-  - `logoWidth` : The width of the logo you want to set to increase or decrease the size.
-  - `background`: You can pass any url of an image here to set the background of the meeting room
-  - `defaultChainId` : The `chainId` of the chain you want as default when the huddle01 app loads. e.g. `137` for polygon mainnet.
-  - `redirectUrlOnLeave`: You can pass any url a webpage you want to redirect to after the meeting ends
-  - `virtualBgs` : Links to additional virtual backgrounds you’d wanna set in the meeting.
-  - `wallets`: You can choose multiple wallets to be used in the lobby. (i.e. '\*', 'metamask', 'walletconnect', 'keplr', 'templewallet', 'lens', 'ud', 'cyberconnect', 'okxwallet', 'phantom',)
+Pass a config to customize meeting room appearance. You need to pass following options to the `iframeApi.initialize()` method.
 
-  <Callout emoji="⚠️">Use "*" to show all wallets</Callout>
-
-- **`muteMic()`**: Mutes the user's microphone.
-- **`unmuteMic()`**: Unmutes the user's microphone.
-- **`enableShare()`**: Enables screen sharing.
-- **`disableShare()`**: Disables screen sharing.
-- **`startRecording()`**: Starts recording the meeting.
-- **`stopRecording()`**: Stops recording the meeting.
-- **`sendReaction(emogi)`**: Sends a reaction during the meeting. Allowed emojis are: 😂, 😢, 😦, 😍, 🤔, 👀, 🙌, 👍, 👎, 🔥, 🍻, 🚀, 🎉, ❤️, 💯.
-- **`changeAvatarUrl()`**: Change the avatarUrl for your peer once joined room.
-- **`startLiveStream()`**: Start Livestreaming the meeting.
-  ```jsx
-  iframeApi.startLiveStream({
-    streamUrl: "rtmp://xyz",
-    streamKey: "sldheolfhdsf",
-  });
-  ```
-- **`stopLiveStream()`**: Start Livestreaming the meeting.
-  ```jsx
-  iframeApi.stopLiveStream();
-  ```
-  {/* - **`connectWallet(accessToken)`**: Accepts an accessToken that can be generated via the [Auth Simulator](https://auth-simulator.vercel.app/) or the Huddle01 [Auth Package](https://www.npmjs.com/package/@huddle01/auth). */}
-
-### **Initializing for the first time**
-
-<Callout emoji="⚠️">
+<Callout>
   Don't use the `useEffect` hook to call `iframeApi.initialize()` for the first
   time, use the `useEventListener` hook instead
 </Callout>
 
+<OptionTable
+  headers={["Method", "Description", "Parameter"]}
+  options={[
+    ["logoUrl", "Change the default logo in the meeting room", "string"],
+    ["background", "Change the background of the meeting room", "string"],
+    [
+      "redirectUrlOnLeave",
+      "Redirect to a given URL after the meeting ends",
+      "string",
+    ],
+    [
+      "virtualBgs",
+      "Links to additional virtual backgrounds for the meeting.",
+      "string[]",
+    ],
+  ]}
+/>
+
+**Example Usage**
+
 ```jsx
-// the `lobby:initialized`  event can be used to know when the lobby has been loaded
-useEventListener("lobby:initialized", () => {
-  iframeApi.initialize({
-    redirectUrlOnLeave: "https://huddle01.com",
-    wallets: ["metamask"],
-  });
+iframeApi.initialize({
+  background: "YOUR_BACKGROUND_URL",
+  logoUrl: "YOUR_LOGO_URL",
+  redirectUrlOnLeave: "YOUR_REDIRECT_URL",
+  virtualBgs: ["BG_URL_1", "BG_URL_2"],
 });
+```
+
+### Enable/Disable Features
+
+You can enable or disable the following features by calling `iframeApi.updateFeatures()` method.
+
+<OptionTable
+  headers={["Method", "Description", "Parameter", "Default"]}
+  options={[
+    ["isChatEnabled", "Enable chat feature", "boolean", "true"],
+    ["isReactionsEnabled", "Enable reactions feature", "boolean", "true"],
+    [
+      "isVirtualBgEnabled",
+      "Enable virtual background feature",
+      "boolean",
+      "true",
+    ],
+    [
+      "isCopyInviteLinkEnabled",
+      "Enable copy invite link feature",
+      "boolean",
+      "false",
+    ],
+    ["isRecordingEnabled", "Enable recording functionality", "boolean", "true"],
+    ["isScreenShareEnabled", "Enable screen share feature", "boolean", "true"],
+    ["isRoomLocked", "Enable lock screen option", "boolean", "true"],
+  ]}
+/>
+
+**Example Usage**
+
+```jsx
+iframeApi.updateFeatures({
+  isChatEnabled: true,
+  isReactionsEnabled: true,
+  isVirtualBgEnabled: true,
+  isCopyInviteLinkEnabled: true,
+  isRecordingEnabled: true,
+  isScreenShareEnabled: true,
+  isRoomLocked: true,
+});
+```
+
+### **Other Methods**
+
+You can also handle media devices, send reactions and other actions using the following methods:
+
+<OptionTable
+  headers={["Method", "Description", "Parameter"]}
+  options={[
+    ["muteMic", "Mute the user's microphone", "void"],
+    ["unmuteMic", "Unmute the user's microphone", "void"],
+    ["enableShare", "Enable screen sharing", "void"],
+    ["disableShare", "Disable screen sharing", "void"],
+    ["startRecording", "Start recording the meeting", "void"],
+    ["stopRecording", "Stop recording the meeting", "void"],
+    ["sendReaction", "Send a reaction during the meeting", "string"],
+    [
+      "changeAvatarUrl",
+      "Change the avatarUrl for your peer once joined room",
+      "string",
+    ],
+  ]}
+/>
+
+**Example Usage**
+
+```jsx
+iframeApi.muteMic();
+iframeApi.unmuteMic();
+iframeApi.enableShare();
+iframeApi.disableShare();
+iframeApi.startRecording();
+iframeApi.stopRecording();
+iframeApi.sendReaction("😂");
+iframeApi.changeAvatarUrl("YOUR_AVATAR_URL");
 ```
 
 ## **Events**
 
-There are some additional meeting events that you can listen to as well:
+You can listen to the following events using the `useEventListener` hook:
 
-- `app:initialized` **✅**
-- `lobby:metadata` **✅**
-- `room:joined` **✅**
-- `room:failed` **✅**
-- `room:new-peer` **✅**
-- `room:me-left` **✅**
-- `room:peer-left` **✅**
-- `room:recording-started` **✅**
-- `room:recording-stopped` **✅**
-- `room:livestream-started` **✅**
-- `room:livestream-stopped` **✅**
+<OptionTable
+  headers={["Event", "Description", "Data"]}
+  options={[
+    ["app:initialized", "Triggered when the app is initialized", ""],
+    [
+      "lobby:metadata",
+      "Triggered when the lobby metadata is updated",
+      "TPreviewPeers",
+    ],
+    ["room:joined", "Triggered when a user joins the room", , ""],
+    [
+      "room:failed",
+      "Triggered when a user fails to join the room",
+      "reason: TRejectReasons",
+    ],
+    ["room:new-peer", "Triggered when a new peer joins the room", "TPeerData"],
+    ["room:me-left", "Triggered when the user leaves the room", ""],
+    [
+      "room:peer-left",
+      "Triggered when a peer leaves the room",
+      "peerId: string",
+    ],
+    ["room:recording-started", "Triggered when the recording starts", ""],
+    [
+      "room:recording-stopped",
+      "Triggered when the recording stops",
+      "TRecData",
+    ],
+    ["room:livestream-started", "Triggered when the livestream starts", ""],
+    ["room:livestream-stopped", "Triggered when the livestream stops", ""],
+  ]}
+/>
+
+**Example Usage**
 
 ```jsx
-// JavaScript
 import { useEventListener } from "@huddle01/iframe";
 
-useEventListener("room:new-peer", (data) => console.log({ data }));
-
-// TypeScript
-import { useEventListener } from "@huddle01/iframe";
-
-useEventListener("lobby:joined", (data) => console.log({ data }));
-```
-
-## **Color Customisation**
-
-This code snippet demonstrates how to implement the HuddleIframe component from the `@huddle01/iframe` package in a React application. It shows three different ways to apply themes: using predefined **light** and **dark** themes for a consistent and quick styling, and a custom color theme option where specific color values can be assigned to various interface elements, allowing for a personalized and branded appearance.
-
-```tsx
-import { darkTheme, lightTheme } from "@huddle01/iframe/types";
-import { HuddleIframe } from "@huddle01/iframe";
-
-// Light Theme
-<HuddleIframe
-		roomUrl="https://iframe.huddle01.com"
-		theme={lightTheme}
-/>
-
-// Dark Theme
-<HuddleIframe
-		roomUrl="https://iframe.huddle01.com"
-		theme={darkTheme}
-/>
-
-// Custom Colors
-<HuddleIframe
-		roomUrl="https://iframe.huddle01.com"
-		theme={{
-			iconColor: '#94A3B8',
-		  textColor: 'red',
-		  borderColor: '#1C1E24',
-		  brandColor: 'blue',
-			interfaceColor: '#181A20',
-			onBrandColor: '#ffffff',
-		}}
-/>
+useEventListener("lobby:metadata", (data) => console.log({ data }));
+useEventListener("room:joined", () => console.log("User joined the room"));
+useEventListener("room:failed", (reason) => console.log({ reason }));
 ```
