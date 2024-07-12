@@ -49,7 +49,6 @@ Paste the below code into your web app's markup
 
 To use the methods listed below, you first need to get the iFrame element and its content window. After adding the CDN to your code you can call the methods in the following way:
 
-```jsx
 <OptionTable
   headers={["Method", "Description", "Parameter"]}
   options={[
@@ -67,11 +66,11 @@ To use the methods listed below, you first need to get the iFrame element and it
     ],
   ]}
 />
-```
 
 **Example:**
 
 ```jsx
+const HIframe = document.getElementById("huddle01-iframe");
 HIframe.iframeApi.initialize({
   background: "YOUR_BACKGROUND_URL",
   logoUrl: "YOUR_LOGO_URL",
@@ -108,6 +107,7 @@ You can enable or disable the following features by calling `HIframe.iframeApi.u
 **Example Usage**
 
 ```jsx
+const HIframe = document.getElementById("huddle01-iframe");
 HIframe.iframeApi.updateFeatures({
   isChatEnabled: false,
   isReactionsEnabled: false,
@@ -144,6 +144,7 @@ You can also handle media devices, send reactions and other actions using the fo
 **Example Usage**
 
 ```jsx
+const HIframe = document.getElementById("huddle01-iframe");
 HIframe.iframeApi.muteMic();
 HIframe.iframeApi.unmuteMic();
 HIframe.iframeApi.enableShare();
