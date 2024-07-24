@@ -52,7 +52,7 @@ The useLocalVideo hook exposes primitives to interact with your own video stream
       "changeVideoSource",
       "Changes the video sources of the devices.",
       'Promise<void>',
-      '{ deviceId: string }'
+      '"front" | "environment"'
     ]
   ]}
 />
@@ -87,6 +87,12 @@ const handleVideo = async () => {
     await enableVideo();
   }
 };
+
+// flip camera
+const flipCamera = async () => {
+  await changeVideoSource("front"); // for front camera
+  await changeVideoSource("environment"); // for rear camera
+}
 ```
 
 ## Props

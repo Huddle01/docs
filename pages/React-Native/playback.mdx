@@ -1,0 +1,61 @@
+---
+title: 'Playback'
+---
+
+# Audio Playback
+
+Audio streams coming from the SDK are played automatically inside your React Native application without having to render them manually. You can create your custom UI to show the peer's avatar or viewport, but there are no extra steps required to play the audio streams.
+
+By default, audio streams are played through the mobile device's earpiece. How you choose to handle the audio output source is up to you, and not a part of the SDK. Below is an example to set the output source as **speakerphone**, using the `react-native-incall-manager` package. You can check out their [documentation](https://github.com/react-native-webrtc/react-native-incall-manager) to learn more, like adding support for bluetooth headphones.
+
+```tsx filename="Meeting.tsx"
+import InCallManager from 'react-native-incall-manager';
+import { useRoom } from '@huddle01/react/hooks';
+
+const room = useRoom({
+  onJoin: (data) => {
+    //change audio output source to speakerphone
+    InCallManager.start({ media: 'audio' });
+    InCallManager.setKeepScreenOn(true);
+    InCallManager.stopProximitySensor();
+    InCallManager.setForceSpeakerphoneOn(true);
+  }
+  onLeave: () => {
+    InCallManager.stop();
+  }
+});
+```
+
+# Video Playback
+
+To render the video streams coming from the SDK, you have to use the `RTCView` component exported from the `react-native-webrtc` package.
+
+In case you want to skip the effort of building your own reusable component for rendering video streams, we have provided a pre-made component that you can use in your React Native application. Just copy paste this in your application and you are good to go.
+
+
+```tsx filename="RNVideo.tsx"
+import { MediaStream as RNMediaStream, RTCView } from 'react-native-webrtc';
+
+const RNVideo: React.FC<
+  {
+    videoStream: MediaStream | null;
+  } & Omit<React.ComponentPropsWithoutRef<typeof RTCView>, 'streamURL'>
+> = ({ videoStream, ...props }) => {
+  return (
+    <RTCView
+      mirror={true}
+      objectFit={'cover'}
+      zOrder={0}
+      // @ts-ignore
+      streamURL={(videoStream as RNMediaStream | null)?.toURL() ?? ''}
+      {...props}
+    />
+  );
+};
+
+export default RNVideo;
+```
+
+This component accept the `videoStream` as prop and renders the video stream. You can also pass any other props that are accepted by the `RTCView` component from `react-native-webrtc` to this component, like `style`, `objectFit`, `zOrder`, etc.
+
+## You're all set! Happy Hacking! 🎉

@@ -39,7 +39,7 @@ The useRemoteAudio hook exposes primitives to interact with audio streams coming
 
 ```tsx
 import { useRemoteAudio } from "@huddle01/react/hooks";
-import { MediaStream, RTCView } from "react-native-webrtc";
+import { MediaStream } from "react-native-webrtc";
 
 const {
     state,
@@ -59,12 +59,6 @@ const {
     message: string;
     }) {},
   });
-
-return (
-  <View>
-    <RTCView streamURL={(stream as MediaStream | null)?.toURL() ?? ""}/>
-  </View>
-)
 ```
 
 ## Props
