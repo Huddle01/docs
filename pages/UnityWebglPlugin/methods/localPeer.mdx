@@ -1,0 +1,229 @@
+---
+title: 'Local Peer'
+---
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+# Local Peer Methods
+
+# Methods
+
+## UpdateLocalPeerMetaData(string metadata)
+
+To Update the local peer metadata, call the method Huddle01Init.Instance.UpdateLocalPeerMetaData. it takes json string as a parameter. Keep that in mind, in case you want to make some changes in class PeerMetadata you need to make some changes in HuddleWebglPlugin.jslib accordingly
+
+Unity Code example
+
+```csharp
+public void UpdateLocalPeerMetaData(PeerMetadata peerMetadata)
+{
+    Debug.Log($"UpdateLocalPeerMetaData : {JsonConvert.SerializeObject(peerMetadata)}");
+    Huddle01Init.Instance.UpdateLocalPeerMetaData(JsonConvert.SerializeObject(peerMetadata));
+}
+
+[System.Serializable]
+public class PeerMetadata
+{
+    [JsonProperty("peerId")]
+    public string PeerId;
+    [JsonProperty("muteStatus")]
+    public bool MuteStatus;
+    [JsonProperty("videoStatus")]
+    public bool VideoStatus;
+    [JsonProperty("name")]
+    public string Name;
+}
+```
+
+.jslib
+
+```jsx
+UpdatePeerMeataData : function(metadataVal)
+{
+    var metadata = JSON.parse(UTF8ToString(metadataVal));
+    huddleClient.localPeer.updateMetadata({ 
+        peerId: metadata.peerId,
+        muteStatus: metadata.muteStatus,
+        muteStatus: metadata.videoStatus,
+        name : metadata.name
+    });
+}
+```
+
+## GetLocalPeerId()
+
+call this method to get the localPeerId and subscribe to LocalPeerId event to handle the peerId
+
+```csharp
+private void OnEnable()
+{
+    Huddle01Init.LocalPeerId += OnLocalPeerIdReceived;
+}
+
+  private void OnDisable()
+  {
+      Huddle01Init.LocalPeerId -= OnLocalPeerIdReceived;
+  }
+
+public void GetLocalPeerId()
+{
+	 Huddle01Init.Instance.GetLocalPeerId();
+}
+
+private void OnLocalPeerIdReceived(string peerId)
+{
+    Debug.Log($"Local peer id : {peerId}");
+}
+
+```
+
+## MuteMic(bool shouldMute, PeerMetadata metadata)
+
+To mute microphone, call MuteMic function. It takes the bool and PeerMetadata as param. Keep that in mind, in case you want to make some changes in class PeerMetadata you need to make some changes in HuddleWebglPlugin.jslib accordingly.
+
+```csharp
+public void MuteMic(bool shouldMute,PeerMetadata metadata)
+{
+    Huddle01Init.Instance.MuteMic(shouldMute, metadata);
+}
+```
+
+## EnableVideo(bool enable, PeerMetadata metadata)
+
+For enabling video, first you need to get Texture Id which you can call in start
+
+```csharp
+public class VideoSection: MonoBehaviour
+{
+		private int m_TextureId =1;
+		
+		private void Start()
+    {
+        GetNewTextureId();
+    }
+    
+    public void GetNewTextureId() 
+    {
+        m_TextureId = JSNative.NewTexture();
+    }
+}
+```
+
+Once you get the texture Id and you want to start rendering the streaming video you need to call AttachVideo method which belongs to JSNative class and call SetupTexture in update.
+
+Check the below script
+
+```csharp
+public class VideoSection: MonoBehaviour
+{
+
+		private HuddleUserInfo _userInfo;
+		
+		private int m_TextureId =1;
+		
+		public Texture2D Texture { get; private set; }
+		public bool isVideoPlaying=false;
+		[SerializeField]
+    private RawImage _videoTexture;
+				
+		private void Start()
+    {
+        GetNewTextureId();
+    }
+    
+    public void Setup(HuddleUserInfo userInfo)
+    {
+        _userInfo = userInfo;
+    }
+    
+    private void Update()
+    {
+        if (isVideoPlaying) 
+        {
+            SetupTexture();
+        }
+    }
+    
+    public void GetNewTextureId() 
+    {
+        m_TextureId = JSNative.NewTexture();
+    }
+    
+    public void AttachVideo() 
+    {
+        JSNative.AttachVideo(_userInfo.PeerId, m_TextureId);
+    }
+    
+    public void SetupTexture() 
+    {
+        if (Texture != null)
+            Object.Destroy(Texture);
+        Texture = Texture2D.CreateExternalTexture(1280, 720, TextureFormat.RGBA32, false, true, (IntPtr)m_TextureId);
+        _videoTexture.texture = Texture;
+    }
+}
+```
+
+once above setup is done, you can simply call Huddle01Init.Instance.EnableVideo to enable and disable local peer video.
+Same process can be used to get the remote peer video, all you need to do is to subscribe OnStopPeerVideo and OnResumePeerVideo events from Huddle01Init class.
+
+```csharp
+public void EnableVideoStreaming(bool enableVideo) 
+{
+    Huddle01Init.Instance.EnableVideo(enableVideo, userSectionRef.UserInfo.Metadata);
+
+}
+```
+
+## SendTextMessage(string message)
+
+call this function to send any message to room.
+
+```csharp
+public void SendMessageToRoom() 
+{
+    Huddle01Init.Instance.SendTextMessage("Hello guyzz");
+}
+```
+
+# Events
+
+## LocalPeerId(string peerId)
+
+Subscribe to this event to get localPeerId.
+
+```csharp
+Huddle01Init.LocalPeerId += OnLocalPeerIdReceived;
+```
+
+# Classes
+
+## HuddleUserInfo
+
+```csharp
+[Serializable]
+public class HuddleUserInfo
+{
+    public string PeerId;
+    public PeerMetadata Metadata = new PeerMetadata();
+    public bool IsRemotePeer;
+    public string Role;
+}
+```
+
+## PeerMetadata
+
+```csharp
+[System.Serializable]
+public class PeerMetadata
+{
+    [JsonProperty("peerId")]
+    public string PeerId;
+    [JsonProperty("muteStatus")]
+    public bool MuteStatus;
+    [JsonProperty("videoStatus")]
+    public bool VideoStatus;
+    [JsonProperty("name")]
+    public string Name;
+}
+```

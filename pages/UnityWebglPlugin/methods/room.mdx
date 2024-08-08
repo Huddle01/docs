@@ -1,0 +1,68 @@
+---
+title: 'Room'
+---
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+# Room Methods
+
+# Room
+
+## JoinRoom
+
+After initializing Huddle01 plugin, you can call join room function and subscribe to OnJoinRoom Event
+
+```csharp
+private void OnEnable()
+{
+    Huddle01Init.OnJoinRoom += OnJoinRoom;
+}
+
+private void OnDisable()
+{
+    Huddle01Init.OnJoinRoom -= OnJoinRoom;  
+}
+
+public void JoinRoom(string roomId,string token)
+{
+    Huddle01Init.Instance.JoinRoom(roomId, token);
+}
+
+private void OnJoinRoom()
+{
+    Debug.Log("Room Joined");
+}
+```
+
+## LeaveRoom
+
+Call Huddle01Init.Instance.LeaveRoom method to leave the current room
+
+```csharp
+public void LeaveRoom()
+{
+    Huddle01Init.Instance.LeaveRoom();
+    //post leave room
+}
+```
+
+## RoomClosed
+
+Subscribe to Huddle01Init.RoomClosed event incase room is closed
+
+```csharp
+private void OnEnable()
+{
+     Huddle01Init.RoomClosed += OnRoomClosed;
+}
+
+private void OnDisable()
+{
+     Huddle01Init.RoomClosed -= OnRoomClosed;  
+}
+
+private void OnRoomClosed()
+{
+    Debug.Log("Current room closed");
+}
+```

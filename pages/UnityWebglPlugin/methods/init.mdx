@@ -1,0 +1,25 @@
+---
+title: 'Init'
+---
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+# Init Method
+
+# Init
+
+To initialize the Huddle01, you need to call Huddle01Init.Instance.Init method
+
+```csharp
+using UnityEngine;
+using Huddle01;
+
+public class AudioVideoMeet : MonoBehaviour
+{
+		void Start()
+    {
+        Huddle01Init.Instance.Init("Your_project_id");
+        Debug.Log("Huddle01 Initiated");
+    }
+}
+```

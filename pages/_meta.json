@@ -43,6 +43,7 @@
   "React-Native": "",
   "Server-SDK": "",
   "Flutter": "",
+  "UnityWebglPlugin": "",
 
   "--Quick Integration": {
     "type": "separator",

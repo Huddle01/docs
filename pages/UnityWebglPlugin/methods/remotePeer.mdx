@@ -1,0 +1,117 @@
+---
+title: 'Remote Peer'
+---
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+# Remote Peer
+
+# Methods
+
+### ConsumePeer(string peerId,string label);
+Call this function to consume individual peer
+
+### StopConsumingPeer(string peerId,string label);
+Call this function to stop consuming individual peer
+
+# Events
+
+### PeerAddedEventHandler(string peerInfo);
+
+This is called when any peer is added in the current room. Subscribe to get the notification
+
+### PeerLeftEventHandler(string peerId);
+
+This is called when any peer left current room. Subscribe to get the notification
+
+### PeerMutedEventHandler(bool muted)
+
+This is called when any peer changed the mute status. Subscribe to get the notification
+
+### PeerMetadataUpdatedEventHandler(string peerMetadata)
+
+This is called when any peer update its metadata. Subscribe to get the notification
+
+### ResumePeerVideoEventHandler(string peerId);
+
+This is called when any peer resume its video. Subscribe to get the notification
+
+### StopPeerVideoEventHandler(string peerId)
+
+This is called when any peer stops its video. Subscribe to get the notification
+
+### StartConsumingPeerEventHandler(string peerId)
+
+This is invoked then plugin starts consuming peer
+
+### StopConsumingPeerEventHandler(string peerId)
+
+This is invoked then plugin stops consuming peer
+
+code example 
+
+```csharp
+private void OnEnable()
+{
+    Huddle01Init.PeerAdded += OnPeerJoined;
+    Huddle01Init.PeerLeft += OnPeerLeft;
+    Huddle01Init.PeerMuted += OnPeerMuted;
+    Huddle01Init.PeerMetadata += OnPeerMetaDataUpdated;
+    Huddle01Init.OnResumePeerVideo += OnPeerVideoResume;
+    Huddle01Init.OnStopPeerVideo += OnPeerVideoStop;
+    Huddle01Init.OnStartConsumingPeer += OnPeerVideoStop;
+    Huddle01Init.OnStopConsumingPeer += OnPeerVideoStop;
+}
+
+private void OnDisable()
+{
+    Huddle01Init.PeerAdded -= OnPeerJoined;
+    Huddle01Init.PeerLeft -= OnPeerLeft;
+    Huddle01Init.PeerMuted -= OnPeerMuted;
+    Huddle01Init.PeerMetadata -= OnPeerMetaDataUpdated;
+    Huddle01Init.OnResumePeerVideo -= OnPeerVideoResume;
+    Huddle01Init.OnStopPeerVideo -= OnPeerVideoStop;
+    Huddle01Init.OnStartConsumingPeer -= OnPeerVideoStop;
+    Huddle01Init.OnStopConsumingPeer -= OnPeerVideoStop;
+}
+
+private void OnPeerMuted(string peerId)
+{
+    Debug.Log($"OnPeerMuted: {peerInfo}");
+}
+
+private void OnPeerLeft(string peerInfo)
+{
+    Debug.Log($"OnPeerLeft : {peerInfo}");
+}
+
+private void OnPeerJoined(string peerId)
+{
+    Debug.Log($"OnPeerJoined : {peerId}");
+}
+
+private void OnPeerMetaDataUpdated(PeerMetadata peerInfo)
+{
+    Debug.Log($"OnPeerMetaDataUpdated: {peerInfo}");
+}
+
+private void OnPeerVideoStop(string peerId)
+{
+   Debug.Log($"OnPeerVideoStop: {peerId}");
+}
+
+private void OnPeerVideoResume(string peerId)
+{
+    Debug.Log($"OnPeerVideoResume: {peerId}");
+}
+
+private void OnStartConsumingPeer(string peerId)
+{
+    Debug.Log($"OnStartConsumingPeer: {peerId}");
+}
+
+private void OnStopConsumingPeer(string peerId)
+{
+    Debug.Log($"OnStopConsumingPeer: {peerId}");
+}
+```
