@@ -779,3 +779,31 @@ export const APIFunctionsData = [
     },
   },
 ];
+
+export const UnityWebglPluginData = [
+  {
+    href: "/UnityWebglPlugin/quickstart",
+    name: "Quickstart",
+    description:
+      "This section provides a brief overview of how to quickly get started with using the plugin in a Unity project.",
+    icon: Stopwatch,
+    pattern: {
+      y: 22,
+      squares: [[0, 1]],
+    },
+  },
+  {
+    href: "/UnityWebglPlugin/methods/init",
+    name: "Methods",
+    description:
+      "This section provides an overview of the available Unity methods in the Webgl Huddle01 plugin that can be used to create custom functionality.",
+    icon: PaperClipIcon,
+    pattern: {
+      y: 32,
+      squares: [
+        [0, 2],
+        [1, 4],
+      ],
+    },
+  },
+];
