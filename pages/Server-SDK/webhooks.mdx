@@ -18,9 +18,19 @@ import { Callout } from "nextra-theme-docs";
 ```ts
 import { WebhookReceiver } from "@huddle01/server-sdk/webhooks";
 
+// Initiate webhook receiver
 const webhookReceiver = new WebhookReceiver({
   apiKey: "YOUR_API_KEY",
 });
+
+// validate body using the receive func
+const receivedData = receiver.receive(req.body, header); 
+
+// get properly typed data in typescript
+const { data } = webhookReceiver.createTypedWebhookData(
+  "meeting:started",
+  receivedData.payload,
+);
 ```
 
 <details>
@@ -30,43 +40,65 @@ const webhookReceiver = new WebhookReceiver({
     <Callout>
     To make the webhook work on localhost, you'll have to use something like `ngrok` for port forwarding.
     </Callout>
+    <Callout>
+    The `Content-Type` is set to "Content-Type": "text/plain", attempting to parse it as JSON, multipart, or any other structured format will not work as expected. Please ensure that you handle the content as plain text.
+    </Callout>
 
     ```ts
     import express, { Request, Response } from "express";
     import bodyParser from "body-parser";
     import { WebhookReceiver } from "@huddle01/server-sdk/webhooks";
 
-    type Err = { message: string };
-
     const receiver = new WebhookReceiver({
-    apiKey: "YOUR_API_KEY",
+      apiKey: "YOUR_API_KEY",
     });
 
     const app = express();
-    const port: number = 3002;
+    const port = 3002;
 
-    // Middleware to parse JSON bodies
-    app.use(bodyParser.text());
+    // Middleware to parse the body as text/plain
+    app.use(express.text({ type: '*/*' }));
 
     app.post("/", (req: Request, res: Response) => {
-    try {
-    const header: string | undefined = req.headers[
-    "huddle01-signature"
-    ] as string;
+      try {
+        const header = req.headers["huddle01-signature"] as string | undefined;
 
         const data = receiver.receive(req.body, header);
 
         console.log({ data });
 
-        res.status(200).send({ success: true });
+        switch (receivedData.event) {
+          case "meeting:started": {
+            // !! Thie helper will give properly typed data in typescript
+            const { data } = webhookReceiver.createTypedWebhookData(
+              "meeting:started",
+              receivedData.payload,
+            );
 
-    } catch (error) {
-    console.error({ error });
-    }
+            // ... logic as per requirment
+            break;
+          }
+
+          case "meeting:ended": {
+            const { data } = webhookReceiver.createTypedWebhookData(
+              "meeting:ended",
+              receivedData.payload,
+            );
+
+            // ... logic as per requirment
+          }
+
+          // ... cases for peer:joined, peer:left, recording:started, etc
+        }
+
+        res.status(200).send({ success: true });
+      } catch (error) {
+        console.error({ error });
+      }
     });
 
     app.listen(port, () => {
-    console.log(`🦊 Express server running at http://localhost:${port}`);
+      console.log(`🦊 Express server running at http://localhost:${port}`);
     });
 
     ```
@@ -82,10 +114,13 @@ You can listen to these event on your server side and perform various actions ba
     **`meeting:started`**
     </summary>
 
-| Attributes | Type   |
-| ---------- | ------ |
-| roomId     | string |
-| createdAt  | number |
+```ts
+type MeetingStarted = {
+  sessionId: string;
+  roomId: string;
+  createdAt: number;
+};
+```
 
 </details>
 
@@ -94,14 +129,19 @@ You can listen to these event on your server side and perform various actions ba
     **`meeting:ended`**
     </summary>
 
-| Attributes      | Type   |
-| --------------- | ------ |
-| roomId          | string |
-| createdAt       | number |
-| endedAt         | number |
-| duration        | number |
-| participants    | number |
-| maxParticipants | number |
+```ts
+type MeetingEnded = {
+  sessionId: string;
+  roomId: string;
+  createdAt: number;
+  endedAt: number;
+  duration: number;
+  participants: number;
+  maxParticipants: number;
+  audioMinutes: number;
+  videoMinutes: number;
+};
+```
 
 </details>
 
@@ -110,29 +150,29 @@ You can listen to these event on your server side and perform various actions ba
     **`peer:joined`**
     </summary>
 
-| Attributes | Type    |
-| ---------- | ------- |
-| id         | string  |
-| roomId     | string  |
-| joinedAt   | number  |
-| metadata   | string? |
-| role       | string? |
-| browser    | Browser |
-| device     | Device  |
-
-**Browser**
-| Attributes | Type |
-| ---------- | ------- |
-| name | string? |
-| version | string? |
-
-**Device**
-
-| Attributes | Type    |
-| ---------- | ------- |
-| model      | string? |
-| type       | string? |
-| vendor     | string? |
+```ts
+type PeerJoined = {
+  id: string;
+  sessionId: string;
+  roomId: string;
+  joinedAt: number;
+  metadata?: string;
+  role?: string;
+  browser: {
+    name?: string;
+    version?: string;
+  };
+  geoData?: {
+    region: string;
+    country: string;
+  };
+  device: {
+    model?: string;
+    type?: string;
+    vendor?: string;
+  };
+};
+```
 
 </details>
 
@@ -141,38 +181,17 @@ You can listen to these event on your server side and perform various actions ba
     **`peer:left`**
     </summary>
 
-| Attributes | Type    |
-| ---------- | ------- |
-| id         | string  |
-| roomId     | string  |
-| leftAt     | number  |
-| duration   | number  |
-| metadata   | string? |
-| role       | string? |
-
-</details>
-
-<details>
-    <summary>
-    **`peer:trackPublished`**
-    </summary>
-
-| Attributes | Type   |
-| ---------- | ------ |
-| id         | string |
-| track      | string |
-
-</details>
-
-<details>
-    <summary>
-    **`peer:trackUnpublished`**
-    </summary>
-
-| Attributes | Type   |
-| ---------- | ------ |
-| id         | string |
-| track      | string |
+```ts
+type PeerLeft = {
+  id: string;
+  sessionId: string;
+  roomId: string;
+  leftAt: number;
+  duration: number;
+  metadata?: string;
+  role?: string;
+}
+```
 
 </details>
 
@@ -181,10 +200,27 @@ You can listen to these event on your server side and perform various actions ba
     **`recording:started`**
     </summary>
 
-| Attributes | Type   |
-| ---------- | ------ |
-| id         | string |
-| roomId     | string |
+```ts
+type Recording = {
+  id: string;
+  roomId: string;
+  sessionId: string;
+  files: {
+    duration: number;
+    size: number;
+    filename: string;
+    location: string;
+  }[];  // This array will be empty when we start the recording
+  streams: {
+    duration: number;
+    url: string;
+    startedAt: number;
+    endedAt: number;
+  }[];  // This array will be empty when we start the recording
+  cid?: string;
+  ipfsUrl?: string;
+};
+```
 
 </details>
 
@@ -193,9 +229,55 @@ You can listen to these event on your server side and perform various actions ba
     **`recording:stopped`**
     </summary>
 
-| Attributes | Type   |
-| ---------- | ------ |
-| id         | string |
-| roomId     | string |
+```ts
+type Recording = {
+  id: string;
+  roomId: string;
+  sessionId: string;
+  files: {
+    duration: number;  // Duration is in seconds
+    size: number;  // Size is in MB
+    filename: string;
+    location: string;
+  }[];
+  streams: {
+    duration: number;  // Duration is in seconds
+    url: string;
+    startedAt: number;
+    endedAt: number;
+  }[];
+  cid?: string;
+  ipfsUrl?: string;
+};
+```
+
+</details>
+
+<details>
+    <summary>
+    **`recording:updated`**
+    </summary>
+
+```ts
+type Recording = {
+  id: string;
+  roomId: string;
+  sessionId: string;
+  files: {
+    duration: number;  // Duration is in seconds
+    size: number;  // Size is in MB
+    filename: string;
+    location: string;
+  }[];
+  streams: {
+    duration: number;  // Duration is in seconds
+    url: string;  // rtmp url, where you streamed to
+    startedAt: number;
+    endedAt: number;
+  }[];
+  cid?: string;
+  ipfsUrl?: string;
+};
+```
 
 </details>
