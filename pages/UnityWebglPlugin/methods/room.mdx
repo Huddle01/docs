@@ -3,6 +3,7 @@ title: 'Room'
 ---
 
 import { Tab, Tabs } from 'nextra-theme-docs';
+import OptionTable from '@components/common/Table/OptionTable';
 
 # Room Methods
 
@@ -10,9 +11,25 @@ import { Tab, Tabs } from 'nextra-theme-docs';
 
 ## JoinRoom
 
-After initializing Huddle01 plugin, you can call join room function and subscribe to OnJoinRoom Event
+After initializing Huddle01 plugin, you can call JoinRoom function and subscribe to [`Huddle01Init.OnJoinRoom`](/UnityWebglPlugin/methods/room#joinroomeventhandler-onjoinroom) Event
 
-```csharp
+<OptionTable
+  headers={['Name', 'Type' ,'Description']}
+  options={[
+    [
+      'roomId',
+      'string',
+      'Id of room',
+    ],
+    [
+      'token',
+      'string',
+      'access token',
+    ]
+  ]}
+/>
+
+```csharp filename=".csharp"
 private void OnEnable()
 {
     Huddle01Init.OnJoinRoom += OnJoinRoom;
@@ -38,7 +55,7 @@ private void OnJoinRoom()
 
 Call Huddle01Init.Instance.LeaveRoom method to leave the current room
 
-```csharp
+```csharp filename=".csharp"
 public void LeaveRoom()
 {
     Huddle01Init.Instance.LeaveRoom();
@@ -48,9 +65,9 @@ public void LeaveRoom()
 
 ## RoomClosed
 
-Subscribe to Huddle01Init.RoomClosed event incase room is closed
+Subscribe to [`Huddle01Init.RoomClosed`](/UnityWebglPlugin/methods/room#huddle01initroomclosedeventhandler-roomclosed) event incase room is closed
 
-```csharp
+```csharp filename=".csharp"
 private void OnEnable()
 {
      Huddle01Init.RoomClosed += OnRoomClosed;
@@ -65,4 +82,12 @@ private void OnRoomClosed()
 {
     Debug.Log("Current room closed");
 }
+
 ```
+
+# Events
+## Huddle01Init.JoinRoomEventHandler OnJoinRoom
+This is called in room joined successfully
+
+## Huddle01Init.RoomClosedEventHandler RoomClosed
+This is called in room is closed successfully

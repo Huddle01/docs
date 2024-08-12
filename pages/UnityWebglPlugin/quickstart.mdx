@@ -31,7 +31,7 @@ Import the unitypackage file in your project include all the files mentioned in 
 
 To initialize the Huddle01, you need to call Huddle01Init.Instance.Init method
 
-```csharp
+```csharp filename=".csharp"
 using UnityEngine;
 using Huddle01;
 
@@ -49,7 +49,7 @@ public class AudioVideoMeet : MonoBehaviour
 
 After initializing Huddle01 plugin, you can call join room function and subscribe to OnJoinRoom Event
 
-```csharp
+```csharp filename=".csharp"
 private void OnEnable()
 {
     Huddle01Init.OnJoinRoom += OnJoinRoom;
@@ -77,42 +77,34 @@ private void OnJoinRoom()
 
 Methods:
 
-- Huddle01Init.Instance.JoinRoom(”Your_Room_ID”, “YOUR_ACCESS_TOKEN”);
-- Huddle01Init.Instance.LeaveRoom();
+- [`Huddle01Init.Instance.JoinRoom(”Your_Room_ID”, “YOUR_ACCESS_TOKEN”)`](/UnityWebglPlugin/methods/room#joinroom)
+- [`Huddle01Init.Instance.LeaveRoom()`](/UnityWebglPlugin/methods/room#leaveroom)
 
 Events:
 
-- Huddle01Init.Instance.OnJoinRoom();
-- Huddle01Init.Instance.OnRoomClosed()
+- [`Huddle01Init.Instance.OnJoinRoom()`](/UnityWebglPlugin/methods/room#huddle01initjoinroomeventhandler-onjoinroom)
+- [`Huddle01Init.Instance.OnRoomClosed()`](/UnityWebglPlugin/methods/room#huddle01initroomclosedeventhandler-roomclosed)
 
 ### LocalPeer
 
 Methods
 
-- Huddle01Init.Instance.UpdateLocalPeerMetaData(string metadataJson);
-- Huddle01Init.Instance.GetLocalPeerId();
-- MuteMic(shouldMute,PeerMetadata)
-- EnableVideo(enable,PeerMetadata)
+- [`Huddle01Init.Instance.UpdateLocalPeerMetaData(string metadataJson)`](/UnityWebglPlugin/methods/localPeer#updatelocalpeermetadatastring-metadata)
+- [`Huddle01Init.Instance.GetLocalPeerId()`](/UnityWebglPlugin/methods/localPeer#getlocalpeerid)
+- [`MuteMic(shouldMute,PeerMetadata)`](/UnityWebglPlugin/methods/localPeer#mutemicbool-shouldmute-peermetadata-metadata)
+- [`EnableVideo(enable,PeerMetadata)`](/UnityWebglPlugin/methods/localPeer#enablevideobool-enable-peermetadata-metadata)
 
 Events
 
-- Huddle01Init.LocalPeerIdEventHandler(peerId)
+- [`Huddle01Init.LocalPeerIdEventHandler(peerId)`](/UnityWebglPlugin/methods/localPeer#localpeeridstring-peerid)
 
 ### Remote Peer
 
 Events
 
-- PeerAddedEventHandler(peerInfo);
-- PeerLeftEventHandler(peerId);
-- PeerMutedEventHandler(muted)
-- PeerMetadataUpdatedEventHandler(PeerMetadata)
-- ResumePeerVideoEventHandler(peerId); // can be used for localpeer as well
-- StopPeerVideoEventHandler(peerId);// can be used for localpeer as well
-
-[Init Method](Huddle%20Unity%20Webgl%20plugin%20e8a647a5272e4f07a031b4059e4c68c2/Init%20Method%2046907ab60d534a5a87fea2c354b75873.md)
-
-[Room Methods](Huddle%20Unity%20Webgl%20plugin%20e8a647a5272e4f07a031b4059e4c68c2/Room%20Methods%20f63cacbf85344dc7a44ea9a507771500.md)
-
-[Local Peer Methods](Huddle%20Unity%20Webgl%20plugin%20e8a647a5272e4f07a031b4059e4c68c2/Local%20Peer%20Methods%2010a66583cee7494aad0b9648ed9f2745.md)
-
-[Remote Peer](Huddle%20Unity%20Webgl%20plugin%20e8a647a5272e4f07a031b4059e4c68c2/Remote%20Peer%20ecac7cd1ace64bfcb796b00d2694dc93.md)
+- [`PeerAddedEventHandler(peerInfo)`](/UnityWebglPlugin/methods/remotePeer#peeraddedeventhandlerstring-peerinfo)
+- [`PeerLeftEventHandler(peerId)`](/UnityWebglPlugin/methods/remotePeer#peerlefteventhandlerstring-peerid)
+- [`PeerMutedEventHandler(muted)`](/UnityWebglPlugin/methods/remotePeer#peermutedeventhandlerstring-peeridbool-muted)
+- [`PeerMetadataUpdatedEventHandler(PeerMetadata)`](/UnityWebglPlugin/methods/remotePeer#peermetadataupdatedeventhandlerstring-peermetadata)
+- [`ResumePeerVideoEventHandler(peerId)`](/UnityWebglPlugin/methods/remotePeer#resumepeervideoeventhandlerstring-peerid) // can be used for localpeer as well
+- [`StopPeerVideoEventHandler(peerId)`](/UnityWebglPlugin/methods/remotePeer#stoppeervideoeventhandlerstring-peerid) can be used for localpeer as well
