@@ -111,18 +111,7 @@ The API supports a **POST** request with the following required parameters:
 Upon success, the API will return a response with the following fields:
 
 - **`roomId`** - The room ID of the newly created room.
-- **`appData`** - The app data of the room.
-- **`title`** - The title of the room.
-- **`description`** - The description of the room.
-- **`startTime`** - The start time of the room.
-- **`endTime`** - The end time of the room.
-- **`hostWalletAddress`** - The host wallet address of the room.
-- **`tokenGatingInfo`** - The token gating information of the room.
 - **`roomLock`** - A boolean value indicating if the room is locked.
-- **`muteOnEntry`** - The mute on entry status of the room.
-- **`videoOnEntry	`** - The video on entry status of the room.
-- **`roomType`** - The type of the room, default is `VIDEO`.
-- **`roomSize`** - The size of the room, default is `NORMAL`.
 
 In case of an error, the API will return an error message with a corresponding status code.
 
@@ -135,31 +124,7 @@ In case of an error, the API will return an error message with a corresponding s
 {
     {
       "roomId": "emo-orrj-uvh",
-      "appData": null,
-      "title": "Test Meeting",
-      "description": null,
-      "meetingLink": "https://app.huddle01.com/emo-orrj-uvh",
-      "startTime": null,
-      "expiryTime": null,
-      "videoOnEntry": false,
-      "muteOnEntry": false,
       "roomLocked": false,
-      "hostWalletAddress": []
-      "tokenGatingInfo": {
-        "id": "TOKEN_GATING_ID",
-        "tokenGatingConditions": [
-          {
-            "id": "TOKEN_GATING_CONDITIONS_ID",
-            "tokenType": "TOKEN_TYPE",
-            "chain": "CHAIN",
-            "contractAddress": "CONTRACT_ADDRESS",
-            "conditionType": null,
-            "conditionValue": null,
-          }
-        ]
-      },
-      "roomType": "VIDEO | AUDIO",
-      "roomSize": "NORMAL | LARGE"
     }
 }
 ````

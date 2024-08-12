@@ -7,7 +7,7 @@
     }
   },
   "create-room": {
-    "title": "Create Room APIs",
+    "title": "Create Room",
     "theme": {
       "layout": "full",
       "toc": false
