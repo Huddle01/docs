@@ -1,26 +1,21 @@
 ---
-title: 'Remote Peer'
+title: "Remote Peer"
 ---
 
-import { Tab, Tabs } from 'nextra-theme-docs';
-import OptionTable from '@components/common/Table/OptionTable';
+import { Tab, Tabs } from "nextra-theme-docs";
+import OptionTable from "@components/common/Table/OptionTable";
 
 # Remote Peer
 
-# Methods
+## Methods
 
 ### StartConsumerPeer(string peerId);
 
 Call this function to consume individual peer. This function will invoke Event [`Huddle01Init.OnStartConsumingPeer`](/UnityWebglPlugin/methods/remotePeer#startconsumingpeereventhandlerstring-peerid) once the process is successfully done
+
 <OptionTable
-  headers={['Name', 'Type' ,'Description']}
-  options={[
-    [
-      'peerId',
-      'string',
-      'remote peer id',
-    ]
-  ]}
+  headers={["Name", "Type", "Description"]}
+  options={[["peerId", "string", "remote peer id"]]}
 />
 
 ```csharp filename=".csharp"
@@ -31,17 +26,12 @@ public void ConsumePeer(string peerId)
 ```
 
 ### StopConsumePeer(string peerId,string label);
+
 Call this function to stop consuming individual peer.This function will invoke Event [`Huddle01Init.OnStopConsumingPeer`](/UnityWebglPlugin/methods/remotePeer#stopconsumingpeereventhandlerstring-peerid) once the process is successfully done
 
 <OptionTable
-  headers={['Name', 'Type' ,'Description']}
-  options={[
-    [
-      'peerId',
-      'string',
-      'remote peer id',
-    ],
-  ]}
+  headers={["Name", "Type", "Description"]}
+  options={[["peerId", "string", "remote peer id"]]}
 />
 
 ```csharp filename=".csharp"
@@ -51,94 +41,72 @@ public void StopConsumePeer(string peerId)
 }
 ```
 
-# Events
+## Events
 
 ### PeerAddedEventHandler(string peerInfo);
 
 This is called when any peer is added in the current room. Subscribe to get the notification
+
 <OptionTable
-  headers={['Name', 'Type' ,'Description']}
-  options={[
-    [
-      'peerInfo',
-      'string',
-      'remote peer id',
-    ]
-  ]}
+  headers={["Name", "Type", "Description"]}
+  options={[["peerInfo", "string", "remote peer id"]]}
 />
 
 ### PeerLeftEventHandler(string peerId);
 
 This is called when any peer left current room. Subscribe to get the notification
+
 <OptionTable
-  headers={['Name', 'Type' ,'Description']}
-  options={[
-    [
-      'peerId',
-      'string',
-      'remote peer id',
-    ]
-  ]}
+  headers={["Name", "Type", "Description"]}
+  options={[["peerId", "string", "remote peer id"]]}
 />
 
 ### PeerMutedEventHandler(string peerId,bool muted)
 
 This is called when any peer changed the mute status. Subscribe to get the notification
+
 <OptionTable
-  headers={['Name', 'Type' ,'Description']}
+  headers={["Name", "Type", "Description"]}
   options={[
-    [
-      'peerId',
-      'string',
-      'remote peer id',
-    ],
-    [
-      'muted',
-      'bool',
-      'mute status of peer',
-    ]
+    ["peerId", "string", "remote peer id"],
+    ["muted", "bool", "mute status of peer"],
   ]}
 />
 
 ### PeerMetadataUpdatedEventHandler(string peerMetadata)
 
 This is called when any peer update its metadata. Subscribe to get the notification
+
 <OptionTable
-  headers={['Name', 'Type' ,'Description']}
+  headers={["Name", "Type", "Description"]}
   options={[
     [
-      'peerMetadata',
-      'string',
-      'remote peer meta data. Peerid is a part od metadata',
-    ]
+      "peerMetadata",
+      "string",
+      "remote peer meta data. Peerid is a part od metadata",
+    ],
   ]}
 />
 
 ### ResumePeerVideoEventHandler(string peerId);
 
 This is called when any peer resume its video. Subscribe to get the notification
+
 <OptionTable
-  headers={['Name', 'Type' ,'Description']}
+  headers={["Name", "Type", "Description"]}
   options={[
-    [
-      'peerId',
-      'string',
-      'peer id. it can be of both local or remote peer',
-    ]
+    ["peerId", "string", "peer id. it can be of both local or remote peer"],
   ]}
 />
 
 ### StopPeerVideoEventHandler(string peerId)
 
 This is called when any peer stops its video. Subscribe to get the notification
+
 <OptionTable
-  headers={['Name', 'Type' ,'Description']}
+  headers={["Name", "Type", "Description"]}
   options={[
-    [
-      'peerId',
-      'string',
-      'peer id. it can be of both local or remote peer',
-    ]
+    ["peerId", "string", "peer id. it can be of both local or remote peer"],
   ]}
 />
 
@@ -147,31 +115,19 @@ This is called when any peer stops its video. Subscribe to get the notification
 This is invoked then plugin starts consuming peer
 
 <OptionTable
-  headers={['Name', 'Type' ,'Description']}
-  options={[
-    [
-      'peerId',
-      'string',
-      'peer id',
-    ]
-  ]}
+  headers={["Name", "Type", "Description"]}
+  options={[["peerId", "string", "peer id"]]}
 />
 ### StopConsumingPeerEventHandler(string peerId)
 
 This is invoked then plugin stops consuming peer
+
 <OptionTable
-  headers={['Name', 'Type' ,'Description']}
-  options={[
-    [
-      'peerId',
-      'string',
-      'peer id',
-    ]
-  ]}
+  headers={["Name", "Type", "Description"]}
+  options={[["peerId", "string", "peer id"]]}
 />
 
-
-code example 
+code example
 
 ```csharp filename=".csharp"
 private void OnEnable()

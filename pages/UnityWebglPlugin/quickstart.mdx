@@ -1,17 +1,17 @@
 ---
-title: 'Quickstart'
+title: "Quickstart"
 ---
 
-import { Tab, Tabs } from 'nextra-theme-docs';
+import { Tab, Tabs } from "nextra-theme-docs";
 import Image from "next/image";
 
 # Huddle Unity Webgl plugin
 
 The Huddle Unity WebGL Plugin SDK provides a process and method for seamless integration of real-time audio and video in Unity
 
-# **QuickStart**
+## **QuickStart**
 
-# Installing the package
+### Installing the package
 
 To get started with the Huddle01 Unity Webgl Plugin, you can download the unitypackage from here
 
@@ -27,7 +27,7 @@ Import the unitypackage file in your project include all the files mentioned in 
   className="my-8"
 />
 
-# **Initializing** Huddle01
+### **Initializing** Huddle01
 
 To initialize the Huddle01, you need to call Huddle01Init.Instance.Init method
 
@@ -45,7 +45,7 @@ public class AudioVideoMeet : MonoBehaviour
 }
 ```
 
-## Join Room
+### Join Room
 
 After initializing Huddle01 plugin, you can call join room function and subscribe to OnJoinRoom Event
 
@@ -57,7 +57,7 @@ private void OnEnable()
 
 private void OnDisable()
 {
-    Huddle01Init.OnJoinRoom -= OnJoinRoom;  
+    Huddle01Init.OnJoinRoom -= OnJoinRoom;
 }
 
 public void JoinRoom(string roomId,string token)
