@@ -4,14 +4,7 @@ title: "Webhooks"
 
 import { Callout } from "nextra-theme-docs";
 
-## Web Hooks
-
-{" "}
-
-<Callout>
-  Reachout to the Huddle01 Team to set your webhook URL for your subdomain,
-  you'll be able to set it up from the dashboard soon.
-</Callout>
+## Webhooks
 
 ### Usage:
 
@@ -23,7 +16,7 @@ const webhookReceiver = new WebhookReceiver({
   apiKey: "YOUR_API_KEY",
 });
 
-// validate body using the receive func
+// verify and validate webhook data using the receive func
 const receivedData = receiver.receive(req.body, header); 
 
 // get properly typed data in typescript
@@ -280,4 +273,67 @@ type Recording = {
 };
 ```
 
+</details>
+
+### How to manually verify and validate webhooks
+
+
+This code ensures the messages from Huddle01 are genuine - like a secret handshake. It checks if the signature matches what we expect, using your unique key. This way, you know it's really Huddle01 contacting you. We use the received header and your API key to verify the payload's integrity. By hashing the payload with a timestamp, we protect against tampering and replay attacks. The same concept can be carried to any other language. If you are using any other language and facing difficulty, please let us know.
+
+<details>
+  <summary>
+    Example
+  </summary>
+
+```ts
+import crypto from "node:crypto"
+
+const verifyWebhook = (body: any, header?: string | null) => {
+  // Huddle01-Signature: t=36285904404,sha256=88f3ff0fds9sf8a98vb0b096e81507cfd5c932fc17cf63a4a55566fd38da3a2d3d2
+  const timestamp = header?.split(",")[0]?.split("=")?.[1];
+  const signature = header?.split(",")[1];
+
+  if (!timestamp || !signature) throw new Error("Invalid headers");
+
+  let data: Record<any, any>;
+
+  if (typeof body === "string") data = JSON.parse(body);
+  else if (typeof body === "object") data = body;
+  else throw new Error("Invalid body");
+
+  if (!data.id) throw new Error("Invalid body");
+
+  // Tolerance zone: 5 minutes ago
+  const tolerance = Date.now() - 5 * 60 * 1000;
+
+  if (Number(timestamp) < tolerance) {
+    // The request timestamp is outside of the tolerance zone.
+    throw new Error("Request expired");
+  }
+
+  const hashPayload = `${data.id}.${timestamp}.${JSON.stringify(data)}`;
+
+  const signatureAlgorithm = signature.split("=")[0];
+
+  if (!signatureAlgorithm) throw new Error("Invalid signature algorithm");
+
+  const hmac = crypto.createHmac(signatureAlgorithm, "YOUR_API_KEY");
+
+  const digest = Buffer.from(
+    `${signatureAlgorithm}=${hmac.update(hashPayload).digest("hex")}`,
+    "utf8",
+  );
+
+  const providerSig = Buffer.from(signature, "utf8");
+
+  if (
+    providerSig.length !== digest.length ||
+    !crypto.timingSafeEqual(digest, providerSig)
+  ) {
+    throw new Error("Invalid signature");
+  }
+
+  return data;
+};
+```
 </details>
