@@ -11,7 +11,7 @@ import OptionTable from "@components/common/Table/OptionTable";
 
 ### StartConsumerPeer(string peerId);
 
-Call this function to consume individual peer. This function will invoke Event [`Huddle01Init.OnStartConsumingPeer`](/UnityWebglPlugin/methods/remotePeer#startconsumingpeereventhandlerstring-peerid) once the process is successfully done
+Call this function to consume individual peer. This function will invoke Event [`Huddle01Core.OnStartConsumingPeer`](/UnityWebglPlugin/methods/remotePeer#startconsumingpeereventhandlerstring-peerid) once the process is successfully done
 
 <OptionTable
   headers={["Name", "Type", "Description"]}
@@ -21,13 +21,13 @@ Call this function to consume individual peer. This function will invoke Event [
 ```csharp filename=".csharp"
 public void ConsumePeer(string peerId)
 {
-    Huddle01Init.Instance.StartConsumerPeer(peerId);
+    Huddle01Core.Instance.StartConsumerPeer(peerId);
 }
 ```
 
 ### StopConsumePeer(string peerId,string label);
 
-Call this function to stop consuming individual peer.This function will invoke Event [`Huddle01Init.OnStopConsumingPeer`](/UnityWebglPlugin/methods/remotePeer#stopconsumingpeereventhandlerstring-peerid) once the process is successfully done
+Call this function to stop consuming individual peer.This function will invoke Event [`Huddle01Core.OnStopConsumingPeer`](/UnityWebglPlugin/methods/remotePeer#stopconsumingpeereventhandlerstring-peerid) once the process is successfully done
 
 <OptionTable
   headers={["Name", "Type", "Description"]}
@@ -37,33 +37,33 @@ Call this function to stop consuming individual peer.This function will invoke E
 ```csharp filename=".csharp"
 public void StopConsumePeer(string peerId)
 {
-    Huddle01Init.Instance.StopConsumeingPeer(roomId);
+    Huddle01Core.Instance.StopConsumeingPeer(roomId);
 }
 ```
 
 ## Events
 
-### PeerAddedEventHandler(string peerInfo);
+### Huddle01Core.PeerAddedEventHandler(string peerInfo);
 
-This is called when any peer is added in the current room. Subscribe to get the notification
+This is called when any peer is added in the current room. Subscribe to this event to get the notification
 
 <OptionTable
   headers={["Name", "Type", "Description"]}
   options={[["peerInfo", "string", "remote peer id"]]}
 />
 
-### PeerLeftEventHandler(string peerId);
+### Huddle01Core.PeerLeftEventHandler(string peerId);
 
-This is called when any peer left current room. Subscribe to get the notification
+This is called when any peer left current room. Subscribe to this event to get the notification
 
 <OptionTable
   headers={["Name", "Type", "Description"]}
   options={[["peerId", "string", "remote peer id"]]}
 />
 
-### PeerMutedEventHandler(string peerId,bool muted)
+### Huddle01Core.PeerMutedEventHandler(string peerId,bool muted)
 
-This is called when any peer changed the mute status. Subscribe to get the notification
+This is called when any peer changed the mute status. Subscribe to this event to get the notification
 
 <OptionTable
   headers={["Name", "Type", "Description"]}
@@ -73,9 +73,9 @@ This is called when any peer changed the mute status. Subscribe to get the notif
   ]}
 />
 
-### PeerMetadataUpdatedEventHandler(string peerMetadata)
+### Huddle01Core.PeerMetadataUpdatedEventHandler(string peerMetadata)
 
-This is called when any peer update its metadata. Subscribe to get the notification
+This is called when any peer update its metadata. Subscribe to this event to get the notification
 
 <OptionTable
   headers={["Name", "Type", "Description"]}
@@ -88,20 +88,9 @@ This is called when any peer update its metadata. Subscribe to get the notificat
   ]}
 />
 
-### ResumePeerVideoEventHandler(string peerId);
+### Huddle01Core.ResumePeerVideoEventHandler(string peerId);
 
-This is called when any peer resume its video. Subscribe to get the notification
-
-<OptionTable
-  headers={["Name", "Type", "Description"]}
-  options={[
-    ["peerId", "string", "peer id. it can be of both local or remote peer"],
-  ]}
-/>
-
-### StopPeerVideoEventHandler(string peerId)
-
-This is called when any peer stops its video. Subscribe to get the notification
+This is called when any peer resume its video. Subscribe to this event get the notification
 
 <OptionTable
   headers={["Name", "Type", "Description"]}
@@ -110,7 +99,18 @@ This is called when any peer stops its video. Subscribe to get the notification
   ]}
 />
 
-### StartConsumingPeerEventHandler(string peerId)
+### Huddle01Core.StopPeerVideoEventHandler(string peerId)
+
+This is called when any peer stops its video. Subscribe to this event to get the notification
+
+<OptionTable
+  headers={["Name", "Type", "Description"]}
+  options={[
+    ["peerId", "string", "peer id. it can be of both local or remote peer"],
+  ]}
+/>
+
+### Huddle01Core.StartConsumingPeerEventHandler(string peerId)
 
 This is invoked then plugin starts consuming peer
 
@@ -118,7 +118,7 @@ This is invoked then plugin starts consuming peer
   headers={["Name", "Type", "Description"]}
   options={[["peerId", "string", "peer id"]]}
 />
-### StopConsumingPeerEventHandler(string peerId)
+### Huddle01Core.StopConsumingPeerEventHandler(string peerId)
 
 This is invoked then plugin stops consuming peer
 
@@ -132,26 +132,26 @@ code example
 ```csharp filename=".csharp"
 private void OnEnable()
 {
-    Huddle01Init.PeerAdded += OnPeerJoined;
-    Huddle01Init.PeerLeft += OnPeerLeft;
-    Huddle01Init.PeerMuted += OnPeerMuted;
-    Huddle01Init.PeerMetadata += OnPeerMetaDataUpdated;
-    Huddle01Init.OnResumePeerVideo += OnPeerVideoResume;
-    Huddle01Init.OnStopPeerVideo += OnPeerVideoStop;
-    Huddle01Init.OnStartConsumingPeer += OnPeerVideoStop;
-    Huddle01Init.OnStopConsumingPeer += OnPeerVideoStop;
+    Huddle01Core.PeerAdded += OnPeerJoined;
+    Huddle01Core.PeerLeft += OnPeerLeft;
+    Huddle01Core.PeerMuted += OnPeerMuted;
+    Huddle01Core.PeerMetadata += OnPeerMetaDataUpdated;
+    Huddle01Core.OnResumePeerVideo += OnPeerVideoResume;
+    Huddle01Core.OnStopPeerVideo += OnPeerVideoStop;
+    Huddle01Core.OnStartConsumingPeer += OnPeerVideoStop;
+    Huddle01Core.OnStopConsumingPeer += OnPeerVideoStop;
 }
 
 private void OnDisable()
 {
-    Huddle01Init.PeerAdded -= OnPeerJoined;
-    Huddle01Init.PeerLeft -= OnPeerLeft;
-    Huddle01Init.PeerMuted -= OnPeerMuted;
-    Huddle01Init.PeerMetadata -= OnPeerMetaDataUpdated;
-    Huddle01Init.OnResumePeerVideo -= OnPeerVideoResume;
-    Huddle01Init.OnStopPeerVideo -= OnPeerVideoStop;
-    Huddle01Init.OnStartConsumingPeer -= OnPeerVideoStop;
-    Huddle01Init.OnStopConsumingPeer -= OnPeerVideoStop;
+    Huddle01Core.PeerAdded -= OnPeerJoined;
+    Huddle01Core.PeerLeft -= OnPeerLeft;
+    Huddle01Core.PeerMuted -= OnPeerMuted;
+    Huddle01Core.PeerMetadata -= OnPeerMetaDataUpdated;
+    Huddle01Core.OnResumePeerVideo -= OnPeerVideoResume;
+    Huddle01Core.OnStopPeerVideo -= OnPeerVideoStop;
+    Huddle01Core.OnStartConsumingPeer -= OnPeerVideoStop;
+    Huddle01Core.OnStopConsumingPeer -= OnPeerVideoStop;
 }
 
 private void OnPeerMuted(string peerId)

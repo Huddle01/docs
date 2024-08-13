@@ -13,7 +13,7 @@ The Huddle Unity WebGL Plugin SDK provides a process and method for seamless int
 
 ### Installing the package
 
-To get started with the Huddle01 Unity Webgl Plugin, you can download the unitypackage from here
+To get started with the Huddle01 Unity Webgl Plugin, you can download the latest unitypackage from [`here`](https://github.com/Huddle01/UnityWebglPlugin/releases)
 
 Import the unitypackage file in your project include all the files mentioned in below image:
 
@@ -29,7 +29,7 @@ Import the unitypackage file in your project include all the files mentioned in 
 
 ### **Initializing** Huddle01
 
-To initialize the Huddle01, you need to call Huddle01Init.Instance.Init method
+To initialize the Huddle01, you need to call Huddle01Core.Instance.Init method
 
 ```csharp filename=".csharp"
 using UnityEngine;
@@ -39,7 +39,7 @@ public class AudioVideoMeet : MonoBehaviour
 {
 		void Start()
     {
-        Huddle01Init.Instance.Init("Your_project_id");
+        Huddle01Core.Instance.Init("Your_project_id");
         Debug.Log("Huddle01 Initiated");
     }
 }
@@ -52,17 +52,17 @@ After initializing Huddle01 plugin, you can call join room function and subscrib
 ```csharp filename=".csharp"
 private void OnEnable()
 {
-    Huddle01Init.OnJoinRoom += OnJoinRoom;
+    Huddle01Core.OnJoinRoom += OnJoinRoom;
 }
 
 private void OnDisable()
 {
-    Huddle01Init.OnJoinRoom -= OnJoinRoom;
+    Huddle01Core.OnJoinRoom -= OnJoinRoom;
 }
 
 public void JoinRoom(string roomId,string token)
 {
-    Huddle01Init.Instance.JoinRoom(roomId, token);
+    Huddle01Core.Instance.JoinRoom(roomId, token);
 }
 
 private void OnJoinRoom()
@@ -77,26 +77,26 @@ private void OnJoinRoom()
 
 Methods:
 
-- [`Huddle01Init.Instance.JoinRoom(”Your_Room_ID”, “YOUR_ACCESS_TOKEN”)`](/UnityWebglPlugin/methods/room#joinroom)
-- [`Huddle01Init.Instance.LeaveRoom()`](/UnityWebglPlugin/methods/room#leaveroom)
+- [`Huddle01Core.Instance.JoinRoom(”Your_Room_ID”, “YOUR_ACCESS_TOKEN”)`](/UnityWebglPlugin/methods/room#joinroom)
+- [`Huddle01Core.Instance.LeaveRoom()`](/UnityWebglPlugin/methods/room#leaveroom)
 
 Events:
 
-- [`Huddle01Init.Instance.OnJoinRoom()`](/UnityWebglPlugin/methods/room#huddle01initjoinroomeventhandler-onjoinroom)
-- [`Huddle01Init.Instance.OnRoomClosed()`](/UnityWebglPlugin/methods/room#huddle01initroomclosedeventhandler-roomclosed)
+- [`Huddle01Core.Instance.OnJoinRoom()`](/UnityWebglPlugin/methods/room#Huddle01Corejoinroomeventhandler-onjoinroom)
+- [`Huddle01Core.Instance.OnRoomClosed()`](/UnityWebglPlugin/methods/room#Huddle01Coreroomclosedeventhandler-roomclosed)
 
 ### LocalPeer
 
 Methods
 
-- [`Huddle01Init.Instance.UpdateLocalPeerMetaData(string metadataJson)`](/UnityWebglPlugin/methods/localPeer#updatelocalpeermetadatastring-metadata)
-- [`Huddle01Init.Instance.GetLocalPeerId()`](/UnityWebglPlugin/methods/localPeer#getlocalpeerid)
+- [`Huddle01Core.Instance.UpdateLocalPeerMetaData(string metadataJson)`](/UnityWebglPlugin/methods/localPeer#updatelocalpeermetadatastring-metadata)
+- [`Huddle01Core.Instance.GetLocalPeerId()`](/UnityWebglPlugin/methods/localPeer#getlocalpeerid)
 - [`MuteMic(shouldMute,PeerMetadata)`](/UnityWebglPlugin/methods/localPeer#mutemicbool-shouldmute-peermetadata-metadata)
 - [`EnableVideo(enable,PeerMetadata)`](/UnityWebglPlugin/methods/localPeer#enablevideobool-enable-peermetadata-metadata)
 
 Events
 
-- [`Huddle01Init.LocalPeerIdEventHandler(peerId)`](/UnityWebglPlugin/methods/localPeer#localpeeridstring-peerid)
+- [`Huddle01Core.LocalPeerIdEventHandler(peerId)`](/UnityWebglPlugin/methods/localPeer#localpeeridstring-peerid)
 
 ### Remote Peer
 
