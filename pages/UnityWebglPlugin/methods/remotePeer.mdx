@@ -5,192 +5,95 @@ title: "Remote Peer"
 import { Tab, Tabs } from "nextra-theme-docs";
 import OptionTable from "@components/common/Table/OptionTable";
 
-# Remote Peer
+## Remote Peer
 
-## Methods
+### Huddle01Core.PeerAdded(string peerInfo);
 
-### StartConsumerPeer(string peerId);
+This event gets invoked when any peer is added in the current room. Subscribe to this event to get the notification
 
-Call this function to consume individual peer. This function will invoke Event [`Huddle01Core.OnStartConsumingPeer`](/UnityWebglPlugin/methods/remotePeer#startconsumingpeereventhandlerstring-peerid) once the process is successfully done
-
+**Parameters**
 <OptionTable
-  headers={["Name", "Type", "Description"]}
-  options={[["peerId", "string", "remote peer id"]]}
+  headers={["Param", "Type", "Description"]}
+  options={[["peerInfo", "string", "The peer ID of the Remote Peer who has joined the room"]]}
 />
-
-```csharp filename=".csharp"
-public void ConsumePeer(string peerId)
-{
-    Huddle01Core.Instance.StartConsumerPeer(peerId);
-}
-```
-
-### StopConsumePeer(string peerId,string label);
-
-Call this function to stop consuming individual peer.This function will invoke Event [`Huddle01Core.OnStopConsumingPeer`](/UnityWebglPlugin/methods/remotePeer#stopconsumingpeereventhandlerstring-peerid) once the process is successfully done
-
-<OptionTable
-  headers={["Name", "Type", "Description"]}
-  options={[["peerId", "string", "remote peer id"]]}
-/>
-
-```csharp filename=".csharp"
-public void StopConsumePeer(string peerId)
-{
-    Huddle01Core.Instance.StopConsumeingPeer(roomId);
-}
-```
-
-## Events
-
-### Huddle01Core.PeerAddedEventHandler(string peerInfo);
-
-This is called when any peer is added in the current room. Subscribe to this event to get the notification
-
-<OptionTable
-  headers={["Name", "Type", "Description"]}
-  options={[["peerInfo", "string", "remote peer id"]]}
-/>
-
-### Huddle01Core.PeerLeftEventHandler(string peerId);
-
-This is called when any peer left current room. Subscribe to this event to get the notification
-
-<OptionTable
-  headers={["Name", "Type", "Description"]}
-  options={[["peerId", "string", "remote peer id"]]}
-/>
-
-### Huddle01Core.PeerMutedEventHandler(string peerId,bool muted)
-
-This is called when any peer changed the mute status. Subscribe to this event to get the notification
-
-<OptionTable
-  headers={["Name", "Type", "Description"]}
-  options={[
-    ["peerId", "string", "remote peer id"],
-    ["muted", "bool", "mute status of peer"],
-  ]}
-/>
-
-### Huddle01Core.PeerMetadataUpdatedEventHandler(string peerMetadata)
-
-This is called when any peer update its metadata. Subscribe to this event to get the notification
-
-<OptionTable
-  headers={["Name", "Type", "Description"]}
-  options={[
-    [
-      "peerMetadata",
-      "string",
-      "remote peer meta data. Peerid is a part od metadata",
-    ],
-  ]}
-/>
-
-### Huddle01Core.ResumePeerVideoEventHandler(string peerId);
-
-This is called when any peer resume its video. Subscribe to this event get the notification
-
-<OptionTable
-  headers={["Name", "Type", "Description"]}
-  options={[
-    ["peerId", "string", "peer id. it can be of both local or remote peer"],
-  ]}
-/>
-
-### Huddle01Core.StopPeerVideoEventHandler(string peerId)
-
-This is called when any peer stops its video. Subscribe to this event to get the notification
-
-<OptionTable
-  headers={["Name", "Type", "Description"]}
-  options={[
-    ["peerId", "string", "peer id. it can be of both local or remote peer"],
-  ]}
-/>
-
-### Huddle01Core.StartConsumingPeerEventHandler(string peerId)
-
-This is invoked then plugin starts consuming peer
-
-<OptionTable
-  headers={["Name", "Type", "Description"]}
-  options={[["peerId", "string", "peer id"]]}
-/>
-### Huddle01Core.StopConsumingPeerEventHandler(string peerId)
-
-This is invoked then plugin stops consuming peer
-
-<OptionTable
-  headers={["Name", "Type", "Description"]}
-  options={[["peerId", "string", "peer id"]]}
-/>
-
-code example
 
 ```csharp filename=".csharp"
 private void OnEnable()
 {
     Huddle01Core.PeerAdded += OnPeerJoined;
-    Huddle01Core.PeerLeft += OnPeerLeft;
-    Huddle01Core.PeerMuted += OnPeerMuted;
-    Huddle01Core.PeerMetadata += OnPeerMetaDataUpdated;
-    Huddle01Core.OnResumePeerVideo += OnPeerVideoResume;
-    Huddle01Core.OnStopPeerVideo += OnPeerVideoStop;
-    Huddle01Core.OnStartConsumingPeer += OnPeerVideoStop;
-    Huddle01Core.OnStopConsumingPeer += OnPeerVideoStop;
-}
+}    
 
 private void OnDisable()
 {
     Huddle01Core.PeerAdded -= OnPeerJoined;
-    Huddle01Core.PeerLeft -= OnPeerLeft;
-    Huddle01Core.PeerMuted -= OnPeerMuted;
-    Huddle01Core.PeerMetadata -= OnPeerMetaDataUpdated;
-    Huddle01Core.OnResumePeerVideo -= OnPeerVideoResume;
-    Huddle01Core.OnStopPeerVideo -= OnPeerVideoStop;
-    Huddle01Core.OnStartConsumingPeer -= OnPeerVideoStop;
-    Huddle01Core.OnStopConsumingPeer -= OnPeerVideoStop;
-}
-
-private void OnPeerMuted(string peerId)
-{
-    Debug.Log($"OnPeerMuted: {peerInfo}");
-}
-
-private void OnPeerLeft(string peerInfo)
-{
-    Debug.Log($"OnPeerLeft : {peerInfo}");
 }
 
 private void OnPeerJoined(string peerId)
 {
-    Debug.Log($"OnPeerJoined : {peerId}");
+    Debug.Log($"Peer Joined : {peerId}");
+}
+
+```
+
+
+### Huddle01Core.PeerLeft(string peerId);
+
+This is called when any peer left current room. Subscribe to this event to get the notification
+
+**Parameters**
+<OptionTable
+  headers={["Param", "Type", "Description"]}
+  options={[["peerId", "string", "The peer ID of the Remote Peer who has left the room"]]}
+/>
+
+```csharp filename=".csharp"
+private void OnEnable()
+{
+    Huddle01Core.PeerLeft += OnPeerLeft;
+}    
+
+private void OnDisable()
+{
+    Huddle01Core.PeerLeft -= OnPeerLeft;
+}
+
+private void OnPeerLeft(string peerId)
+{
+    Debug.Log($"Peer left : {peerId}");
+}
+
+```
+
+### Huddle01Core.PeerMetadata(string peerMetadata)
+
+This is called when any peer in the room update its metadata. Subscribe to this event to get the notification
+
+**Parameters**
+<OptionTable
+  headers={["Param", "Type", "Description"]}
+  options={[
+    [
+      "peerMetadata",
+      "string",
+      "The peer ID of the Remote Peer who has updated the metadata. Peerid is a part od metadata",
+    ],
+  ]}
+/>
+
+```csharp filename=".csharp"
+private void OnEnable()
+{
+    Huddle01Core.PeerMetadata += OnPeerMetaDataUpdated;
+}    
+
+private void OnDisable()
+{
+    Huddle01Core.PeerMetadata -= OnPeerMetaDataUpdated;
 }
 
 private void OnPeerMetaDataUpdated(PeerMetadata peerInfo)
 {
-    Debug.Log($"OnPeerMetaDataUpdated: {peerInfo}");
+    Debug.Log($"OnPeerMetaDataUpdated : {peerInfo.PeerId}");
 }
 
-private void OnPeerVideoStop(string peerId)
-{
-   Debug.Log($"OnPeerVideoStop: {peerId}");
-}
-
-private void OnPeerVideoResume(string peerId)
-{
-    Debug.Log($"OnPeerVideoResume: {peerId}");
-}
-
-private void OnStartConsumingPeer(string peerId)
-{
-    Debug.Log($"OnStartConsumingPeer: {peerId}");
-}
-
-private void OnStopConsumingPeer(string peerId)
-{
-    Debug.Log($"OnStopConsumingPeer: {peerId}");
-}
 ```

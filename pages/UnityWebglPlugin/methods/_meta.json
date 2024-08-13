@@ -2,6 +2,10 @@
     "init": "Init",
     "localPeer": "Local Peer",
     "remotePeer": "Remote Peer",
-    "room": "Room"
+    "room": "Room",
+    "audio":"Audio",
+    "video":"Video",
+    "sendMessage":"Send Message",
+    "consume" : "Consume"
   }
   

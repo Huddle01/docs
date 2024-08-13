@@ -1,0 +1,66 @@
+---
+title: "Send Message"
+---
+
+
+import OptionTable from "@components/common/Table/OptionTable";
+import { Callout } from "nextra-theme-docs";
+
+### SendTextMessage(string message)
+
+Call this function to send any message to room. All the peers which are present in the room will receive the message
+
+```csharp filename=".csharp"
+public void SendMessageToRoom()
+{
+    Huddle01Core.Instance.SendTextMessage(<string to send>);
+}
+
+```
+
+### HuddleCore.OnMessageReceived
+
+Subscribe to this event to receive message send by any peer in the room.
+
+**Parameters**
+
+<OptionTable
+  headers={["Params", "Type", "Description"]}
+  options={[
+    ["message", "string", "message in form of json which can be Deserialized into `MessageReceivedResponse`"]
+    ]}
+/>
+
+```csharp filename=".csharp"
+
+private void OnEnable()
+{
+    Huddle01Core.OnMessageReceived += OnMessageReceived;
+}    
+
+private void OnDisable()
+{
+    Huddle01Core.OnMessageReceived -= OnMessageReceived;
+}
+
+private void OnMessageReceived(string data)
+{
+    Debug.Log($"received data : {data}");
+    MessageReceivedResponse response = JsonConvert.DeserializeObject<MessageReceivedResponse>(data);
+}
+
+
+[System.Serializable]
+public class MessageReceivedResponse 
+{
+    [JsonProperty("from")]
+    public string From;
+
+    [JsonProperty("label")]
+    public string Label;
+
+    [JsonProperty("payload")]
+    public string Payload;
+}
+
+```
