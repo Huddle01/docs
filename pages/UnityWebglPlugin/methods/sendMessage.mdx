@@ -8,26 +8,32 @@ import { Callout } from "nextra-theme-docs";
 
 ### SendData(string message)
 
-Call this function to send any string data or message to all peers in the room. All the peers which are present in the room will receive the message
+Call this function to send any string data either to specific peer or all peer in the room.
+Pass "*" to send data to all peers in the room or peerId to specific peer in the room
 
 **Parameters**
 
 <OptionTable
   headers={["Params", "Type", "Description"]}
   options={[
-    ["data", "string", "Any data or message in form of string"]
+    ["to", "string", 'peer ID or "*" for all peers.'],
+    ["data", "string", "Any data or message in form of string"],
+    ["label", "string", "The label of the data message."]
     ]}
 />
 
+**Example**
+
 ```csharp filename=".csharp"
-public void SendDataToAllPeersInRoom(string data)
-{
-    Huddle01Core.Instance.SendData(data);
-}
+//Send data to all peers in the room
+Huddle01Core.Instance.SendData("*",data,label);
+
+//Send data to peer in a room
+Huddle01Core.Instance.SendData(<peerId>,data,label);
 
 ```
 
-### SendData(string data,List&lt;string&gt; peerIds)
+### SendData(List&lt;string&gt; peerIds,string data, string label)
 
 Call this function to send any string data or message selected peers in the room. 
 
@@ -36,18 +42,21 @@ Call this function to send any string data or message selected peers in the room
 <OptionTable
   headers={["Params", "Type", "Description"]}
   options={[
+    ["peerIds", "List<string>", "List of peerIds"],
     ["data", "string", "Any data or message in form of string"],
-    ["peerIds", "string", "List of peerIds"]
+    ["label", "string", "The label of the data message."]
     ]}
 />
 
-```csharp filename=".csharp"
-public void SendDataToSelectedPeersInRoom(string data,List<string> peerIds)
-{
-    Huddle01Core.Instance.SendData(data,peerIds);
-}
+**Example**
 
+```csharp filename=".csharp"
+public void SendData(List<string> peerIds,string data,string label)
+{
+    Huddle01Core.Instance.SendData(peerIds,data,label);
+}
 ```
+
 
 
 ### HuddleCore.OnMessageReceived
