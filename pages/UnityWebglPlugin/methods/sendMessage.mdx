@@ -11,9 +11,9 @@ import { Callout } from "nextra-theme-docs";
 Call this function to send any message to room. All the peers which are present in the room will receive the message
 
 ```csharp filename=".csharp"
-public void SendMessageToRoom()
+public void SendMessageToRoom(string message)
 {
-    Huddle01Core.Instance.SendTextMessage(<string to send>);
+    Huddle01Core.Instance.SendTextMessage(message);
 }
 
 ```
