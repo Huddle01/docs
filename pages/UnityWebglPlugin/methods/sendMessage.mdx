@@ -6,17 +6,49 @@ title: "Send Message"
 import OptionTable from "@components/common/Table/OptionTable";
 import { Callout } from "nextra-theme-docs";
 
-### SendTextMessage(string message)
+### SendData(string message)
 
-Call this function to send any message to room. All the peers which are present in the room will receive the message
+Call this function to send any string data or message to all peers in the room. All the peers which are present in the room will receive the message
+
+**Parameters**
+
+<OptionTable
+  headers={["Params", "Type", "Description"]}
+  options={[
+    ["data", "string", "Any data or message in form of string"]
+    ]}
+/>
 
 ```csharp filename=".csharp"
-public void SendMessageToRoom(string message)
+public void SendDataToAllPeersInRoom(string data)
 {
-    Huddle01Core.Instance.SendTextMessage(message);
+    Huddle01Core.Instance.SendData(data);
 }
 
 ```
+
+### SendData(string data,List&lt;string&gt; peerIds)
+
+Call this function to send any string data or message selected peers in the room. 
+
+**Parameters**
+
+<OptionTable
+  headers={["Params", "Type", "Description"]}
+  options={[
+    ["data", "string", "Any data or message in form of string"],
+    ["peerIds", "string", "List of peerIds"]
+    ]}
+/>
+
+```csharp filename=".csharp"
+public void SendDataToSelectedPeersInRoom(string data,List<string> peerIds)
+{
+    Huddle01Core.Instance.SendData(data,peerIds);
+}
+
+```
+
 
 ### HuddleCore.OnMessageReceived
 

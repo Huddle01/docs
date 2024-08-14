@@ -5,7 +5,7 @@
     "room": "Room",
     "audio":"Audio",
     "video":"Video",
-    "sendMessage":"Send Message",
+    "sendMessage":"Send Data",
     "consume" : "Consume"
   }
   
