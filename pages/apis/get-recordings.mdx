@@ -17,7 +17,7 @@ import { Callout } from 'nextra-theme-docs';
 ## **Get Recordings API**
 
 The Get Recordings API provides the ability to fetch recordings that were created using the SDK.
-In order to use the API, you will need to obtain an API key by connecting to your wallet.
+In order to use the API, you will need to obtain an API key by connecting to your wallet, Follow the steps mentioned in the [API Key](/docs/api-keys) section.
 
 ## **Endpoint**
 <div className="flex justify-between w-full lg:flex-row flex-col">
@@ -32,7 +32,8 @@ In order to use the API, you will need to obtain an API key by connecting to you
 
 
 <Paragraph className="mt-5">
-Whatever recordings are created using the SDK, will be listed in the Get Recordings API. The API will return the list of all the recordings which are created using the SDK.
+Whatever recordings are created using the SDK, will be listed in the Get Recordings API, if you want to fetch the recordings for a particular meeting, you can pass the `meetingId` as a query parameter.
+otherwise, the API will return all the recordings associated with your API Key.
 
 </Paragraph>
 
@@ -56,6 +57,7 @@ The API supports a **GET** request with the following required parameters:
 - **`cursor`** - The cursor for pagination, (optional).
 
 </div>
+
 
 <APIRequestCard
     requestType = "GET"
@@ -107,6 +109,10 @@ curl -X POST \
   </APIRequestCard>
 
 </div>
+
+<Callout>
+  `meetingId` is an optional parameter. To Fetch `meetingId` of a particular roomId. You can use the [Get Meeting API](/apis/meeting-details/meeting-list).
+</Callout>
 
 <div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-10">
 <div className="text-start ">
