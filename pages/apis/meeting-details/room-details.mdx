@@ -2,36 +2,42 @@
 title: Room Details API
 ---
 
-import MeetingDetails from '@components/ApiRef/MeetingDetails';
-import MeetingDetailsResponse from '@components/ApiRef/MeetingDetailsResponse';
-import RequestStrip from '@components/ApiRequest/RequestStrip';
+import MeetingDetails from "@components/ApiRef/MeetingDetails";
+import MeetingDetailsResponse from "@components/ApiRef/MeetingDetailsResponse";
+import RequestStrip from "@components/ApiRequest/RequestStrip";
 import {
   APIRequestCard,
   APIRequestContent,
   APIResponseCard,
-} from '@components/common/ApiCard/ApiCard';
-import { ParticipantListAPI, MeetingDetailsUsingTitleAPI, ParticipantListResponse, MeetingsListAPI, MeetingsListResponse } from '@components/ApiRef/data/MeetingDetails';
-import { Button } from '@components/common/Button/Button';
-import HighLight from '@components/common/HighLight';
-import Paragraph from '@components/common/Paragraph';
-import Pill from '@components/common/Pill/Pill';
-import { Callout } from 'nextra-theme-docs';
+} from "@components/common/ApiCard/ApiCard";
+import {
+  ParticipantListAPI,
+  MeetingDetailsUsingTitleAPI,
+  ParticipantListResponse,
+  MeetingsListAPI,
+  MeetingsListResponse,
+} from "@components/ApiRef/data/MeetingDetails";
+import { Button } from "@components/common/Button/Button";
+import HighLight from "@components/common/HighLight";
+import Paragraph from "@components/common/Paragraph";
+import Pill from "@components/common/Pill/Pill";
+import { Callout } from "nextra-theme-docs";
 
 ## **Room Details API**
 
 This API lets you retrieve the room details using either the room ID or the title of the room.
 
 ## **Using RoomId**
+
 <div className="flex justify-between lg:flex-row flex-col">
   <HighLight className="my-3 w-full">
     <RequestStrip
-      method={'GET'}
-      url={'https://api.huddle01.com/api/v1'}
-      endpoint={'room-details/{roomId}'}
+      method={"GET"}
+      url={"https://api.huddle01.com/api/v1"}
+      endpoint={"room-details/{roomId}"}
     />
   </HighLight>
 </div>
-
 
 <Paragraph className="mt-5">
   The Room Details API is a useful tool for retrieving information about a
@@ -58,7 +64,6 @@ Overall, the Room Details API is a valuable resource for accessing information a
 The API supports a **POST** request with the following required parameters:
 
 - **`roomId`** - The RoomId of the room, for which you need to get the details.
-
 
 </div>
 
@@ -99,9 +104,7 @@ The API supports a **POST** request with the following required parameters:
     </APIRequestContent>
   </APIRequestCard>
 
-
 </div>
-
 
 <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
 <div className="text-start">
@@ -111,22 +114,24 @@ The API supports a **POST** request with the following required parameters:
 Upon success, the API will return a response with the following fields:
 
 - **`roomId`** - The room ID of the newly created room.
-- **`roomLock`** - A boolean value indicating if the room is locked.
+- **`roomLocked`** - A boolean value indicating if the room is locked.
+- **`metadata`** - An object containing the metadata of the room, including the title and other custom metadata.
 
 In case of an error, the API will return an error message with a corresponding status code.
 
 </div>
 
-
 <APIResponseCard>
   <APIRequestContent value="Success">
 ```jsx
-{
-    {
-      "roomId": "emo-orrj-uvh",
-      "roomLocked": false,
-    }
-}
+  {
+    "roomId": "nvw-fxtj-gha",
+    "roomLocked": true,
+    "metadata": {
+      "title": "deployeddd",
+      "hi": "axit"
+	  }
+  }
 ````
 
 </APIRequestContent>
