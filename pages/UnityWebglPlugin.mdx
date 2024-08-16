@@ -1,0 +1,19 @@
+---
+title: "Unity Webgl"
+---
+
+import { UnityWebglPluginData } from "@components/assets/Data/data";
+import GradientCard from "@components/common/GradientCard/GradientCard";
+import { Callout } from "nextra-theme-docs";
+
+# Unity Webgl Plugin
+
+The Huddle Unity WebGL Plugin SDK provides a process and method for seamless integration of real-time audio and video in Unity for Webgl platform.
+
+<div className="my-16 xl:max-w-none">
+  <div className="not-prose mt-4 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
+    {UnityWebglPluginData.map((resource) => (
+      <GradientCard key={resource.href} resource={resource} />
+    ))}
+  </div>
+</div>
