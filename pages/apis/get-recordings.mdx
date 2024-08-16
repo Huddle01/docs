@@ -51,44 +51,47 @@ Whatever recordings are created using the SDK, will be listed in the Get Recordi
 The API supports a **GET** request with the following required parameters:
 
 - **`x-api-key`** - Add your API Key to the headers to fetch all rooms associated with your API Key.
-
+- **`meetingId`** - The meeting ID for which you want to fetch the recordings, (optional).
+- **`limit`** - The number of recordings you want to fetch, `(optional)`.
+- **`cursor`** - The cursor for pagination, (optional).
 
 </div>
 
 <APIRequestCard
     requestType = "GET"
     route="/get-recordings"
-    
   >
 
 <APIRequestContent value="axios">
       ```js
-      const response = await axios.get(
-        'https://api.huddle01.com/api/v1/get-recordings',
-        {},
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': {{API_KEY}},
-          },
+      let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'https://api.huddle01.com/api/v1/get-recordings?meetingId=5b4bb748-c808-4ef4-8367-d3cef64bb15c',
+        headers: { 
+          'x-api-key': 'WDfdwP2ChGv3OmRDbQzKDHeJQd0cTnqk'
         }
-    );
+      };
+
+      axios.request(config)
+
       ```
     </APIRequestContent>
 
     
     <APIRequestContent value="fetch">
       ```js
-     const  response = await fetch("https://api.huddle01.com/api/v1/get-recordings", {
-     
-    method: "GET",
-    {},
-    headers: {
-        "Content-type": "application/json",
-        'x-api-key': {{API_KEY}},
-    }
-})
-      ```
+      const myHeaders = new Headers();
+      myHeaders.append("x-api-key", "••••••");
+
+      const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow"
+      };
+
+      fetch("https://api.huddle01.com/api/v1/get-recordings?limit=1&cursor=1", requestOptions)
+            ```
     </APIRequestContent>
 
     <APIRequestContent value="cUrl">
@@ -127,8 +130,8 @@ In case of an error, the API will return an error message with a corresponding s
           "recordings": [
             {
                 "id": "dummy-recording-id",
-                "url": "https://dummy-recording-url.com",
-                "size": 100
+                "recordingUrl": "https://dummy-recording-url.com",
+                "recordingSize": 100
             }
           ]
       }

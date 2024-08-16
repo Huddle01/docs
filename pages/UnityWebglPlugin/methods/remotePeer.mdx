@@ -1,0 +1,99 @@
+---
+title: "Remote Peer"
+---
+
+import { Tab, Tabs } from "nextra-theme-docs";
+import OptionTable from "@components/common/Table/OptionTable";
+
+## Remote Peer
+
+### Huddle01Core.PeerAdded(string peerInfo);
+
+This event gets invoked when any peer is added in the current room. Subscribe to this event to get the notification
+
+**Parameters**
+<OptionTable
+  headers={["Param", "Type", "Description"]}
+  options={[["peerInfo", "string", "The peer ID of the Remote Peer who has joined the room"]]}
+/>
+
+```csharp filename=".csharp"
+private void OnEnable()
+{
+    Huddle01Core.PeerAdded += OnPeerJoined;
+}    
+
+private void OnDisable()
+{
+    Huddle01Core.PeerAdded -= OnPeerJoined;
+}
+
+private void OnPeerJoined(string peerId)
+{
+    Debug.Log($"Peer Joined : {peerId}");
+}
+
+```
+
+
+### Huddle01Core.PeerLeft(string peerId);
+
+This is called when any peer left current room. Subscribe to this event to get the notification
+
+**Parameters**
+<OptionTable
+  headers={["Param", "Type", "Description"]}
+  options={[["peerId", "string", "The peer ID of the Remote Peer who has left the room"]]}
+/>
+
+```csharp filename=".csharp"
+private void OnEnable()
+{
+    Huddle01Core.PeerLeft += OnPeerLeft;
+}    
+
+private void OnDisable()
+{
+    Huddle01Core.PeerLeft -= OnPeerLeft;
+}
+
+private void OnPeerLeft(string peerId)
+{
+    Debug.Log($"Peer left : {peerId}");
+}
+
+```
+
+### Huddle01Core.PeerMetadata(string peerMetadata)
+
+This is called when any peer in the room update its metadata. Subscribe to this event to get the notification
+
+**Parameters**
+<OptionTable
+  headers={["Param", "Type", "Description"]}
+  options={[
+    [
+      "peerMetadata",
+      "string",
+      "The peer ID of the Remote Peer who has updated the metadata. Peerid is a part od metadata",
+    ],
+  ]}
+/>
+
+```csharp filename=".csharp"
+private void OnEnable()
+{
+    Huddle01Core.PeerMetadata += OnPeerMetaDataUpdated;
+}    
+
+private void OnDisable()
+{
+    Huddle01Core.PeerMetadata -= OnPeerMetaDataUpdated;
+}
+
+private void OnPeerMetaDataUpdated(PeerMetadata peerInfo)
+{
+    Debug.Log($"OnPeerMetaDataUpdated : {peerInfo.PeerId}");
+}
+
+```

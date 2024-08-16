@@ -1,0 +1,11 @@
+{
+    "init": "Initialization",
+    "localPeer": "Local Peer",
+    "remotePeer": "Remote Peer",
+    "room": "Room",
+    "audio":"Audio",
+    "video":"Video",
+    "sendMessage":"Send Data",
+    "consume" : "Consume"
+  }
+  

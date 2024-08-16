@@ -115,8 +115,6 @@ curl -X POST \
 
 Upon success, the API will return a response with an array of rooms with the following fields:
 
-- **`title`** - The title of the room passed during room creation.
-- **`hostWalletAddress`** - An array of wallet addresses who are assigned as hosts.
 - **`roomId`** - The roomId of the room created using Create Room API.
 
 
@@ -131,13 +129,9 @@ In case of an error, the API will return an error message with a corresponding s
           {
             "liveMeetings": [
               {
-                "title": "first meeting",
-                "hostWalletAddress": [],
                 "roomId": "wpd-hjnj-cyf"
               },
               {
-                "title": "second meeting",
-                "hostWalletAddress": [],
                 "roomId": "gvh-pmpn-nbe"
               }
             ]
@@ -229,7 +223,7 @@ The API supports a **GET** request with the following required parameters:
 <APIRequestContent value="axios">
       ```js
       const response = await axios.get(
-        'https://api.huddle01.com/api/v1/live-meetings',
+        'https://api.huddle01.com/api/v1/live-meeting',
         {
           roomId: 'YOUR_ROOM_ID',
         },
@@ -283,10 +277,7 @@ curl -X GET \
 
 Upon success, the API will return a response with the following fields:
 
-- **`title`** - The title of the room passed during room creation.
-- **`hostWalletAddress`** - An array of wallet addresses who are assigned as hosts.
 - **`roomId`** - The roomId of the room created using Create Room API.
-
 
 
 </div>
@@ -296,8 +287,6 @@ Upon success, the API will return a response with the following fields:
     ```jsx
       {
         {
-          "title": "first meeting",
-          "hostWalletAddress": [],
           "roomId": "wpd-hjnj-cyf"
         },
       }

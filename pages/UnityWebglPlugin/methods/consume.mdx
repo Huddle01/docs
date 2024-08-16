@@ -1,0 +1,42 @@
+---
+title: "Consume"
+---
+
+import OptionTable from "@components/common/Table/OptionTable";
+import { Callout } from "nextra-theme-docs";
+
+## Consume
+
+### StartConsumerPeer(string peerId);
+
+Call this function to consume individual peer. This function will invoke Event [`Huddle01Core.OnStartConsumingPeer`](/UnityWebglPlugin/methods/remotePeer#startconsumingpeereventhandlerstring-peerid) once the process is successfully done
+
+**Parameters**
+<OptionTable
+  headers={["Param", "Type", "Description"]}
+  options={[["peerId", "string", "The peer ID of the Remote Peer to consume from."]]}
+/>
+
+```csharp filename=".csharp"
+public void ConsumePeer(string peerId)
+{
+    Huddle01Core.Instance.StartConsumerPeer(peerId);
+}
+```
+
+### StopConsumePeer(string peerId,string label);
+
+Call this function to stop consuming individual peer.This function will invoke Event [`Huddle01Core.OnStopConsumingPeer`](/UnityWebglPlugin/methods/remotePeer#stopconsumingpeereventhandlerstring-peerid) once the process is successfully done
+
+**Parameters**
+<OptionTable
+  headers={["Param", "Type", "Description"]}
+  options={[["peerId", "string", "The peer ID of the Remote Peer"]]}
+/>
+
+```csharp filename=".csharp"
+public void StopConsumePeer(string peerId)
+{
+    Huddle01Core.Instance.StopConsumeingPeer(roomId);
+}
+```

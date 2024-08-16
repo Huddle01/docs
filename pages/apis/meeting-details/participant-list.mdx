@@ -121,7 +121,11 @@ The API supports a **GET** request with the following required parameters:
 
 Upon success, the API will return a response with the following fields:
 
-- **`participants`** - The list of `displayName` and `walletAdddress` of the participants who joined the meeting.
+- **`participants`** - The list of participants who joined the meeting.
+  - **`peerId`** - The peerId of the participant.
+  - **`joinTime`** - The time when the participant joined the meeting.
+  - **`exitTime`** - The time when the participant exited the meeting.
+  - **`metadata`** - The metadata associated with the participant, metadata is the information provided when a new Access Token was generated.
 
 In case of an error, the API will return an error message with a corresponding status code.
 
@@ -132,25 +136,16 @@ In case of an error, the API will return an error message with a corresponding s
   <APIRequestContent value="Success">
 ```jsx
 {
-    {
-      "roomId": "emo-orrj-uvh",
-      "hostWalletAddress": [],
-      "duration": 244,
-      "participants": [
+    "participants": [
         {
-          "displayName": "OmG",
-          "walletAddress": "0x123456789",
-          "joinedAt": "2023-07-10T09:33:34.771Z",
-          "exitedAt": "2023-07-10T09:34:40.436Z",,
+            "peerId": "peerId--AmxuhmUBW17kP1FGL2mU",
+            "joinTime": 1706810039986,
+            "exitTime": 1706811249372,
+            "metadata": {
+                ...
+            }
         },
-        {
-          "displayName": "Axit",
-          "walletAddress": null,
-          "joinedAt": "2023-07-10T09:06:12.157Z",
-          "exitedAt": "2023-07-10T09:34:40.436Z",,
-        }
-      ]
-    }
+    ]
 }
 ````
 
@@ -169,6 +164,11 @@ In case of an error, the API will return an error message with a corresponding s
   </APIResponseCard>
 
 </div>
+
+<Callout>
+  `metadata` is the information provided when a new Access Token was generated. It can be used to store additional information about the participant.
+  To Learn more about the Access Token and how metadata can used, visit the [Access Token](/Server-SDK/access-token#generating-access-token).
+</Callout>
 
 <div className = 'flex-col item-center gap-3' >
 

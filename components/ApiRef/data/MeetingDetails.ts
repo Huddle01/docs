@@ -25,78 +25,10 @@ export const MeetingDetailsResponse: IApiDataType[] = [
     type: 'string',
   },
   {
-    title: 'title',
-    description: 'The title of the room.',
-    required: false,
-    type: 'string',
-  },
-  {
-    title: 'description',
-    description: 'The description of the room.',
-    required: false,
-    type: 'string',
-  },
-  {
-    title: 'startTime',
-    description: 'The start time of the room.',
-    required: false,
-    type: 'string (ISO 8601)',
-  },
-  {
-    title: 'expiryTime',
-    description: 'The expiry time of the room.',
-    required: false,
-    type: 'string (ISO 8601)',
-  },
-  {
-    title: 'hostWalletAddress',
-    description: 'The host wallet address of the room.',
-    required: false,
-    type: 'string [ ]',
-  },
-  {
     title: 'roomLocked',
     description: 'The room locked status of the room.',
     required: false,
     type: 'boolean',
-  },
-  {
-    title: 'muteOnEntry',
-    description: 'The mute on entry status of the room.',
-    required: false,
-    type: 'boolean',
-    default: 'false',
-  },
-  {
-    title: 'videoOnEntry',
-    description: 'The video on entry status of the room.',
-    required: false,
-    type: 'boolean',
-    default: 'false',
-  },
-  {
-    title: 'tokenGatingInfo',
-    description: 'The token gating info of the room.',
-    required: false,
-    type: 'object',
-  },
-  {
-    title: 'roomType',
-    description: 'The room type of the room.',
-    required: false,
-    type: 'VIDEO | AUDIO',
-  },
-  {
-    title: 'roomSize',
-    description: 'The room size of the room.',
-    required: false,
-    type: 'NORMAL | LARGE',
-  },
-  {
-    title: 'appData',
-    description: 'The app data of the room.',
-    required: false,
-    type: 'object',
   },
 ];
 
