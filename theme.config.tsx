@@ -59,6 +59,7 @@ const config: DocsThemeConfig = {
         "Flutter",
         "Server-SDK",
         "Unity Webgl",
+        "Kotlin"
       ].includes(title);
 
       const version: {
@@ -70,6 +71,7 @@ const config: DocsThemeConfig = {
         Flutter: "",
         "Server-SDK": "",
         "Unity Webgl": "",
+        Kotlin:""
       };
 
       if (isSdkTitles) {

@@ -3,5 +3,6 @@
   { "title": "React JS", "url": "React" },
   { "title": "Flutter", "url": "Flutter/quickstart" },
   { "title": "React Native", "url": "React-Native" },
-  { "title": "Unity Webgl", "url": "UnityWebglPlugin" }
+  { "title": "Unity Webgl", "url": "UnityWebglPlugin" },
+  { "title": "Kotlin", "url": "Flutter/quickstart" }
 ]
