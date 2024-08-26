@@ -1,0 +1,29 @@
+---
+title: "Audio"
+---
+
+import OptionTable from "@components/common/Table/OptionTable";
+
+## Audio
+
+### Enable Audio
+
+The `enableAudio` method enables the local microphone and starts producing the audio track.
+
+**Example**
+
+```kotlin
+// Enable audio stream
+val audioTrack = huddleClient.localPeer.enableAudio()
+```
+
+### Disable Audio
+
+The `disableAudio` method stops the local audio stream and also stops producing the audio stream with remote peers.
+
+**Example**
+
+```kotlin
+// Disable audio stream
+huddleClient.localPeer.disableAudio();
+```
