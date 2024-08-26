@@ -30,8 +30,8 @@ The **`produce`** method allows the Local Peer to produce a media stream with a 
 
 **Example**
 
-```dart
-final producer = await huddleClient.localPeer.produce(
+```kotlin
+val producer = huddleClient.localPeer.produce(
   label: "video",
   stream: mediaStream,
   appData: { 'key': "value" },
@@ -51,8 +51,8 @@ The **`stopProducing`** method allows the Local Peer to stop producing a media s
 
 **Example**
 
-```dart
-final producer = await huddleClient.localPeer.stopProducing( label: "video" );
+```kotlin
+val producer = huddleClient.localPeer.stopProducing( label: "video" );
 ```
 
 ## Events
