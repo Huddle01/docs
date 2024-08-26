@@ -1,0 +1,160 @@
+---
+title: "Walkthrough"
+---
+
+import { Callout, Steps, Tab, Tabs } from "nextra-theme-docs";
+
+# Building an Android App with Huddle01 Kotlin SDK
+
+## Walkthrough
+
+The following guide explains how you can integrate audio/video into your Android application seamlessly using the Huddle01 Kotlin SDK.
+<Steps>
+
+### Installation
+
+The following guide explains how you can integrate audio/video into your Android application seamlessly using the Huddle01 Kotlin SDK.
+
+• Add the following in your  `settings.gradle.kts`
+
+```kotlin
+	
+	dependencyResolutionManagement {
+		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+		repositories {
+			mavenCentral()
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
+• Add the following dependency in your app's `app/build.gradle`.
+
+```kotlin
+
+dependencies {
+	        implementation 'com.github.Huddle01:Kotlin-Client:1.0.1'
+	}
+  
+```
+
+### **Handling Permissions**
+
+Before you can start using the Huddle01 SDK, you need to enable your app to handle some permissions required for audio/video communication.
+
+### **Add permissions into your project**
+
+- In `/app/Manifests/AndroidManifest.xml`, add the following permissions after `</application>`.
+
+```kotlin
+
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.CAMERA" />
+
+```
+### **Initialization of project**
+
+Head over to [API Keys Page](https://docs.huddle01.com/docs/api-keys) and connect your wallet to get your project credentials:
+
+- `API Key`
+- `projectId`
+
+Once done, you can initialise your project with the `HuddleClient` class by passing in your `projectId`.
+
+```kotlin
+import com.huddle01.kotlin_client.HuddleClient
+
+var huddleClient: HuddleClient = HuddleClient("YOUR_PROJECT_ID", this)
+```
+
+### **Joining and leaving the room**
+
+Once you initialise `huddleClient` you can access various methods such as `joinRoom`. 
+You can generate roomId using this [API](https://docs.huddle01.com/docs/api-keys) and an access token to join that particular room using our [Server SDK](https://docs.huddle01.com/docs/Server-SDK). 
+
+The access token should always be generated on a backend server.
+
+Add the `joinRoom()` and `leaveRoom()` methods for joining and leaving functionalities.
+
+```kotlin
+// joinRoom
+lifecycleScope.launch {
+                try {
+                    huddleClient.joinRoom(roomId, token)
+                    val intent = Intent(this@HomeActivity, MeetingRoomActivity::class.java)
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    Toast.makeText(this@HomeActivity, "Failed to join the room: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+            
+ // leaveRoom           
+ lifecycleScope.launch { huddleClient.leaveRoom() }
+```
+
+Clicking on the **JOIN_ROOM** button, will make the user join the room and will allow them to send/receive media with other participants.
+
+### **Enabling and Disabling Audio and Video**
+
+Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
+
+**Audio**
+
+The `enableAudio` method enables the local microphone and starts producing the audio stream with the label `audio`.
+The `disableAudio` method stops the local audio stream and also stops producing the audio stream with remote peers.
+
+**Video**
+
+The `enableVideo` method enables the local microphone and starts producing the video stream with the label `video`.
+The `disableVideo` method stops the local video stream and also stops producing the video stream with remote peers.
+
+```kotlin
+   var isMicOn = false
+   var isCamOn = false
+   
+   val surfaceView: SurfaceViewRenderer = binding.localView
+
+   binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.mic -> {
+                    Timber.i("Mic Btn Pressed")
+                    lifecycleScope.launch {
+                        if (isMicOn) {
+                            huddleClient.localPeer.disableAudio()
+                            item.setIcon(R.drawable.icon_mic_off)
+                        } else {
+                            huddleClient.localPeer.enableAudio()
+                            item.setIcon(R.drawable.icon_mic_on)
+                        }
+                        isMicOn = !isMicOn
+                    }
+                    true
+                }
+
+                R.id.cam -> {
+                    Timber.i("Cam Btn Pressed")
+                    lifecycleScope.launch {
+                        if (isCamOn) {
+                            huddleClient.localPeer.disableVideo(surfaceView)
+                            item.setIcon(R.drawable.icon_video_off)
+                        } else {
+                            huddleClient.localPeer.enableVideo(surfaceView)
+                            item.setIcon(R.drawable.icon_video_on)
+                        }
+                        isCamOn = !isCamOn
+                    }
+                    true
+                }
+              }
+              
+```
+
+These functions are available on the `huddleClient.localPeer` .
+
+### You're all set! Happy Hacking! 🎉
+
+For more information, please refer to the [SDK Reference](/Kotlin).
+
+</Steps>
