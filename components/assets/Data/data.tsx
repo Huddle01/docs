@@ -34,20 +34,6 @@ export const KotlinData = [
     },
   },
   {
-    href: "/Kotlin/example",
-    name: "Start from an Example",
-    description:
-      "This section provides instructions on how to clone and run a sample Huddle01 app in an Android project.",
-    icon: PaperAirplaneIcon,
-    pattern: {
-      y: -6,
-      squares: [
-        [-1, 2],
-        [1, 3],
-      ],
-    },
-  },
-  {
     href: "/Kotlin/methods",
     name: "Methods",
     description:
@@ -59,17 +45,6 @@ export const KotlinData = [
         [0, 2],
         [1, 4],
       ],
-    },
-  },
-  {
-    href: "/Kotlin/events",
-    name: "Events",
-    description:
-      "This section lists the available events that can be subscribed to in the Kotlin SDK.",
-    icon: CalendarIcon,
-    pattern: {
-      y: 22,
-      squares: [[0, 1]],
     },
   },
 ];
