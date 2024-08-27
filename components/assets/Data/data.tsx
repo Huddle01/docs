@@ -7,6 +7,48 @@ import { PaperAirplaneIcon } from "../PaperPlane";
 import { SquaresPlusIcon } from "../SquarePlusIcon";
 import { Stopwatch } from "../stopwatch";
 
+export const KotlinData = [
+  {
+    href: "/Kotlin/quickstart",
+    name: "Quickstart",
+    description:
+      "This section provides a brief overview of how to quickly get started with using the Huddle01 SDK in an Android project.",
+    icon: Stopwatch,
+    pattern: {
+      y: 22,
+      squares: [[0, 1]],
+    },
+  },
+  {
+    href: "/Kotlin/walkthrough",
+    name: "Walkthrough",
+    description:
+      "This section provides a step-by-step guide to building a simple Huddle01-based video conferencing app in an Android project.",
+    icon: BookIcon,
+    pattern: {
+      y: 16,
+      squares: [
+        [0, 1],
+        [1, 3],
+      ],
+    },
+  },
+  {
+    href: "/Kotlin/methods",
+    name: "Methods",
+    description:
+      "This section provides an overview of the available Flutter Methods in the Huddle01 SDK that can be used to create custom functionality.",
+    icon: PaperClipIcon,
+    pattern: {
+      y: 32,
+      squares: [
+        [0, 2],
+        [1, 4],
+      ],
+    },
+  },
+];
+
 export const FlutterSDKData = [
   {
     href: "/Flutter/quickstart",

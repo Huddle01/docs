@@ -1,0 +1,31 @@
+---
+title: "Kotlin"
+---
+
+import { KotlinData } from "@components/assets/Data/data";
+import GradientCard from "@components/common/GradientCard/GradientCard";
+import { Callout } from "nextra-theme-docs";
+
+# Kotlin
+
+The Huddle01 Kotlin SDK enables seamless integration into Android mobile applications with minimal configuration.
+It provides a comprehensive set of methods and event listeners, streamlining real-time audio and video communication while requiring minimal coding.
+
+<div className='my-16 xl:max-w-none'>
+  <div className='not-prose mt-4 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3'>
+    {KotlinData.map((resource) => (
+      <GradientCard key={resource.href} resource={resource} />
+    ))}
+  </div>
+</div>
+
+## Pre Requisites
+
+Before using the Huddle01 Kotlin SDK,  make sure your setup has these things:
+
+- Java Development Kit (JDK)
+- Android Studio version 3.0 or higher
+- Android SDK with API Level 21 or above
+- An Android phone or tablet running version 5.0 or later
+
+You can install **Android Studio** from [here](https://developer.android.com/studio)

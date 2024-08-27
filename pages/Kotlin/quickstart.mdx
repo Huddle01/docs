@@ -1,0 +1,34 @@
+---
+title: 'Quickstart'
+---
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+# Quickstart
+
+## Installing the packages
+
+To get started with the Huddle01 Kotlin SDK:
+
+• Add the following in your `settings.gradle.kts`
+
+```kotlin
+	
+	dependencyResolutionManagement {
+		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+		repositories {
+			mavenCentral()
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
+• Add the following dependency in your app's `app/build.gradle`
+
+```kotlin
+
+dependencies {
+	        implementation 'com.github.Huddle01:Kotlin-Client:1.0.1'
+	}
+  
+```

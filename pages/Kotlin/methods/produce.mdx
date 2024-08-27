@@ -1,0 +1,69 @@
+---
+title: "Produce"
+---
+
+import OptionTable from "@components/common/Table/OptionTable";
+
+### Produce
+
+The **`produce`** method allows the Local Peer to produce a media stream with a given label and associated application data to share with all Remote Peers.
+
+**Parameters**
+
+<OptionTable
+  headers={["Name", "Type", "Description"]}
+  options={[
+    ["label", "string", "A unique identifier for the stream"],
+    ["stream", "MediaStream", "The media stream to produce"],
+    [
+      "stopTrackOnClose",
+      "boolean (optional)",
+      "Stops the track when the producer is closed",
+    ],
+    [
+      "appData",
+      "Object (optional)",
+      "Application-level custom data which can be added to the producer for the Local Peer. This data will be available in the producer object and can be used only by the Local Peer.",
+    ],
+  ]}
+/>
+
+**Example**
+
+```kotlin
+val producer = huddleClient.localPeer.produce(
+  label: "video",
+  stream: mediaStream,
+  appData: { 'key': "value" },
+});
+```
+
+### Stop Producing
+
+The **`stopProducing`** method allows the Local Peer to stop producing a media stream with a given label.
+
+**Parameters**
+
+<OptionTable
+  headers={["Name", "Type", "Description"]}
+  options={[["label", "string", "A unique identifier for the stream"]]}
+/>
+
+**Example**
+
+```kotlin
+val producer = huddleClient.localPeer.stopProducing( label: "video" );
+```
+
+## Events
+
+<OptionTable
+  headers={["Name", "Description", "Returns"]}
+  options={[
+    [
+      "new-producer",
+      "Emitted when a new producer is created",
+      "{ label: string; producer: Producer }",
+    ],
+  ]}
+/>

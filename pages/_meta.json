@@ -44,6 +44,7 @@
   "Server-SDK": "",
   "Flutter": "",
   "UnityWebglPlugin": "",
+  "Kotlin": "",
 
   "--Quick Integration": {
     "type": "separator",

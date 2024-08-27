@@ -1,0 +1,36 @@
+---
+title: "Video"
+---
+
+import OptionTable from "@components/common/Table/OptionTable";
+import { Callout } from "nextra-theme-docs";
+
+## Video
+
+### Enable Video
+
+The `enableVideo` method enables the local microphone and starts producing the video track.
+
+<Callout type='info'>
+  `enableVideo` method calls both `fetchStream` and `produce` method
+  internally.It also return `MediaStream` which can be used to render the screen
+  share stream in the UI.
+</Callout>
+
+**Example**
+
+```kotlin
+// Enable Video stream
+val videoTrack = huddleClient.localPeer.enableVideo();
+```
+
+- ### Disable Video
+
+The `disableVideo` method stops the local video stream and also stops producing the video stream with remote peers.
+
+**Example**
+
+```kotlin
+// Disable video stream
+huddleClient.localPeer.disableVideo();
+```

@@ -1,0 +1,10 @@
+{
+  "init": "Init",
+  "room": "Room",
+  "audio": "Audio",
+  "video": "Video",
+  "localPeer": "Local Peer",
+  "remotePeer": "Remote Peer",
+  "produce": "Produce",
+  "consume": "Consume"
+}

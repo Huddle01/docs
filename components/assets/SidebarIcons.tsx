@@ -7,8 +7,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <path
         opacity="0.12"
         d="M2.25 7.92385C2.25 7.49308 2.25 7.2777 2.30552 7.07935C2.3547 6.90365 2.43552 6.73839 2.54402 6.5917C2.6665 6.4261 2.83652 6.29387 3.17654 6.0294L8.26327 2.07306C8.52677 1.86812 8.65851 1.76565 8.80399 1.72626C8.93235 1.69151 9.06765 1.69151 9.19601 1.72626C9.34149 1.76565 9.47324 1.86812 9.73673 2.07306L14.8235 6.02941C15.1635 6.29387 15.3335 6.4261 15.456 6.5917C15.5645 6.73839 15.6453 6.90365 15.6945 7.07935C15.75 7.2777 15.75 7.49308 15.75 7.92385V13.35C15.75 14.1901 15.75 14.6102 15.5865 14.931C15.4427 15.2133 15.2132 15.4427 14.931 15.5866C14.6101 15.75 14.1901 15.75 13.35 15.75H4.65C3.80992 15.75 3.38988 15.75 3.06901 15.5866C2.78677 15.4427 2.5573 15.2133 2.41349 14.931C2.25 14.6102 2.25 14.1901 2.25 13.35V7.92385Z"
@@ -29,8 +28,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <path
         opacity="0.12"
         d="M9 11.2499L6.75 8.99994C7.14911 7.96451 7.65165 6.97199 8.25 6.03744C9.12389 4.64018 10.3407 3.48973 11.7847 2.69551C13.2288 1.90129 14.852 1.48972 16.5 1.49994C16.5 3.53994 15.915 7.12494 12 9.74994C11.0527 10.349 10.0476 10.8515 9 11.2499Z"
@@ -51,8 +49,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_2104_34322)">
         <g opacity="0.12" filter="url(#filter0_di_2104_34322)">
           <path
@@ -79,8 +76,7 @@ const SidebarIcons: {
           width="15.5"
           height="21.5"
           filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
+          colorInterpolationFilters="sRGB">
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
@@ -132,8 +128,7 @@ const SidebarIcons: {
           width="24.502"
           height="23.002"
           filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
+          colorInterpolationFilters="sRGB">
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
@@ -190,8 +185,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <path
         opacity="0.12"
         d="M2.25 5.78571C2.25 4.58621 2.25 3.98645 2.47282 3.52376C2.69398 3.06452 3.06452 2.69398 3.52376 2.47282C3.98645 2.25 4.58621 2.25 5.78571 2.25H12.2143C13.4138 2.25 14.0135 2.25 14.4762 2.47282C14.9355 2.69398 15.306 3.06452 15.5272 3.52376C15.75 3.98645 15.75 4.58621 15.75 5.78571C15.75 7.38506 15.75 8.18473 15.4529 8.80165C15.158 9.41397 14.664 9.90803 14.0517 10.2029C13.4347 10.5 12.6351 10.5 11.0357 10.5H6.96429C5.36494 10.5 4.56527 10.5 3.94835 10.2029C3.33603 9.90803 2.84197 9.41397 2.54709 8.80165C2.25 8.18473 2.25 7.38506 2.25 5.78571Z"
@@ -212,8 +206,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <path
         opacity="0.12"
         d="M2.25 5.78571C2.25 4.58621 2.25 3.98645 2.47282 3.52376C2.69398 3.06452 3.06452 2.69398 3.52376 2.47282C3.98645 2.25 4.58621 2.25 5.78571 2.25H12.2143C13.4138 2.25 14.0135 2.25 14.4762 2.47282C14.9355 2.69398 15.306 3.06452 15.5272 3.52376C15.75 3.98645 15.75 4.58621 15.75 5.78571C15.75 7.38506 15.75 8.18473 15.4529 8.80165C15.158 9.41397 14.664 9.90803 14.0517 10.2029C13.4347 10.5 12.6351 10.5 11.0357 10.5H6.96429C5.36494 10.5 4.56527 10.5 3.94835 10.2029C3.33603 9.90803 2.84197 9.41397 2.54709 8.80165C2.25 8.18473 2.25 7.38506 2.25 5.78571Z"
@@ -234,8 +227,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_2104_34336)">
         <path
           opacity="0.12"
@@ -263,8 +255,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_2104_34336)">
         <path
           opacity="0.12"
@@ -292,8 +283,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_2224_50724)">
         <path
           opacity="0.12"
@@ -321,8 +311,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_2104_34356)">
         <path d="M0 0H18V18H0V0Z" fill="#F0DB4F" />
         <path
@@ -342,8 +331,7 @@ const SidebarIcons: {
       xmlns="http://www.w3.org/2000/svg"
       width="22"
       height="22"
-      viewBox="0 0 256 289"
-    >
+      viewBox="0 0 256 289">
       <path
         fill="#539E43"
         d="M128 288.464c-3.975 0-7.685-1.06-11.13-2.915l-35.247-20.936c-5.3-2.915-2.65-3.975-1.06-4.505c7.155-2.385 8.48-2.915 15.9-7.156c.796-.53 1.856-.265 2.65.265l27.032 16.166c1.06.53 2.385.53 3.18 0l105.74-61.217c1.06-.53 1.59-1.59 1.59-2.915V83.08c0-1.325-.53-2.385-1.59-2.915l-105.74-60.953c-1.06-.53-2.385-.53-3.18 0L20.405 80.166c-1.06.53-1.59 1.855-1.59 2.915v122.17c0 1.06.53 2.385 1.59 2.915l28.887 16.695c15.636 7.95 25.44-1.325 25.44-10.6V93.68c0-1.59 1.326-3.18 3.181-3.18h13.516c1.59 0 3.18 1.325 3.18 3.18v120.58c0 20.936-11.396 33.126-31.272 33.126c-6.095 0-10.865 0-24.38-6.625l-27.827-15.9C4.24 220.885 0 213.465 0 205.515V83.346C0 75.396 4.24 67.976 11.13 64L116.87 2.783c6.625-3.71 15.635-3.71 22.26 0L244.87 64C251.76 67.975 256 75.395 256 83.346v122.17c0 7.95-4.24 15.37-11.13 19.345L139.13 286.08c-3.445 1.59-7.42 2.385-11.13 2.385Zm32.596-84.009c-46.377 0-55.917-21.2-55.917-39.221c0-1.59 1.325-3.18 3.18-3.18h13.78c1.59 0 2.916 1.06 2.916 2.65c2.12 14.045 8.215 20.936 36.306 20.936c22.261 0 31.802-5.035 31.802-16.96c0-6.891-2.65-11.926-37.367-15.372c-28.886-2.915-46.907-9.275-46.907-32.33c0-21.467 18.02-34.187 48.232-34.187c33.921 0 50.617 11.66 52.737 37.101c0 .795-.265 1.59-.795 2.385c-.53.53-1.325 1.06-2.12 1.06h-13.78c-1.326 0-2.65-1.06-2.916-2.385c-3.18-14.575-11.395-19.345-33.126-19.345c-24.38 0-27.296 8.48-27.296 14.84c0 7.686 3.445 10.07 36.306 14.31c32.597 4.24 47.967 10.336 47.967 33.127c-.265 23.321-19.345 36.571-53.002 36.571Z"
@@ -359,8 +347,7 @@ const SidebarIcons: {
       fillRule="evenodd"
       clipRule="evenodd"
       strokeLinejoin="round"
-      strokeMiterlimit="2"
-    >
+      strokeMiterlimit="2">
       <path
         d="M482.333 358.4V119.467L275.399 0v91.733l81.068 46.934c3.2 2.132 3.2 6.4 0 7.467l-96 55.467c-3.2 2.132-6.4 1.066-8.534 0l-96-55.467c-3.2-1.067-3.2-6.4 0-7.467L237 91.733V0L29 119.467V358.4v-1.067 1.067l78.933-45.867v-93.867c0-3.2 4.267-5.332 6.4-4.266l96 55.467c3.2 2.133 4.267 4.267 4.267 7.467v110.932c0 3.2-4.267 5.335-6.4 4.267L127.134 345.6 48.2 391.467 255.133 512l206.934-119.467-78.934-45.867-81.066 46.935c-3.2 2.132-6.4 0-6.4-4.268V278.4c0-3.2 2.132-6.4 4.266-7.467l96.001-55.467c3.199-2.132 6.399 0 6.399 4.267V313.6l80 44.8z"
         fill="#4c4c4c"
@@ -390,8 +377,7 @@ const SidebarIcons: {
       viewBox="0 0 48 48"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-    >
+      xmlnsXlink="http://www.w3.org/1999/xlink">
       <rect width="48" height="48" fill="white" />
       <mask
         id="mask0_2501_2757"
@@ -399,8 +385,7 @@ const SidebarIcons: {
         x="8"
         y="6"
         width="30"
-        height="36"
-      >
+        height="36">
         <path
           d="M37.4422 22.6294L27.8161 32.2341L37.4422 41.841H26.4382L22.3131 37.725L16.81 32.2341L26.4382 22.6294H37.4422ZM26.4382 6.15894L8.55762 24L14.0606 29.4908L37.4422 6.15894H26.4382Z"
           fill="white"
@@ -425,8 +410,7 @@ const SidebarIcons: {
         x="8"
         y="6"
         width="30"
-        height="36"
-      >
+        height="36">
         <path
           d="M37.4422 22.6294L27.8161 32.2341L37.4422 41.841H26.4382L22.3131 37.725L16.81 32.2341L26.4382 22.6294H37.4422ZM26.4382 6.15894L8.55762 24L14.0606 29.4908L37.4422 6.15894H26.4382Z"
           fill="white"
@@ -444,8 +428,7 @@ const SidebarIcons: {
         x="8"
         y="6"
         width="30"
-        height="36"
-      >
+        height="36">
         <path
           d="M37.4422 22.6294L27.8161 32.2341L37.4422 41.841H26.4382L22.3131 37.725L16.81 32.2341L26.4382 22.6294H37.4422ZM26.4382 6.15894L8.55762 24L14.0606 29.4908L37.4422 6.15894H26.4382Z"
           fill="white"
@@ -463,8 +446,7 @@ const SidebarIcons: {
         x="8"
         y="6"
         width="30"
-        height="36"
-      >
+        height="36">
         <path
           d="M37.4422 22.6294L27.8161 32.2341L37.4422 41.841H26.4382L22.3131 37.725L16.81 32.2341L26.4382 22.6294H37.4422ZM26.4382 6.15894L8.55762 24L14.0606 29.4908L37.4422 6.15894H26.4382Z"
           fill="white"
@@ -482,8 +464,7 @@ const SidebarIcons: {
         x="8"
         y="6"
         width="30"
-        height="36"
-      >
+        height="36">
         <path
           d="M37.4422 22.6294L27.8161 32.2341L37.4422 41.841H26.4382L22.3131 37.725L16.81 32.2341L26.4382 22.6294H37.4422ZM26.4382 6.15894L8.55762 24L14.0606 29.4908L37.4422 6.15894H26.4382Z"
           fill="white"
@@ -504,8 +485,7 @@ const SidebarIcons: {
           id="pattern0"
           patternContentUnits="objectBoundingBox"
           width="1"
-          height="1"
-        >
+          height="1">
           <use
             xlinkHref="#image0_2501_2757"
             transform="scale(0.0078125 0.010101)"
@@ -517,8 +497,7 @@ const SidebarIcons: {
           y1="38.7848"
           x2="28.0067"
           y2="34.687"
-          gradientUnits="userSpaceOnUse"
-        >
+          gradientUnits="userSpaceOnUse">
           <stop stopColor="#1A237E" stopOpacity="0.4" />
           <stop offset="1" stopColor="#1A237E" stopOpacity="0" />
         </linearGradient>
@@ -528,8 +507,7 @@ const SidebarIcons: {
           cy="0"
           r="1"
           gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(11.3317 9.59911) scale(44.0241 43.9267)"
-        >
+          gradientTransform="translate(11.3317 9.59911) scale(44.0241 43.9267)">
           <stop stopColor="white" stopOpacity="0.1" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
@@ -548,8 +526,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_2104_34370)">
         <path d="M0 0H18V18H0V0Z" fill="#414141" />
         <path
@@ -574,8 +551,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_2104_34386)">
         <path d="M0 0H18V18H0V0Z" fill="#F2F2F2" />
         <path
@@ -600,8 +576,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <path
         opacity="0.12"
         d="M15.75 6.75C15.75 9.23528 13.7353 11.25 11.25 11.25C11.0447 11.25 10.8427 11.2363 10.6447 11.2096C10.3191 11.1659 10.1563 11.144 10.0533 11.1587C9.94601 11.1741 9.88819 11.1936 9.79358 11.2465C9.70275 11.2973 9.61328 11.3867 9.43435 11.5656L8.25 12.75H6.75V14.25H5.25V15.75H3.45C3.02996 15.75 2.81994 15.75 2.65951 15.6683C2.51839 15.5963 2.40365 15.4816 2.33175 15.3405C2.25 15.1801 2.25 14.97 2.25 14.55V13.2471C2.25 13.0636 2.25 12.9719 2.27072 12.8856C2.2891 12.809 2.3194 12.7359 2.36052 12.6688C2.4069 12.5931 2.47176 12.5282 2.60147 12.3985L6.43435 8.56565C6.61328 8.38672 6.70275 8.29725 6.75352 8.20642C6.8064 8.11181 6.82594 8.05399 6.84129 7.94669C6.85602 7.84369 6.83413 7.68089 6.79036 7.35528C6.76374 7.15731 6.75 6.95526 6.75 6.75C6.75 4.26472 8.76472 2.25 11.25 2.25C13.7353 2.25 15.75 4.26472 15.75 6.75Z"
@@ -622,8 +597,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <path
         d="M12.75 12.75L16.5 9L12.75 5.25M5.25 5.25L1.5 9L5.25 12.75M10.5 2.25L7.5 15.75"
         stroke="#9EA3AE"
@@ -639,8 +613,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <path
         opacity="0.12"
         d="M2.25 5.85C2.25 4.58988 2.25 3.95982 2.49524 3.47852C2.71095 3.05516 3.05516 2.71095 3.47852 2.49524C3.95982 2.25 4.58988 2.25 5.85 2.25H12.15C13.4101 2.25 14.0402 2.25 14.5215 2.49524C14.9448 2.71095 15.289 3.05516 15.5048 3.47852C15.75 3.95982 15.75 4.58988 15.75 5.85V12.15C15.75 13.4101 15.75 14.0402 15.5048 14.5215C15.289 14.9448 14.9448 15.289 14.5215 15.5048C14.0402 15.75 13.4101 15.75 12.15 15.75H5.85C4.58988 15.75 3.95982 15.75 3.47852 15.5048C3.05516 15.289 2.71095 14.9448 2.49524 14.5215C2.25 14.0402 2.25 13.4101 2.25 12.15V5.85Z"
@@ -661,8 +634,7 @@ const SidebarIcons: {
       height="18"
       viewBox="0 0 18 18"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+      xmlns="http://www.w3.org/2000/svg">
       <path
         opacity="0.12"
         d="M16.5 6.75V5.85C16.5 4.58988 16.5 3.95982 16.2548 3.47852C16.039 3.05516 15.6948 2.71095 15.2715 2.49524C14.7902 2.25 14.1601 2.25 12.9 2.25L5.1 2.25C3.83988 2.25 3.20982 2.25 2.72852 2.49524C2.30516 2.71095 1.96095 3.05516 1.74524 3.47852C1.5 3.95982 1.5 4.58988 1.5 5.85L1.5 6.75L16.5 6.75Z"
@@ -675,6 +647,57 @@ const SidebarIcons: {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  ),
+  Kotlin: (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <g clipPath="url(#clip0_kotlin_icon)">
+        <path d="M0 18L9 9L18 18H0Z" fill="url(#paint0_linear)" />
+        <path d="M0 0H9L0 9V0Z" fill="url(#paint1_linear)" />
+        <path d="M9 0L0 9V18L9 9L18 0H9Z" fill="url(#paint2_linear)" />
+      </g>
+      <defs>
+        <linearGradient
+          id="paint0_linear"
+          x1="9"
+          y1="9"
+          x2="9"
+          y2="18"
+          gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#C757BC" />
+          <stop offset="0.375" stopColor="#D0609A" />
+          <stop offset="1" stopColor="#E1725C" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear"
+          x1="0"
+          y1="0"
+          x2="9"
+          y2="9"
+          gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#7F52FF" />
+          <stop offset="1" stopColor="#C757BC" />
+        </linearGradient>
+        <linearGradient
+          id="paint2_linear"
+          x1="9"
+          y1="0"
+          x2="9"
+          y2="18"
+          gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#7F52FF" />
+          <stop offset="0.5" stopColor="#C757BC" />
+          <stop offset="1" stopColor="#E1725C" />
+        </linearGradient>
+        <clipPath id="clip0_kotlin_icon">
+          <rect width="18" height="18" rx="4" fill="white" />
+        </clipPath>
+      </defs>
     </svg>
   ),
 };
