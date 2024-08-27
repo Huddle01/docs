@@ -24,8 +24,8 @@ In order to use the API, you will need to obtain an API key by connecting to you
   <HighLight className="my-3 w-full">
     <RequestStrip
       method={'GET'}
-      url={'https://api.huddle01.com/api/v1'}
-      endpoint={'get-recordings'}
+      url={'https://api.huddle01.com/api/v2/sdk'}
+      endpoint={'recordings'}
     />
   </HighLight>
 </div>
@@ -41,7 +41,7 @@ otherwise, the API will return all the recordings associated with your API Key.
 <div>
 <div className="flex items-center gap-4">
 <Pill >GET</Pill>
-<div className="text-sm font-normal text-slate-50">`/get-recordings`</div>
+<div className="text-sm font-normal text-slate-50">`/recordings`</div>
 
 </div>
 
@@ -61,7 +61,7 @@ The API supports a **GET** request with the following required parameters:
 
 <APIRequestCard
     requestType = "GET"
-    route="/get-recordings"
+    route="/recordings"
   >
 
 <APIRequestContent value="axios">
@@ -69,7 +69,7 @@ The API supports a **GET** request with the following required parameters:
       let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'https://api.huddle01.com/api/v1/get-recordings?meetingId={{meetingId}}&limit=1&cursor=1',
+        url: 'https://api.huddle01.com/api/v2/sdk/recordings?meetingId={{meetingId}}&limit=1&cursor=1',
         headers: { 
           'x-api-key': '••••••'
         }
@@ -92,14 +92,14 @@ The API supports a **GET** request with the following required parameters:
         redirect: "follow"
       };
 
-      fetch("https://api.huddle01.com/api/v1/get-recordings?limit=1&cursor=1", requestOptions)
+      fetch("https://api.huddle01.com/api/v2/sdk/recordings?limit=1&cursor=1", requestOptions)
             ```
     </APIRequestContent>
 
     <APIRequestContent value="cUrl">
       ```bash
 curl -X POST \
-  'https://api.huddle01.com/api/v1/get-recordings' \
+  'https://api.huddle01.com/api/v2/sdk/recordings' \
   --header 'Accept: */*' \
   --header 'x-api-key: {{API_KEY}}' \
   --header 'Content-Type: application/json' \

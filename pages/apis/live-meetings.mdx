@@ -26,7 +26,7 @@ In order to use the API, you will need to obtain an API key by connecting to you
   <HighLight className="my-3 w-full">
     <RequestStrip
       method={'GET'}
-      url={'https://api.huddle01.com/api/v1'}
+      url={'https://api.huddle01.com/api/v2/sdk'}
       endpoint={'live-meetings'}
     />
   </HighLight>
@@ -55,49 +55,48 @@ The API supports a **GET** request with the following required parameters:
 
 - **`x-api-key`** - Add your API Key to the headers to fetch all rooms associated with your API Key.
 
-
 </div>
 
 <APIRequestCard
     requestType = "GET"
     route="/live-meetings"
-    
-  >
+>
 
 <APIRequestContent value="axios">
       ```js
-      const response = await axios.get(
-        'https://api.huddle01.com/api/v1/live-meeting',
-        {},
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': {{API_KEY}},
-          },
-        }
+    const response = await axios.get(
+      'https://api.huddle01.com/api/v2/sdk/live-meeting',
+      {},
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': {{API_KEY}},
+        },
+      }
     );
-      ```
+    ```
     </APIRequestContent>
 
     
     <APIRequestContent value="fetch">
       ```js
-     const  response = await fetch("https://api.huddle01.com/api/v1/live-meeting", {
-     
-    method: "GET",
-    {},
-    headers: {
-        "Content-type": "application/json",
-        'x-api-key': {{API_KEY}},
-    }
-})
+      const response = await fetch(
+        "https://api.huddle01.com/api/v2/sdk/live-meeting",
+        {
+          method: "GET",
+          {},
+          headers: {
+            "Content-type": "application/json",
+            'x-api-key': {{API_KEY}},
+          }
+      })
       ```
     </APIRequestContent>
 
     <APIRequestContent value="cUrl">
       ```bash
 curl -X POST \
-  'https://api.huddle01.com/api/v1/live-meetings' \
+  'https://api.huddle01.com/api/v2/sdk/live-meetings' \
   --header 'Accept: */*' \
   --header 'x-api-key: {{API_KEY}}' \
   --header 'Content-Type: application/json' \
@@ -115,7 +114,10 @@ curl -X POST \
 
 Upon success, the API will return a response with an array of rooms with the following fields:
 
-- **`roomId`** - The roomId of the room created using Create Room API.
+- **`roomId`** - The roomId of the room.
+- **`startTime`** - The start time of session
+- **`liveStreamCount`** - The count of live streams associated with this session
+- **`recordingCount`** - The count of recordings associated with this session
 
 
 In case of an error, the API will return an error message with a corresponding status code.
@@ -124,39 +126,33 @@ In case of an error, the API will return an error message with a corresponding s
 
 <APIResponseCard>
   <APIRequestContent value="Success">
-    ```jsx
+      ```jsx
       {
+        "liveMeetings": [
           {
-            "liveMeetings": [
-              {
-                "roomId": "wpd-hjnj-cyf"
-              },
-              {
-                "roomId": "gvh-pmpn-nbe"
-              }
-            ]
+            "roomId": "mjc-vksd-ktu",
+            "startTime": "2024-08-27T18:29:56.345Z",
+            "livestreamCount": 1,
+            "recordingCount": 1
+          },
+          {
+            "roomId": "gar-ouoz-szl",
+            "startTime": "2024-08-27T17:29:42.694Z",
+            "livestreamCount": 0,
+            "recordingCount": 0
           }
+        ]
       }
-    ```
+      ```
   </APIRequestContent>
 
   <APIRequestContent value="Error">
 
     ```jsx
     {
-        "message": "Input validation failed",
-        "code": "BAD_REQUEST",
-        "issues": [
-            {
-                "code": "invalid_type",
-                "expected": "string",
-                "received": "number",
-                "path": [
-                    "roomId"
-                ],
-                "message": "Expected string, received number"
-            }
-        ]
+      "message": "Incorrect or no API key provided",
+      "ok": false,
+      "validated": false
     }
     ```
 
@@ -171,8 +167,8 @@ In case of an error, the API will return an error message with a corresponding s
   <HighLight className="my-3 w-3/4">
     <RequestStrip
       method={'GET'}
-      url={'https://api.huddle01.com/api/v1'}
-      endpoint={'live-meeting/?roomId=YOUR_ROOM_ID'}
+      url={'https://api.huddle01.com/api/v2/sdk'}
+      endpoint={'live-meeting/YOUR_ROOM_ID'}
     />
   </HighLight>
   <Button
@@ -198,7 +194,7 @@ In case of an error, the API will return an error message with a corresponding s
 <div>
 <div className="flex items-center gap-4">
 <Pill >GET</Pill>
-<div className="text-sm font-normal text-slate-50">`/live-meeting`</div>
+<div className="text-sm font-normal text-slate-50">`/live-meeting/:roomId`</div>
 
 </div>
 
@@ -209,61 +205,53 @@ In case of an error, the API will return an error message with a corresponding s
 The API supports a **GET** request with the following required parameters:
 
 - **`x-api-key`** - Add your API Key to the headers to fetch all rooms associated with your API Key.
-- **`roomId`** - Add the roomId in query params to fetch the details of a single active room.
+- **`YOUR_ROOM_ID`** - Add the roomId in path params to fetch the details of a single active room.
 
 
 </div>
 
 <APIRequestCard
     requestType = "GET"
-    route="/live-meeting"
-    
-  >
+    route="/live-meeting/:roomId"
+>
 
-<APIRequestContent value="axios">
+    <APIRequestContent value="axios">
       ```js
       const response = await axios.get(
-        'https://api.huddle01.com/api/v1/live-meeting',
-        {
-          roomId: 'YOUR_ROOM_ID',
-        },
+        'https://api.huddle01.com/api/v2/sdk/live-meeting/YOUR_ROOM_ID',
         {
           headers: {
             'Content-Type': 'application/json',
             'x-api-key': {{API_KEY}},
           },
         }
-    );
+      );
       ```
     </APIRequestContent>
 
     
     <APIRequestContent value="fetch">
       ```js
-     const  response = await fetch("https://api.huddle01.com/api/v1/live-meetings", {
-     
-    method: "GET",
-    {
-      roomId: 'YOUR_ROOM_ID',
-    },
-    headers: {
-        "Content-type": "application/json",
-        'x-api-key': {{API_KEY}},
-    }
-})
+      const response = await fetch(
+        "https://api.huddle01.com/api/v2/sdk/live-meetings/YOUR_ROOM_ID",
+        {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+            "x-api-key": "asdasd",
+          },
+        },
+      );
       ```
     </APIRequestContent>
 
     <APIRequestContent value="cUrl">
       ```bash
 curl -X GET \
-  'https://api.huddle01.com/api/v1/live-meetings' \
+  'https://api.huddle01.com/api/v2/sdk/live-meetings/YOUR_ROOM_ID' \
   --header 'Accept: */*' \
   --header 'x-api-key: {{API_KEY}}' \
   --header 'Content-Type: application/json' \
-  --data-raw '{
-    "roomId" : "YOUR_ROOM_ID",
-    }'
       ```
     </APIRequestContent>
   </APIRequestCard>
@@ -285,11 +273,17 @@ Upon success, the API will return a response with the following fields:
 <APIResponseCard>
   <APIRequestContent value="Success">
     ```jsx
-      {
+    {
+      "liveMeetings": [
         {
-          "roomId": "wpd-hjnj-cyf"
-        },
-      }
+            "roomId": "gar-ouoz-szl",
+            "startTime": "2024-08-27T17:29:42.694Z",
+            "currentPeerCount": 412,
+            "livestreamCount": 1,
+            "recordingCount": 1
+        }
+      ]
+    }
     ```
   </APIRequestContent>
 
@@ -297,19 +291,8 @@ Upon success, the API will return a response with the following fields:
 
     ```jsx
     {
-        "message": "Input validation failed",
-        "code": "BAD_REQUEST",
-        "issues": [
-            {
-                "code": "invalid_type",
-                "expected": "string",
-                "received": "number",
-                "path": [
-                    "roomId"
-                ],
-                "message": "Expected string, received number"
-            }
-        ]
+      "ok": false,
+      "message": "No live meetings found for this room id"
     }
     ```
 

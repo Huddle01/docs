@@ -15,23 +15,14 @@ import HighLight from '@components/common/HighLight';
 import Paragraph from '@components/common/Paragraph';
 import Pill from '@components/common/Pill/Pill';
 import { Callout } from 'nextra-theme-docs';
+import DeprecatedHeader from '@components/Card/Depreceted';
 
-## **Join Room Token API**
-
-The Huddle01 API provides the ability to create rooms for hosting various communication experiences.
-In order to use the API, you will need to obtain an API key by connecting to your wallet.
-
-## **Endpoint**
-<div className="flex justify-between w-full lg:flex-row flex-col">
-  <HighLight className="my-3 w-full">
-    <RequestStrip
-      method={'GET'}
-      url={'https://api.huddle01.com/api/v1'}
-      endpoint={'join-room-token'}
-    />
-  </HighLight>
+<div style={{
+  borderBottom: '1px solid #444',
+  marginBottom: '20px'
+}}>
+  <DeprecatedHeader title="Join Room Token API" />
 </div>
-
 
 <Paragraph className="mt-5">
   The Join Room Token API is used for the creation of tokens that can be used to join a room from an iframe. 
