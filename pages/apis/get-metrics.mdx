@@ -69,7 +69,7 @@ The API supports a **GET** request with the following required parameters:
             'x-api-key': {{API_KEY}},
           },
         }
-    );
+      );
       ```
     </APIRequestContent>
 
@@ -108,12 +108,11 @@ curl -X POST \
 
 Upon success, the API will return a response with an array of rooms with the following fields:
 
-- **`livestreamCount`** - The total number of livestreams for the API Key.
-- **`recordingCount`** - The total number of recordings for the API Key.
-- **`tokenGatedMeetings`** - The total number of token gated meetings for the API Key.
 - **`totalMeetings`** - The total number of meetings for the API Key.
 - **`totalDuration`** - The total number of minutes spent on meetings for the API Key.
 - **`totalUsers`** - The total number of users for the API Key.
+- **`recordingCount`** - The total number of recordings for the API Key.
+- **`livestreamCount`** - The total number of livestreams for the API Key.
 
 In case of an error, the API will return an error message with a corresponding status code.
 
@@ -122,14 +121,13 @@ In case of an error, the API will return an error message with a corresponding s
 <APIResponseCard>
   <APIRequestContent value="Success">
     ```jsx
-      {
-            "livestreamCount": 2,
-            "recordingCount": 7,
-            "tokenGatedMeetings": 2,
-            "totalMeetings": 10,
-            "totalDuration": 100,
-            "totalUsers": 10
-      }
+    {
+      "totalMeetings": 156,
+      "totalDuration": 10254,
+      "totalUsers": 849,
+      "recordingCount": 7,
+      "livestreamCount": 2
+    }
     ```
   </APIRequestContent>
 </APIResponseCard>

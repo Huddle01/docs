@@ -33,8 +33,8 @@ This API lets you retrieve the room details using either the room ID or the titl
   <HighLight className="my-3 w-full">
     <RequestStrip
       method={"GET"}
-      url={"https://api.huddle01.com/api/v1"}
-      endpoint={"room-details/{roomId}"}
+      url={"https://api.huddle01.com/api/v2/sdk"}
+      endpoint={"rooms/room-details/{roomId}"}
     />
   </HighLight>
 </div>
@@ -53,7 +53,7 @@ Overall, the Room Details API is a valuable resource for accessing information a
 <div>
 <div className="flex items-center gap-4">
 <Pill >GET</Pill>
-<div className="text-sm font-normal text-slate-50">`/room-details/{roomId}`</div>
+<div className="text-sm font-normal text-slate-50">`/rooms/room-details/{roomId}`</div>
 
 </div>
 
@@ -69,19 +69,19 @@ The API supports a **POST** request with the following required parameters:
 
 <APIRequestCard
     requestType = "GET"
-    route="/room-details/{roomId}"
+    route="/rooms/room-details/{roomId}"
     
   >
     <APIRequestContent value="cUrl">
       ```bash
-        curl --location --request GET 'https://api.huddle01.com/api/v1/room-details/{roomId}' \
+        curl --location --request GET 'https://api.huddle01.com/api/v2/sdk/rooms/room-details/{roomId}' \
         --header 'x-api-key: {{API_KEY}}' \
       ```
     </APIRequestContent>
     
     <APIRequestContent value="fetch">
       ```js
-        const  response = await fetch("https://api.huddle01.com/api/v1/room-details/{roomId}", {
+        const  response = await fetch("https://api.huddle01.com/api/v2/sdk/rooms/room-details/{roomId}", {
           method: "GET",
           headers: {
               'x-api-key': {{API_KEY}},
@@ -93,7 +93,7 @@ The API supports a **POST** request with the following required parameters:
     <APIRequestContent value="axios">
       ```js
       const response = await axios.get(
-        'https://api.huddle01.com/api/v1/room-details/{roomId}',
+        'https://api.huddle01.com/api/v2/sdk/rooms/room-details/{roomId}',
         {
           headers: {
             'x-api-key': {{API_KEY}},
@@ -124,25 +124,27 @@ In case of an error, the API will return an error message with a corresponding s
 <APIResponseCard>
   <APIRequestContent value="Success">
 ```jsx
-  {
-    "roomId": "nvw-fxtj-gha",
-    "roomLocked": true,
-    "metadata": {
-      "title": "deployeddd",
-      "hi": "axit"
-	  }
+{
+  "roomId": "nvw-fxtj-gha",
+  "roomLocked": true,
+  "metadata": {
+    "hosts": [],
+    "title": "",
+    "roomType": "video",
+    "meetingLink": "https://akmo.huddle01.com/voy-kpsa-hpo"
   }
-````
+}
+```
 
 </APIRequestContent>
 
 <APIRequestContent value="Error">
 
 ```jsx
-  {
-      "message": "Room Not Found",
-      "code": "BAD_REQUEST"
-  }
+{
+  "message": "Room Not Found",
+  "code": "BAD_REQUEST"
+}
 ```
 
 </APIRequestContent>

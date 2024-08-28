@@ -32,7 +32,7 @@ In order to use the API, you will need to obtain an API key by connecting to you
 
 
 <Paragraph className="mt-5">
-Whatever recordings are created using the SDK, will be listed in the Get Recordings API, if you want to fetch the recordings for a particular meeting, you can pass the `meetingId` as a query parameter.
+Whatever recordings are created using the SDK, will be listed in the Get Recordings API, if you want to fetch the recordings for a particular session, you can pass the `sessionId` as a query parameter.
 otherwise, the API will return all the recordings associated with your API Key.
 
 </Paragraph>
@@ -52,7 +52,7 @@ otherwise, the API will return all the recordings associated with your API Key.
 The API supports a **GET** request with the following required parameters:
 
 - **`x-api-key`** - Add your API Key to the headers to fetch all rooms associated with your API Key.
-- **`meetingId`** - The meeting ID for which you want to fetch the recordings, (optional).
+- **`sessionId`** - The session ID for which you want to fetch the recordings, (optional).
 - **`limit`** - The number of recordings you want to fetch, `(optional)`.
 - **`cursor`** - The cursor for pagination, (optional).
 
@@ -69,7 +69,7 @@ The API supports a **GET** request with the following required parameters:
       let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'https://api.huddle01.com/api/v2/sdk/recordings?meetingId={{meetingId}}&limit=1&cursor=1',
+        url: 'https://api.huddle01.com/api/v2/sdk/recordings?sessionId={{sessionId}}&limit=1&cursor=1',
         headers: { 
           'x-api-key': '••••••'
         }
@@ -111,7 +111,7 @@ curl -X POST \
 </div>
 
 <Callout>
-  `meetingId` is an optional parameter. To Fetch `meetingId` of a particular roomId. You can use the [Get Meeting API](/apis/meeting-details/meeting-list).
+  `sessionId` is an optional parameter. To Fetch `sessionId` of a particular roomId. You can use the [Get session API](/apis/session-details/session-list).
 </Callout>
 
 <div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-10">

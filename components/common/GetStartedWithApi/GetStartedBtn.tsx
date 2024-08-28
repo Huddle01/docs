@@ -27,7 +27,7 @@ export const GetStartedBtn: React.FC = () => {
 
 export const Endpoint = () => (
   <Wrapper
-    onClick={() => window.open("https://api.huddle01.com/api/v1")}
+    onClick={() => window.open("https://api.huddle01.com/api/v2/sdk")}
     className="flex-col items-start p-8"
   >
     <div className="flex items-center gap-4">
@@ -42,7 +42,7 @@ export const Endpoint = () => (
     </div>
 
     <div className="mt-6 bg-[#202328] border border-slate-600 rounded-lg p-3 w-full text-slate-50/2 font-sm font-normal">
-      https://api.huddle01.com/api/v1/
+      https://api.huddle01.com/api/v2/sdk
     </div>
   </Wrapper>
 );

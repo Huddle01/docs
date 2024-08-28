@@ -23,8 +23,8 @@ import { Callout } from 'nextra-theme-docs';
   <HighLight className="my-3 w-3/4">
     <RequestStrip
       method={'GET'}
-      url={'https://api.huddle01.com/api/v1'}
-      endpoint={'rooms/participant-list?meetingId={meetingId}'}
+      url={'https://api.huddle01.com/api/v2/sdk'}
+      endpoint={'rooms/participant-list?sessionId={sessionId}'}
     />
   </HighLight>
   <Button
@@ -39,7 +39,7 @@ import { Callout } from 'nextra-theme-docs';
 
 <Paragraph className="mt-5">
   The Participant List API is a useful tool for retrieving information about a
-  specific meeting room. By passing in the meetingId as a parameter, you can easily
+  specific meeting room. By passing in the sessionId as a parameter, you can easily
   access a list of participants who joined the meeting.
 
 This API is especially useful if you need to retrieve information about a room for administrative purposes or if you want to gather a list of participants.
@@ -48,14 +48,14 @@ Overall, the Participant List API is a valuable resource for accessing participa
 </Paragraph>
 
 <Callout>
-Retrieve the meetingId by utilizing the [Meeting List API](/apis/meeting-details/meeting-list) and copying the meetingId associated with the particular meeting.
+Retrieve the sessionId by utilizing the [Meeting List API](/apis/meeting-details/meeting-list) and copying the sessionId associated with the particular meeting.
 </Callout>
 
 <div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-10  md:h-[24.5rem]">
 <div>
 <div className="flex items-center gap-4">
 <Pill >GET</Pill>
-<div className="text-sm font-normal text-slate-50">`/rooms/participant-list?meetingId={meetingId}`</div>
+<div className="text-sm font-normal text-slate-50">`/rooms/participant-list?sessionId={sessionId}`</div>
 
 </div>
 
@@ -65,40 +65,42 @@ Retrieve the meetingId by utilizing the [Meeting List API](/apis/meeting-details
 
 The API supports a **GET** request with the following required parameters:
 
-- **`meetingId`** - The meetingId of the meeting, for which you need to get the details.
+- **`sessionId`** - The sessionId of the meeting, for which you need to get the details.
 
 
 </div>
 
 <APIRequestCard
     requestType = "GET"
-    route="rooms/participant-list?meetingId={meetingId}"
+    route="rooms/participant-list?sessionId={sessionId}"
     
   >
     <APIRequestContent value="cUrl">
       ```bash
-        curl --location --request GET 'https://api.huddle01.com/api/v1/rooms/participant-list?meetingId={meetingId}' \
+        curl --location --request GET 'https://api.huddle01.com/api/v2/sdk/rooms/participant-list?sessionId={sessionId}' \
         --header 'x-api-key: {{API_KEY}}' \
         --header 'Content-Type: application/json' \
       ```
     </APIRequestContent>
     
     <APIRequestContent value="fetch">
-      ```js
-        const  response = await fetch("https://api.huddle01.com/api/v1/rooms/participant-list?meetingId={meetingId}", {
-          method: "GET",
-          headers: {
-              "Content-type": "application/json",
-              'x-api-key': {{API_KEY}},
-          },
-        }
+    ```js
+    const response = await fetch(
+      "https://api.huddle01.com/api/v2/sdk/rooms/participant-list?sessionId={sessionId}",
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          'x-api-key': {{API_KEY}},
+        },
+      }
     )
-      ```
+    ```
     </APIRequestContent>
     <APIRequestContent value="axios">
       ```js
       const response = await axios.get(
-        'https://api.huddle01.com/api/v1/rooms/participant-list?meetingId={meetingId}',
+        'https://api.huddle01.com/api/v2/sdk/rooms/participant-list?sessionId={sessionId}',
         {
           headers: {
             'Content-Type': 'application/json',
@@ -121,7 +123,7 @@ The API supports a **GET** request with the following required parameters:
 
 Upon success, the API will return a response with the following fields:
 
-- **`participants`** - The list of participants who joined the meeting.
+  - **`participants`** - The list of participants who joined the meeting.
   - **`peerId`** - The peerId of the participant.
   - **`joinTime`** - The time when the participant joined the meeting.
   - **`exitTime`** - The time when the participant exited the meeting.
@@ -136,16 +138,17 @@ In case of an error, the API will return an error message with a corresponding s
   <APIRequestContent value="Success">
 ```jsx
 {
-    "participants": [
-        {
-            "peerId": "peerId--AmxuhmUBW17kP1FGL2mU",
-            "joinTime": 1706810039986,
-            "exitTime": 1706811249372,
-            "metadata": {
-                ...
-            }
-        },
-    ]
+  "participants": [
+    {
+      "peerId": "peerId--AmxuhmUBW17kP1FGL2mU",
+      "joinTime": 1706810039986,
+      "exitTime": 1706811249372,
+      "metadata": {
+          ...
+      }
+    },
+    ...
+  ]
 }
 ````
 
@@ -154,10 +157,9 @@ In case of an error, the API will return an error message with a corresponding s
 <APIRequestContent value="Error">
 
 ```jsx
-  {
-      "message": "Room Not Found",
-      "code": "BAD_REQUEST"
-  }
+{
+  "message": "Session Not Found",
+}
 ```
 
 </APIRequestContent>
