@@ -20,7 +20,7 @@
       "layout": "full"
     }
   },
-  "metadata": {
+  "get-metadata": {
     "title": "Get Metadata API",
     "theme": {
       "toc": false,
