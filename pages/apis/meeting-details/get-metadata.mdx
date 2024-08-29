@@ -27,7 +27,7 @@ In order to use the API, you will need to obtain an API key for the project from
     <RequestStrip
       method={'GET'}
       url={'https://api.huddle01.com/api/v2/sdk'}
-      endpoint={'/rooms/get-metadata/:roomId'}
+      endpoint={'rooms/get-metadata/:roomId'}
     />
   </HighLight>
 </div>
@@ -113,12 +113,7 @@ curl -X POST \
 
 Upon success, the API will return a response with an array of rooms with the following fields:
 
-- **`rooms`** - The list of rooms with their respective roomId, createdAt, roomLocked and metadata.
-- **`pageSize`** - The number of rooms in current page
-- **`current`** - The current page number
-- **`nextCursor`** - The next page number
-- **`prevCursor`** - The previous page number
-- **`count`** - The total number of rooms in the project 
+- **`metadata`** - Metadata of the room 
 
 In case of an error, the API will return an error message with a corresponding status code.
 
@@ -128,12 +123,21 @@ In case of an error, the API will return an error message with a corresponding s
   <APIRequestContent value="Success">
     ```json
     {
-        'metadata': {
-            'title': 'Huddle01 Room' 
-        }
+      "metadata": {
+        "title": "Huddle01 Room"
+      }
     }
     ```
   </APIRequestContent>
+
+   <APIRequestContent value="Error">
+    ```json
+    {
+      "message": "Room Not Found"
+    }
+    ```
+  </APIRequestContent>
+ 
 </APIResponseCard>
 
 </div>
