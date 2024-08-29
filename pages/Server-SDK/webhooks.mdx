@@ -58,8 +58,6 @@ const { data } = webhookReceiver.createTypedWebhookData(
 
         const data = await receiver.receive(req.body, header);
 
-        console.log({ data });
-
         switch (receivedData.event) {
           case "meeting:started": {
             // !! Thie helper will give properly typed data in typescript

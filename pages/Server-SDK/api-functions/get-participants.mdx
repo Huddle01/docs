@@ -24,11 +24,11 @@ const participantsList = async () => {
     apiKey: process.env.API_KEY!,
   });
 
-  const participants = await api.getParticipants({
+  const participantsRes = await api.getParticipants({
     sessionId: 'YOUR_SESSION_ID',
   });
 
-  return participants?.data;
+  return participantsRes;
 };
 ```
 

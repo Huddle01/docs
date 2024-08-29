@@ -25,15 +25,13 @@ const getRoomId = async () => {
     apiKey: process.env.API_KEY!,
   });
 
-  const createNewRoom = await api.createRoom({
+  const newRoom = await api.createRoom({
     roomLocked: true,
     metadata: JSON.stringify({
       'title': 'Huddle01 Meeting',
     })
   });
 
-  const roomId = createNewRoom?.data;
-
-  return roomId;
+  return newRoom;
 };
 ```

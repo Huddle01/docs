@@ -26,13 +26,13 @@ const meetingsList = async () => {
     roomId: 'YOUR_ROOM_ID',
   });
 
-  return meetingsList?.data;
+  return meetingsList;
 };
 ```
 
 ### Returns 
 
-`getRoomMeetings()` returns a list of meetings with following fields. 
+`getSessions()` returns a list of sessions with following fields. 
 
 <OptionTable
     headers={['Name', 'Type', 'Description']}
@@ -57,15 +57,13 @@ const meetingsList = async () => {
 
 ```json
 {
-    "data": {
-        "meetings": [
-            {
-                "sessionId": "YOUR_SESSION_ID",
-                "startTime": 1707929199649, // epoch timestamp
-                "endTime": 1707933488746 // epoch timestamp
-            }
-        ]
-    }
+    "sessions": [
+        {
+            "sessionId": "YOUR_SESSION_ID",
+            "startTime": 1707929199649, // epoch timestamp
+            "endTime": 1707933488746 // epoch timestamp
+        }
+    ]
 }
 ```
 
