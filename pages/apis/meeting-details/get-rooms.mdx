@@ -117,7 +117,7 @@ Upon success, the API will return a response with an array of rooms with the fol
 - **`current`** - The current page number
 - **`nextCursor`** - The next page number
 - **`prevCursor`** - The previous page number
-- **`total`** - The total number of rooms in the project 
+- **`count`** - The total number of rooms in the project 
 
 In case of an error, the API will return an error message with a corresponding status code.
 
@@ -125,12 +125,12 @@ In case of an error, the API will return an error message with a corresponding s
 
 <APIResponseCard>
   <APIRequestContent value="Success">
-    ```jsx
+    ```json
     {
       "rooms": [
           {
               "roomId": "dummy-room-id",
-              "createdAt": "2024-08-06T06:42:06.356Z",
+              "createdAt": 1724880119036,
               "roomLocked": false,
               "metadata": null
           }
@@ -139,9 +139,9 @@ In case of an error, the API will return an error message with a corresponding s
       "current": 1,
       "nextCursor": 2,
       "prevCursor": 0,
-      "total": 104
+      "count": 104
     }
- ```
+    ```
   </APIRequestContent>
 </APIResponseCard>
 

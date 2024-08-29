@@ -33,6 +33,11 @@ const rooms = async () => {
     headers={['Name', 'Type', 'Description']}
     options={[
         [
+            'pageSize',
+            'number',
+            'The number of rooms in current page'
+        ],
+        [
             'nextCursor',
             'number',
             'The cursor to fetch the next page of rooms.'
@@ -58,41 +63,37 @@ const rooms = async () => {
             'The unique identifier of the room.'
         ],
         [
-            'meetingUrl',
-            'string',
-            'The meeting URL of the room.'
-        ],
-        [
-            'startTime',
+            'createdAt',
             'number',
-            'The start time of the room in timestamp epoch format.'
+            'The creation time of the room in timestamp epoch format.'
         ],
         [
-            'expiryTime',
-            'number',
-            'The expiry time of the room in timestamp epoch format.'
+            'roomLocked',
+            'boolean',
+            'State indicating if room is locked'
         ],
         [
-            'roomType',
-            "'VIDEO' | 'AUDIO'",
-            'The type of the room. It can be either VIDEO or AUDIO.'
+            'metadata',
+            "string",
+            'The metadata associated with the room'
         ]
     ]}
 />
 
 ```json
-  {
-      "nextCursor": 1,
-      "prevCursor": 0,
-      "count": 1,
-      "rooms": [
-        {
-            "roomId": "dummy-room-id",
-            "meetingUrl": "https://app.huddle01.com/dummy-room-id",
-            "startTime": null, // start time in timestamp epoch format
-            "expiryTime": null, // expiry time in timestamp epoch format
-            "roomType": "VIDEO" // VIDEO or AUDIO
-        }
-      ]
-  }
+{
+  "rooms": [
+      {
+          "roomId": "dummy-room-id",
+          "createdAt": "2024-08-06T06:42:06.356Z",
+          "roomLocked": false,
+          "metadata": null
+      }
+  ],
+  "pageSize": 1,
+  "current": 1,
+  "nextCursor": 2,
+  "prevCursor": 0,
+  "count": 104
+}
 ```

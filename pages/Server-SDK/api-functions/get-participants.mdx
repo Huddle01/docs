@@ -7,11 +7,11 @@ import { Callout } from 'nextra-theme-docs';
 
 # Get Participants 
 
-This method returns a list of participants in a meetings. By passing the `meetingId`, you can 
+This method returns a list of participants in a meetings. By passing the `sessionId`, you can 
 easily access a list of participants who joined the meeting. 
 
 <Callout>
-You can retrieve the `meetingId` by using `getRoomMeetings()`. 
+You can retrieve the `sessionId` by using `getRoomMeetings()`. 
 </Callout>
 
 ### Example 
@@ -25,7 +25,7 @@ const participantsList = async () => {
   });
 
   const participants = await api.getParticipants({
-    meetingId: 'YOUR_MEETING_ID',
+    sessionId: 'YOUR_SESSION_ID',
   });
 
   return participants?.data;
@@ -40,40 +40,40 @@ const participantsList = async () => {
     headers={["Name", "Type", "Description"]}
     options={[
         [
-            'roomId',
+            'peerId',
             'string',
-            'The room id of the meeting'
+            'The peer id of the user'
         ],
         [
-            'hostWalletAddress',
-            'string[]',
-            'list of host wallet addresses'
-        ],
-        [
-            'duration',
+            'joinTime',
             'number',
-            'The duration of the meeting in minutes'
+            'Time of joining the call in Epochs'
         ],
         [
-            'participants',
-            '{ displayName: string, walletAddress: string }',
-            'Participants list with name and wallet address'
+            'exitTIme',
+            'number | undefined',
+            'Time of exiting the call in Epochs'
         ],
+        [
+          'metadata',
+          'unknown',
+          'Metadata associated with the peer'
+        ]
     ]}
 />
 
 ```json
 {
-    "data": {
-        "roomId": "YOUR_ROOM_ID",
-        "hostWalletAddress": [],
-        "duration": 23, // this will be in minutes
-        "participants": [
-            {
-                "displayName": "John Doe",
-                "walletAddress": "0x1234567890", // if walletAddress is passed while creating token
-            }
-        ]
-    }
+  "participants": [
+    {
+      "peerId": "peerId--AmxuhmUBW17kP1FGL2mU",
+      "joinTime": 1706810039986,
+      "exitTime": 1706811249372,
+      "metadata": {
+          ...
+      }
+    },
+    ...
+  ]
 }
-```
+````

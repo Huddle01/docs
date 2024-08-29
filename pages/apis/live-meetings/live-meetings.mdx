@@ -1,5 +1,5 @@
 ---
-title: 'Live Meetings API'
+title: 'Get Live Meetings API'
 ---
 
 import JoinRoomToken from '@components/ApiRef/JoinRoomToken';
@@ -63,7 +63,7 @@ The API supports a **GET** request with the following required parameters:
 >
 
 <APIRequestContent value="axios">
-      ```js
+    ```js
     const response = await axios.get(
       'https://api.huddle01.com/api/v2/sdk/live-meeting',
       {},
@@ -100,7 +100,6 @@ curl -X POST \
   --header 'Accept: */*' \
   --header 'x-api-key: {{API_KEY}}' \
   --header 'Content-Type: application/json' \
-  
       ```
     </APIRequestContent>
   </APIRequestCard>
@@ -115,7 +114,7 @@ curl -X POST \
 Upon success, the API will return a response with an array of rooms with the following fields:
 
 - **`roomId`** - The roomId of the room.
-- **`startTime`** - The start time of session
+- **`startTime`** - The start time of session in Epoch
 - **`liveStreamCount`** - The count of live streams associated with this session
 - **`recordingCount`** - The count of recordings associated with this session
 
@@ -126,18 +125,18 @@ In case of an error, the API will return an error message with a corresponding s
 
 <APIResponseCard>
   <APIRequestContent value="Success">
-      ```jsx
+      ```json
       {
         "liveMeetings": [
           {
             "roomId": "mjc-vksd-ktu",
-            "startTime": "2024-08-27T18:29:56.345Z",
+            "startTime": 1724825547555,
             "livestreamCount": 1,
             "recordingCount": 1
           },
           {
             "roomId": "gar-ouoz-szl",
-            "startTime": "2024-08-27T17:29:42.694Z",
+            "startTime": 1724180396850,
             "livestreamCount": 0,
             "recordingCount": 0
           }
@@ -265,19 +264,23 @@ curl -X GET \
 
 Upon success, the API will return a response with the following fields:
 
-- **`roomId`** - The roomId of the room created using Create Room API.
+- **`roomId`** - The roomId of the room.
+- **`startTime`** - The start time of session in epoch
+- **`liveStreamCount`** - The count of live streams associated with this session
+- **`recordingCount`** - The count of recordings associated with this session
+- **`currentPeerCount`** - The count of peers currently inside session 
 
 
 </div>
 
 <APIResponseCard>
   <APIRequestContent value="Success">
-    ```jsx
+    ```json
     {
-      "liveMeetings": [
+      "livemeetings": [
         {
-            "roomId": "gar-ouoz-szl",
-            "startTime": "2024-08-27T17:29:42.694Z",
+            "roomid": "gar-ouoz-szl",
+            "starttime": 1724825547555,
             "currentPeerCount": 412,
             "livestreamCount": 1,
             "recordingCount": 1
@@ -289,7 +292,7 @@ Upon success, the API will return a response with the following fields:
 
   <APIRequestContent value="Error">
 
-    ```jsx
+    ```json
     {
       "ok": false,
       "message": "No live meetings found for this room id"

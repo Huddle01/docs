@@ -108,8 +108,8 @@ curl -X POST \
 
 Upon success, the API will return a response with an array of rooms with the following fields:
 
-- **`totalMeetings`** - The total number of meetings for the API Key.
-- **`totalDuration`** - The total number of minutes spent on meetings for the API Key.
+- **`totalSessions`** - The total number of sessions for the API Key.
+- **`totalDuration`** - The total number of minutes spent on sessions for the API Key.
 - **`totalUsers`** - The total number of users for the API Key.
 - **`recordingCount`** - The total number of recordings for the API Key.
 - **`livestreamCount`** - The total number of livestreams for the API Key.
@@ -122,7 +122,7 @@ In case of an error, the API will return an error message with a corresponding s
   <APIRequestContent value="Success">
     ```jsx
     {
-      "totalMeetings": 156,
+      "totalSessions": 156,
       "totalDuration": 10254,
       "totalUsers": 849,
       "recordingCount": 7,

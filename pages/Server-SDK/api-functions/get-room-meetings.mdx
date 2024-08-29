@@ -1,17 +1,17 @@
 ---
-title: 'getRoomMeetings()'
+title: 'getSessions()'
 ---
 
 import OptionTable from '@components/common/Table/OptionTable';
 import { Callout } from 'nextra-theme-docs';
 
-# Get Room Meetings 
+# Get Sessions
 
-`getRoomMeetings()` returns all the meetings from given `roomId`. 
+`getSessions()` returns all the meetings for a given `roomId`. 
 By passing `roomId` you can get list of meetings along with their start and end time. 
 
 <Callout>
-`meetingId` and `roomId` are different, one `roomId` can have multiple meetings i.e. multiple `meetingId`s. 
+`sessionId` and `roomId` are different, one `roomId` can have multiple sessions i.e. multiple `sessionId`s. 
 </Callout>
 
 ```ts 
@@ -38,18 +38,18 @@ const meetingsList = async () => {
     headers={['Name', 'Type', 'Description']}
     options={[
         [
-            'meetingId',
+            'sessionId',
             'string',
             'Your meeting ID',
         ],
         [
             'startTime',
-            'string',
+            'number',
             'Start time of the meeting in epoch timestamp format',
         ],
         [
             'endTime',
-            'string',
+            'number',
             'End time of the meeting in epoch timestamp format',
         ],
     ]}
@@ -60,7 +60,7 @@ const meetingsList = async () => {
     "data": {
         "meetings": [
             {
-                "meetingId": "YOUR_MEETING_ID",
+                "sessionId": "YOUR_SESSION_ID",
                 "startTime": 1707929199649, // epoch timestamp
                 "endTime": 1707933488746 // epoch timestamp
             }
