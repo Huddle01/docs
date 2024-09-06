@@ -616,7 +616,24 @@ const SidebarIcons: {
       />
     </svg>
   ),
-  "API Reference": (
+  "API Reference V1": (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12.75 12.75L16.5 9L12.75 5.25M5.25 5.25L1.5 9L5.25 12.75M10.5 2.25L7.5 15.75"
+        stroke="#9EA3AE"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  ),
+  "API Reference V2": (
     <svg
       width="18"
       height="18"

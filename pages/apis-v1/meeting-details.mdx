@@ -1,0 +1,19 @@
+---
+title: 'Meeting Details API'
+---
+
+import { meetingDetailsApi  } from '@components/assets/Data/data';
+import GradientCard from '@components/common/GradientCard/GradientCard';
+
+# Room and Meeting Details APIs
+
+The Huddle01 SDK provides a comprehensive suite of APIs for Room and Meeting Details. These APIs allow you to obtain information on created rooms, conducted sessions within each room, and participant list details.
+
+
+<div className="my-16 xl:max-w-none">
+  <div className="not-prose mt-4 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
+    {meetingDetailsApi.map(resource => (
+      <GradientCard key={resource.href} resource={resource} />
+    ))}
+  </div>
+</div>
