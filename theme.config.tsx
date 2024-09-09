@@ -112,7 +112,7 @@ const config: DocsThemeConfig = {
   },
   gitTimestamp: null,
   chat: {
-    link: "https://discord.gg/huddle01-890224574761926756",
+    link: "https://discord.com/invite/huddle01",
   },
 };
 
