@@ -34,7 +34,7 @@
   "api-keys": "Get an API key",
   "apis": "API Reference V2",
   "apis-v1": "API Reference V1",
-
+  "platform-apis": "Product APIs",
   "--SDKs": {
     "type": "separator",
     "title": "SDKs"
