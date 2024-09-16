@@ -1,5 +1,6 @@
+
 ---
-title: 'getParticipants()'
+title: 'getLiveParticipantsDetails()'
 ---
 
 import OptionTable from '@components/common/Table/OptionTable';
@@ -7,11 +8,11 @@ import { Callout } from 'nextra-theme-docs';
 
 # Get Participants Detail
 
-This method returns a list of participants in a meetings. By passing the `sessionId`, you can 
-easily access a list of participants who joined the meeting. 
+This method returns a list of participants in a live meetings. By passing the `roomId`, you can 
+easily access a list of participants who are currently attending the meeting. 
 
 <Callout>
-You can retrieve the `sessionId` by using `getRoomMeetings()`. 
+You can retrieve the `roomId` by using `getRooms()`. 
 </Callout>
 
 ### Example 
@@ -19,13 +20,13 @@ You can retrieve the `sessionId` by using `getRoomMeetings()`.
 ```ts 
 import { API } from '@huddle01/server-sdk/api';
 
-const participantsList = async () => {
+const liveParticipantsList = async () => {
   const api = new API({
     apiKey: process.env.API_KEY!,
   });
 
-  const participantsRes = await api.getParticipantsDetails({
-    sessionId: 'YOUR_SESSION_ID',
+  const participantsRes = await api.getLiveParticipantsDetails({
+    roomId: 'YOUR_ROOM_ID',
   });
 
   return participantsRes;

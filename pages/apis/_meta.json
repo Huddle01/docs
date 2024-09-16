@@ -33,12 +33,5 @@
       "toc": false,
       "layout": "full"
     }
-  },
-  "join-room-token": {
-    "title": "Join Room Token API",
-    "theme": {
-      "toc": false,
-      "layout": "full"
-    }
   }
 }

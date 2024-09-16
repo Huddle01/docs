@@ -4,7 +4,7 @@ title: "getLiveMeetings()"
 
 import OptionTable from '@components/common/Table/OptionTable';
 
-# Get Live Meetings 
+# Get Live Sessions
 
 This method retrieves the list of live meetings from a given `API_KEY`. 
 Live meetings are meetings which are currently running.
@@ -14,20 +14,20 @@ Live meetings are meetings which are currently running.
 ```ts 
 import { API } from '@huddle01/server-sdk/api';
 
-const liveMeetings = async () => {
+const liveSessions = async () => {
   const api = new API({
     apiKey: process.env.API_KEY!,
   });
 
-  const liveMeetings = await api.getLiveMeetings();
+  const liveSessions = await api.getLiveSessions();
 
-  return liveMeetings;
+  return liveSessions;
 };
 ```
 
 ### Returns 
 
-`getLiveMeetings()` function will return an array of rooms with the following fields:
+`getLiveSessions()` function will return an array of rooms with the following fields:
 
 <OptionTable
   headers={["Name", "Type", "Description"]}
@@ -57,7 +57,7 @@ const liveMeetings = async () => {
 
 ```json
 {
-  "liveMeetings": [
+  "liveSessions": [
     {
       "roomId": "mjc-vksd-ktu",
       "startTime": 1724911036147,
@@ -85,14 +85,14 @@ Live meetings are meetings which are currently running.
 ```ts 
 import { API } from '@huddle01/server-sdk/api';
 
-const liveMeetings = async () => {
+const liveSessions = async () => {
   const api = new API({
     apiKey: process.env.API_KEY!,
   });
 
   const roomId = 'YOUR_ROOM_ID'
 
-  const liveMeetings = await api.getLiveMeetings({ roomId });
+  const liveSessions = await api.getLiveMeetings({ roomId });
 
   return liveMeetings.data;
 };
@@ -100,7 +100,7 @@ const liveMeetings = async () => {
 
 ### Returns 
 
-`getLiveMeetings()` function will return an array of rooms with the following fields:
+`getLiveSessions()` function will return an array of rooms with the following fields:
 
 <OptionTable
   headers={["Name", "Type", "Description"]}
@@ -136,7 +136,7 @@ const liveMeetings = async () => {
 
 ```json
 {
-  "livemeetings": [
+  "liveSessions": [
     {
         "roomid": "gar-ouoz-szl",
         "starttime": 1724911036147,

@@ -17,16 +17,16 @@ By passing `roomId` you can get list of meetings along with their start and end 
 ```ts 
 import { API } from '@huddle01/server-sdk/api';
 
-const meetingsList = async () => {
+const sessionList = async () => {
   const api = new API({
     apiKey: process.env.API_KEY!,
   });
 
-  const meetingsList = await api.getRoomMeetings({
+  const sessionList = await api.getRoomSessions({
     roomId: 'YOUR_ROOM_ID',
   });
 
-  return meetingsList;
+  return sessionList;
 };
 ```
 
