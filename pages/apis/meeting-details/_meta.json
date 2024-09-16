@@ -1,4 +1,11 @@
 {
+  "create-room": {
+    "title": "Create Room API",
+    "theme": {
+      "toc": false,
+      "layout": "full"
+    }
+  },
   "room-details": {
     "title": "Room Details API",
     "theme": {
@@ -7,7 +14,7 @@
     }
   },
   "meeting-list": {
-    "title": "Meeting List API",
+    "title": "Session List API",
     "theme": {
       "toc": false,
       "layout": "full"
