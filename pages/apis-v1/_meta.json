@@ -1,0 +1,65 @@
+{
+  "index": {
+    "title": "Getting Started",
+    "theme": {
+      "layout": "full",
+      "toc": false
+    }
+  },
+  "create-room": {
+    "title": "Create Room",
+    "theme": {
+      "layout": "full",
+      "toc": false
+    }
+  },
+  "join-room-token": {
+    "title": "Join Room Token API",
+    "theme": {
+      "toc": false,
+      "layout": "full"
+    }
+  },
+  "get-rooms": {
+    "title": "Get Rooms API",
+    "theme": {
+      "toc": false,
+      "layout": "full"
+    }
+  },
+  "get-metrics": {
+    "title": "Get Key Metrics API",
+    "theme": {
+      "toc": false,
+      "layout": "full"
+    }
+  },
+  "get-recordings": {
+    "title": "Get Recordings API",
+    "theme": {
+      "toc": false,
+      "layout": "full"
+    }
+  },
+  "live-meetings": {
+    "title": "Live Meetings API",
+    "theme": {
+      "toc": false,
+      "layout": "full"
+    }
+  },
+  "meeting-details": {
+    "title": "Room & Meetings API",
+    "theme": {
+      "toc": false,
+      "layout": "full"
+    }
+  },
+  "preview-peers": {
+    "title": "Preview Live Meeting Peers AP",
+    "theme": {
+      "toc": false,
+      "layout": "full"
+    }
+  }
+}

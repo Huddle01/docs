@@ -1,0 +1,188 @@
+---
+title: "Create Room API"
+---
+
+import CreateRoom from "@components/ApiRef/CreateRoom";
+import CreateRoomResponse from "@components/ApiRef/CreateRoomResponse";
+import RequestStrip from "@components/ApiRequest/RequestStrip";
+import {
+  APIRequestCard,
+  APIRequestContent,
+  APIResponseCard,
+} from "@components/common/ApiCard/ApiCard";
+import { Button } from "@components/common/Button/Button";
+import HighLight from "@components/common/HighLight";
+import Paragraph from "@components/common/Paragraph";
+import Pill from "@components/common/Pill/Pill";
+import { Callout } from "nextra-theme-docs";
+
+# Create Room API
+
+The Huddle01 API provides the ability to create rooms for hosting various communication experiences.
+In order to use the API, you will need to obtain an API key by connecting to your wallet.
+
+## **Endpoint**
+
+<div className="flex md:justify-between md:flex-row flex-col">
+  <HighLight className="my-3 w-full">
+    <RequestStrip
+      method={"POST"}
+      url={"https://api.huddle01.com/api/v2/sdk"}
+      endpoint={"rooms/create-room"}
+    />
+  </HighLight>
+</div>
+
+<Paragraph className="mt-5">
+  The Create Room API is to create a meeting room and obtain roomId.
+</Paragraph>
+
+<div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-10  md:h-[24.5rem]">
+<div>
+<div className="flex items-center gap-4">
+<Pill >POST</Pill>
+<div className="text-sm font-normal text-slate-50">/rooms/create-room</div>
+
+</div>
+
+<div className="mt-7 font-mono text-2xl font-bold text-[#f1f5f9]">
+  Create Room Api
+</div>
+
+The API supports a **POST** request with the following required parameters:
+
+- **`roomLocked`** - A boolean value that determines whether the room is locked or not.
+- **`metadata`** - A key-value pair object that can be used to store additional information about the room.
+
+</div>
+
+<APIRequestCard
+    requestType = "POST"
+    route="/rooms/create-room"
+  >
+
+    <APIRequestContent value="axios">
+      ```js
+      const response = await axios.post(
+        'https://api.huddle01.com/api/v2/sdk/rooms/create-room',
+        {
+          roomLocked: false,
+          metadata: {
+            title: "My Room",
+            hostWallets: ['0x29f54719E88332e70550cf8737293436E9d7b10b']
+          },
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': {{API_KEY}},
+          },
+        }
+    );
+      ```
+    </APIRequestContent>
+
+    <APIRequestContent value="fetch">
+      ```js
+     const  response = await fetch("https://api.huddle01.com/api/v2/sdk/rooms/create-room", {
+       method: "POST",
+        {
+            title: "Huddle01-Test",
+            hostWallets: ['0x29f54719E88332e70550cf8737293436E9d7b10b']
+        },
+        headers: {
+            "Content-type": "application/json",
+            'x-api-key': {{API_KEY}},
+        }
+    });
+
+    ```
+   </APIRequestContent>
+
+    <APIRequestContent value="cUrl">
+        ```bash
+        curl -X POST \
+         'https://api.huddle01.com/api/v2/sdk/rooms/create-room' \
+         --header 'Accept: _/_' \
+         --header 'x-api-key: {{API_KEY}}' \
+         --header 'Content-Type: application/json' \
+         --data-raw '{
+        "title" : "Huddle01-Test"
+        }'
+        ````
+
+    </APIRequestContent>
+
+  </APIRequestCard>
+
+</div>
+
+<div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-16">
+<div className="text-start ">
+
+<div className="font-mono text-2xl font-bold text-[#f1f5f9]">Response</div>
+
+Upon success, the API will return a response with the following fields:
+
+- **`message`** - The message returned from the server.
+- **`roomId`** - The id of the room created.
+
+In case of an error, the API will return an error message with a corresponding status code.
+
+</div>
+
+<APIResponseCard>
+  <APIRequestContent value="Success">
+```json
+{
+    "message": "Room Created Successfully",
+    "data": {
+        "roomId": "tyt-eyoq-zwq",
+    }
+}
+```
+
+</APIRequestContent>
+
+<APIRequestContent value="Error">
+
+```json
+{
+  "success": false,
+  "error": {
+    "issues": [
+      {
+            "code": "invalid_type",
+            "expected": "boolean",
+            "received": "string",
+            "path": [
+                "roomLocked"
+            ],
+            "message": "Expected boolean, received string"
+        }
+    ]
+  }
+}
+```
+
+</APIRequestContent>
+  </APIResponseCard>
+
+</div>
+
+<div className = 'flex-col item-center gap-3' >
+
+### **Request**
+
+<CreateRoom />
+
+<Callout>
+  metadata is a key-value pair object that can be used to store additional
+  information about the room, Maximum Payload size can be 10kb.
+</Callout>
+
+### **Response**
+
+<CreateRoomResponse />
+
+</div>

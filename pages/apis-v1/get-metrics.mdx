@@ -26,8 +26,8 @@ In order to use the API, you will need to obtain an API key by connecting to you
   <HighLight className="my-3 w-full">
     <RequestStrip
       method={'GET'}
-      url={'https://api.huddle01.com/api/v2/sdk'}
-      endpoint={'metrics'}
+      url={'https://api.huddle01.com/api/v1'}
+      endpoint={'get-metrics'}
     />
   </HighLight>
 </div>
@@ -37,7 +37,7 @@ In order to use the API, you will need to obtain an API key by connecting to you
 <div>
 <div className="flex items-center gap-4">
 <Pill >GET</Pill>
-<div className="text-sm font-normal text-slate-50">`metrics`</div>
+<div className="text-sm font-normal text-slate-50">`/get-metrics`</div>
 
 </div>
 
@@ -54,14 +54,14 @@ The API supports a **GET** request with the following required parameters:
 
 <APIRequestCard
     requestType = "GET"
-    route="/metrics"
+    route="/get-metrics"
     
   >
 
 <APIRequestContent value="axios">
       ```js
       const response = await axios.get(
-        'https://api.huddle01.com/api/v2/sdk/metrics',
+        'https://api.huddle01.com/api/v1/get-metrics',
         {},
         {
           headers: {
@@ -69,28 +69,29 @@ The API supports a **GET** request with the following required parameters:
             'x-api-key': {{API_KEY}},
           },
         }
-      );
+    );
       ```
     </APIRequestContent>
 
     
     <APIRequestContent value="fetch">
-    ```js
-    const  response = await fetch("https://api.huddle01.com/api/v2/sdk/metrics", {
-      method: "GET",
-      {},
-      headers: {
+      ```js
+     const  response = await fetch("https://api.huddle01.com/api/v1/get-metrics", {
+     
+    method: "GET",
+    {},
+    headers: {
         "Content-type": "application/json",
         'x-api-key': {{API_KEY}},
-      }
-    })
-    ```
+    }
+})
+      ```
     </APIRequestContent>
 
     <APIRequestContent value="cUrl">
       ```bash
 curl -X POST \
-  'https://api.huddle01.com/api/v2/sdk/metrics' \
+  'https://api.huddle01.com/api/v1/get-metrics' \
   --header 'Accept: */*' \
   --header 'x-api-key: {{API_KEY}}' \
   --header 'Content-Type: application/json' \
@@ -108,11 +109,12 @@ curl -X POST \
 
 Upon success, the API will return a response with an array of rooms with the following fields:
 
-- **`totalSessions`** - The total number of sessions for the API Key.
-- **`totalDuration`** - The total number of minutes spent on sessions for the API Key.
-- **`totalUsers`** - The total number of users for the API Key.
-- **`recordingCount`** - The total number of recordings for the API Key.
 - **`livestreamCount`** - The total number of livestreams for the API Key.
+- **`recordingCount`** - The total number of recordings for the API Key.
+- **`tokenGatedMeetings`** - The total number of token gated meetings for the API Key.
+- **`totalMeetings`** - The total number of meetings for the API Key.
+- **`totalDuration`** - The total number of minutes spent on meetings for the API Key.
+- **`totalUsers`** - The total number of users for the API Key.
 
 In case of an error, the API will return an error message with a corresponding status code.
 
@@ -121,13 +123,14 @@ In case of an error, the API will return an error message with a corresponding s
 <APIResponseCard>
   <APIRequestContent value="Success">
     ```jsx
-    {
-      "totalSessions": 156,
-      "totalDuration": 10254,
-      "totalUsers": 849,
-      "recordingCount": 7,
-      "livestreamCount": 2
-    }
+      {
+            "livestreamCount": 2,
+            "recordingCount": 7,
+            "tokenGatedMeetings": 2,
+            "totalMeetings": 10,
+            "totalDuration": 100,
+            "totalUsers": 10
+      }
     ```
   </APIRequestContent>
 </APIResponseCard>

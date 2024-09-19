@@ -5,13 +5,11 @@ import Image from "next/image";
 
 const Container = () => {
   const roomData = [
-    { id: "1", name: "Create Room", href: "/apis/create-room" },
-    { id: "2", name: "Join Room Token", href: "/apis/join-room-token" },
-    { id: "3", name: "Meeting Details", href: "/apis/meeting-details" },
-    { id: "4", name: "Get Metrics", href: "/apis/get-metrics" },
-    { id: "5", name: "Get the list of Rooms", href: "/apis/get-rooms" },
+    { id: "1", name: "Join Room Token", href: "/apis/join-room-token" },
+    { id: "2", name: "Meeting Details", href: "/apis/meeting-details" },
+    { id: "3", name: "Get Metrics", href: "/apis/get-metrics" },
     {
-      id: "6",
+      id: "4",
       name: "Get the list of Recordings",
       href: "/apis/get-recordings",
     },

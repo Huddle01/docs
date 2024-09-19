@@ -17,7 +17,7 @@ const webhookReceiver = new WebhookReceiver({
 });
 
 // verify and validate webhook data using the receive func
-const receivedData = receiver.receive(req.body, header); 
+const receivedData = await receiver.receive(req.body, header); 
 
 // get properly typed data in typescript
 const { data } = webhookReceiver.createTypedWebhookData(
@@ -52,13 +52,11 @@ const { data } = webhookReceiver.createTypedWebhookData(
     // Middleware to parse the body as text/plain
     app.use(express.text({ type: '*/*' }));
 
-    app.post("/", (req: Request, res: Response) => {
+    app.post("/", async (req: Request, res: Response) => {
       try {
         const header = req.headers["huddle01-signature"] as string | undefined;
 
-        const data = receiver.receive(req.body, header);
-
-        console.log({ data });
+        const data = await receiver.receive(req.body, header);
 
         switch (receivedData.event) {
           case "meeting:started": {

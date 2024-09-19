@@ -6,36 +6,8 @@
       "toc": false
     }
   },
-  "create-room": {
-    "title": "Create Room",
-    "theme": {
-      "layout": "full",
-      "toc": false
-    }
-  },
-  "join-room-token": {
-    "title": "Join Room Token API",
-    "theme": {
-      "toc": false,
-      "layout": "full"
-    }
-  },
-  "get-rooms": {
-    "title": "Get Rooms API",
-    "theme": {
-      "toc": false,
-      "layout": "full"
-    }
-  },
-  "get-metrics": {
-    "title": "Get Key Metrics API",
-    "theme": {
-      "toc": false,
-      "layout": "full"
-    }
-  },
-  "get-recordings": {
-    "title": "Get Recordings API",
+  "meeting-details": {
+    "title": "Room & Session API",
     "theme": {
       "toc": false,
       "layout": "full"
@@ -48,15 +20,15 @@
       "layout": "full"
     }
   },
-  "meeting-details": {
-    "title": "Room & Meetings API",
+  "get-metrics": {
+    "title": "Get Metrics API",
     "theme": {
       "toc": false,
       "layout": "full"
     }
   },
-  "preview-peers": {
-    "title": "Preview Live Meeting Peers AP",
+  "get-recordings": {
+    "title": "Get Recordings API",
     "theme": {
       "toc": false,
       "layout": "full"

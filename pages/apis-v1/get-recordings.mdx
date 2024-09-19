@@ -24,15 +24,15 @@ In order to use the API, you will need to obtain an API key by connecting to you
   <HighLight className="my-3 w-full">
     <RequestStrip
       method={'GET'}
-      url={'https://api.huddle01.com/api/v2/sdk'}
-      endpoint={'recordings'}
+      url={'https://api.huddle01.com/api/v1'}
+      endpoint={'get-recordings'}
     />
   </HighLight>
 </div>
 
 
 <Paragraph className="mt-5">
-Whatever recordings are created using the SDK, will be listed in the Get Recordings API, if you want to fetch the recordings for a particular session, you can pass the `sessionId` as a query parameter.
+Whatever recordings are created using the SDK, will be listed in the Get Recordings API, if you want to fetch the recordings for a particular meeting, you can pass the `meetingId` as a query parameter.
 otherwise, the API will return all the recordings associated with your API Key.
 
 </Paragraph>
@@ -41,7 +41,7 @@ otherwise, the API will return all the recordings associated with your API Key.
 <div>
 <div className="flex items-center gap-4">
 <Pill >GET</Pill>
-<div className="text-sm font-normal text-slate-50">`/recordings`</div>
+<div className="text-sm font-normal text-slate-50">`/get-recordings`</div>
 
 </div>
 
@@ -52,7 +52,7 @@ otherwise, the API will return all the recordings associated with your API Key.
 The API supports a **GET** request with the following required parameters:
 
 - **`x-api-key`** - Add your API Key to the headers to fetch all rooms associated with your API Key.
-- **`sessionId`** - The session ID for which you want to fetch the recordings, (optional).
+- **`meetingId`** - The meeting ID for which you want to fetch the recordings, (optional).
 - **`limit`** - The number of recordings you want to fetch, `(optional)`.
 - **`cursor`** - The cursor for pagination, (optional).
 
@@ -61,7 +61,7 @@ The API supports a **GET** request with the following required parameters:
 
 <APIRequestCard
     requestType = "GET"
-    route="/recordings"
+    route="/get-recordings"
   >
 
 <APIRequestContent value="axios">
@@ -69,7 +69,7 @@ The API supports a **GET** request with the following required parameters:
       let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'https://api.huddle01.com/api/v2/sdk/recordings?sessionId={{sessionId}}&limit=1&cursor=1',
+        url: 'https://api.huddle01.com/api/v1/get-recordings?meetingId={{meetingId}}&limit=1&cursor=1',
         headers: { 
           'x-api-key': '••••••'
         }
@@ -92,14 +92,14 @@ The API supports a **GET** request with the following required parameters:
         redirect: "follow"
       };
 
-      fetch("https://api.huddle01.com/api/v2/sdk/recordings?limit=1&cursor=1", requestOptions)
+      fetch("https://api.huddle01.com/api/v1/get-recordings?limit=1&cursor=1", requestOptions)
             ```
     </APIRequestContent>
 
     <APIRequestContent value="cUrl">
       ```bash
 curl -X POST \
-  'https://api.huddle01.com/api/v2/sdk/recordings' \
+  'https://api.huddle01.com/api/v1/get-recordings' \
   --header 'Accept: */*' \
   --header 'x-api-key: {{API_KEY}}' \
   --header 'Content-Type: application/json' \
@@ -111,7 +111,7 @@ curl -X POST \
 </div>
 
 <Callout>
-  `sessionId` is an optional parameter. To Fetch `sessionId` of a particular roomId. You can use the [Get session API](/apis/session-details/session-list).
+  `meetingId` is an optional parameter. To Fetch `meetingId` of a particular roomId. You can use the [Get Meeting API](/apis/meeting-details/meeting-list).
 </Callout>
 
 <div className="grid md:grid-cols-2 gap-4 grid-cols-1 mt-10">

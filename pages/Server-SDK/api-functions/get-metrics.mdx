@@ -28,7 +28,7 @@ const metrics = async () => {
 
   const metrics = await api.getMetrics();
 
-  return metrics?.data;
+  return metrics;
 };
 ```
 
@@ -40,6 +40,11 @@ const metrics = async () => {
     headers={["Name", "Type", "Description"]}
     options={[
         [
+            'totalSessions',
+            'number',
+            'Total number of sessions'
+        ],
+        [
             'livestreamCount',
             'number',
             'Total number of livestreams'
@@ -49,39 +54,27 @@ const metrics = async () => {
             'number',
             'Total number of recordings'
         ],
-        [
-            'tokenGatedMeetings',
-            'number',
-            'Total number of token gated meetings'
-        ],
-        [
-            'totalMeetings',
-            'number',
-            'Total number of meetings'
-        ],
+        
         [
             'totalDuration',
             'number',
-            'Total duration of meetings'
+            'Total duration of all sessions'
         ],
         [
             'totalUsers',
             'number',
-            'Total number of users'
+            'Total number of users joined in all sessions'
         ]
     ]} 
 />
 
-```json
+ ```json
 {
-  "data": {
-    "livestreamCount": 0,
-    "recordingCount": 0,
-    "tokenGatedMeetings": 0,
-    "totalMeetings": 0,
-    "totalDuration": 0,
-    "totalUsers": 0
-    }
+  "totalSessions": 156,
+  "totalDuration": 10254,
+  "totalUsers": 849,
+  "recordingCount": 7,
+  "livestreamCount": 2
 }
 ```
 

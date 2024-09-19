@@ -1,11 +1,4 @@
 {
-  "create-room": {
-    "title": "Create Room API",
-    "theme": {
-      "toc": false,
-      "layout": "full"
-    }
-  },
   "room-details": {
     "title": "Room Details API",
     "theme": {
@@ -14,7 +7,7 @@
     }
   },
   "meeting-list": {
-    "title": "Session List API",
+    "title": "Meeting List API",
     "theme": {
       "toc": false,
       "layout": "full"
@@ -22,13 +15,6 @@
   },
   "participant-list": {
     "title": "Participant List API",
-    "theme": {
-      "toc": false,
-      "layout": "full"
-    }
-  },
-  "get-metadata": {
-    "title": "Get Metadata API",
     "theme": {
       "toc": false,
       "layout": "full"
