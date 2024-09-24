@@ -1,5 +1,5 @@
 ---
-title: 'Get Live Meetings API'
+title: 'Get Live Sessions API'
 ---
 
 import JoinRoomToken from '@components/ApiRef/JoinRoomToken';
@@ -16,9 +16,9 @@ import Paragraph from '@components/common/Paragraph';
 import Pill from '@components/common/Pill/Pill';
 import { Callout } from 'nextra-theme-docs';
 
-## **Live Meetings API**
+## **Live Sessions API**
 
-The Live Meetings API provides the ability to fetch live rooms in which people are currently present.
+The Live Sessions API provides the ability to fetch live rooms in which people are currently present.
 In order to use the API, you will need to obtain an API key by connecting to your wallet.
 
 ## **Endpoint**
@@ -27,14 +27,14 @@ In order to use the API, you will need to obtain an API key by connecting to you
     <RequestStrip
       method={'GET'}
       url={'https://api.huddle01.com/api/v2/sdk'}
-      endpoint={'live-meetings'}
+      endpoint={'live-sessions'}
     />
   </HighLight>
 </div>
 
 
 <Paragraph className="mt-5">
- Whatever meetings are created using Create Room API and are joined by users, will be listed in the Live Meetings API. The API will return the list of all the rooms which are currently live and the number of users present in each room.
+ Whatever sessions are created using Create Room API and are joined by users, will be listed in the Live Sessions API. The API will return the list of all the rooms which are currently live and the number of users present in each room.
 
 
 </Paragraph>
@@ -43,12 +43,12 @@ In order to use the API, you will need to obtain an API key by connecting to you
 <div>
 <div className="flex items-center gap-4">
 <Pill >GET</Pill>
-<div className="text-sm font-normal text-slate-50">`/live-meetings`</div>
+<div className="text-sm font-normal text-slate-50">`/live-sessions`</div>
 
 </div>
 
 <div className="mt-7 font-mono text-2xl font-bold text-[#f1f5f9]">
-  Get All Live Meetings API
+  Get All Live Sessions API
 </div>
 
 The API supports a **GET** request with the following required parameters:
@@ -59,7 +59,7 @@ The API supports a **GET** request with the following required parameters:
 
 <APIRequestCard
     requestType = "GET"
-    route="/live-meetings"
+    route="/live-sessions"
 >
 
 <APIRequestContent value="axios">
@@ -96,7 +96,7 @@ The API supports a **GET** request with the following required parameters:
     <APIRequestContent value="cUrl">
       ```bash
 curl -X POST \
-  'https://api.huddle01.com/api/v2/sdk/live-meetings' \
+  'https://api.huddle01.com/api/v2/sdk/live-sessions' \
   --header 'Accept: */*' \
   --header 'x-api-key: {{API_KEY}}' \
   --header 'Content-Type: application/json' \
@@ -127,7 +127,7 @@ In case of an error, the API will return an error message with a corresponding s
   <APIRequestContent value="Success">
       ```json
       {
-        "liveMeetings": [
+        "liveSessions": [
           {
             "roomId": "mjc-vksd-ktu",
             "startTime": 1724825547555,
@@ -184,7 +184,7 @@ In case of an error, the API will return an error message with a corresponding s
 </Callout>
 
 <Paragraph className="mt-5">
- Whatever meetings are created using Create Room API and are joined by users, will be listed in the Live Meetings API. The API will return the list of all the rooms which are currently live and the number of users present in each room.
+ Whatever sessions are created using Create Room API and are joined by users, will be listed in the Live Sessions API. The API will return the list of all the rooms which are currently live and the number of users present in each room.
 
 
 </Paragraph>
@@ -232,7 +232,7 @@ The API supports a **GET** request with the following required parameters:
     <APIRequestContent value="fetch">
       ```js
       const response = await fetch(
-        "https://api.huddle01.com/api/v2/sdk/live-meetings/YOUR_ROOM_ID",
+        "https://api.huddle01.com/api/v2/sdk/live-sessions/YOUR_ROOM_ID",
         {
           method: "GET",
           headers: {
@@ -247,7 +247,7 @@ The API supports a **GET** request with the following required parameters:
     <APIRequestContent value="cUrl">
       ```bash
 curl -X GET \
-  'https://api.huddle01.com/api/v2/sdk/live-meetings/YOUR_ROOM_ID' \
+  'https://api.huddle01.com/api/v2/sdk/live-sessions/YOUR_ROOM_ID' \
   --header 'Accept: */*' \
   --header 'x-api-key: {{API_KEY}}' \
   --header 'Content-Type: application/json' \
@@ -277,7 +277,7 @@ Upon success, the API will return a response with the following fields:
   <APIRequestContent value="Success">
     ```json
     {
-      "livemeetings": [
+      "liveSessions": [
         {
             "roomid": "gar-ouoz-szl",
             "starttime": 1724825547555,
@@ -295,7 +295,7 @@ Upon success, the API will return a response with the following fields:
     ```json
     {
       "ok": false,
-      "message": "No live meetings found for this room id"
+      "message": "No live sessions found for this room id"
     }
     ```
 
