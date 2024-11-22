@@ -40,7 +40,7 @@ const Iframe = () => {
         Huddle01&apos;s web app directly into your app.
       </div>
       <div className="not-prose mt-4 grid grid-cols-1 gap-8 md:grid-cols-2">
-        {data.map(resource => (
+        {data.map((resource) => (
           <GradientCard key={resource.href} resource={resource} />
         ))}
       </div>

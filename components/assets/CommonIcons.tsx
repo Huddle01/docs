@@ -47,7 +47,7 @@ const CommonIcons = {
       />
     </svg>
   ),
-  "chevron-right": (
+  'chevron-right': (
     <svg
       width="32"
       height="32"
@@ -64,7 +64,7 @@ const CommonIcons = {
       />
     </svg>
   ),
-  "chevron-down": (
+  'chevron-down': (
     <svg
       width="32"
       height="32"

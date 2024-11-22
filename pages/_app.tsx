@@ -1,8 +1,8 @@
-import "../styles/global.css";
+import '../styles/global.css';
 
-import { Toaster } from "react-hot-toast";
+import { Toaster } from 'react-hot-toast';
 
-import { NextLayoutComponentType } from "next";
+import { NextLayoutComponentType } from 'next';
 
 export default function Nextra({
   Component,

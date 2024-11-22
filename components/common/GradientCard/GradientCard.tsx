@@ -1,14 +1,14 @@
-import React, { MouseEvent } from "react";
+import React, { MouseEvent } from 'react';
 
 import {
   MotionValue,
   motion,
   useMotionTemplate,
   useMotionValue,
-} from "framer-motion";
-import { useRouter } from "next/router";
+} from 'framer-motion';
+import { useRouter } from 'next/router';
 
-import Icon from "./Icon";
+import Icon from './Icon';
 
 interface IPatterns {
   mouseX: MotionValue<number>;

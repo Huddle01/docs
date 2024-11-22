@@ -31,7 +31,7 @@ export const APIRequestCard: React.FC<Props> = ({
                 value={tab}
                 key={`tabs-toggle-${i + 1}`}
                 className={cn(
-                  'transition-all duration-300 ease-out pb-2 font-semibold text-white'
+                  'transition-all duration-300 ease-out pb-2 font-semibold text-white',
                 )}
               >
                 {tab}
@@ -86,7 +86,7 @@ export const APIResponseCard: React.FC<Props> = ({ children }) => {
                 value={tab}
                 key={`tabs-toggle-${i + 1}`}
                 className={cn(
-                  'transition-all duration-300 ease-out pb-2 font-semibold text-white text-base'
+                  'transition-all duration-300 ease-out pb-2 font-semibold text-white text-base',
                 )}
               >
                 {tab}

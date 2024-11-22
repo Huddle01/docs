@@ -1,6 +1,6 @@
-import { TResourceType } from "@components/common/GradientCard/GradientCard";
-import Image from "next/image";
-import React from "react";
+import { TResourceType } from '@components/common/GradientCard/GradientCard';
+import Image from 'next/image';
+import React from 'react';
 
 type ShowcaseCardProps = {
   href: string;
@@ -11,7 +11,7 @@ type ShowcaseCardProps = {
 const ShowcaseCard: React.FC<ShowcaseCardProps> = ({ desc, href, name }) => {
   return (
     <div
-      onClick={() => window.open(href, "_blank")}
+      onClick={() => window.open(href, '_blank')}
       className="border border-custom-1 p-3.5 rounded-md cursor-pointer flex flex-col hover:bg-custom-1/60 transition-all duration-300 ease-in-out"
       role="presentation"
     >

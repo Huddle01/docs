@@ -6,7 +6,7 @@ import CustomHead from '../components/assets/CustomHead';
 
 class MyDocument extends Document {
   static override async getInitialProps(
-    ctx: DocumentContext
+    ctx: DocumentContext,
   ): Promise<DocumentInitialProps> {
     const initialProps = await Document.getInitialProps(ctx);
 

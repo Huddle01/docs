@@ -16,7 +16,7 @@ interface Props {
 }
 
 const CreateRoom: React.FC<Props> = ({ data = CreateRoomAPI }) => {
-  const values = data.map(item => {
+  const values = data.map((item) => {
     return [
       item.title,
       item.description,

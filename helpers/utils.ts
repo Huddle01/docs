@@ -28,7 +28,7 @@ export const extractProjectName = (url: string) => {
   const match = url.match(regex);
   if (match?.[1]) {
     return match[1];
-  } 
+  }
   return null;
 };
 

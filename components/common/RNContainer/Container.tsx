@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import RNCard from "@components/Card/RNCard";
+import RNCard from '@components/Card/RNCard';
 
-import reactNative from "../../Data/reactNative.json";
+import reactNative from '../../Data/reactNative.json';
 
 const Container = () => {
   return (

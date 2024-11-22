@@ -55,7 +55,7 @@ const ApiRefrence = () => {
         Huddle01.
       </div>
       <div className="not-prose mt-4 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
-        {data.map(resource => (
+        {data.map((resource) => (
           <GradientCard key={resource.href} resource={resource} />
         ))}
       </div>

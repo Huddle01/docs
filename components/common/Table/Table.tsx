@@ -36,7 +36,7 @@ const Table: React.FC<Props> = ({ headerData }) => {
       </div>
 
       <div className=" w-full border-b border-[#383838] pb-4 grid md:grid-cols-[0.3fr,1fr,0.5fr,0.5fr] grid-cols-[0.4fr,1fr,0.8fr,0.5fr]">
-        {headerData.map(data => (
+        {headerData.map((data) => (
           <div
             className={cn('text-[#e2e8f0]  text-sm font-inter font-semibold ')}
             key={data}

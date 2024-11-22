@@ -1,5 +1,5 @@
-import ExternalLinks from "../helpers/externalLinks";
-import FooterIcons from "./assets/FooterIcons";
+import ExternalLinks from '../helpers/externalLinks';
+import FooterIcons from './assets/FooterIcons';
 
 export type TSocialDataType = {
   id: number;
@@ -28,21 +28,21 @@ export const NavigationData: TNavigationType = {
     },
     {
       id: 6,
-      name: "Twitter",
-      href: "https://twitter.com/huddle01com",
+      name: 'Twitter',
+      href: 'https://twitter.com/huddle01com',
     },
   ],
   company: [
-    { id: 7, name: "About Us", href: "https://huddle01.com/about-us" },
+    { id: 7, name: 'About Us', href: 'https://huddle01.com/about-us' },
     {
       id: 8,
-      name: "Terms & Conditions",
-      href: "https://huddle01.com/terms",
+      name: 'Terms & Conditions',
+      href: 'https://huddle01.com/terms',
     },
     {
       id: 9,
-      name: "Privacy Policy",
-      href: "https://huddle01.com/privacy",
+      name: 'Privacy Policy',
+      href: 'https://huddle01.com/privacy',
     },
   ],
 };

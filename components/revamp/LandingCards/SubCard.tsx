@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import LandingIcons from "@components/assets/LandingIcons";
-import Link from "next/link";
+import LandingIcons from '@components/assets/LandingIcons';
+import Link from 'next/link';
 
 type SubCardProps = {
   title: string;

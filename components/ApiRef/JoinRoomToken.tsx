@@ -16,7 +16,7 @@ interface Props {
 }
 
 const JoinRoomToken: React.FC<Props> = ({ data = JoinRoomTokenAPI }) => {
-  const values = data.map(item => {
+  const values = data.map((item) => {
     return [
       item.title,
       item.description,

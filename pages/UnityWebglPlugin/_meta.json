@@ -1,6 +1,5 @@
 {
-    "quickstart": "Quickstart",
-    "example" : "Start with example",
-    "methods" : "Methods"
+  "quickstart": "Quickstart",
+  "example": "Start with example",
+  "methods": "Methods"
 }
-  

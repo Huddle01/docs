@@ -36,7 +36,7 @@ const SdkTabs: React.FC<Props> = ({
                 'transition-all duration-300 ease-out pb-2 font-medium',
                 activeTab === i + 1
                   ? 'border-b-2 text-[#246bfd] border-[#246bfd]'
-                  : 'border-transparent  border-b-2'
+                  : 'border-transparent  border-b-2',
               )}
             >
               {tab}

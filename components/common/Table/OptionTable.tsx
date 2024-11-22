@@ -1,5 +1,5 @@
-import { cn } from "../../../helpers/utils";
-import styles from "./style.module.css";
+import { cn } from '../../../helpers/utils';
+import styles from './style.module.css';
 
 export default function OptionTable({
   options,
@@ -35,8 +35,8 @@ export default function OptionTable({
                 <td
                   key={item} // Replace `${item}-${i}` with `item`
                   className={cn(
-                    i === 0 ? "text-blue-500" : "text-slate-400",
-                    "whitespace-pre py-2 pr-4 font-mono text-xs font-semibold leading-6"
+                    i === 0 ? 'text-blue-500' : 'text-slate-400',
+                    'whitespace-pre py-2 pr-4 font-mono text-xs font-semibold leading-6',
                   )}
                 >
                   {item}

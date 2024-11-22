@@ -17,7 +17,7 @@ const ApiRefTable: React.FC<Props> = ({ headers, options }) => {
       <table className="w-full border-collapse text-sm">
         <thead>
           <tr className="border-b py-4 text-left dark:border-neutral-700">
-            {headers.map(header => (
+            {headers.map((header) => (
               <th className="py-2 font-semibold" key={header}>
                 {header}
               </th>
@@ -27,7 +27,7 @@ const ApiRefTable: React.FC<Props> = ({ headers, options }) => {
           </tr>
         </thead>
         <tbody className="align-baseline text-gray-900 dark:text-gray-100">
-          {options.map(row => (
+          {options.map((row) => (
             <tr
               key={row[0]}
               className="border-b border-gray-100 dark:border-neutral-700/50"
@@ -39,7 +39,7 @@ const ApiRefTable: React.FC<Props> = ({ headers, options }) => {
                     i === 0
                       ? 'text-blue-600 dark:text-blue-500'
                       : 'text-slate-500 dark:text-slate-400',
-                    'py-2 pr-4 font-mono text-xs font-semibold leading-6 break-words w-fit'
+                    'py-2 pr-4 font-mono text-xs font-semibold leading-6 break-words w-fit',
                   )}
                 >
                   {item}

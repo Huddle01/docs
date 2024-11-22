@@ -17,7 +17,7 @@ const Pill: React.FC<IPill> = ({ isSmall, isMedium, children, isGreen }) => {
         'text-cyan-300',
         isGreen && 'bg-green-300/20 text-green-300',
         isSmall ? 'scale-75' : '',
-        isMedium ? 'text-[10px]' : ''
+        isMedium ? 'text-[10px]' : '',
       )}
     >
       {children}

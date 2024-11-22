@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import StackIcons from "@components/assets/StackIcons";
+import StackIcons from '@components/assets/StackIcons';
 
-import { cn } from "../../helpers/utils";
-import Link from "next/link";
+import { cn } from '../../helpers/utils';
+import Link from 'next/link';
 
 interface Props {
   title: string;
@@ -16,8 +16,8 @@ const RNCard: React.FC<Props> = ({ title, url, icon }) => {
     <Link href={url}>
       <div
         className={cn(
-          " bg-slate-800 rounded-xl cursor-pointer flex gap-3 items-center",
-          icon ? "p-3" : "p-4"
+          ' bg-slate-800 rounded-xl cursor-pointer flex gap-3 items-center',
+          icon ? 'p-3' : 'p-4',
         )}
       >
         {icon && <span>{StackIcons[icon as keyof typeof StackIcons]}</span>}

@@ -16,7 +16,7 @@ interface Props {
 }
 
 const MeetingDetailsResponse: React.FC<Props> = ({ data = ResponseData }) => {
-  const values = data.map(item => {
+  const values = data.map((item) => {
     return [
       item.title,
       item.description,

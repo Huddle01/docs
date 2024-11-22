@@ -1,8 +1,8 @@
-import StackIcons from "@components/assets/StackIcons";
-import { useRouter } from "next/router";
+import StackIcons from '@components/assets/StackIcons';
+import { useRouter } from 'next/router';
 
-import { cn } from "../../../helpers/utils";
-import Link from "next/link";
+import { cn } from '../../../helpers/utils';
+import Link from 'next/link';
 
 interface Props {
   title: string;
@@ -20,7 +20,7 @@ const SdkCard: React.FC<Props> = ({ title, desc, typeArr }) => {
       </div>
       <div
         className={cn(
-          "md:h-60 h-full bg-[#262626] rounded-2xl flex flex-col items-center justify-center px-5  gap-6 w-full"
+          'md:h-60 h-full bg-[#262626] rounded-2xl flex flex-col items-center justify-center px-5  gap-6 w-full',
         )}
       >
         {typeArr.map(({ icon, title, url }) => (

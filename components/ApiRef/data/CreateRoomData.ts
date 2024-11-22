@@ -10,11 +10,12 @@ export const CreateRoomAPI: IApiDataType[] = [
       'The start time of the room. This will be displayed in the room list.',
   },
   {
-    title: "metadata",
-    type: "object",
+    title: 'metadata',
+    type: 'object',
     required: false,
-    description: "This can be custom data that you want to store with the room. This data will be returned when you fetch the room details.",
-  }
+    description:
+      'This can be custom data that you want to store with the room. This data will be returned when you fetch the room details.',
+  },
 ];
 
 export const CreateRoomResponse = [

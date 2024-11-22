@@ -17,7 +17,7 @@ const FooterGrid: React.FC = () => {
   };
   return (
     <div className="grid md:grid-cols-2 gap-10 grid-cols-2 mb-16 md:mb-0 w-full">
-      {Object.entries(NavigationData).map(navData => (
+      {Object.entries(NavigationData).map((navData) => (
         <div key={navData[0]}>
           <span className="text-slate-300 text-base font-semibold capitalize ">
             {navData[0]}

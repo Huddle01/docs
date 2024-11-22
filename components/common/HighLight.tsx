@@ -12,7 +12,7 @@ const HighLight: React.FC<Props> = ({ children, className }) => {
     <div
       className={cn(
         `p-2 rounded-lg bg-[#262F40] shadow-md text-xs md:text-base`,
-        className
+        className,
       )}
     >
       {children}
