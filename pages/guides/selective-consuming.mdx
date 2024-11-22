@@ -1,22 +1,17 @@
 ---
-title: 'Selective Consuming'
+title: "Selective Consuming"
 ---
 
-import { Callout } from 'nextra-theme-docs';
-
+import { Callout } from "nextra-theme-docs";
 
 # Selective Consuming (Advanced)
-
-<Callout>
-  We have upgraded our SDK to v2 `(2.x.x)`. For the previous stable release, please visit <a className="text-bold underline" href="https://legacy.docs.huddle01.com/docs">here</a>
-</Callout>
 
 Selective consuming is a feature that allows you to receive media streams inside a room, only from the peers that you want. This is useful when you want to mute someone in a meeting only for yourself, or turn off their incoming video, without it affecting other participants.
 
 To enable selective consuming, you need to pass `autoConsume: false` inside `options` when you initialize the HuddleClient.
 
 ```ts
-import { HuddleClient } from '@huddle01/react';
+import { HuddleClient } from "@huddle01/react";
 
 const huddleClient = new HuddleClient({
   projectId: env.NEXT_PUBLIC_PROJECT_ID,
@@ -24,7 +19,7 @@ const huddleClient = new HuddleClient({
     activeSpeakers: {
       size: 8,
     },
-    autoConsume: false //this will enable selective consuming in your app
+    autoConsume: false, //this will enable selective consuming in your app
   },
 });
 ```
@@ -34,7 +29,7 @@ As a result, whenever you join a room, you will not receive media streams from a
 You can now selectively consume media streams from the peers you want, by calling the `consume` method on your `localPeer` object.
 
 ```ts
-import { useHuddle01, usePeerIds } from '@huddle01/react/dist/hooks';
+import { useHuddle01, usePeerIds } from "@huddle01/react/dist/hooks";
 
 const { huddleClient } = useHuddle01();
 const { peerIds } = usePeerIds();

@@ -1,19 +1,14 @@
 ---
-title: 'Walkthrough'
+title: "Walkthrough"
 ---
 
-import { Callout, Steps, Tab, Tabs } from 'nextra-theme-docs';
+import { Callout, Steps, Tab, Tabs } from "nextra-theme-docs";
 
 # Building a React Native App with Huddle01
 
-<Callout>
-  We have upgraded our SDK to v2 `(2.x.x)`. For the previous stable release, please visit <a className="text-bold underline" href = "https://legacy.docs.huddle01.com/docs">here</a>
-</Callout>
-
-
 ## Walkthrough
 
-The following guide explains how you can integrate audio/video into your React Native mobile  app seamlessly using the Huddle01 React SDK.
+The following guide explains how you can integrate audio/video into your React Native mobile app seamlessly using the Huddle01 React SDK.
 
     <Steps>
     ### Install `@huddle01/react` in your react native app
@@ -22,10 +17,11 @@ To power your React Native app with audio/video communication using Huddle01 ins
 
       <Tabs items = { ['pnpm', 'npm', 'yarn']}>
               <Tab>
-            ```bash 
-      pnpm i @huddle01/react @huddle01/server-sdk react-native-get-random-values react-native-webrtc 
+            ```bash
+      pnpm i @huddle01/react @huddle01/server-sdk react-native-get-random-values react-native-webrtc
     ```
             </Tab>
+
   <Tab>
       ```bash 
     npm i @huddle01/react @huddle01/server-sdk react-native-get-random-values react-native-webrtc 
@@ -48,14 +44,14 @@ If you are building for iOS, don’t forget to run `pod install` inside the ios
 Now that we have our packages installed and app permissions granted, we need to add a few more lines of code for configuring the SDK. Go to your top-level `index.js` file and replace all of the code with the following:
 
 ```js filename="index.js"
-import { AppRegistry } from 'react-native';
-import 'react-native-get-random-values';
-import { registerGlobals } from 'react-native-webrtc';
-import App from './App';
-import { name as appName } from './app.json';
- 
+import { AppRegistry } from "react-native";
+import "react-native-get-random-values";
+import { registerGlobals } from "react-native-webrtc";
+import App from "./App";
+import { name as appName } from "./app.json";
+
 registerGlobals();
- 
+
 AppRegistry.registerComponent(appName, () => App);
 ```
 
@@ -64,15 +60,16 @@ That’s all the SDK setup we need to build a full-fledged video conferencing ap
 ### Initialization of project
 
       { /* TODO: Add initialization of project link */}
-Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials: 
+
+Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials:
 
 - `API Key`
 - `projectId`
 
-Once done, initialize your project by adding the `HuddleProvider` and pass `projectId`  in params. 
+Once done, initialize your project by adding the `HuddleProvider` and pass `projectId` in params.
 
 ```tsx filename="app.tsx"
-import { HuddleClient, HuddleProvider } from '@huddle01/react';
+import { HuddleClient, HuddleProvider } from "@huddle01/react";
 
 const huddleClient = new HuddleClient({
   projectId: env.NEXT_PUBLIC_PROJECT_ID,
@@ -93,48 +90,47 @@ const Parent = () => {
 ```
 
 ### Generating the access token
+
 Room Id can be generated using the : [Create Room API](/apis/create-room/create-room)
 
 AccessToken for each peer is to be generated on a backend server using the: [Server SDK](/Server-SDK)
-  
+
 ### Joining and leaving the room
 
+```tsx filename="app.tsx" highlight={2,8-9,26-34}
+import { useRoom } from "@huddle01/react/dist/hooks";
+import { Button, View } from "react-native";
 
-  ```tsx filename="app.tsx" highlight={2,8-9,26-34}
-  import { useRoom } from '@huddle01/react/dist/hooks';
-  import {Button, View} from 'react-native';
+const App = () => {
+  const { joinRoom, leaveRoom } = useRoom({
+    onJoin: () => {
+      console.log("Joined the room");
+    },
+    onLeave: () => {
+      console.log("Left the room");
+    },
+  });
 
-  const App = () => {
-    const { joinRoom, leaveRoom } = useRoom({
-      onJoin: () => {
-        console.log('Joined the room');
-      },
-      onLeave: () => {
-        console.log('Left the room');
-      },
-    });
-  
-    return (
-      <View>
+  return (
+    <View>
       <Button
         title="Join Room"
         onPress={() => {
           joinRoom({
-            roomId: 'YOUR_ROOM_ID',
-            token: 'YOUR_ACCESS_TOKEN'
-          })
+            roomId: "YOUR_ROOM_ID",
+            token: "YOUR_ACCESS_TOKEN",
+          });
         }}
-        />
-         
-        <Button title=" Leave Room" onPress={leaveRoom} />
-        
-      </View>
-    );
-  };
+      />
 
+      <Button title=" Leave Room" onPress={leaveRoom} />
+    </View>
+  );
+};
 ```
 
 ### Sending media across to other participants
+
 Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams. Make sure to ask the user for the necessary permissions to access the device cam/mic before enabling the media devices.
 
 ```tsx filename="app.tsx" highlight={9,14,51-65}
@@ -147,8 +143,8 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
     const { getPermission: getMicPermission } = useDevices({ type: 'mic' });
 
     return (
-        {/* Webcam */} 
-        <Button 
+        {/* Webcam */}
+        <Button
         title="Fetch and Produce Video Stream"
         onPress={async () => {
           const status = await getCamPermission();
@@ -157,10 +153,10 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
           }
         }}
         />
-          
 
-        {/* Mic */} 
-       <Button 
+
+        {/* Mic */}
+       <Button
        title=" Fetch and Produce Audio Stream"
        onPress={async () => {
           const status = await getMicPermission();
@@ -169,7 +165,7 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
           }
         }}
         />
-         
+
 
       </View>
     );
@@ -178,62 +174,60 @@ Here, we are using a term **PRODUCE** which means sending your audio/video strea
 ```
 
 #### Advanced: Using the `useLocalMedia` hook
+
 ```tsx filename="app.tsx" highlight={9,14,51-65}
-  import { useLocalMedia } from '@huddle01/react/dist/hooks';
+import { useLocalMedia } from "@huddle01/react/dist/hooks";
 
-  const App = () => {
-    const { fetchStream } = useLocalMedia();
+const App = () => {
+  const { fetchStream } = useLocalMedia();
 
-    return (
-      <View>
-        {/* Webcam */} 
-        <Button 
+  return (
+    <View>
+      {/* Webcam */}
+      <Button
         title="Fetch Cam Stream"
-          onPress={() => fetchStream({ mediaDeviceKind: 'cam' })} />
-         
+        onPress={() => fetchStream({ mediaDeviceKind: "cam" })}
+      />
 
-        {/* Mic */} 
-       <Button title="Fetch Mic Stream"
-          onPress={() => fetchStream({ mediaDeviceKind: 'mic' })} />
-          
-
-      </View>
-    );
-  };
-
+      {/* Mic */}
+      <Button
+        title="Fetch Mic Stream"
+        onPress={() => fetchStream({ mediaDeviceKind: "mic" })}
+      />
+    </View>
+  );
+};
 ```
+
 ### Receiving the audio and video streams
+
 Here, we are using a term **PRODUCE** which means sending your audio/video stream across to the other peer who will **CONSUME** (or receive) the streams.
 
-  ```tsx filename="RemotePeer.tsx" 
-  import { usePeerIds } from '@huddle01/react/dist/hooks';
-  import { MediaStream, RTCView } from "react-native-webrtc";
+```tsx filename="RemotePeer.tsx"
+import { usePeerIds } from "@huddle01/react/dist/hooks";
+import { MediaStream, RTCView } from "react-native-webrtc";
 
-  const RemotePeer = ({ peerId }) => {
-    
-    const { stream } = useRemoteVideo({ peerId });
- 
-    return (
-      <View>
-        <RTCView
-        streamURL={(stream as MediaStream | null)?.toURL() ?? ""}
-      />
-      </View>
-    ) 
-  }
-  
+const RemotePeer = ({ peerId }) => {
+  const { stream } = useRemoteVideo({ peerId });
 
-  export default function() {
-    const { peerIds } = usePeerIds({ roles: [Role.HOST, Role.CO_HOST] }); // Get Hosts And Cohost's peerIds
+  return (
+    <View>
+      <RTCView streamURL={(stream as MediaStream | null)?.toURL() ?? ""} />
+    </View>
+  );
+};
 
-    return 
-      <View>
-        {peerIds.map(peerId => {
-          return <RemotePeer peerId={peerId}  />
-        })}
-      </View>
-  }
-  ```
+export default function () {
+  const { peerIds } = usePeerIds({ roles: [Role.HOST, Role.CO_HOST] }); // Get Hosts And Cohost's peerIds
+
+  return;
+  <View>
+    {peerIds.map((peerId) => {
+      return <RemotePeer peerId={peerId} />;
+    })}
+  </View>;
+}
+```
 
 ### You're all set! Happy Hacking! 🎉
 

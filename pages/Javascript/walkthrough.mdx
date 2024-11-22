@@ -1,47 +1,30 @@
 ---
-title: 'Walkthrough'
+title: "Walkthrough"
 ---
 
-import { Callout, Steps, Tabs, Tab } from 'nextra-theme-docs';
+import { Callout, Steps, Tabs, Tab } from "nextra-theme-docs";
 
 # Building a Vanilla App with Huddle01
 
-<Callout>
-  We have upgraded our SDK to v2 `(2.x.x)`. For the previous stable release, please visit <a className="text-bold underline" href="https://legacy.docs.huddle01.com/docs">here</a>
-</Callout>
-
-
 ## Walkthrough
 
-The following guide explains how you can integrate audio/video into your application seamlessly using the Huddle01 vanilla JS SDK. 
+The following guide explains how you can integrate audio/video into your application seamlessly using the Huddle01 vanilla JS SDK.
 
 <Steps>
 ### Install `@huddle01/web-core` package
 
 To power your Vanilla JS App with audio/video communication using Huddle01.
 
- <Tabs items={['pnpm', 'npm', 'yarn']}>
-              <Tab>
-            ```bash 
-      pnpm i @huddle01/web-core
-    ```
-            </Tab>
-  <Tab>
-      ```bash 
-    npm i @huddle01/web-core
-    ```
-            </Tab>
-  <Tab>
-      ```bash 
-    yarn add @huddle01/web-core
-    ```
-            </Tab>
-              </Tabs>
-
+{" "}
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tab>```bash pnpm i @huddle01/web-core ```</Tab>
+  <Tab>```bash npm i @huddle01/web-core ```</Tab>
+  <Tab>```bash yarn add @huddle01/web-core ```</Tab>
+</Tabs>
 
 ### Initialization of project
 
-Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials: 
+Head over to [API Keys Page](/api-keys) and connect your wallet to get your project credentials:
 
 - `API Key`
 - `projectId`
@@ -49,52 +32,52 @@ Head over to [API Keys Page](/api-keys) and connect your wallet to get your proj
 Once done, initialize `huddleClient` with the following code snippet.
 
 ```js filename="client.js"
-import { HuddleClient } from '@huddle01/web-core';
+import { HuddleClient } from "@huddle01/web-core";
 
 export const client = new HuddleClient({
-  projectId: 'TxG-OolMwGeCoZPzX660e65wwuU2MP83',
+  projectId: "TxG-OolMwGeCoZPzX660e65wwuU2MP83",
 });
 ```
 
 ### Generating the Access Token
+
 Once the client has been initialized, Room Id can be generated using the [Create Room API](/apis/create-room/create-room)
 
-Access Token can be generated using [`Server-SDK`](/Server-SDK). Make sure you use `Server-SDK` from server side only, don't call it from client side. 
+Access Token can be generated using [`Server-SDK`](/Server-SDK). Make sure you use `Server-SDK` from server side only, don't call it from client side.
 We have created a [token simulator](https://huddle01-token-simulator.vercel.app/) which you can use to generate room and access token.
 You can create your own server where you can generate the access token using the following code snippet.
 
 ```js filename="server.js"
-  
-  import { AccessToken, Role } from '@huddle01/server-sdk/auth';
+import { AccessToken, Role } from "@huddle01/server-sdk/auth";
 
-  const generateAccessToken = async () => {
-   const accessToken = new AccessToken({
-        apiKey,
-        roomId: "YOUR_ROOM_ID",
-        role:  Role.HOST,
-        permissions: {
-          admin: true,
-          canConsume: true,
-          canProduce: true,
-          canProduceSources: {
-            cam: true,
-            mic: true,
-            screen: true,
-          },
-          canRecvData: true,
-          canSendData: true,
-          canUpdateMetadata: true,
-        },
-        options: {
-          metadata: { 
-             // you can add any custom attributes here which you want to associate with the user
-            walletAddress: "vrajdesai.eth"
-          },
-        },
-    });
+const generateAccessToken = async () => {
+  const accessToken = new AccessToken({
+    apiKey,
+    roomId: "YOUR_ROOM_ID",
+    role: Role.HOST,
+    permissions: {
+      admin: true,
+      canConsume: true,
+      canProduce: true,
+      canProduceSources: {
+        cam: true,
+        mic: true,
+        screen: true,
+      },
+      canRecvData: true,
+      canSendData: true,
+      canUpdateMetadata: true,
+    },
+    options: {
+      metadata: {
+        // you can add any custom attributes here which you want to associate with the user
+        walletAddress: "vrajdesai.eth",
+      },
+    },
+  });
   const token = await accessToken.toJwt();
   return token;
-  }
+};
 ```
 
 ### Joining and leaving the room
@@ -102,23 +85,22 @@ You can create your own server where you can generate the access token using the
 The `joinRoom() `method can be called to enter the room. To leave that respective room you can call the `leaveRoom() `method.
 
 <Callout type="info">
-Clicking on the **JOIN_ROOM** button, will make the user join the room and will allow them to send/receive media and data with other participants.
+  Clicking on the **JOIN_ROOM** button, will make the user join the room and
+  will allow them to send/receive media and data with other participants.
 </Callout>
 
 ```js filename="app.js" highlight={8-14}
+document.getElementById("joinRoom").onclick = async () => {
+  // you can use roomId and accessToken which we have generated in the above steps
+  await huddleClient.joinRoom({
+    roomId: "YOUR_ROOM_ID",
+    token: "YOUR_ACCESS_TOKEN",
+  });
+};
 
-  document.getElementById('joinRoom').onclick = async () => {
-    // you can use roomId and accessToken which we have generated in the above steps
-    await huddleClient.joinRoom({
-      roomId: "YOUR_ROOM_ID",
-      token: "YOUR_ACCESS_TOKEN"
-    });
-  };
-
-  document.getElementById('leaveRoom').onclick = async () => {
-      await huddleClient.leaveRoom();
-  };
-
+document.getElementById("leaveRoom").onclick = async () => {
+  await huddleClient.leaveRoom();
+};
 ```
 
 ### Enabling and Disabling Audio, Video and Screen Share.
@@ -126,7 +108,7 @@ Clicking on the **JOIN_ROOM** button, will make the user join the room and will 
 The following code snippet shows how you can enable/disable audio, video and screen share.
 
 ```js filename="handleStream.js"
-import { client } from './client';
+import { client } from "./client";
 
 // This function will enable or disable audio stream
 export function handleAudioStream(element) {
@@ -148,20 +130,19 @@ export function handleAudioStream(element) {
 
 // This function will enable or disable video stream
 export function handleVideoStream(element) {
-  element.addEventListener('click', async () => {
-
+  element.addEventListener("click", async () => {
     // Reference to the button to enable/disable video
-    const videoRef = document.querySelector('#videoRef');
+    const videoRef = document.querySelector("#videoRef");
 
     // If video stream is already enabled, then disable it
     if (videoRef.srcObject) {
       client.localPeer.disableVideo();
       videoRef.srcObject = null;
-      document.querySelector('#video').textContent = 'Enable Video';
+      document.querySelector("#video").textContent = "Enable Video";
       return;
     }
 
-    // This will fetch video stream and return MediaStream 
+    // This will fetch video stream and return MediaStream
     const stream = await client.localPeer.enableVideo();
 
     // This will set the stream to the video element
@@ -169,7 +150,7 @@ export function handleVideoStream(element) {
     videoRef.onloadedmetadata = async () => {
       try {
         await videoRef.play();
-        document.querySelector('#video').textContent = 'Disable Video';
+        document.querySelector("#video").textContent = "Disable Video";
       } catch (error) {
         console.error(error);
       }
@@ -179,16 +160,15 @@ export function handleVideoStream(element) {
 
 // This function will enable or disable screen share
 export function handleScreenStream(element) {
-  element.addEventListener('click', async () => {
-
+  element.addEventListener("click", async () => {
     // Reference to the button to enable/disable screen share
-    const screenRef = document.querySelector('#screenRef');
+    const screenRef = document.querySelector("#screenRef");
 
     // If screen share is already enabled, then disable it
     if (screenRef.srcObject) {
       client.localPeer.stopScreenShare();
       screenRef.srcObject = null;
-      document.querySelector('#screen').textContent = 'Share Screen';
+      document.querySelector("#screen").textContent = "Share Screen";
       return;
     }
 
@@ -200,26 +180,24 @@ export function handleScreenStream(element) {
     screenRef.onloadedmetadata = async () => {
       try {
         await screenRef.play();
-        document.querySelector('#screen').textContent = 'Stop Sharing';
+        document.querySelector("#screen").textContent = "Stop Sharing";
       } catch (error) {
         console.error(error);
       }
     };
   });
 }
-
 ```
 
-### Show remote peers in the room 
+### Show remote peers in the room
 
-We have to listen to two events `stream-added` and `stream-closed` from `room` to add and remove remote peers stream. 
+We have to listen to two events `stream-added` and `stream-closed` from `room` to add and remove remote peers stream.
 
 ```js filename="handleEvents.js"
 import { client } from "./client";
 
 // This function needs to be called in app.js file
 export function handleEvents() {
-
   // This event will be triggered when a new stream is added to the room
   client.room.on("stream-added", ({ peerId, label }) => {
     const container = document.querySelector("#remotePeers");
@@ -252,7 +230,7 @@ export function handleEvents() {
 
   // This event will be triggered when a stream is closed in the room
   client.room.on("stream-closed", ({ peerId, label }) => {
-    // Get the reference of media element    
+    // Get the reference of media element
     const mediaRef = document.querySelector(`#${peerId}-${label}`);
     // Stop the track and remove the media element
     mediaRef.srcObject.getTracks().forEach((track) => track.stop());
@@ -264,7 +242,7 @@ export function handleEvents() {
 
 ### You're all set! Happy Hacking! 🎉
 
-Full code of this walkthrough can be found [here](https://github.com/Huddle01/beta-esm-js-example). 
+Full code of this walkthrough can be found [here](https://github.com/Huddle01/beta-esm-js-example).
 For more information, please refer to the [SDK Reference](/Javascript).
 
 </Steps>
