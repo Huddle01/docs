@@ -1,7 +1,7 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.8.2/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.9.3/schema.json",
   "organizeImports": {
-    "enabled": true
+    "enabled": false
   },
   "linter": {
     "enabled": true,
@@ -9,24 +9,30 @@
       "recommended": true,
       "suspicious": {
         "noConsoleLog": "warn",
-        "noRedeclare": "off"
+        "noShadowRestrictedNames": "off"
       },
       "a11y": {
-        "useKeyWithClickEvents": "off",
         "noSvgWithoutTitle": "off",
-        "useMediaCaption": "off"
+        "useSemanticElements": "off",
+        "useFocusableInteractive": "off",
+        "useButtonType": "off",
+        "useKeyWithClickEvents": "off"
       },
       "correctness": {
-        "useExhaustiveDependencies": "off"
+        "useExhaustiveDependencies": "off",
+        "useJsxKeyInIterable": "off"
       }
     },
-    "ignore": ["node_modules", ".next", "dist", "mobile", "mobile_shinigami"]
+    "ignore": ["node_modules", ".next", "dist"]
   },
   "formatter": {
     "indentStyle": "space",
     "indentWidth": 2,
     "enabled": true,
-    "ignore": ["node_modules", ".next", "dist", "gen/*"]
+    "ignore": ["node_modules", ".next", "dist"]
+  },
+  "files": {
+    "ignore": ["node_modules", ".next", "dist"]
   },
   "javascript": {
     "formatter": {
