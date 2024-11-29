@@ -1,15 +1,11 @@
 ---
-title: 'Quickstart'
+title: "Quickstart"
 ---
 
-import { Tab, Tabs } from 'nextra-theme-docs';
-import { Callout } from 'nextra-theme-docs';
+import { Tab, Tabs } from "nextra-theme-docs";
+import { Callout } from "nextra-theme-docs";
 
 ## Quickstart
-
-<Callout>
-  We have upgraded our SDK to v2 `(2.x.x)`. For the previous stable release, please visit <a className="text-bold underline" href="https://legacy.docs.huddle01.com/docs">here</a>
-</Callout>
 
 ### Installation
 
@@ -42,7 +38,7 @@ To get started with the Huddle01 React SDK, you can install the package using np
 
 ## Initializing the SDK:
 
-First you need to configure HuddleProvider in your root component. 
+First you need to configure HuddleProvider in your root component.
 
 ```jsx
 import { HuddleProvider, HuddleClient } from '@huddle01/react';
@@ -63,22 +59,20 @@ const huddleClient = new HuddleClient({
 ...
 ```
 
-### Joining Room 
+### Joining Room
 
 ```jsx
-import { useRoom } from '@huddle01/react/dist/hooks';
+import { useRoom } from "@huddle01/react/dist/hooks";
 
 const { joinRoom } = useRoom({
-   onJoin: () => {
-     console.log('Joined room');
-   }
+  onJoin: () => {
+    console.log("Joined room");
+  },
 });
 
-// join room 
+// join room
 joinRoom({
-   roomId: "YOUR_ROOM_ID",
-   token: "YOUR_TOKEN"
+  roomId: "YOUR_ROOM_ID",
+  token: "YOUR_TOKEN",
 });
 ```
-
-

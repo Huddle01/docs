@@ -1,14 +1,10 @@
 ---
-title: 'Walkthrough'
+title: "Walkthrough"
 ---
 
-import { Steps, Tab, Tabs, Callout } from 'nextra-theme-docs';
+import { Steps, Tab, Tabs, Callout } from "nextra-theme-docs";
 
 # Building a React App with Huddle01
-
-<Callout>
-  We have upgraded our SDK to v2 `(2.x.x)`. For the previous stable release, please visit <a className="text-bold underline" href="https://legacy.docs.huddle01.com/docs">here</a>
-</Callout>
 
 ## Walkthrough
 
@@ -21,10 +17,11 @@ To power your React dApp with audio/video communication using Huddle01, install 
 
       <Tabs items={['pnpm', 'npm', 'yarn', 'bun']}>
               <Tab>
-            ```bash 
+            ```bash
       pnpm i @huddle01/react @huddle01/server-sdk
     ```
             </Tab>
+
   <Tab>
       ```bash 
     npm i @huddle01/react @huddle01/server-sdk
@@ -44,12 +41,12 @@ To power your React dApp with audio/video communication using Huddle01, install 
 
 ### Initialization of project
 
-Head over to [API Keys](/api-keys) Page and connect your wallet to get your project credentials: 
+Head over to [API Keys](/api-keys) Page and connect your wallet to get your project credentials:
 
 - `API Key`
 - `projectId`
 
-Once done, initialize your project by creating an instance of `HuddleClient` and pass it in `HuddleProvider`. Make sure that you wrap `HuddleProvider` in your root i.e. 
+Once done, initialize your project by creating an instance of `HuddleClient` and pass it in `HuddleProvider`. Make sure that you wrap `HuddleProvider` in your root i.e.
 
 <Tabs items={['Pages Router', 'App Router']}>
 <Tab>
@@ -59,13 +56,13 @@ import type { AppProps } from "next/app";
 import { HuddleClient, HuddleProvider } from "@huddle01/react";
 
 const huddleClient = new HuddleClient({
-  projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
-  options: {
-    // `activeSpeakers` will be most active `n` number of peers, by default it's 8
-    activeSpeakers: {
-      size: 12,
-    },
-  },
+projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
+options: {
+// `activeSpeakers` will be most active `n` number of peers, by default it's 8
+activeSpeakers: {
+size: 12,
+},
+},
 });
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -88,29 +85,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
 
-  const huddleClient = new HuddleClient({
-    projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
-  });
+const huddleClient = new HuddleClient({
+projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
+});
 
-  return (
-    <html lang="en">
-      <body>
-        <HuddleProvider client={huddleClient}>
-          {children}
-        </HuddleProvider>
-      </body>
-    </html>
-  );
+return (
+<html lang="en">
+<body>
+<HuddleProvider client={huddleClient}>
+{children}
+</HuddleProvider>
+</body>
+</html>
+);
 }
-```
+
+````
 </Tab>
 </Tabs>
 
-## Room Creation 
+## Room Creation
 
-You need a `roomId` for joining a room, which you can get by calling the [Create Room](/apis/create-room/create-room) API. 
-Make sure that you are calling this API from server side. 
-If you are using pages router you can create an API route or for app router you can easily create a server side component. 
+You need a `roomId` for joining a room, which you can get by calling the [Create Room](/apis/create-room/create-room) API.
+Make sure that you are calling this API from server side.
+If you are using pages router you can create an API route or for app router you can easily create a server side component.
 
 <Tabs items={['Pages Router', 'App Router']}>
 <Tab>
@@ -140,7 +138,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 export default handler;
-```
+````
+
 </Tab>
 <Tab>
 ```ts filename="createRoom.ts"
@@ -159,17 +158,18 @@ export const createRoom = async () => {
     cache: "no-cache",
   });
 
-  const data = await response.json();
-  const roomId = data.data.roomId;
-  return roomId;
+const data = await response.json();
+const roomId = data.data.roomId;
+return roomId;
 };
-```
+
+````
 </Tab>
 </Tabs>
 
 ### Generating the Access Token
 
-Once, `roomId` is generated you need to generate `accessToken` which is required to join room. 
+Once, `roomId` is generated you need to generate `accessToken` which is required to join room.
 
 <Tabs items={['Pages Router', 'App Router']}>
 <Tab>
@@ -210,7 +210,8 @@ export default async function handler(
 
   return res.status(200).json({ token });
 }
-```
+````
+
 </Tab>
 <Tab>
 ```ts filename="token/route.ts"
@@ -221,36 +222,37 @@ export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
 
-  const roomId = searchParams.get("roomId");
+const roomId = searchParams.get("roomId");
 
-  if (!roomId) {
-    return new Response("Missing roomId", { status: 400 });
-  }
-
-  const accessToken = new AccessToken({
-    apiKey: process.env.API_KEY!,
-    roomId: roomId as string,
-    role: Role.HOST,
-    permissions: {
-      admin: true,
-      canConsume: true,
-      canProduce: true,
-      canProduceSources: {
-        cam: true,
-        mic: true,
-        screen: true,
-      },
-      canRecvData: true,
-      canSendData: true,
-      canUpdateMetadata: true,
-    }
-  });
-
-  const token = await accessToken.toJwt();
-
-  return new Response(token, { status: 200 });
+if (!roomId) {
+return new Response("Missing roomId", { status: 400 });
 }
-```
+
+const accessToken = new AccessToken({
+apiKey: process.env.API_KEY!,
+roomId: roomId as string,
+role: Role.HOST,
+permissions: {
+admin: true,
+canConsume: true,
+canProduce: true,
+canProduceSources: {
+cam: true,
+mic: true,
+screen: true,
+},
+canRecvData: true,
+canSendData: true,
+canUpdateMetadata: true,
+}
+});
+
+const token = await accessToken.toJwt();
+
+return new Response(token, { status: 200 });
+}
+
+````
 </Tab>
 </Tabs>
 
@@ -259,7 +261,7 @@ export async function GET(request: Request) {
 You need `roomId` and `accessToken` to join room using `joinRoom` method from `useRoom` hook.
 
 <Callout>
-It's recommended that you send `roomId` over a url like `YOUR_URL/roomId`.  
+It's recommended that you send `roomId` over a url like `YOUR_URL/roomId`.
 </Callout>
 
 ```tsx filename="app.tsx" highlight={2,8-9,26-34}
@@ -274,7 +276,7 @@ const App = () => {
       console.log('Left the room');
     },
   });
-  
+
   return (
     <div>
       <button onClick={() => {
@@ -284,130 +286,136 @@ const App = () => {
         });
       }}>
         Join Room
-      </button>      
+      </button>
       <button onClick={leaveRoom}>
         Leave Room
-      </button> 
+      </button>
+    </div>
+  );
+};
+````
+
+### Sending media across participants
+
+To produce `video`,`audio`, and `screenShare` streams, you can use `useLocalVideo`,`useLocalAudio` and `useLocalScreenShare` hook.
+
+```tsx filename="app.tsx" highlight={9,14,51-65}
+import {
+  useLocalVideo,
+  useLocalAudio,
+  useLocalScreenShare,
+} from "@huddle01/react/hooks";
+
+const App = () => {
+  const { stream, enableVideo, disableVideo, isVideoOn } = useLocalVideo();
+  const { stream, enableAudio, disableAudio, isAudioOn } = useLocalAudio();
+  const { startScreenShare, stopScreenShare, shareStream } =
+    useLocalScreenShare();
+
+  return (
+    <div>
+      {/* Webcam */}
+      <button
+        onClick={() => {
+          isVideoOn ? disableVideo() : enableVideo();
+        }}
+      >
+        Fetch and Produce Video Stream
+      </button>
+
+      {/* Mic */}
+      <button
+        onClick={() => {
+          isAudioOn ? disableAudio() : enableAudio();
+        }}
+      >
+        Fetch and Produce Audio Stream
+      </button>
+
+      {/* Screen Share */}
+      <button
+        onClick={() => {
+          shareStream ? stopScreenShare() : startScreenShare();
+        }}
+      >
+        Fetch and Produce Screen Share Stream
+      </button>
     </div>
   );
 };
 ```
 
-### Sending media across participants
-To produce `video`,`audio`, and `screenShare` streams, you can use `useLocalVideo`,`useLocalAudio` and `useLocalScreenShare` hook. 
-
-```tsx filename="app.tsx" highlight={9,14,51-65}
-  import { useLocalVideo, useLocalAudio, useLocalScreenShare } from '@huddle01/react/hooks';
-
-  const App = () => {
-    const { stream, enableVideo, disableVideo, isVideoOn } = useLocalVideo();
-    const { stream, enableAudio, disableAudio, isAudioOn } = useLocalAudio();
-    const { startScreenShare, stopScreenShare, shareStream } = useLocalScreenShare();
-
-    return (
-      <div>
-        {/* Webcam */} 
-        <button 
-          onClick={() => {
-            isVideoOn ? disableVideo() : enableVideo()
-          }}>
-          Fetch and Produce Video Stream
-        </button>
-
-        {/* Mic */} 
-       <button 
-          onClick={() => {
-            isAudioOn ? disableAudio() : enableAudio();
-          }}>
-          Fetch and Produce Audio Stream
-        </button>
-
-        {/* Screen Share */}
-        <button 
-          onClick={() => {
-            shareStream ? stopScreenShare() : startScreenShare();
-          }}>
-          Fetch and Produce Screen Share Stream
-        </button>
-      </div>
-    );
-  };
-
-```
-
 #### Advanced: Using the `useLocalMedia` hook
+
 ```tsx filename="app.tsx" highlight={9,14,51-65}
-  import { useLocalMedia } from '@huddle01/react/hooks';
+import { useLocalMedia } from "@huddle01/react/hooks";
 
-  const App = () => {
-    const { fetchStream } = useLocalMedia();
+const App = () => {
+  const { fetchStream } = useLocalMedia();
 
-    return (
-      <div>
-        {/* Webcam */} 
-        <button 
-          onClick={() => fetchStream({ mediaDeviceKind: 'cam' })} >
-          Fetch Cam Stream
-        </button>
+  return (
+    <div>
+      {/* Webcam */}
+      <button onClick={() => fetchStream({ mediaDeviceKind: "cam" })}>
+        Fetch Cam Stream
+      </button>
 
-        {/* Mic */} 
-       <button 
-          onClick={() => fetchStream({ mediaDeviceKind: 'mic' })} >
-          Fetch Mic Stream
-        </button>
-
-      </div>
-    );
-  };
-
+      {/* Mic */}
+      <button onClick={() => fetchStream({ mediaDeviceKind: "mic" })}>
+        Fetch Mic Stream
+      </button>
+    </div>
+  );
+};
 ```
+
 ### Receiving the audio and video streams
 
-We can use hooks such as `useRemoteAudio`, `useRemoteVideo` and `useRemoteScreenShare` for consuming `audio`, `video` and `screen-share` streams. 
+We can use hooks such as `useRemoteAudio`, `useRemoteVideo` and `useRemoteScreenShare` for consuming `audio`, `video` and `screen-share` streams.
 
-  ```tsx filename="ShowPeers.tsx"
-  import { 
-    usePeerIds, 
-    useRemoteVideo, 
-    useRemoteAudio, 
-    useRemoteScreenShare 
-  } from '@huddle01/react/hooks';
-  import { Audio, Video } from '@huddle01/react/components';
-  import { FC } from 'react';
+```tsx filename="ShowPeers.tsx"
+import {
+  usePeerIds,
+  useRemoteVideo,
+  useRemoteAudio,
+  useRemoteScreenShare
+} from '@huddle01/react/hooks';
+import { Audio, Video } from '@huddle01/react/components';
+import { FC } from 'react';
 
-  interface RemotePeerProps {
-    peerId: string;
-  }
+interface RemotePeerProps {
+  peerId: string;
+}
 
-  const RemotePeer: FC<RemotePeerProps> = ({ peerId }) => {
-    
-    const { stream: videoStream } = useRemoteVideo({ peerId });
-    const { stream: audioStream } = useRemoteAudio({ peerId });
-    const { videoStream: screenVideoStream, audioStream: screenAudioStream } = useRemoteScreenShare({ peerId });
-  
-    return (
-      <div>
-        {videoStream && <Video stream={videoStream}>}
-        {audioStream && <Audio stream={audioStream}>}
-        {screenVideoStream && <Video stream={screenVideoStream}>}
-        {screenAudioStream && <Audio stream={screenAudioStream}>}
-      </div>
-    ) 
-  }
-  
-  const ShowPeers = () => {
-    const { peerIds } = usePeerIds({ roles: [Role.HOST, Role.CO_HOST] }); // Get Hosts And Cohost's peerIds
+const RemotePeer: FC<RemotePeerProps> = ({ peerId }) => {
 
-    return (
-      <div>
-        {peerIds.map(peerId => {
-          return <RemotePeer peerId={peerId}  />
-        })}
-      </div>
-    )
-  }
+  const { stream: videoStream } = useRemoteVideo({ peerId });
+  const { stream: audioStream } = useRemoteAudio({ peerId });
+  const { videoStream: screenVideoStream, audioStream: screenAudioStream } = useRemoteScreenShare({ peerId });
 
-  export default ShowPeers;
+  return (
+    <div>
+      {videoStream && <Video stream={videoStream}>}
+      {audioStream && <Audio stream={audioStream}>}
+      {screenVideoStream && <Video stream={screenVideoStream}>}
+      {screenAudioStream && <Audio stream={screenAudioStream}>}
+    </div>
+  )
+}
+
+const ShowPeers = () => {
+  const { peerIds } = usePeerIds({ roles: [Role.HOST, Role.CO_HOST] }); // Get Hosts And Cohost's peerIds
+
+  return (
+    <div>
+      {peerIds.map(peerId => {
+        return <RemotePeer peerId={peerId}  />
+      })}
+    </div>
+  )
+}
+
+export default ShowPeers;
 ```
 
 ### You're all set! Happy Hacking! 🎉

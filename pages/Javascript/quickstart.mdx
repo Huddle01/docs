@@ -2,15 +2,11 @@
 title:'Quickstart'
 ---
 
-import { Tab, Tabs, Callout, Steps } from 'nextra-theme-docs';
+import { Tab, Tabs, Callout, Steps } from "nextra-theme-docs";
 
 # Quickstart
 
-<Callout>
-  We have upgraded our SDK to v2 `(2.x.x)`. For the previous stable release, please visit <a className="text-bold underline" href="https://legacy.docs.huddle01.com/docs">here</a>
-</Callout>
-
-This guide will help you to quickly get started with using our Javascript SDK in your project. 
+This guide will help you to quickly get started with using our Javascript SDK in your project.
 
 ## Installation
 
@@ -20,33 +16,32 @@ You can install the Huddle01 Vanilla JS SDK packages in two ways:
 
 ### Using the script tag (IIFE/UMD)
 
-Add the following code snippet to the head of your HTML. 
+Add the following code snippet to the head of your HTML.
 
 ```html
 <script src="https://unpkg.com/@huddle01/web-core@umd/dist/index.global.js"></script>
 
 <script>
+  let client;
 
-let client;
-
-// call this function in onclick of `join room` button
-const init = async () => {
-  client = new HuddleWebCore.HuddleClient({
-    projectId: "YOUR_PROJECT_ID",
-    options: {
-      activeSpeakers: {
-        // Number of active speaker visible in the grid, by default 8
-        size: 10,
+  // call this function in onclick of `join room` button
+  const init = async () => {
+    client = new HuddleWebCore.HuddleClient({
+      projectId: "YOUR_PROJECT_ID",
+      options: {
+        activeSpeakers: {
+          // Number of active speaker visible in the grid, by default 8
+          size: 10,
+        },
       },
-    },
-  });
-  const room = await client.joinRoom({
-    roomId: "YOUR_ROOM_ID",
-    token: "YOUR_ACCESS_TOKEN",
-  });
-};
+    });
+    const room = await client.joinRoom({
+      roomId: "YOUR_ROOM_ID",
+      token: "YOUR_ACCESS_TOKEN",
+    });
+  };
 </script>
-``` 
+```
 
 ### Use npm or any other package manager (ESM/CommonJS)
 
@@ -70,24 +65,25 @@ Run the following command in your terminal to install the package:
       bun install @huddle01/web-core
       ```
     </Tab>
+
   </Tabs>
 
 #### Using client to access Methods
 
-Once you initialise `huddleClient` you can access various methods such as `joinRoom` and other methods. 
+Once you initialise `huddleClient` you can access various methods such as `joinRoom` and other methods.
 You can generate roomId using this [API](/apis/create-room/create-room) and access token using our [Server SDK](/Server-SDK).
 
 ```ts
-import { HuddleClient } from '@huddle01/web-core';
+import { HuddleClient } from "@huddle01/web-core";
 
 const huddleClient = new HuddleClient({
-  projectId: "YOUR_PROJECT_ID"
-})
+  projectId: "YOUR_PROJECT_ID",
+});
 
 // Call this in onclick on `join room` button.
 huddleClient.joinRoom({
-	roomId: "YOUR_ROOM_ID",
-	token: "YOUR_ACCESS_TOKEN"
+  roomId: "YOUR_ROOM_ID",
+  token: "YOUR_ACCESS_TOKEN",
 });
 ```
 
