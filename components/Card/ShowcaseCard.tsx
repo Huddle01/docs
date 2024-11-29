@@ -1,6 +1,6 @@
 import { TResourceType } from '@components/common/GradientCard/GradientCard';
 import Image from 'next/image';
-import React from 'react';
+import type React from 'react';
 
 type ShowcaseCardProps = {
   href: string;

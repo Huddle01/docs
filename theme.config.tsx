@@ -3,7 +3,7 @@ import React from 'react';
 import SidebarIcons from '@components/assets/SidebarIcons';
 import VersionPill from '@components/revamp/VersionPill/VersionPill';
 import { useRouter } from 'next/router';
-import { DocsThemeConfig, useConfig } from 'nextra-theme-docs';
+import { type DocsThemeConfig, useConfig } from 'nextra-theme-docs';
 
 import Huddle01 from './components/assets/Huddle01';
 import { Footer } from './components/common/Footer/Footer';

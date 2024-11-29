@@ -1,9 +1,9 @@
-import React from 'react';
+import type React from 'react';
 
 import StackIcons from '@components/assets/StackIcons';
 
-import { cn } from '../../helpers/utils';
 import Link from 'next/link';
+import { cn } from '../../helpers/utils';
 
 interface Props {
   title: string;

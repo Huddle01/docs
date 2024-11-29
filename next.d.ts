@@ -8,6 +8,7 @@ import type { AppProps } from 'next/app';
 declare module 'next' {
   type NextLayoutComponentType<P = object> = NextComponentType<
     NextPageContext,
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     any,
     P
   > & {

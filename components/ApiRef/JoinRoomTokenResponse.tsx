@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 
 import ApiRefTable from './ApiRefTable';
 import { JoinRoomTokenResponse as ResponseData } from './data/JoinRoomDetails';

@@ -1,8 +1,8 @@
 import StackIcons from '@components/assets/StackIcons';
 import { useRouter } from 'next/router';
 
-import { cn } from '../../../helpers/utils';
 import Link from 'next/link';
+import { cn } from '../../../helpers/utils';
 
 interface Props {
   title: string;
@@ -24,7 +24,7 @@ const SdkCard: React.FC<Props> = ({ title, desc, typeArr }) => {
         )}
       >
         {typeArr.map(({ icon, title, url }) => (
-          <Link href={url}>
+          <Link key={title} href={url}>
             <div
               key={title}
               className="flex items-center justify-start gap-4 cursor-pointer  w-full hover:bg-[#474747] p-1.5 rounded-lg transition-all duration-300 ease-in-out"

@@ -1,11 +1,11 @@
-import React from 'react';
 import axios from 'axios';
+import React from 'react';
 
 // Assets
 import LandingIcons from '@components/assets/LandingIcons';
 import Image from 'next/image';
-import { useData } from 'nextra/data';
 import Link from 'next/link';
+import { useData } from 'nextra/data';
 
 type PackageVersion = {
   version: string;

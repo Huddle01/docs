@@ -1,6 +1,6 @@
 import CommonIcons from '@components/assets/CommonIcons';
 import { useRouter } from 'next/router';
-import React from 'react';
+import type React from 'react';
 
 const Guides: React.FC = () => {
   const { push } = useRouter();

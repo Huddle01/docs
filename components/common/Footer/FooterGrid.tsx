@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 // Types
 
-import { NavigationData, TNavData } from '../../FooterContent';
+import { NavigationData, type TNavData } from '../../FooterContent';
 
 const FooterGrid: React.FC = () => {
   const router = useRouter();

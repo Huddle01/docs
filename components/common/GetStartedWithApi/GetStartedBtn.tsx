@@ -2,7 +2,7 @@ import LandingIcons from '@components/assets/LandingIcons';
 import { cn } from 'helpers/utils';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react';
+import type React from 'react';
 
 export const GetStartedBtn: React.FC = () => {
   const { push } = useRouter();

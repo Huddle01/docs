@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start -p 3000",
     "format": "biome format ./",
-    "format:fix": "biome format --write ./"
+    "format:fix": "biome format --write ./",
+    "lint": "biome lint ./ ",
+    "lint:fix": "biome lint --write ./",
+    "fix": "biome check --write ./"
   },
   "license": "MIT",
   "dependencies": {
@@ -24,7 +27,7 @@
     "tailwind-merge": "^1.10.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.5.3",
+    "@biomejs/biome": "1.9.3",
     "@types/node": "18.11.10",
     "@types/react": "^18.0.31",
     "autoprefixer": "^10.4.14",

@@ -1,4 +1,4 @@
-import { IApiDataType } from '../TokenGated';
+import type { IApiDataType } from '../TokenGated';
 
 export const CreateRoomAPI: IApiDataType[] = [
   {

@@ -1,7 +1,7 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import { HooksData } from './data';
 import { cn } from 'helpers/utils';
+import { useRouter } from 'next/router';
+import type React from 'react';
+import { HooksData } from './data';
 
 const HooksTable: React.FC = () => {
   const { push } = useRouter();

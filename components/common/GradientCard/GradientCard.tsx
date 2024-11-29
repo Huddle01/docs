@@ -1,7 +1,7 @@
-import React, { MouseEvent } from 'react';
+import React, { type MouseEvent } from 'react';
 
 import {
-  MotionValue,
+  type MotionValue,
   motion,
   useMotionTemplate,
   useMotionValue,
@@ -38,6 +38,7 @@ export type TResourceType = {
   };
   name: string;
   description: string;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   icon: JSX.Element | any;
 };
 

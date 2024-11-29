@@ -5,6 +5,7 @@ export default function OptionTable({
   options,
   headers,
 }: {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   options: [string, string, any];
   headers: [string];
 }) {

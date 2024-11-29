@@ -49,8 +49,8 @@ const GridPattern: React.FC<Props> = ({
               key={`${x}-${y}`}
               width={width + 1}
               height={height + 1}
-              x={x! * width}
-              y={y! * height}
+              x={x * width}
+              y={y * height}
             />
           ))}
         </svg>

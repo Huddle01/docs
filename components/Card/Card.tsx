@@ -1,3 +1,4 @@
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export function Cards({ children, num, ...props }: any) {
   return (
     <div
