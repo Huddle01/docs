@@ -350,7 +350,7 @@ const SidebarIcons: {
       />
     </svg>
   ),
-  'Unity Webgl': (
+  Unity: (
     <svg
       height={18}
       width={18}

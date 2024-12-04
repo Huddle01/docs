@@ -1,0 +1,110 @@
+---
+title: "Quickstart"
+---
+
+import { Tab, Tabs } from "nextra-theme-docs";
+import Image from "next/image";
+
+# Huddle Unity plugin
+
+The Huddle Unity Plugin SDK provides a process and method for seamless integration of real-time audio and video in Unity
+
+## **QuickStart**
+
+### Installing the package
+
+To get started with the Huddle01 Unity Plugin, you can download the latest unitypackage from [`here`](https://github.com/Huddle01/UnityWebglPlugin/releases)
+
+Import the unitypackage file in your project include all the files mentioned in below image:
+
+<Image
+  src="/docs/images/HuddlePackage_01.png"
+  alt="architecture"
+  width={1000}
+  height={1000}
+  quality={100}
+  priority
+  className="my-8"
+/>
+
+### **Initializing** Huddle01
+
+To initialize the Huddle01, you need to call Huddle01Core.Instance.Init method
+
+```csharp filename=".csharp"
+using UnityEngine;
+using Huddle01;
+
+public class AudioVideoMeet : MonoBehaviour
+{
+		void Start()
+    {
+        Huddle01Core.Instance.Init("Your_project_id");
+        Debug.Log("Huddle01 Initiated");
+    }
+}
+```
+
+### Join Room
+
+After initializing Huddle01 plugin, you can call join room function and subscribe to OnJoinRoom Event
+
+```csharp filename=".csharp"
+private void OnEnable()
+{
+    Huddle01Core.OnJoinRoom += OnJoinRoom;
+}
+
+private void OnDisable()
+{
+    Huddle01Core.OnJoinRoom -= OnJoinRoom;
+}
+
+public void JoinRoom(string roomId,string token)
+{
+    Huddle01Core.Instance.JoinRoom(roomId, token);
+}
+
+private void OnJoinRoom()
+{
+    Debug.Log("Room Joined");
+}
+```
+
+## Methods:
+
+### Room:
+
+Methods:
+
+- [`Huddle01Core.Instance.JoinRoom(”Your_Room_ID”, “YOUR_ACCESS_TOKEN”)`](/UnityWebglPlugin/methods/room#joinroom)
+- [`Huddle01Core.Instance.LeaveRoom()`](/UnityWebglPlugin/methods/room#leaveroom)
+
+Events:
+
+- [`Huddle01Core.Instance.OnJoinRoom()`](/UnityWebglPlugin/methods/room#Huddle01Corejoinroomeventhandler-onjoinroom)
+- [`Huddle01Core.Instance.OnRoomClosed()`](/UnityWebglPlugin/methods/room#Huddle01Coreroomclosedeventhandler-roomclosed)
+
+### LocalPeer
+
+Methods
+
+- [`Huddle01Core.Instance.UpdateLocalPeerMetaData(string metadataJson)`](/UnityWebglPlugin/methods/localPeer#updatelocalpeermetadatastring-metadata)
+- [`Huddle01Core.Instance.GetLocalPeerId()`](/UnityWebglPlugin/methods/localPeer#getlocalpeerid)
+- [`MuteMic(shouldMute,PeerMetadata)`](/UnityWebglPlugin/methods/localPeer#mutemicbool-shouldmute-peermetadata-metadata)
+- [`EnableVideo(enable,PeerMetadata)`](/UnityWebglPlugin/methods/localPeer#enablevideobool-enable-peermetadata-metadata)
+
+Events
+
+- [`Huddle01Core.LocalPeerIdEventHandler(peerId)`](/UnityWebglPlugin/methods/localPeer#localpeeridstring-peerid)
+
+### Remote Peer
+
+Events
+
+- [`PeerAddedEventHandler(peerInfo)`](/UnityWebglPlugin/methods/remotePeer#peeraddedeventhandlerstring-peerinfo)
+- [`PeerLeftEventHandler(peerId)`](/UnityWebglPlugin/methods/remotePeer#peerlefteventhandlerstring-peerid)
+- [`PeerMutedEventHandler(muted)`](/UnityWebglPlugin/methods/remotePeer#peermutedeventhandlerstring-peeridbool-muted)
+- [`PeerMetadataUpdatedEventHandler(PeerMetadata)`](/UnityWebglPlugin/methods/remotePeer#peermetadataupdatedeventhandlerstring-peermetadata)
+- [`ResumePeerVideoEventHandler(peerId)`](/UnityWebglPlugin/methods/remotePeer#resumepeervideoeventhandlerstring-peerid) // can be used for localpeer as well
+- [`StopPeerVideoEventHandler(peerId)`](/UnityWebglPlugin/methods/remotePeer#stoppeervideoeventhandlerstring-peerid) can be used for localpeer as well

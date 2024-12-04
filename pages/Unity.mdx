@@ -1,0 +1,23 @@
+---
+title: "Unity"
+---
+
+import { UnityData } from "@components/assets/Data/data";
+import GradientCard from "@components/common/GradientCard/GradientCard";
+import { Callout } from "nextra-theme-docs";
+
+# Unity Plugin
+
+The Huddle01 Unity plugin offers seamless integration of audio and video capabilities for WebGL platforms, enhancing real-time communication in your projects. It provides a comprehensive set of methods and events to manage audio and video streams, ensuring smooth and interactive experiences. This plugin simplifies the development of immersive multimedia applications in Unity.
+
+This plugin is ideal for a variety of use cases, such as virtual events, online classrooms, multiplayer games, and collaborative workspaces where real-time communication is crucial. It enables developers to easily implement features like video conferencing, and in-game voice chat, all within a WebGL environment.
+
+Checkout the live demo [here](https://unity.huddle01.media/)
+
+<div className="my-16 xl:max-w-none">
+  <div className="not-prose mt-4 grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
+    {UnityData.map((resource) => (
+      <GradientCard key={resource.href} resource={resource} />
+    ))}
+  </div>
+</div>
