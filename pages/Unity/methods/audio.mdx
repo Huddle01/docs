@@ -7,59 +7,27 @@ import { Callout } from "nextra-theme-docs";
 
 ## Audio
 
-### MuteMic(bool shouldMute, PeerMetadata metadata)
+### Enable Audio
 
-To mute microphone, call `MuteMic` function. It takes the bool and PeerMetadata as param. Keep that in mind, in case you want to make some changes in class PeerMetadata you need to make some changes in HuddleWebglPlugin.jslib accordingly.
+The EnableAudio method enables the local microphone and starts producing the audio stream with the label audio.
 
-**Parameters**
+```csharp
 
-<OptionTable
-  headers={["Params", "Type", "Description"]}
-  options={[
-    ["shouldMute", "bool", "setting mute status of peer"],
-    [
-      "metadata",
-      "PeerMetadata",
-      "custom class object to store metadata of peer",
-    ],
-  ]}
-/>
-
-```csharp filename=".csharp"
-public void MuteMic(bool shouldMute,PeerMetadata metadata)
+private void EnableAudio()
 {
-    Huddle01Core.Instance.MuteMic(shouldMute, metadata);
+    _huddleClientInstance.EnableAudio();
 }
 ```
 
-### Huddel01Core.PeerMuted(string peerId, bool isMuted)
-This event gets invoked when any peer toggle their audio. Subcribe to this event to receive notification.
+### Disable Audio
 
-**Parameters**
+The DisableAudio method stops the local audio stream and also stops producing the audio stream with remote peers.
 
-<OptionTable
-  headers={["Params", "Type", "Description"]}
-  options={[
-    ["peerId", "string", "peer id"],
-    ["isMuted","bool","mic status, true if muted",]
-  ]}
-/>
+```csharp
 
-```csharp filename=".csharp"
-private void OnEnable()
+private void DisableAudio()
 {
-    Huddle01Core.PeerMuted += OnPeerMute;
-}    
-
-private void OnDisable()
-{
-    Huddle01Core.PeerMuted -= OnPeerMute;
+    _huddleClientInstance.DisableAudio();
 }
 
-private void OnPeerMute(string peerId,bool isMuted)
-{
-    Debug.Log($"{peerId} : {isMuted}");
-}
 ```
-
-
