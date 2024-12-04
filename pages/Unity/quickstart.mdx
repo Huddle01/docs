@@ -7,18 +7,19 @@ import Image from "next/image";
 
 # Huddle Unity plugin
 
-The Huddle Unity Plugin SDK provides a process and method for seamless integration of real-time audio and video in Unity
+The Huddle Unity Native Plugin SDK offers a streamlined solution for integrating real-time audio and video into Unity projects.
+It supports multiple platforms, including Windows, macOS, Android, iOS, and WebGL.
 
 ## **QuickStart**
 
 ### Installing the package
 
-To get started with the Huddle01 Unity Plugin, you can download the latest unitypackage from [`here`](https://github.com/Huddle01/UnityWebglPlugin/releases)
+To get started with the Huddle01 Unity SDK, download the Unity package from [`here`](insert link).
 
-Import the unitypackage file in your project include all the files mentioned in below image:
+Import the package into your Unity project.
 
 <Image
-  src="/docs/images/HuddlePackage_01.png"
+  src="/docs/images/HuddlePackageInstall.png"
   alt="architecture"
   width={1000}
   height={1000}
@@ -27,84 +28,98 @@ Import the unitypackage file in your project include all the files mentioned in 
   className="my-8"
 />
 
-### **Initializing** Huddle01
+### Initializing SDK
 
-To initialize the Huddle01, you need to call Huddle01Core.Instance.Init method
+To initialize the Huddle01 Unity SDK, you need to call Huddle01Core.Instance.Init method
 
-```csharp filename=".csharp"
-using UnityEngine;
-using Huddle01;
+```csharp
+private HuddleClient _huddleClientInstance;
 
-public class AudioVideoMeet : MonoBehaviour
+#if !UNITY_WEBGL
+[SerializeField]
+private DeviceHandler _deviceHandler; // Assign from inspector
+#endif
+
+[SerializeField]
+private string _roomId; // Assign from inspector
+
+[SerializeField]
+private string _projectId; // Assign from inspector
+
+void Init()
 {
-		void Start()
-    {
-        Huddle01Core.Instance.Init("Your_project_id");
-        Debug.Log("Huddle01 Initiated");
-    }
+#if UNITY_WEBGL
+    HuddleClient.Instance.InitForWebgl(_projectId, _roomId);
+#else
+    HuddleClient.Instance.InitForNative(_projectId, _roomId, _deviceHandler);
+#endif
+    _huddleClientInstance = HuddleClient.Instance;
 }
+
 ```
+
 
 ### Join Room
 
-After initializing Huddle01 plugin, you can call join room function and subscribe to OnJoinRoom Event
+After initializing the HuddleClient, you can invoke the JoinRoom function and subscribe to the OnJoinRoom event.
 
-```csharp filename=".csharp"
-private void OnEnable()
+```csharp
+
+public void JoinRoom()
 {
-    Huddle01Core.OnJoinRoom += OnJoinRoom;
+    _huddleClientInstance.JoinRoom(_roomId);
 }
 
-private void OnDisable()
+private void SubscribeEvents() 
 {
-    Huddle01Core.OnJoinRoom -= OnJoinRoom;
+    HuddleClient.OnJoinRoom += OnRoomJoined;
+    
 }
 
-public void JoinRoom(string roomId,string token)
+private void UnSubscribeEvents()
 {
-    Huddle01Core.Instance.JoinRoom(roomId, token);
+    HuddleClient.OnJoinRoom -= OnRoomJoined;
+    
 }
 
-private void OnJoinRoom()
+private void OnRoomJoined()
 {
-    Debug.Log("Room Joined");
+    string localPeerId = _huddleClientInstance.GetLocalPeerId();
 }
+
+public void LeaveRoom()
+{
+    _huddleClientInstance.LeaveRoom();
+}
+
 ```
 
-## Methods:
+## List of Events and Delegates available in the HuddleClient class::
 
-### Room:
+```csharp
+    //Delegates
+    public delegate void PeerAddedEventHandler(string peerId);
+    public delegate void PeerLeftEventHandler(string peerId);
+    public delegate void PeerMutedEventHandler(string peerId);
+    public delegate void PeerUnMutedEventHandler(string peerId);
+    public delegate void RoomClosedEventHandler();
+    public delegate void PeerMetadataUpdatedEventHandler(string peerId);
+    public delegate void JoinRoomEventHandler();
+    public delegate void ResumePeerVideoEventHandler(string peerId);
+    public delegate void StopPeerVideoEventHandler(string peerId);
+    public delegate void MessageReceivedEventHandler(string data);
+    public delegate void LeaveRoomEventHandler();
 
-Methods:
-
-- [`Huddle01Core.Instance.JoinRoom(”Your_Room_ID”, “YOUR_ACCESS_TOKEN”)`](/UnityWebglPlugin/methods/room#joinroom)
-- [`Huddle01Core.Instance.LeaveRoom()`](/UnityWebglPlugin/methods/room#leaveroom)
-
-Events:
-
-- [`Huddle01Core.Instance.OnJoinRoom()`](/UnityWebglPlugin/methods/room#Huddle01Corejoinroomeventhandler-onjoinroom)
-- [`Huddle01Core.Instance.OnRoomClosed()`](/UnityWebglPlugin/methods/room#Huddle01Coreroomclosedeventhandler-roomclosed)
-
-### LocalPeer
-
-Methods
-
-- [`Huddle01Core.Instance.UpdateLocalPeerMetaData(string metadataJson)`](/UnityWebglPlugin/methods/localPeer#updatelocalpeermetadatastring-metadata)
-- [`Huddle01Core.Instance.GetLocalPeerId()`](/UnityWebglPlugin/methods/localPeer#getlocalpeerid)
-- [`MuteMic(shouldMute,PeerMetadata)`](/UnityWebglPlugin/methods/localPeer#mutemicbool-shouldmute-peermetadata-metadata)
-- [`EnableVideo(enable,PeerMetadata)`](/UnityWebglPlugin/methods/localPeer#enablevideobool-enable-peermetadata-metadata)
-
-Events
-
-- [`Huddle01Core.LocalPeerIdEventHandler(peerId)`](/UnityWebglPlugin/methods/localPeer#localpeeridstring-peerid)
-
-### Remote Peer
-
-Events
-
-- [`PeerAddedEventHandler(peerInfo)`](/UnityWebglPlugin/methods/remotePeer#peeraddedeventhandlerstring-peerinfo)
-- [`PeerLeftEventHandler(peerId)`](/UnityWebglPlugin/methods/remotePeer#peerlefteventhandlerstring-peerid)
-- [`PeerMutedEventHandler(muted)`](/UnityWebglPlugin/methods/remotePeer#peermutedeventhandlerstring-peeridbool-muted)
-- [`PeerMetadataUpdatedEventHandler(PeerMetadata)`](/UnityWebglPlugin/methods/remotePeer#peermetadataupdatedeventhandlerstring-peermetadata)
-- [`ResumePeerVideoEventHandler(peerId)`](/UnityWebglPlugin/methods/remotePeer#resumepeervideoeventhandlerstring-peerid) // can be used for localpeer as well
-- [`StopPeerVideoEventHandler(peerId)`](/UnityWebglPlugin/methods/remotePeer#stoppeervideoeventhandlerstring-peerid) can be used for localpeer as well
+    //Events
+    public static event PeerAddedEventHandler PeerAdded;
+    public static event PeerLeftEventHandler PeerLeft;
+    public static event PeerMutedEventHandler PeerMuted;
+    public static event PeerUnMutedEventHandler PeerUnMuted;
+    public static event RoomClosedEventHandler RoomClosed;
+    public static event PeerMetadataUpdatedEventHandler PeerMetadata;
+    public static event JoinRoomEventHandler OnJoinRoom;
+    public static event ResumePeerVideoEventHandler OnResumePeerVideo;
+    public static event StopPeerVideoEventHandler OnStopPeerVideo;
+    public static event MessageReceivedEventHandler OnMessageReceived;
+    public static event LeaveRoomEventHandler OnLeaveRoom;
+```
