@@ -6,20 +6,30 @@ import { Tab, Tabs } from "nextra-theme-docs";
 
 ## Initialization
 
-### Huddle01Core.Instance.Init(string projectId)
+To initialize the Huddle01 Unity SDK, you need to call Huddle01Core.Instance.Init method
 
-To initialize the Huddle01, you need to call `Huddle01Core.Instance.Init` method
+```csharp
+private HuddleClient _huddleClientInstance;
 
-```csharp filename=".csharp"
-using UnityEngine;
-using Huddle01;
+#if !UNITY_WEBGL
+[SerializeField]
+private DeviceHandler _deviceHandler; // Assign from inspector
+#endif
 
-public class AudioVideoMeet : MonoBehaviour
+[SerializeField]
+private string _roomId; // Assign from inspector
+
+[SerializeField]
+private string _projectId; // Assign from inspector
+
+void Init()
 {
-		void Start()
-    {
-        Huddle01Core.Instance.Init("Your_project_id");
-        Debug.Log("Huddle01 Initiated");
-    }
+#if UNITY_WEBGL
+    HuddleClient.Instance.InitForWebgl(_projectId, _roomId);
+#else
+    HuddleClient.Instance.InitForNative(_projectId, _roomId, _deviceHandler);
+#endif
+    _huddleClientInstance = HuddleClient.Instance;
 }
+
 ```
