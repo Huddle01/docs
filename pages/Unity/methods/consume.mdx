@@ -9,34 +9,35 @@ import { Callout } from "nextra-theme-docs";
 
 ### StartConsumerPeer(string peerId);
 
-Call this function to consume individual peer. This function will invoke Event [`Huddle01Core.OnStartConsumingPeer`](/UnityWebglPlugin/methods/remotePeer#startconsumingpeereventhandlerstring-peerid) once the process is successfully done
-
 **Parameters**
 <OptionTable
   headers={["Param", "Type", "Description"]}
-  options={[["peerId", "string", "The peer ID of the Remote Peer to consume from."]]}
+  options={[["peerId", "string", "The peer ID of the Remote Peer"],["label", "string", "The peer ID of the Remote Peer"]]}
 />
 
+
+Call this function to consume individual peer. 
+
 ```csharp filename=".csharp"
-public void ConsumePeer(string peerId)
+public void ConsumePeer(string peerId,string label)
 {
-    Huddle01Core.Instance.StartConsumerPeer(peerId);
+    _huddleClientInstance.ConsumePeer(peerId,label);
 }
 ```
 
 ### StopConsumePeer(string peerId,string label);
 
-Call this function to stop consuming individual peer.This function will invoke Event [`Huddle01Core.OnStopConsumingPeer`](/UnityWebglPlugin/methods/remotePeer#stopconsumingpeereventhandlerstring-peerid) once the process is successfully done
+Call this function to stop consuming individual peer.
 
 **Parameters**
 <OptionTable
   headers={["Param", "Type", "Description"]}
-  options={[["peerId", "string", "The peer ID of the Remote Peer"]]}
+  options={[["peerId", "string", "The peer ID of the Remote Peer"],["label", "string", "The peer ID of the Remote Peer"]]}
 />
 
 ```csharp filename=".csharp"
-public void StopConsumePeer(string peerId)
+public void StopConsumingPeer(string peerId,string label)
 {
-    Huddle01Core.Instance.StopConsumeingPeer(roomId);
+    _huddleClientInstance.StopConsumingPeer(peerId,label);
 }
 ```

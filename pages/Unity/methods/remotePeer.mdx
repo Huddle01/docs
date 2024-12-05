@@ -7,6 +7,74 @@ import OptionTable from "@components/common/Table/OptionTable";
 
 ## Remote Peer
 
+Following are the static events in HuddleClient.These event gets invoked when any peer is added, leave or updateMetadata in the current room. 
+Subscribe to this event to get the notification
+
+```csharp
+public Dictionary<string, GameObject> RemotePeers => _remotePeers;
+private Dictionary<string, GameObject> _remotePeers = new Dictionary<string, GameObject>();
+
+private void SubscribeEvents() 
+{
+    HuddleClient.PeerAdded += OnPeerAdded;
+    HuddleClient.PeerLeft += OnPeerLeft;
+
+    HuddleClient.PeerMetadata += OnPeerMetadataUpdated;
+}
+
+private void UnSubscribeEvents()
+{
+    HuddleClient.PeerAdded -= OnPeerAdded;
+    HuddleClient.PeerLeft -= OnPeerLeft;
+
+    HuddleClient.PeerMetadata -= OnPeerMetadataUpdated;
+}
+
+
+private void OnPeerLeft(string peerId)
+{
+    if (peerId.Equals(_localPeerId)) 
+    {
+        return;
+    }
+
+    Destroy(_remotePeers[peerId]);
+    _remotePeers.Remove(peerId);
+}
+
+private void OnPeerAdded(string peerId)
+{
+    if (peerId.Equals(_localPeerId))
+    {
+        return;
+    }
+
+    //instantiate remote peer prefab for webgl and for native
+    GameObject tempRemotePeer = null;
+#if !UNITY_WEBGL
+    //Instantiate remote peer section for webgl
+#else
+    //Instantiate remote peer section for native
+#endif
+
+    _remotePeers[peerId] = tempRemotePeer;
+    Debug.Log("Peer Added");
+
+}
+
+ private void OnPeerMetadataUpdated(string peerId)
+{
+    if (peerId.Equals(_localPeerId))
+    {
+        return;
+    }
+
+    Debug.Log($"Get metadata for {peerId}");
+    string metadata =  _huddleClientInstance.GetMetadataOfRemotePeers(peerId);
+    PeerMedataUpdate?.Invoke(peerId,JsonConvert.DeserializeObject<MetadataInfo>(metadata));
+}
+```
+
 ### RemotePeer Section for Native platforms
 
 ```csharp

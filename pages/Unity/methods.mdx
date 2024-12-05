@@ -27,28 +27,3 @@ import OptionTable from '@components/common/Table/OptionTable';
 </svg>} title="room" href="methods/room"/>
 
 </Cards>
-
-#### Example
-
-<OptionTable
-  headers={['Name', 'Type' ,'Description']}
-  options={[
-    [
-      'roomId',
-      'string',
-      'Id of room',
-    ],
-    [
-      'token',
-      'string',
-      'access token',
-    ]
-  ]}
-/>
-
-```csharp filename=".csharp"
-public void JoinRoom(string roomId,string token)
-{
-    Huddle01Core.Instance.JoinRoom(roomId, token);
-}
-```

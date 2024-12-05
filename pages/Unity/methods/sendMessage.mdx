@@ -26,14 +26,14 @@ Pass "*" to send data to all peers in the room or peerId to specific peer in the
 
 ```csharp filename=".csharp"
 //Send data to all peers in the room
-Huddle01Core.Instance.SendData("*",data,label);
+HuddleClient.Instance.SendTextMessage("*",data,label);
 
 //Send data to peer in a room
-Huddle01Core.Instance.SendData(<peerId>,data,label);
+HuddleClient.Instance.SendTextMessage(<peerId>,data,label);
 
 ```
 
-### SendData(List&lt;string&gt; peerIds,string data, string label)
+{/* ### SendData(List&lt;string&gt; peerIds,string data, string label)
 
 Call this function to send any string data or message to selected peers in the room. 
 
@@ -57,9 +57,9 @@ public void SendData(List<string> peerIds,string data,string label)
 }
 ```
 
+ */}
 
-
-### HuddleCore.OnMessageReceived
+### HuddleClient.OnMessageReceived
 
 Subscribe to this event to receive message send by any peer in the room.
 
@@ -76,12 +76,12 @@ Subscribe to this event to receive message send by any peer in the room.
 
 private void OnEnable()
 {
-    Huddle01Core.OnMessageReceived += OnMessageReceived;
+    HuddleClient.OnMessageReceived += OnMessageReceived;
 }    
 
 private void OnDisable()
 {
-    Huddle01Core.OnMessageReceived -= OnMessageReceived;
+    HuddleClient.OnMessageReceived -= OnMessageReceived;
 }
 
 private void OnMessageReceived(string data)
