@@ -75,7 +75,11 @@ private void OnPeerAdded(string peerId)
 }
 ```
 
-### RemotePeer Section for Native platforms
+### Remote Peer Section Component
+To render video and audio from a remote peer, you can create `RemotePeerSections` for both WebGL and native platforms by extending the `RemotePeerBase` class.
+Below are examples for native platforms and WebGL separately.
+
+#### RemotePeer Section for Native platforms
 
 ```csharp
 
@@ -256,7 +260,7 @@ public class RemotePeerNative : RemotePeerBase
     }
 ```
 
-### RemotePeer Section for Webgl platform
+#### RemotePeer Section for Webgl platform
 
 ```csharp
 
