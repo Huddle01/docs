@@ -1,0 +1,43 @@
+---
+title: "Consume"
+---
+
+import OptionTable from "@components/common/Table/OptionTable";
+import { Callout } from "nextra-theme-docs";
+
+## Consume
+
+### StartConsumerPeer(string peerId);
+
+**Parameters**
+<OptionTable
+  headers={["Param", "Type", "Description"]}
+  options={[["peerId", "string", "The peer ID of the Remote Peer"],["label", "string", "The peer ID of the Remote Peer"]]}
+/>
+
+
+Call this function to consume individual peer. 
+
+```csharp filename=".csharp"
+public void ConsumePeer(string peerId,string label)
+{
+    _huddleClientInstance.ConsumePeer(peerId,label);
+}
+```
+
+### StopConsumePeer(string peerId,string label);
+
+Call this function to stop consuming individual peer.
+
+**Parameters**
+<OptionTable
+  headers={["Param", "Type", "Description"]}
+  options={[["peerId", "string", "The peer ID of the Remote Peer"],["label", "string", "The peer ID of the Remote Peer"]]}
+/>
+
+```csharp filename=".csharp"
+public void StopConsumingPeer(string peerId,string label)
+{
+    _huddleClientInstance.StopConsumingPeer(peerId,label);
+}
+```

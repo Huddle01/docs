@@ -1,0 +1,35 @@
+---
+title: "Initialization"
+---
+
+import { Tab, Tabs } from "nextra-theme-docs";
+
+## Initialization
+
+To initialize the Huddle01 Unity SDK, you need initialize HuddleClient
+
+```csharp
+private HuddleClient _huddleClientInstance;
+
+#if !UNITY_WEBGL
+[SerializeField]
+private DeviceHandler _deviceHandler; // Assign from inspector
+#endif
+
+[SerializeField]
+private string _roomId; // Assign from inspector
+
+[SerializeField]
+private string _projectId; // Assign from inspector
+
+void Init()
+{
+#if UNITY_WEBGL
+    HuddleClient.Instance.InitForWebgl(_projectId, _roomId);
+#else
+    HuddleClient.Instance.InitForNative(_projectId, _roomId, _deviceHandler);
+#endif
+    _huddleClientInstance = HuddleClient.Instance;
+}
+
+```

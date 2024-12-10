@@ -1,0 +1,107 @@
+---
+title: "Send Message"
+---
+
+
+import OptionTable from "@components/common/Table/OptionTable";
+import { Callout } from "nextra-theme-docs";
+
+### SendData(string message)
+
+Call this function to send any string data either to specific peer or all peer in the room.
+Pass "*" to send data to all peers in the room or peerId to specific peer in the room
+
+**Parameters**
+
+<OptionTable
+  headers={["Params", "Type", "Description"]}
+  options={[
+    ["to", "string", 'peer ID or "*" for all peers.'],
+    ["data", "string", "Any data or message in form of string"],
+    ["label", "string", "The label of the data message."]
+    ]}
+/>
+
+**Example**
+
+```csharp filename=".csharp"
+//Send data to all peers in the room
+HuddleClient.Instance.SendTextMessage("*",data,label);
+
+//Send data to peer in a room
+HuddleClient.Instance.SendTextMessage(<peerId>,data,label);
+
+```
+
+{/* ### SendData(List&lt;string&gt; peerIds,string data, string label)
+
+Call this function to send any string data or message to selected peers in the room. 
+
+**Parameters**
+
+<OptionTable
+  headers={["Params", "Type", "Description"]}
+  options={[
+    ["peerIds", "List<string>", "List of peerIds"],
+    ["data", "string", "Any data or message in form of string"],
+    ["label", "string", "The label of the data message."]
+    ]}
+/>
+
+**Example**
+
+```csharp filename=".csharp"
+public void SendData(List<string> peerIds,string data,string label)
+{
+    Huddle01Core.Instance.SendData(peerIds,data,label);
+}
+```
+
+ */}
+
+### HuddleClient.OnMessageReceived
+
+Subscribe to this event to receive message send by any peer in the room.
+
+**Parameters**
+
+<OptionTable
+  headers={["Params", "Type", "Description"]}
+  options={[
+    ["message", "string", "message in form of json which can be Deserialized into `MessageReceivedResponse`"]
+    ]}
+/>
+
+```csharp filename=".csharp"
+
+private void OnEnable()
+{
+    HuddleClient.OnMessageReceived += OnMessageReceived;
+}    
+
+private void OnDisable()
+{
+    HuddleClient.OnMessageReceived -= OnMessageReceived;
+}
+
+private void OnMessageReceived(string data)
+{
+    Debug.Log($"received data : {data}");
+    MessageReceivedResponse response = JsonConvert.DeserializeObject<MessageReceivedResponse>(data);
+}
+
+
+[System.Serializable]
+public class MessageReceivedResponse 
+{
+    [JsonProperty("from")]
+    public string From;
+
+    [JsonProperty("label")]
+    public string Label;
+
+    [JsonProperty("payload")]
+    public string Payload;
+}
+
+```

@@ -1,0 +1,33 @@
+---
+title: "Audio"
+---
+
+import OptionTable from "@components/common/Table/OptionTable";
+import { Callout } from "nextra-theme-docs";
+
+## Audio
+
+### Enable Audio
+
+The EnableAudio method enables the local microphone and starts producing the audio stream with the label audio.
+
+```csharp
+
+private void EnableAudio()
+{
+    _huddleClientInstance.EnableAudio();
+}
+```
+
+### Disable Audio
+
+The DisableAudio method stops the local audio stream and also stops producing the audio stream with remote peers.
+
+```csharp
+
+private void DisableAudio()
+{
+    _huddleClientInstance.DisableAudio();
+}
+
+```

@@ -1,0 +1,125 @@
+---
+title: "Quickstart"
+---
+
+import { Tab, Tabs } from "nextra-theme-docs";
+import Image from "next/image";
+
+# Unity SDK
+
+The Huddle Unity Native Plugin SDK offers a streamlined solution for integrating real-time audio and video into Unity projects.
+It supports multiple platforms, including WebGL & Native Platforms such as Windows, macOS, Android, iOS.
+
+## **QuickStart**
+
+### Installing the package
+
+To get started with the Huddle01 Unity SDK, download the Unity package from **[here](https://github.com/AdhikSharma/Huddle01UnitySdk/releases)**
+
+Import the package into your Unity project.
+
+<Image
+  src="/docs/images/HuddlePackageInstall.png"
+  alt="architecture"
+  width={1000}
+  height={1000}
+  quality={100}
+  priority
+  className="my-8"
+/>
+
+### Initializing SDK
+
+To initialize the Huddle01 Unity SDK, you need initialize HuddleClient
+
+```csharp
+private HuddleClient _huddleClientInstance;
+
+#if !UNITY_WEBGL
+[SerializeField]
+private DeviceHandler _deviceHandler; // Assign from inspector
+#endif
+
+[SerializeField]
+private string _roomId; // Assign from inspector
+
+[SerializeField]
+private string _projectId; // Assign from inspector
+
+void Init()
+{
+#if UNITY_WEBGL
+    HuddleClient.Instance.InitForWebgl(_projectId, _roomId);
+#else
+    HuddleClient.Instance.InitForNative(_projectId, _roomId, _deviceHandler);
+#endif
+    _huddleClientInstance = HuddleClient.Instance;
+}
+
+```
+
+
+### Join Room
+
+After initializing the HuddleClient, you can invoke the JoinRoom function and subscribe to the OnJoinRoom event.
+
+```csharp
+
+public void JoinRoom()
+{
+    _huddleClientInstance.JoinRoom(_roomId);
+}
+
+private void SubscribeEvents() 
+{
+    HuddleClient.OnJoinRoom += OnRoomJoined;
+    
+}
+
+private void UnSubscribeEvents()
+{
+    HuddleClient.OnJoinRoom -= OnRoomJoined;
+    
+}
+
+private void OnRoomJoined()
+{
+    string localPeerId = _huddleClientInstance.GetLocalPeerId();
+}
+
+public void LeaveRoom()
+{
+    _huddleClientInstance.LeaveRoom();
+}
+
+```
+
+## List of Events and Delegates available in the HuddleClient class::
+
+```csharp
+    //Delegates
+    public delegate void PeerAddedEventHandler(string peerId);
+    public delegate void PeerLeftEventHandler(string peerId);
+    public delegate void PeerMutedEventHandler(string peerId);
+    public delegate void PeerUnMutedEventHandler(string peerId);
+    public delegate void RoomClosedEventHandler();
+    public delegate void PeerMetadataUpdatedEventHandler(string peerId);
+    public delegate void JoinRoomEventHandler();
+    public delegate void ResumePeerVideoEventHandler(string peerId);
+    public delegate void StopPeerVideoEventHandler(string peerId);
+    public delegate void MessageReceivedEventHandler(string data);
+    public delegate void LeaveRoomEventHandler();
+
+    //Events
+    public static event PeerAddedEventHandler PeerAdded;
+    public static event PeerLeftEventHandler PeerLeft;
+    public static event PeerMutedEventHandler PeerMuted;
+    public static event PeerUnMutedEventHandler PeerUnMuted;
+    public static event RoomClosedEventHandler RoomClosed;
+    public static event PeerMetadataUpdatedEventHandler PeerMetadata;
+    public static event JoinRoomEventHandler OnJoinRoom;
+    public static event ResumePeerVideoEventHandler OnResumePeerVideo;
+    public static event StopPeerVideoEventHandler OnStopPeerVideo;
+    public static event MessageReceivedEventHandler OnMessageReceived;
+    public static event LeaveRoomEventHandler OnLeaveRoom;
+```

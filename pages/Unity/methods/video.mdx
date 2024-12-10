@@ -1,0 +1,32 @@
+---
+title: "Video"
+---
+
+import OptionTable from "@components/common/Table/OptionTable";
+import { Callout } from "nextra-theme-docs";
+
+## Video
+
+### Enable Video
+
+The EnableVideo method enables the local microphone and starts producing the video stream with the label video.
+```csharp
+
+private void EnableVideo()
+{
+    _huddleClientInstance.EnableVideo();
+}
+```
+
+### Disable Audio
+
+The DisableVideo method stops the local video stream and also stops producing the video stream with remote peers.
+
+```csharp
+
+private void DisableVideo()
+{
+    _huddleClientInstance.DisableVideo();
+}
+
+```

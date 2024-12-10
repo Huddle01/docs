@@ -1,0 +1,43 @@
+---
+title: "Room"
+---
+
+import { Tab, Tabs } from "nextra-theme-docs";
+import OptionTable from "@components/common/Table/OptionTable";
+
+# Room
+
+## Methods
+
+After initializing the HuddleClient, you can invoke the JoinRoom function and subscribe to the OnJoinRoom event.
+
+```csharp
+
+public void JoinRoom()
+{
+    _huddleClientInstance.JoinRoom(_roomId);
+}
+
+private void SubscribeEvents() 
+{
+    HuddleClient.OnJoinRoom += OnRoomJoined;
+    
+}
+
+private void UnSubscribeEvents()
+{
+    HuddleClient.OnJoinRoom -= OnRoomJoined;
+    
+}
+
+private void OnRoomJoined()
+{
+    string localPeerId = _huddleClientInstance.GetLocalPeerId();
+}
+
+public void LeaveRoom()
+{
+    _huddleClientInstance.LeaveRoom();
+}
+
+```

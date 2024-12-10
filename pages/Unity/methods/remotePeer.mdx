@@ -1,0 +1,364 @@
+---
+title: "Remote Peer"
+---
+
+import { Tab, Tabs } from "nextra-theme-docs";
+import OptionTable from "@components/common/Table/OptionTable";
+
+## Remote Peer
+
+Following are the static events in HuddleClient.These event gets invoked when any peer is added, leave or updateMetadata in the current room. 
+Subscribe to this event to get the notification
+
+```csharp
+public Dictionary<string, GameObject> RemotePeers => _remotePeers;
+private Dictionary<string, GameObject> _remotePeers = new Dictionary<string, GameObject>();
+
+private void SubscribeEvents() 
+{
+    HuddleClient.PeerAdded += OnPeerAdded;
+    HuddleClient.PeerLeft += OnPeerLeft;
+
+    HuddleClient.PeerMetadata += OnPeerMetadataUpdated;
+}
+
+private void UnSubscribeEvents()
+{
+    HuddleClient.PeerAdded -= OnPeerAdded;
+    HuddleClient.PeerLeft -= OnPeerLeft;
+
+    HuddleClient.PeerMetadata -= OnPeerMetadataUpdated;
+}
+
+
+private void OnPeerLeft(string peerId)
+{
+    if (peerId.Equals(_localPeerId)) 
+    {
+        return;
+    }
+
+    Destroy(_remotePeers[peerId]);
+    _remotePeers.Remove(peerId);
+}
+
+private void OnPeerAdded(string peerId)
+{
+    if (peerId.Equals(_localPeerId))
+    {
+        return;
+    }
+
+    //instantiate remote peer prefab for webgl and for native
+    GameObject tempRemotePeer = null;
+#if !UNITY_WEBGL
+    //Instantiate remote peer section for webgl
+#else
+    //Instantiate remote peer section for native
+#endif
+
+    _remotePeers[peerId] = tempRemotePeer;
+    Debug.Log("Peer Added");
+
+}
+
+ private void OnPeerMetadataUpdated(string peerId)
+{
+    if (peerId.Equals(_localPeerId))
+    {
+        return;
+    }
+
+    Debug.Log($"Get metadata for {peerId}");
+    string metadata =  _huddleClientInstance.GetMetadataOfRemotePeers(peerId);
+    PeerMedataUpdate?.Invoke(peerId,JsonConvert.DeserializeObject<MetadataInfo>(metadata));
+}
+```
+
+### Remote Peer Section Component
+To render video and audio from a remote peer, you can create `RemotePeerSections` for both WebGL and native platforms by extending the `RemotePeerBase` class.
+Below are examples for native platforms and WebGL separately.
+
+#### RemotePeer Section for Native platforms
+
+```csharp
+
+public class RemotePeerNative : RemotePeerBase
+    {
+        
+#if !UNITY_WEBGL
+
+        private VideoStreamTrack _videotrack;
+
+        private GameObject _audioRef;
+
+        public RemotePeer RemotePeer => _remotePeer;
+        private RemotePeer _remotePeer;
+
+        List<Tuple<Action<Consumer<Mediasoup.Types.AppData>, string>, Consumer<Mediasoup.Types.AppData>, string>> ConsumeTasks =
+                            new List<Tuple<Action<Consumer<Mediasoup.Types.AppData>, string>, Consumer<Mediasoup.Types.AppData>, string>>();
+        List<Tuple<Action<string, string>, string, string>> CloseConsumerTasks =
+                                new List<Tuple<Action<string, string>, string, string>>();
+
+
+        void Start()
+        {
+
+        }
+
+        void Update()
+        {
+            while (ConsumeTasks.Count > 0)
+            {
+                ConsumeTasks[0].Item1.Invoke(ConsumeTasks[0].Item2, ConsumeTasks[0].Item3);
+                ConsumeTasks.RemoveAt(0);
+            }
+
+            while (CloseConsumerTasks.Count > 0)
+            {
+                CloseConsumerTasks[0].Item1.Invoke(CloseConsumerTasks[0].Item2, CloseConsumerTasks[0].Item3);
+                CloseConsumerTasks.RemoveAt(0);
+            }
+
+            if (_videotrack != null && _videotrack.ReadyState == TrackState.Live && _videotrack.Enabled)
+            {
+                Debug.Log($"tex format {_videotrack.Texture == null}");
+
+                _videoTexture.texture = _videotrack.Texture;
+            }
+        }
+
+        public override void Init(string remotePeerId)
+        {
+            base.Init(remotePeerId);
+            _remotePeer = Room.Instance.GetRemotePeerById(remotePeerId);
+
+            _remotePeer.On("stream-playable", async (arg) =>
+            {
+                Debug.Log("Play stream");
+                try
+                {
+                    Consumer<Mediasoup.Types.AppData> consumer = arg[0] as Consumer<Mediasoup.Types.AppData>;
+                    string label = arg[1] as string;
+
+                    Debug.Log(consumer.track.ReadyState);
+
+                    if (label.Equals("audio"))
+                    {
+                        var temp = new Tuple<Action<Consumer<Mediasoup.Types.AppData>, string>, Consumer<Mediasoup.Types.AppData>, string>(EnableAudio, consumer, label);
+                        ConsumeTasks.Add(temp);
+                    }
+                    else if (label.Equals("video"))
+                    {
+                        var temp = new Tuple<Action<Consumer<Mediasoup.Types.AppData>, string>, Consumer<Mediasoup.Types.AppData>, string>(EnableVideo, consumer, label);
+                        ConsumeTasks.Add(temp);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError(ex);
+                }
+            });
+
+            _remotePeer.On("stream-closed", async (arg) =>
+            {
+                Debug.Log("Close stream");
+                var temp = new Tuple<Action<string, string>, string, string>(OnCloseTrack, arg[0] as string, arg[1] as string);
+                CloseConsumerTasks.Add(temp);
+            });
+
+            Room.Instance.On("peer-left", async (arg) => DestroyThisObject());
+
+        }
+
+        public override void SetMetadata(MetadataInfo metadata)
+        {
+            _nameText.text = metadata.Name;
+            base.SetMetadata(metadata);
+        }
+
+        public void EnableVideo(Consumer<Mediasoup.Types.AppData> consumer, string label)
+        {
+            Debug.Log("Play video stream");
+            try
+            {
+                _videotrack = consumer.track as VideoStreamTrack;
+                _videotrack.OnVideoReceived += (tex) =>
+                {
+                    Debug.Log($"tex format {tex.graphicsFormat}");
+                    _videoTexture.texture = tex;
+
+                };
+                _videotrack.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Texture format issue {ex}");
+            }
+        }
+
+        public void EnableAudio(Consumer<Mediasoup.Types.AppData> consumer, string label)
+        {
+            SetAudioSource(consumer.track);
+            //_micStatus.color = Color.green;
+        }
+
+        private void SetAudioSource(MediaStreamTrack track)
+        {
+            try
+            {
+                _audioRef = new GameObject("AudioSource");
+                _audioRef.transform.SetParent(this.transform);
+                AudioSource aud = _audioRef.AddComponent<AudioSource>();
+
+                AudioStreamTrack audioTrack = track as AudioStreamTrack;
+
+                aud.SetTrack(audioTrack);
+                aud.loop = true;
+                aud.Play();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Cant play audio {ex}");
+            }
+        }
+
+        public void DisableVideo(string peerId)
+        {
+            _videotrack.OnVideoReceived -= (tex) => { _videoTexture.texture = tex; };
+            _videotrack.Enabled = false;
+            //_videoTexture.texture = _defaultTextureForVideo;
+        }
+
+        public void DisableAudio(string peerId)
+        {
+            Destroy(_audioRef);
+            _audioRef = null;
+            //_micStatus.color = Color.red;
+        }
+
+        public void OnCloseTrack(string label, string peerId)
+        {
+            if (label.Equals("audio"))
+            {
+                DisableAudio(peerId);
+            }
+
+            if (label.Equals("video"))
+            {
+                DisableVideo(peerId);
+            }
+        }
+
+        protected override void PeerMetadataUpdated(string peerId, MetadataInfo metadata)
+        {
+            if (peerId.Equals(_remotePeer.PeerId)) 
+            {
+                _nameText.text = metadata.Name;
+                base.PeerMetadataUpdated(peerId, metadata);
+            }
+
+        }
+
+        public override void DestroyThisObject()
+        {
+            if (_audioRef!=null) 
+            {
+                AudioSource aud = _audioRef.AddComponent<AudioSource>();
+                if (aud.isPlaying) 
+                {
+                    aud.Stop();
+                }
+            }
+
+            base.DestroyThisObject();
+        }
+
+#endif
+
+    }
+
+```
+
+#### RemotePeer Section for Webgl platform
+
+```csharp
+
+public class RemotePeerWebgl : RemotePeerBase
+    {
+        public bool IsVideoPlaying => _isVideoPlaying;
+        private bool _isVideoPlaying = false;
+
+        private int m_TextureId = -1;
+
+        public Texture2D Texture { get; private set; }
+
+        private bool isVideoPlaying = false;
+
+#if UNITY_WEBGL
+
+        void Start()
+        {
+            GetNewTextureId();
+        }
+
+        void Update()
+        {
+            if (isVideoPlaying)
+            {
+                SetupTexture();
+            }
+        }
+
+        public override void Init(string remotePeerId)
+        {
+            base.Init(remotePeerId);
+        }
+
+        public override void SetMetadata(MetadataInfo metadata)
+        {
+            _nameText.text = metadata.Name;
+            base.SetMetadata(metadata);
+        }
+
+        public void GetNewTextureId()
+        {
+            m_TextureId = Huddle01JSNative.NewTexture();
+        }
+
+        public void SetupTexture()
+        {
+            if (Texture != null)
+                UnityEngine.Object.Destroy(Texture);
+            Texture = Texture2D.CreateExternalTexture(1280, 720, TextureFormat.RGBA32, false, true, (IntPtr)m_TextureId);
+            _videoTexture.texture = Texture;
+            
+        }
+
+        public void EnableVideo(string peerId) 
+        {
+            isVideoPlaying = true;
+            Huddle01JSNative.AttachVideo(peerId, m_TextureId);
+        }
+
+        public void DisableVideo()
+        {
+            isVideoPlaying = false;
+            _videoTexture.texture = _defaultTexture; 
+        }
+
+        public override void EnableAudio()
+        {
+            base.EnableAudio();
+        }
+
+        public override void DisableAudio()
+        {
+            base.DisableAudio();
+        }
+
+#endif
+    }
+
+```

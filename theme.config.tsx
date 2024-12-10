@@ -58,7 +58,7 @@ const config: DocsThemeConfig = {
         'React Native',
         'Flutter',
         'Server-SDK',
-        'Unity Webgl',
+        'Unity',
         'Kotlin',
       ].includes(title);
 
@@ -70,7 +70,7 @@ const config: DocsThemeConfig = {
         'React Native': '',
         Flutter: '',
         'Server-SDK': '',
-        'Unity Webgl': '',
+        Unity: '',
         Kotlin: '',
       };
 

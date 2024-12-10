@@ -1,0 +1,40 @@
+---
+title: "Local Peer"
+---
+
+import { Tab, Tabs } from "nextra-theme-docs";
+import OptionTable from "@components/common/Table/OptionTable";
+
+## Local Peer
+
+### UpdateMetadata(string metadataJson)
+
+To update the local peer metadata, call the method `HuddleClient.Instance.UpdateMetadata`, which takes a JSON string as a parameter.
+Keep in mind that you must update `HuddleWebglPlugin.jslib` to reflect any changes in the data structure of the JSON you pass.
+
+```csharp"
+private void UpdateMetadata(MetadataInfo metadataInfo)
+{
+    _huddleClientInstance.UpdateMetadata(JsonConvert.SerializeObject(metadataInfo));
+}
+```
+
+```jsx"
+UpdatePeerMetaData : function(metadataVal)
+    {
+        var metadata = JSON.parse(UTF8ToString(metadataVal));
+        huddleClient.localPeer.updateMetadata({ 
+            name : metadata.name
+        });
+    },
+```
+
+### string GetLocalPeerId()
+
+To get local peerId, use `HuddleClient.Instance.GetLocalPeerId` method
+
+```csharp
+
+string _localPeerId = _huddleClientInstance.GetLocalPeerId();
+
+```
