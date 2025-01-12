@@ -22,10 +22,13 @@ private string _roomId; // Assign from inspector
 [SerializeField]
 private string _projectId; // Assign from inspector
 
+[SerializeField]
+private string _autoConsume; // Assign from inspector
+
 void Init()
 {
 #if UNITY_WEBGL
-    HuddleClient.Instance.InitForWebgl(_projectId, _roomId);
+    HuddleClient.Instance.InitForWebgl(_projectId, _roomId,_autoConsume);
 #else
     HuddleClient.Instance.InitForNative(_projectId, _roomId, _deviceHandler);
 #endif
