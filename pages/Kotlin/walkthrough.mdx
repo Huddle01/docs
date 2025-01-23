@@ -28,14 +28,20 @@ The following guide explains how you can integrate audio/video into your Android
 	}
 ```
 
-• Add the following dependency in your app's `app/build.gradle`.
+### Adding the Kotlin-Client Dependency
+
+To include the latest version of the Kotlin-Client SDK in your app, follow these steps:
+
+1. Open your app's `app/build.gradle` file.
+2. Add the following dependency:
+
+***SDK Latest Version***  
+[![Latest Version](https://jitpack.io/v/Huddle01/Kotlin-Client.svg)](https://jitpack.io/#Huddle01/Kotlin-Client)
 
 ```kotlin
-
 dependencies {
-	        implementation 'com.github.Huddle01:Kotlin-Client:1.0.1'
-	}
-  
+    implementation("com.github.Huddle01:Kotlin-Client:<latest-version>")
+}
 ```
 
 ### **Handling Permissions**
