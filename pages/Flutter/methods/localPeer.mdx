@@ -6,7 +6,7 @@ import OptionTable from "@components/common/Table/OptionTable";
 
 # Local Peer
 
-`localPeer` object from `huddleClient` allows you to intereact with your own Peer object, which is how you are represented in the Huddle01 room.
+`localPeer` object from `huddleClient` allows you to interact with your own Peer object, which is how you are represented in the Huddle01 room.
 
 **Metadata**
 
@@ -130,7 +130,7 @@ huddleClient.localPeer.updateRole({role:string});
 ```dart
 // Event listeners for the Remote Peer
 localPeer.on("metadata-updated", () => {
-  print("successfully updated remote peer metatdat.");
+  print("successfully updated remote peer metadata.");
 });
 
 localPeer.once("stream-available", (data) => {
