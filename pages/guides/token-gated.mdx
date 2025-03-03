@@ -39,7 +39,7 @@ We add an API route - since we are using Next.JS, we add a custom Next.js API ro
 "use server";
 
 export const createRoom = async () => {
-  const response = await fetch("https://api.huddle01.com/api/v1/create-room", {
+  const response = await fetch("https://api.huddle01.com/api/v2/sdk/rooms/create-room", {
     method: "POST",
     body: JSON.stringify({
       title: "Huddle01 Room",
@@ -144,7 +144,7 @@ export async function POST(request: Request) {
 
   // Call `room-details` API to get token gating details
   const roomDetailsResponse = await fetch(
-    `https://api.huddle01.com/api/v1/room-details/${roomId}`,
+    `https://api.huddle01.com/api/v2/sdk/rooms/room-details/${roomId}`,
     {
       headers: {
         "x-api-key": process.env.API_KEY!,

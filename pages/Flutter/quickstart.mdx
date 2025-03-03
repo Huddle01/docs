@@ -29,7 +29,7 @@ String apiKey = "<Generated-from-docs>";
 // API call to create meeting
 Future<String> createMeeting() async {
   final http.Response httpResponse = await http.post(
-    Uri.parse("https://api.huddle01.com/api/v1/create-room"),
+    Uri.parse("https://api.huddle01.com/api/v2/sdk/rooms/create-room"),
     headers: {'Authorization': apiKey},
   );
 
