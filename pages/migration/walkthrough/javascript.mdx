@@ -85,7 +85,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { data } = await axios.post(
-      'https://api.huddle01.com/api/v1/create-room',
+      'https://api.huddle01.com/api/v2/sdk/rooms/create-room',
       {
         title: 'Huddle01 Meet',
       },
@@ -120,7 +120,7 @@ app.use(express.json());
 app.post('/create-room', async (req: Request, res: Response) => {
   try {
     const { data } = await axios.post(
-      'https://api.huddle01.com/api/v1/create-room',
+      'https://api.huddle01.com/api/v2/sdk/rooms/create-room',
       {
         title: 'Huddle01 Meet',
       },
