@@ -41,7 +41,7 @@ const config: DocsThemeConfig = {
         <meta name="og:description" content={frontMatter.description} />
         <meta
           property="og:url"
-          content={`https://docs.huddle01.com${router.asPath}`}
+          content={`https://docs.huddle01.network${router.asPath}`}
         />
         <meta property="og:locale" content="en_IE" />
         <meta property="og:site_name" content="Huddle01Docs" />
