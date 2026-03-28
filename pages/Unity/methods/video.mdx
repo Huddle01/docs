@@ -30,3 +30,29 @@ private void DisableVideo()
 }
 
 ```
+
+### Change Video device for native platforms
+
+The ChangeVideoDevice method change the input viedo media source
+
+```csharp
+
+private void ChangeVideoDevice(string deviceId)
+{
+    _huddleClientInstance.ChangeVideoDevice(deviceId);
+}
+
+```
+
+### Change Video device for Webgl platform
+
+The ChangeVideoDevice method change the input viedo media source
+
+```csharp
+
+private void ChangeVideoDevice(string deviceId)
+{
+    _huddleClientInstance.ChangeCamTrackForWebgl(deviceId);
+}
+
+```

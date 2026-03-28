@@ -31,3 +31,29 @@ private void DisableAudio()
 }
 
 ```
+
+### Change Audio device for native platforms
+
+The ChangeAudioDevice method change the input audio media source
+
+```csharp
+
+private void ChangeAudioSource(string deviceId)
+{
+    _huddleClientInstance.ChangeAudioDevice(deviceId);
+}
+
+```
+
+### Change Audio device for Webgl platform
+
+The ChangeAudioDevice method change the input audio media source
+
+```csharp
+
+private void ChangeAudioSource(string deviceId)
+{
+    _huddleClientInstance.ChangeMicTrackForWebgl(deviceId);
+}
+
+```
